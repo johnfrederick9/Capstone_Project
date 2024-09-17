@@ -1,0 +1,259 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package belandres001;
+
+import java.sql.*;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
+
+/**
+ *
+ * @author Marjo
+ */
+public class Form1 extends javax.swing.JFrame {
+
+    /**
+     * Creates new form Form1
+     */
+    Connection con=null;
+    Statement stat;
+    ResultSet rs;
+    
+    String searchChoice;
+    
+    public Form1() {
+        initComponents();
+    }
+
+    
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        // TODO add your handling code here:
+        
+        try{
+            int ItemNo;
+            double ItemPrice,ItemSubtotal,ItemQuantity;
+            String ItemDesc;
+            
+            ItemNo=Integer.parseInt(txtItemNo.getText());
+            ItemPrice=Double.parseDouble(txtItemPrice.getText());
+            ItemQuantity=Double.parseDouble(txtItemQuantity.getText());
+            ItemDesc=txtItemDesc.getText();
+            
+            String Host ="jdbc:derby://localhost:1527/Belandres001";
+            String uName="Joshua001";
+            String uPass="123";
+            
+           con=DriverManager.getConnection(Host,uName,uPass);
+           stat=con.createStatement();
+           
+           ItemSubtotal=ItemPrice*ItemQuantity;
+           
+           String SQL = "INSERT INTO JOSHUA001.ITEMDATA VALUES ("+ItemNo+",'"+ItemDesc+"',"+ItemQuantity+","+ItemPrice+","+ItemSubtotal+")";
+           
+           stat.execute(SQL);
+           
+           JOptionPane.showMessageDialog(this, "Data Saved!");
+           
+           
+           
+           
+           
+           txtItemNo.setText("");
+           txtItemDesc.setText("");
+           txtItemPrice.setText("");
+           txtItemQuantity.setText("");
+           
+        }
+        catch(SQLException err)
+        {
+            System.out.println(err.getMessage());
+        }
+    }                                       
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        // TODO add your handling code here:
+        
+        try{  
+            
+            String SearchName=txtSearch.getText();
+            
+            String Host ="jdbc:derby://localhost:1527/Belandres001";
+            String uName="Joshua001";
+            String uPass="123";
+            
+           con=DriverManager.getConnection(Host,uName,uPass);
+           stat=con.createStatement();
+           
+           String SQL = "SELECT * FROM JOSHUA001.ITEMDATA WHERE ITEMDESC = '"+SearchName+"'";
+           rs=stat.executeQuery(SQL);
+ 
+           if(rs.next()){
+               int ItemNo = rs.getInt("ITEMNO");
+               String ItemDesc = rs.getString("ITEMDESC");
+               double ItemQuantity = rs.getDouble("ITEMQUANTITY");
+               double ItemPrice = rs.getDouble("ITEMPRICE");
+               
+               txtItemNo.setText(String.valueOf(ItemNo));
+               txtItemDesc.setText(ItemDesc);
+               txtItemQuantity.setText(String.valueOf(ItemQuantity));
+               txtItemPrice.setText(String.valueOf(ItemPrice));
+               
+               JOptionPane.showMessageDialog(this,"Record Found"); 
+               
+           }
+           else{
+               JOptionPane.showMessageDialog(this,"Record not Fount");
+           }
+            
+        }
+        catch(SQLException err){
+            System.out.println(err.getMessage());
+        }
+    }                                         
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+        txtItemNo.setText("");
+        txtItemDesc.setText("");
+        txtItemPrice.setText("");
+        txtItemQuantity.setText("");
+        
+        
+    }                                        
+
+    private void btnClearSearchActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        // TODO add your handling code here:
+        txtSearch.setText("");
+    }                                              
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        // TODO add your handling code here:
+        try{
+            int ItemNo,rows;
+            double NewItemPrice,NewItemQuantity,NewItemSubTotal;
+            String NewItemDesc;
+            
+            ItemNo = Integer.parseInt(txtItemNo.getText());
+            NewItemDesc= txtItemDesc.getText();
+            NewItemPrice =Double.parseDouble(txtItemPrice.getText());
+            NewItemQuantity =Double.parseDouble(txtItemQuantity.getText());
+            
+            String Host ="jdbc:derby://localhost:1527/Belandres001";
+            String uName="Joshua001";
+            String uPass="123";
+            
+           con=DriverManager.getConnection(Host,uName,uPass);
+           stat=con.createStatement();
+           
+           NewItemSubTotal= NewItemQuantity*NewItemPrice;
+           
+           String SQL = "UPDATE JOSHUA001.ITEMDATA SET ITEMDESC = '"+NewItemDesc+"', ITEMQUANTITY = "+NewItemQuantity+", ITEMPRICE = "+NewItemPrice+", ITEMSUBTOTAL = "+NewItemSubTotal+" WHERE ITEMNO = "+ItemNo+"";
+           
+           rows =stat.executeUpdate(SQL);
+           
+           if(rows>0){
+               JOptionPane.showMessageDialog(this, "Record with Item No: "+ItemNo+ "is Updated!");
+               txtItemNo.setText("");
+               txtItemDesc.setText("");
+               txtItemPrice.setText("");
+               txtItemQuantity.setText("");
+            
+           }else{
+               JOptionPane.showMessageDialog(this, "Record with Item No: "+ItemNo+ "is not Found!");
+           }
+        }
+        catch(SQLException | NumberFormatException err){
+            err.printStackTrace();
+        }
+    }                                         
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        // TODO add your handling code here:
+        
+        try{
+            int rows,ItemNo; 
+                    
+            ItemNo = Integer.parseInt(txtItemNo.getText());
+            
+            String Host ="jdbc:derby://localhost:1527/Belandres001";
+            String uName="Joshua001";
+            String uPass="123";
+            
+            con=DriverManager.getConnection(Host,uName,uPass);
+            stat=con.createStatement();
+            
+            String SQL = "DELETE FROM JOSHUA001.ITEMDATA WHERE ITEMNO = "+ItemNo+"";
+            
+            rows = stat.executeUpdate(SQL);
+            
+            if(rows>0){
+                JOptionPane.showMessageDialog(this, "Record with ITEM NO: "+ItemNo);
+                
+                txtItemNo.setText("");
+                txtItemDesc.setText("");
+                txtItemPrice.setText("");
+                txtItemQuantity.setText("");
+                 
+            }else{
+                JOptionPane.showMessageDialog(this, "Record with Item No: "+ItemNo+ "is not Found!");
+            }
+        }
+        catch(SQLException err){
+            System.out.println(err.getMessage());
+        }
+    }                                         
+
+    private void RdoSearchDescActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        // TODO add your handling code here:
+        searchChoice="DescSearch";
+        
+    }                                             
+
+    private void RdoSearchIDActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        // TODO add your handling code here:
+        searchChoice = "IdSearch";
+    }                                           
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Form1().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JRadioButton RdoSearchDesc;
+    private javax.swing.JRadioButton RdoSearchID;
+    private javax.swing.JButton btnClearSearch;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnReset;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.ButtonGroup btngroupSearch;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JScrollBar jScrollBar1;
+    private javax.swing.JTextField txtItemDesc;
+    private javax.swing.JTextField txtItemNo;
+    private javax.swing.JTextField txtItemPrice;
+    private javax.swing.JTextField txtItemQuantity;
+    private javax.swing.JTextField txtSearch;
+    // End of variables declaration                   
+}
