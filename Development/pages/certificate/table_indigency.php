@@ -108,7 +108,7 @@ include '../../sidebar.php';
                                         var status = json.status;
                                         if (status == 'true') {
                                             table = $('#example').DataTable();
-                                            var button = '<td><div class= "buttons"> <a href="javascript:void();" data-id="'+ indigency_id +'"  class="update-btn btn-sm editbtn" ><i class="bx bx-sync"></i></a> <a href="javascript:void();"<button class="print-btn" onclick="printCertificate(' + indigency_id +')"><i class="bx bx-printer"></i></button></a></div></td>';
+                                            var button = '<td><div class= "buttons"> <a href="javascript:void();" data-id="'+ indigency_id +'"  class="update-btn btn-sm editbtn" ><i class="bx bx-sync"></i></a> <button class="print-btn" data-id="'+indigency_id+'" title="Print Selected"> <i class="bx bx-printer"></i></button></div></td>';
                                             var row = table.row("[id='" + trid + "']");
                                             row.row("[id='" + trid + "']").data([indigency_cname, indigency_mname, indigency_fname, indigency_date, button]);
                                             $('#exampleModal').modal('hide');
@@ -145,7 +145,28 @@ include '../../sidebar.php';
                             }
                         })
                     });
+                    $(document).ready(function() {
+                    // Event listener for the print button
+                    $(document).on('click', '.print-btn', function() {
+                        var indigencyId = $(this).data('id'); // Get the indigency_id
 
+                        // Make an AJAX request to fetch the certificate content
+                        $.ajax({
+                            url: 'fetch_indigency.php', // URL to fetch the certificate HTML
+                            type: 'POST',
+                            data: {id: indigencyId},
+                            success: function(response) {
+                                // Create a new window to print the content
+                                var printWindow = window.open('', '', 'height=600,width=800');
+                                printWindow.document.write(response);
+                                printWindow.document.close();
+                                printWindow.focus();
+                                printWindow.print();
+                                printWindow.close();
+                            }
+                        });
+                    });
+                });
                     </script>
                 </section><!-- .home-->
                 <!-- Modal -->

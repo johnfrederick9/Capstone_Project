@@ -1,4 +1,5 @@
-<?php include('../../connection.php');
+<?php
+include('../../connection.php');
 
 $output = array();
 $sql = "SELECT * FROM tb_indigency";
@@ -46,7 +47,9 @@ while ($row = mysqli_fetch_assoc($query)) {
     $sub_array[] = $row['indigency_date'];
     $sub_array[] = '<div class="buttons">
                         <a href="javascript:void(0);" data-id="'.$row['indigency_id'].'" class="update-btn btn-sm editbtn"><i class="bx bx-sync"></i></a>
-                        <button class="print-btn btn-sm" onclick="printCertificate('.$row['indigency_id'].')"><i class="bx bx-printer"></i></button>
+                        <button class="print-btn" data-id="'.$row['indigency_id'].'" title="Print Selected">
+                            <i class="bx bx-printer"></i>
+                        </button>
                     </div>';
     $data[] = $sub_array;
 }
