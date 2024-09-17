@@ -41,10 +41,10 @@ include "dashboard_code.php";
                             <h3><?php echo $financial_count; ?></h3>
                             <p>Financial</p>
                         </div>
-                        <div class="stat-card">
-                            <h3><?php ?>0</h3>
-                            <p>Household</p>
-                        </div>
+                        <!---<div class="stat-card">
+                            <h3>0</h3>
+                            <p>Household</sp>
+                        </div>--->
 
                     </div>
                 </div>
