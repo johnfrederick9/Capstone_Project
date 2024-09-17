@@ -212,9 +212,10 @@ include '../../sidebar.php';
                                         var status = json.status;
                                         if (status == 'true') {
                                             table = $('#example').DataTable();
+                                            var checkbox = '<td><input type="checkbox" class="row-checkbox" value="'+resident_id+'"></td>';
                                             var button = '<td><div class= "buttons"> <a href="javascript:void();" data-id="'+ resident_id +'"  class="update-btn btn-sm editbtn" ><i class="bx bx-sync"></i></a></div></td>';
                                             var row = table.row("[id='" + trid + "']");
-                                            row.row("[id='" + trid + "']").data([resident_id, resident_firstname, resident_middlename, resident_lastname, resident_maidenname, resident_address, resident_educationalattainment, resident_birthdate, resident_age, resident_status, button]);
+                                            row.row("[id='" + trid + "']").data([checkbox, resident_firstname, resident_middlename, resident_lastname, resident_maidenname, resident_address, resident_educationalattainment, resident_birthdate, resident_age, resident_status, button]);
                                             $('#exampleModal').modal('hide');
                                         } else {
                                             alert('failed');
