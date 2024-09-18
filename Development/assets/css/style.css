@@ -984,11 +984,17 @@ body.dark .sidebar li a:hover .text {
   display: block;
 }
 
+
+
 .sidebar .dropdown .arrow {
   margin-left: 30px;
 }
 
 .sidebar.close .dropdown-content .bx {
+  margin-left: 15px;
+}
+
+.sidebar .dropdown-content .bx {
   margin-left: 15px;
 }
 

@@ -97,7 +97,7 @@ if (isset($conn) && $conn) {
             <ul class="nav-link dropdown-content">
               <li><a href="../../pages/certificate/table_indigency.php" title="Indigency Certificate">
             <i class='bx bxs-certification'></i> 
-                <span class="text nav-text">Indigency Certificate</span>
+                <span class="text nav-text">&nbsp;&nbsp;Indigency Certificate</span>
               </a>
               </li>
               <li><a href="#"></a></li>
