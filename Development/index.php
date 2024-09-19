@@ -26,13 +26,14 @@ $result = mysqli_query($conn, $query);
                             <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                             <li class="scroll-to-section"><a href="#about">About</a></li>
                             <li class="scroll-to-section"><a href="#officials">Officials</a></li>
-                            <li class="submenu">
+                            <li class="scroll-to-section"><a href="login.php">Log In</a></li>
+                            <!---<li class="submenu">
                                 <a href="javascript:;">Log In</a>
                                 <ul>
                                     <li><a href="login.php">As Officials</a></li>
                                     <li><a href="pages/Samples/table.php">Updates</a></li>
                                 </ul>
-                            </li>
+                            </li>--->
                         </ul>        
                         <a class='menu-trigger'>
                             <span>Menu</span>

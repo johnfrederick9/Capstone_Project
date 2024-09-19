@@ -18,7 +18,6 @@ include '../../sidebar.php';
     max-height: 150px;
     object-fit: cover;
 }
-
 </style>
 <body>
     <section class="home">  
@@ -191,20 +190,6 @@ include '../../sidebar.php';
                 });
 
                     </script>
-                    <iframe id="certificateFrame" style="display:none;"></iframe>
-
-<script>
-    function printIndigencyCertificate(residentId) {
-        // Dynamically set the iframe source to load the certificate for the specific resident
-        var iframe = document.getElementById('certificateFrame');
-        iframe.src = 'Indigency_certificate.php?resident_id=' + residentId;
-
-        // Wait for the iframe to load, then trigger print
-        iframe.onload = function() {
-            iframe.contentWindow.print(); // Trigger print dialog for the certificate
-        };
-    }
-</script>
                 </section><!-- .home-->
                 <!-- Modal -->
                 <!-- Update Project -->
