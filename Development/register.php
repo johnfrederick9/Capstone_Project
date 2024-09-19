@@ -148,12 +148,34 @@ $confirmpassword = '';
                                     $stmt->bind_param("sssssssss", $lastname, $middlename, $firstname, $sex, $suffix, $birthdate, $barangayposition, $username, $hashed_password);
                                     if ($stmt->execute()) {
                                         // Clear the account fields after submission
+                                        $redirectUrl = 'login.php'; // Default fallback page
                                         echo "<script>
                                             document.getElementById('username').value = '';
                                             document.getElementById('password').value = '';
                                             document.getElementById('confirmPassword').value = '';
-                                            alert('Registration Successful'); window.location.href='login.php';
                                             </script>";
+                                            echo " 
+                                    <div id='toast' class='toast'>   
+                                        <div class='toast-content'>
+                                            <i class='bx bxs-check-circle icon'></i>
+                                            <div class='message'>
+                                                <span class='text'>Register Successful</span>
+                                                <p>Redirecting to the Login Page...</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        const toast = document.getElementById('toast');
+                                        toast.classList.add('show');
+
+                                        setTimeout(() => {
+                                            toast.classList.remove('show');
+                                            window.location.href = '$redirectUrl';
+                                        }, 3000);
+                                    </script>
+                                ";                              
+                                exit();
                                     } else {
                                         echo "<script>alert('Registration Failed');</script>";
                                     }
