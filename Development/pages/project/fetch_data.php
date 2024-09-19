@@ -56,6 +56,7 @@ $data = array();
 while($row = mysqli_fetch_assoc($query))
 {
 	$sub_array = array();
+	$sub_array[] = '<input type="checkbox" class="row-checkbox" value="'.$row['project_id'].'">';
 	$sub_array[] = $row['project_name'];
 	$sub_array[] = $row['project_start'];
 	$sub_array[] = $row['project_end'];
