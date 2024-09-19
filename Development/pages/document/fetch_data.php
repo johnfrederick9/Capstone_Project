@@ -46,6 +46,7 @@ $data = array();
 while($row = mysqli_fetch_assoc($query))
 {
 	$sub_array = array();
+	$sub_array[] = '<input type="checkbox" class="row-checkbox" value="'.$row['document_id'].'">';
 	$sub_array[] = $row['document_name'];
 	$sub_array[] = $row['document_date'];
 	$sub_array[] = $row['document_info'];

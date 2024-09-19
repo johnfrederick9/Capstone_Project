@@ -18,6 +18,7 @@ include '../../sidebar.php';
     max-height: 150px;
     object-fit: cover;
 }
+
 </style>
 <body>
     <section class="home">  
@@ -29,13 +30,16 @@ include '../../sidebar.php';
                         </div>
                         <div class="table-actions">    
                             <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-popup">+ Add Document</button>
-                            <!--<button class="print-btn" title="Print">
-                                <i class="bx bx-printer"></i>
-                            </button>-->
+                            <button class="print-btn " title="Print Selected">
+                            <i class="bx bx-printer"></i>
                         </div>
                     </div>
                     <table id="example" class="table-table">
                     <thead>
+                    <th><button class="print-all-btn" title="Print All">
+                                <i class="bx bx-printer"></i>
+                            </button>
+                        </th>
                         <th>Document Name</th>
                         <th>Document Date</th>
                         <th>Document Info</th>
@@ -76,6 +80,61 @@ include '../../sidebar.php';
                                 }
                             });
                         });
+
+                        // Function to trigger the print dialog with the loaded HTML content
+                        function printContentFromPage(url, ids = '') {
+                            $.ajax({
+                                url: url,
+                                type: 'GET',
+                                data: { ids: ids }, // Pass IDs if needed (for print_selected.php)
+                                success: function(response) {
+                                    // Create an iframe to print the content
+                                    var iframe = document.createElement('iframe');
+                                    iframe.style.position = 'absolute';
+                                    iframe.style.width = '0px';
+                                    iframe.style.height = '0px';
+                                    iframe.style.border = 'none';
+                                    document.body.appendChild(iframe);
+
+                                    // Write the content into the iframe
+                                    var doc = iframe.contentWindow.document;
+                                    doc.open();
+                                    doc.write(response);
+                                    doc.close();
+
+                                    // Trigger print dialog
+                                    iframe.contentWindow.focus();
+                                    iframe.contentWindow.print();
+
+                                    // Remove iframe after printing
+                                    document.body.removeChild(iframe);
+                                },
+                                error: function() {
+                                    alert('Failed to load print content.');
+                                }
+                            });
+                        }
+
+                        // Print selected rows
+                        $('.print-btn').click(function() {
+                            var selectedIds = [];
+                            $('.row-checkbox:checked').each(function() {
+                                selectedIds.push($(this).val());
+                            });
+
+                            if (selectedIds.length > 0) {
+                                var idsString = selectedIds.join(',');
+                                printContentFromPage('print_selected.php', idsString); // Load and print content from print_selected.php
+                            } else {
+                                alert('Please select at least one row to print.');
+                            }
+                        });
+
+                        // Print all rows
+                        $('.print-all-btn').click(function() {
+                            printContentFromPage('print_all.php'); // Load and print content from print_all.php
+                        });
+
                         $(document).on('submit', '#updateUser', function(e) {
                             e.preventDefault();
                             //var tr = $(this).closest('tr');
@@ -101,9 +160,10 @@ include '../../sidebar.php';
                                         var status = json.status;
                                         if (status == 'true') {
                                             table = $('#example').DataTable();
+                                            var checkbox = '<input type="checkbox" class="row-checkbox" value="' +document_id+'">';
                                             var button = '<td><div class= "buttons"> <a href="javascript:void(0);" data-id="'+ document_id +'"  class="update-btn btn-sm editbtn" ><i class="bx bx-sync"></i></a><a href="javascript:void(0);" onclick="openViewModal(' + document_id +');" class="view-btn btn-sm viewbtn"><i class="bx bx-show"></i></div></td>';
                                             var row = table.row("[id='" + trid + "']");
-                                            row.row("[id='" + trid + "']").data([document_name, document_date, document_info, document_type, button]);
+                                            row.row("[id='" + trid + "']").data([checkbox, document_name, document_date, document_info, document_type, button]);
                                             $('#exampleModal').modal('hide');
                                         } else {
                                             alert('failed');
