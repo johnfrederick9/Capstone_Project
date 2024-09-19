@@ -1,7 +1,6 @@
 <?php
 include '../../sidebar.php';
-include '../../head.php';
-require '../../database.php';
+include '../../head.php'
 ?>
 
 <body>
@@ -21,6 +20,7 @@ require '../../database.php';
                     </div>
                     <table id="example" class="table-table">
                     <thead>
+                        <th>#</th>
                         <th>Item Name</th>
                         <th>Item Description</th>
                         <th>Item Count</th>
@@ -41,13 +41,19 @@ require '../../database.php';
                                 'processing': 'true',
                                 'paging': 'true',
                                 'order': [],
+                                "columnDefs": [
+                                { 
+                                    "targets": 0,   
+                                    "visible": false // Makes the column invisible
+                                }
+                            ],
                                 'ajax': {
                                     'url': 'fetch_data.php',
                                     'type': 'post',
                                 },
                                 "aoColumnDefs": [{
                                     "bSortable": false,
-                                    "aTargets": [4]
+                                    "aTargets": [5]
                                 },
 
                                 ]
@@ -147,11 +153,12 @@ require '../../database.php';
                             }
                         })
                     });
+
                         $(document).on('click', '.deleteBtn', function(event) {
                             var table = $('#example').DataTable();
                             event.preventDefault();
                             var item_id = $(this).data('item_id');
-                            if (confirm("Are you sure want to delete this Item ? ")) {
+                            if (confirm("Are you sure want to delete this User ? ")) {
                                 $.ajax({
                                     url: "delete.php",
                                     data: {
@@ -254,7 +261,7 @@ require '../../database.php';
                                 <div class="form-group">
                                     <label for="itemstatus">Item Status:</label>
                                     <select id="item_status" name="item_status" required>
-                                        <option value="Select Status" disabled>Select Status</option>
+                                        <option value="" disabled>Select Status</option>
                                         <option value="New">New</option>
                                         <option value="Used">Used</option>
                                         <!-- Add more options as needed -->

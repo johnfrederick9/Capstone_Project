@@ -7,10 +7,11 @@ $sql = "SELECT * FROM tb_inventory ";
 	$total_all_rows = mysqli_num_rows($totalQuery);
 
 	$columns = array(
-		0 => 'item_name',
-		1 => 'item_description',
-		2 => 'item_count',
-		3 => 'item_status',
+		0 => 'item_id',
+		1 => 'item_name',
+		2 => 'item_description',
+		3 => 'item_count',
+		4 => 'item_status',
 );
 
 if(isset($_POST['search']['value']))
@@ -46,6 +47,7 @@ $data = array();
 while($row = mysqli_fetch_assoc($query))
 {
 	$sub_array = array();
+	$sub_array[] = $row['item_id'];
 	$sub_array[] = $row['item_name'];
 	$sub_array[] = $row['item_description'];
 	$sub_array[] = $row['item_count'];
