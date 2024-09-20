@@ -26,6 +26,74 @@ if (isset($conn) && $conn) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <style>
+.profile .container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    width: 90%; /* Increase width to make the modal wider */
+    max-width: 1200px; /* Set a maximum width */
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin: 20px auto; /* Center the modal */
+}
+
+.profile .profile-section {
+    background-color: #e0e0e0;
+    padding: 20px;
+    text-align: center;
+}
+
+.profile .profile-picture img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin-bottom: 10px;
+}
+
+.profile .profile-info p {
+    margin: 10px 0;
+}
+
+.profile .form-section {
+    padding: 20px;
+}
+
+.profile .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.profile .form-group {
+    margin-bottom: 20px;
+}
+
+.profile .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.profile .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.profile input[type="date"] {
+    padding-right: 40px;
+}
+
+.profile input[type="password"] {
+    font-size: 16px;
+}
+
+.profile .full-width {
+    grid-column: 1 / span 2;
+}
+  </style>
   <title>Barangay Mantalogon Information System</title>
   <link rel="icon" href="../../assets/image/Logo.png">
 </head>
@@ -176,12 +244,75 @@ if (isset($conn) && $conn) {
                         </div>
                         <div class="modal-body">
                             <form id="updateprofile" action="">
-                            </form>
+                            <section class="profile">
+                              <div class="container">
+                                  <div class="profile-section">
+                                      <div class="profile-picture">
+                                          <img src="profile-placeholder.png" alt="Profile Picture">
+                                      </div>
+                                      <div class="profile-info">
+                                          <p><strong>Name</strong></p>
+                                          <p>Barangay Position</p>
+                                          <p>Suffix</p>
+                                          <p>Sex</p>
+                                          <p>Birth Date</p>
+                                      </div>
+                                  </div>
+
+                                  <div class="form-section">
+                                      <form action="#" method="POST">
+                                          <div class="form-grid">
+                                              <!-- Name fields (Left column) -->
+                                              <div class="form-group">
+                                                  <label for="last-name">Last Name</label>
+                                                  <input type="text" id="last-name" name="last-name">
+                                              </div>
+
+                                              <div class="form-group">
+                                                  <label for="first-name">First Name</label>
+                                                  <input type="text" id="first-name" name="first-name">
+                                              </div>
+
+                                              <div class="form-group">
+                                                  <label for="middle-name">Middle Name</label>
+                                                  <input type="text" id="middle-name" name="middle-name">
+                                              </div>
+
+                                              <!-- Suffix, Sex, and Birth Date fields (Right column) -->
+                                              <div class="form-group">
+                                                  <label for="suffix">Suffix</label>
+                                                  <input type="text" id="suffix" name="suffix">
+                                              </div>
+
+                                              <div class="form-group">
+                                                  <label for="sex">Sex</label>
+                                                  <input type="text" id="sex" name="sex">
+                                              </div>
+
+                                              <div class="form-group">
+                                                  <label for="birth-date">Birth Date</label>
+                                                  <input type="date" id="birth-date" name="birth-date">
+                                              </div>
+                                          </div>
+
+                                          <!-- Username and Password fields below the grid -->
+                                          <div class="form-group full-width">
+                                              <label for="username">Username</label>
+                                              <input type="text" id="username" name="username">
+                                          </div>
+
+                                          <div class="form-group full-width">
+                                              <label for="password">Password</label>
+                                              <input type="password" id="password" name="password">
+                                          </div> 
+                                    </div>
+                                </div>
+                            </section>   
+                          </form>
                         </div>
                     </div>
                 </div>
             </div>
-  
   <script>
     // JavaScript for sidebar, mode switch, and dropdown
     const body = document.querySelector('body'),
