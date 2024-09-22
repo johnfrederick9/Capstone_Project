@@ -22,7 +22,10 @@ Table of contents
 13. events
 14. certificate
 15. indigency-certificate
-16. admin_login
+16. reports
+17. admin_login
+18. profile
+19. additional_css-bootstrap
 --------------------------------------------- */
 /* ===== Reusable Comments - Here ===== */
 
@@ -3276,7 +3279,7 @@ font-size: 18px;
 }
 /*
 ---------------------------------------------
-15. report
+16. report
 ---------------------------------------------
 */
 .report-container {
@@ -3454,7 +3457,7 @@ font-size: 18px;
 
 /*
 ---------------------------------------------
-15. admin_login
+17. admin_login
 ---------------------------------------------
 */
 .admin{
@@ -3563,6 +3566,88 @@ font-size: 18px;
       width: 90%;
   }
 }
+
+/*
+---------------------------------------------
+18. profile
+---------------------------------------------
+*/
+
+.profile .container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  width: 100%; /* Full width */
+  max-width: 1400px; /* Increase max width to make it more responsive */
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin: 20px auto;
+}
+
+.profile .profile-section {
+  background-color: #e0e0e0;
+  padding: 10px;
+  text-align: center;
+}
+
+.profile .profile-picture img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin-bottom: 10px;
+}
+
+.profile .profile-info p {
+  margin: 10px 0;
+}
+
+.profile .form-section {
+  padding: 10px;
+}
+
+.profile .form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two-column layout */
+  gap: 10px; /* Gap between form fields */
+}
+
+.profile .form-group {
+  margin-bottom: 10px;
+}
+
+.profile .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.profile .form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.profile input[type="date"] {
+  padding-right: 40px;
+}
+
+.profile input[type="password"] {
+  font-size: 16px;
+}
+
+.profile .full-width {
+  grid-column: 1 / span 2; /* Make username and password full width */
+}
+
+.profile .form-section form {
+  max-width: 100%;
+}
+/*
+---------------------------------------------
+19. additional_css-bootstrap
+---------------------------------------------
+*/
 [type=search]{
   outline-offset:-2px;
   -webkit-appearance:textfield
