@@ -8,77 +8,7 @@
                     <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="updateprofile" action="">
-                        <div class="container">
-                            <div class="profile-section">
-                                <div class="profile-picture">
-                                    <img src="../../assets/image/profile_default.png" alt="Profile Picture">
-                                </div>
-                                <div class="profile-info">
-                                    <p><strong>Name</strong></p>
-                                    <p>Barangay Position</p>
-                                    <p>Suffix</p>
-                                    <p>Sex</p>
-                                    <p>Birth Date</p>
-                                    
-                                    <button type="submit" class="btn btn-primary">Update</button>
-                               
-                                </div>
-                            </div>
-
-                            <div class="form-section">
-                                <div class="form-grid">
-                                    <!-- Name fields (Left column) -->
-                                    <div class="form-group">
-                                        <label for="last-name">Last Name</label>
-                                        <input type="text" id="last-name" name="last-name">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="first-name">First Name</label>
-                                        <input type="text" id="first-name" name="first-name">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="middle-name">Middle Name</label>
-                                        <input type="text" id="middle-name" name="middle-name">
-                                    </div>
-
-                                    <!-- Suffix, Sex, and Birth Date fields (Right column) -->
-                                    <div class="form-group">
-                                        <label for="suffix">Suffix</label>
-                                        <input type="text" id="suffix" name="suffix">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="sex">Sex</label>
-                                        <input type="text" id="sex" name="sex">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="birth-date">Birth Date</label>
-                                        <input type="date" id="birth-date" name="birth-date">
-                                    </div>
-                                </div>
-
-                                <!-- Username and Password fields below the grid -->
-                                <div class="form-group full-width">
-                                    <label for="username">Username</label>
-                                    <input type="text" id="username" name="username">
-                                </div>
-
-                                <!--<div class="form-group full-width">
-                                    <label for="password">Password</label>
-                                    <input type="password" id="password" name="password">-->
-                                </div> 
-                            </div>
-                        </div> 
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript">
+                <script type="text/javascript">
         $(document).on('submit', '#updateprofile', function(e) {
             e.preventDefault();
             //var tr = $(this).closest('tr');
@@ -127,19 +57,95 @@
         $.ajax({
             url: "get_single_data.php",
             data: {
-                item_id: item_id
+                user_id: user_id
             },
             type: 'post',
             success: function(data) {
                 var json = JSON.parse(data);
-                $('#nameField').val(json.item_name);
-                $('#descriptionField').val(json.item_description);
-                $('#countField').val(json.item_count);
-                $('#statusField').val(json.item_status);
-                $('#item_id').val(item_id);
+                $('#lastnameField').val(json.lastname);
+                $('#firstnameField').val(json.firsname);
+                $('#middlenameField').val(json.middlename);
+                $('#sexField').val(json.sex);
+                $('#sexField').val(json.suffix);
+                $('#birthdateField').val(json.birthdate);
+                $('#barangaypositionField').val(json.barangayposition);
+                $('#usernameield').val(json.username);
+                $('#user_id').val(user_id);
                 $('#trid').val(trid);
             }
         })
     });
     </script>
+                    <form id="updateprofile" action="">
+                    <input type="hidden" name="user_id" id="user_id" value="">
+                    <input type="hidden" name="trid" id="trid" value="">
+                        <div class="container">
+                            <div class="profile-section">
+                                <div class="profile-picture">
+                                    <img src="../../assets/image/profile_default.png" alt="Profile Picture">
+                                </div>
+                                <div class="profile-info">
+                                    <p><strong>Name</strong></p>
+                                    <p>Barangay Position</p>
+                                    <p>Suffix</p>
+                                    <p>Sex</p>
+                                    <p>Birth Date</p>
+                                    
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                               
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <div class="form-grid">
+                                    <!-- Name fields (Left column) -->
+                                    <div class="form-group">
+                                        <label for="last-name">Last Name</label>
+                                        <input type="text" id="lastnameField" name="last-name">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="first-name">First Name</label>
+                                        <input type="text" id="firstnameField" name="first-name">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="middle-name">Middle Name</label>
+                                        <input type="text" id="middlenameField" name="middle-name">
+                                    </div>
+
+                                    <!-- Suffix, Sex, and Birth Date fields (Right column) -->
+                                    <div class="form-group">
+                                        <label for="suffix">Suffix</label>
+                                        <input type="text" id="suffixField" name="suffix">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="sex">Sex</label>
+                                        <input type="text" id="sexField" name="sex">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="birth-date">Birth Date</label>
+                                        <input type="date" id="birthdateField" name="birth-date">
+                                    </div>
+                                </div>
+
+                                <!-- Username and Password fields below the grid -->
+                                <div class="form-group full-width">
+                                    <label for="username">Username</label>
+                                    <input type="text" id="usernameField" name="username">
+                                </div>
+
+                                <!--<div class="form-group full-width">
+                                    <label for="password">Password</label>
+                                    <input type="password" id="password" name="password">-->
+                                </div> 
+                            </div>
+                        </div> 
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
