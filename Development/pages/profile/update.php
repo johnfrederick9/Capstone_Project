@@ -1,33 +1,34 @@
-<?php 
+<?php
+// Include the database connection file
 include('../../connection.php');
-$item_name = $_POST['item_name'];
-$item_description = $_POST['item_description'];
-$item_count = $_POST['item_count'];
-$item_status = $_POST['item_status'];
-$item_id = $_POST['item_id'];
 
-$sql = "UPDATE `tb_inventory` SET  `item_name`='$item_name' , `item_description`= '$item_description', 
-`item_count`='$item_count',  `item_status`='$item_status' WHERE item_id='$item_id' ";
-$query= mysqli_query($con,$sql);
-$lastId = mysqli_insert_id($con);
-if($query ==true)
-{
-   
-    $data = array(
-        'status'=>'true',
-       
-    );
+// Collect POST data from the form submission
+$user_id = $_POST['user_id'];
+$last_name = $_POST['lastname'];
+$first_name = $_POST['firstname'];
+$middle_name = $_POST['middlename'];
+$suffix = $_POST['suffix'];
+$sex = $_POST['sex'];
+$birth_date = $_POST['birthdate'];
+$username = $_POST['username'];
 
-    echo json_encode($data);
+// Construct SQL query to update the user's profile in the database
+$sql = "UPDATE `tb_users` 
+        SET `lastname` = '$last_name', 
+            `firstname` = '$first_name', 
+            `middlename` = '$middle_name', 
+            `suffix` = '$suffix', 
+            `sex` = '$sex', 
+            `birthdate` = '$birth_date', 
+            `username` = '$username' 
+        WHERE `user_id` = '$user_id'";
+
+$query = mysqli_query($con, $sql);
+
+// Check if the query was successful and return a JSON response
+if ($query) {
+    echo json_encode(['status' => 'true']);
+} else {
+    echo json_encode(['status' => 'false', 'error' => mysqli_error($con)]);
 }
-else
-{
-     $data = array(
-        'status'=>'false',
-      
-    );
-
-    echo json_encode($data);
-} 
-
 ?>

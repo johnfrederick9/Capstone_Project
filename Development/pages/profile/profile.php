@@ -1,6 +1,6 @@
 <!-- Update Profile -->
 <section class="profile">
-    <div class="modal fade" id="UpadateProfileModal" tabindex="-1" aria-labelledby="exampleModalLabelProfile" aria-hidden="true">
+    <div class="modal fade" id="UpdateProfileModal" tabindex="-1" aria-labelledby="exampleModalLabelProfile" aria-hidden="true">
         <div class="modal-dialog modal-lg"> <!-- Changed to modal-lg to increase width -->
             <div class="modal-content">
                 <div class="modal-header">
@@ -8,139 +8,73 @@
                     <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <script type="text/javascript">
-        $(document).on('submit', '#updateprofile', function(e) {
-            e.preventDefault();
-            //var tr = $(this).closest('tr');
-            var item_name = $('#nameField').val();
-            var item_description = $('#descriptionField').val();
-            var item_count = $('#countField').val();
-            var item_status = $('#statusField').val();
-            var trid = $('#trid').val();
-            var item_id = $('#item_id').val();
-            if (item_name != '' && item_description != '' && item_count != '' && item_status != '') {
-                $.ajax({
-                    url: "update.php",
-                    type: "post",
-                    data: {
-                        item_name: item_name,
-                        item_description: item_description,
-                        item_count: item_count,
-                        item_status: item_status,
-                        item_id: item_id
-                    },
-                    success: function(data) {
-                        var json = JSON.parse(data);
-                        var status = json.status;
-                        if (status == 'true') {
-                            table = $('#example').DataTable();
-                            var button = '<td><div class= "buttons"> <a href="javascript:void();" data-id="'+ item_id +'"  class="update-btn btn-sm editbtn" ><i class="bx bx-sync"></i></a>  <a href="!#" data-item_id="' + item_id + '"  class="delete-btn btn-sm deleteBtn" ><i class="bx bxs-trash"></i></a></div></td>';
-                            var row = table.row("[id='" + trid + "']");
-                            row.row("[id='" + trid + "']").data([item_id, item_name, item_description, item_count, item_status, button]);
-                            $('#exampleModal').modal('hide');
-                        } else {
-                            alert('failed');
-                        }
-                    }
-                });
-            } else {
-                alert('Fill all the required fields');
-            }
-        });
-        $('#example').on('click', '.editbtn ', function(event) {
-        var table = $('#example').DataTable();
-        var trid = $(this).closest('tr').attr('id');
-        // console.log(selectedRow);
-        var item_id = $(this).data('id');
-        $('#exampleModal').modal('show');
-
-        $.ajax({
-            url: "get_single_data.php",
-            data: {
-                user_id: user_id
-            },
-            type: 'post',
-            success: function(data) {
-                var json = JSON.parse(data);
-                $('#lastnameField').val(json.lastname);
-                $('#firstnameField').val(json.firsname);
-                $('#middlenameField').val(json.middlename);
-                $('#sexField').val(json.sex);
-                $('#sexField').val(json.suffix);
-                $('#birthdateField').val(json.birthdate);
-                $('#barangaypositionField').val(json.barangayposition);
-                $('#usernameield').val(json.username);
-                $('#user_id').val(user_id);
-                $('#trid').val(trid);
-            }
-        })
-    });
-    </script>
-                    <form id="updateprofile" action="">
+                   <form id="updateprofile" action="">
                     <input type="hidden" name="user_id" id="user_id" value="">
                     <input type="hidden" name="trid" id="trid" value="">
-                        <div class="container">
-                            <div class="profile-section">
-                                <div class="profile-picture">
-                                    <img src="../../assets/image/profile_default.png" alt="Profile Picture">
-                                </div>
-                                <div class="profile-info">
-                                    <p><strong>Name</strong></p>
-                                    <p>Barangay Position</p>
-                                    <p>Suffix</p>
-                                    <p>Sex</p>
-                                    <p>Birth Date</p>
-                                    
-                                    <button type="submit" class="btn btn-primary">Update</button>
-                               
-                                </div>
+                    <div class="container">
+                        <div class="profile-section">
+                            <div class="profile-picture">
+                                <img src="../../assets/image/profile_default.png" alt="Profile Picture">
                             </div>
-
+                            <div class="profile-info">
+                                <p><strong>Name</strong></p>
+                                <p>Barangay Position</p>
+                                <p>Suffix</p>
+                                <p>Sex</p>
+                                <p>Birth Date</p>
+                                
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </div>
                             <div class="form-section">
                                 <div class="form-grid">
-                                    <!-- Name fields (Left column) -->
+                                    <!-- Name fields -->
                                     <div class="form-group">
                                         <label for="last-name">Last Name</label>
-                                        <input type="text" id="lastnameField" name="last-name">
+                                        <input type="text" id="lastname" name="last-name">
                                     </div>
-
                                     <div class="form-group">
                                         <label for="first-name">First Name</label>
-                                        <input type="text" id="firstnameField" name="first-name">
+                                        <input type="text" id="firstname" name="first-name">
                                     </div>
-
                                     <div class="form-group">
                                         <label for="middle-name">Middle Name</label>
-                                        <input type="text" id="middlenameField" name="middle-name">
+                                        <input type="text" id="middlename" name="middle-name">
                                     </div>
 
-                                    <!-- Suffix, Sex, and Birth Date fields (Right column) -->
+                                    <!-- Suffix, Sex, Birth Date fields -->
                                     <div class="form-group">
                                         <label for="suffix">Suffix</label>
-                                        <input type="text" id="suffixField" name="suffix">
+                                        <select id="suffix" class="input-field" name="suffix" required>
+                                            <option value="None">None</option>
+                                            <option value="Sr.">Sr.</option>
+                                            <option value="Jr.">Jr.</option>
+                                        </select>
                                     </div>
-
                                     <div class="form-group">
                                         <label for="sex">Sex</label>
-                                        <input type="text" id="sexField" name="sex">
+                                        <select id="sex" class="input-field" name="sex" required>
+                                            <option value="" disabled>Sex</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
                                     </div>
-
                                     <div class="form-group">
                                         <label for="birth-date">Birth Date</label>
-                                        <input type="date" id="birthdateField" name="birth-date">
+                                        <input type="date" id="birthdate" name="birth-date">
                                     </div>
                                 </div>
 
-                                <!-- Username and Password fields below the grid -->
+                                <!-- Username field -->
                                 <div class="form-group full-width">
                                     <label for="username">Username</label>
-                                    <input type="text" id="usernameField" name="username">
+                                    <input type="text" id="username" name="username">
                                 </div>
 
-                                <!--<div class="form-group full-width">
+                                <div class="form-group full-width">
                                     <label for="password">Password</label>
-                                    <input type="password" id="password" name="password">-->
-                                </div> 
+                                    <input type="password" id="password" name="username">
+                                </div>
                             </div>
                         </div> 
                     </form>
@@ -149,3 +83,32 @@
         </div>
     </div>
 </section>
+<script type="text/javascript">
+    $('#example').on('click', '.editbtn ', function(event) {
+    var table = $('#example').DataTable();
+    var trid = $(this).closest('tr').attr('id');
+    // console.log(selectedRow);
+    var user_id = $(this).data('id');
+    $('#exampleModal').modal('show');
+
+    $.ajax({
+        url: "get_single_data.php",
+        data: {
+            user_id: user_id
+        },
+        type: 'post',
+        success: function(data) {
+            var json = JSON.parse(data);
+            $('#lastname').val(json.lastname);
+            $('#firstname').val(json.firstname);
+            $('#middlename').val(json.middlename);
+            $('#suffix').val(json.suffix);
+            $('#sex').val(json.sex);
+            $('#birthdate').val(json.birthdate);
+            $('#username').val(json.username);
+            $('#user_id').val(user_id);
+            $('#trid').val(trid);
+        }
+    })
+});
+</script>

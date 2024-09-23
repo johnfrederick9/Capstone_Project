@@ -135,16 +135,21 @@ if (isset($conn) && $conn) {
       </div>
       <div class="bottom-content">
         <li>
-          <a href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#UpadateProfileModal" title="Profile" class="editbtn">
-            <i class='bx bxs-user icon'></i>
-            <span class="text nav-text"><?php $firstname = ucfirst(strtolower($row['firstname']));
-                                    $middlename_initial = $row['middlename'] ? ucfirst(strtolower(substr($row['middlename'], 0, 1))) . '.' : '';
-                                    $lastname = ucfirst(strtolower($row['lastname']));
-                                    echo $firstname . ' ' . $middlename_initial . ' ' . $lastname;
-                                    ?><br><p><?php echo $row["barangayposition"];?></p></span>
-          </a>
-        </li>
+        <a href="#!" data-id="<?php echo $row['user_id']; ?>" data-bs-toggle="modal" data-bs-target="#UpdateProfileModal" title="Profile" class="editbtn">
+                <i class='bx bxs-user icon'></i>
+                <span class="text nav-text">
+                    <?php 
+                        $firstname = ucfirst(strtolower($row['firstname']));
+                        $middlename_initial = $row['middlename'] ? ucfirst(strtolower(substr($row['middlename'], 0, 1))) . '.' : '';
+                        $lastname = ucfirst(strtolower($row['lastname']));
+                        echo $firstname . ' ' . $middlename_initial . ' ' . $lastname;
+                    ?>
+                    <br>
+                    <p><?php echo $row["barangayposition"]; ?></p>
+                </span>
+            </a>
 
+        </li>
         <li>
           <a href="../../logout.php" title="Log-out">
             <i class='bx bx-log-out icon'></i>
@@ -167,9 +172,8 @@ if (isset($conn) && $conn) {
     </div>
   </nav>
 <?php
-include 'pages/profile/profile.php'; 
+include "profile.php"
 ?>
-
   <script>
     // JavaScript for sidebar, mode switch, and dropdown
     const body = document.querySelector('body'),
