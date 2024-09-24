@@ -163,7 +163,6 @@ $confirmpassword = '';
                                             <i class='bx bxs-check-circle icon'></i>
                                             <div class='message'>
                                                 <span class='text'>Register Successful</span>
-                                                <p>Redirecting to the Login Page...</p>
                                             </div>
                                         </div>
                                     </div>

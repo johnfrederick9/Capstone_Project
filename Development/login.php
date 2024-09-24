@@ -97,7 +97,6 @@ require 'database.php';
                                             <i class='bx bxs-check-circle icon'></i>
                                             <div class='message'>
                                                 <span class='text'>Login Successful</span>
-                                                <p>Redirecting to the dashboard...</p>
                                             </div>
                                         </div>
                                     </div>
