@@ -29,7 +29,7 @@ $confirmpassword = '';
     <section class="register">
         <div class="register-wrapper">
             <a href="index.php">
-            <img src="assets/image/Logo.png" alt="Logo">
+                <img src="assets/image/Logo.png" alt="Logo">
             </a>
             <h2>Sign Up</h2><br>
             <form action="" method="post">
@@ -143,9 +143,12 @@ $confirmpassword = '';
                                     echo "<div class='alert alert-danger'>Password should be at least 8 characters long</div>";
                                 } elseif ($password == $confirmpassword) {
                                     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                                    $stmt = $conn->prepare("INSERT INTO tb_user (lastname, middlename, firstname, sex, suffix, birthdate, barangayposition, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                        
-                                    $stmt->bind_param("sssssssss", $lastname, $middlename, $firstname, $sex, $suffix, $birthdate, $barangayposition, $username, $hashed_password);
+                                    $profile_picture_name = 'profile_default.png'; // Set default profile picture
+
+                                    // Include profile picture in the insert statement
+                                    $stmt = $conn->prepare("INSERT INTO tb_user (lastname, middlename, firstname, sex, suffix, birthdate, barangayposition, username, password, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                                    $stmt->bind_param("ssssssssss", $lastname, $middlename, $firstname, $sex, $suffix, $birthdate, $barangayposition, $username, $hashed_password, $profile_picture_name);
+
                                     if ($stmt->execute()) {
                                         // Clear the account fields after submission
                                         $redirectUrl = 'login.php'; // Default fallback page

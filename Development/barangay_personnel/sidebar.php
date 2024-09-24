@@ -162,9 +162,9 @@ if (isset($conn) && $conn) {
       </div>
       <div class="bottom-content">
         <li>
-          <a href="#">
+        <a href="#!" data-id="<?php echo $row['user_id']; ?>" data-bs-toggle="modal" data-bs-target="#UpdateProfileModal" title="Profile" class="editbtn">
             <i class='bx bxs-user icon'></i>
-            <span class="text nav-text"><?php $firstname = ucfirst(strtolower($row['firstname']));
+            <span class="text nav-text"><?php $firstname = ucfirst(($row['firstname']));
                                     $middlename_initial = $row['middlename'] ? ucfirst(strtolower(substr($row['middlename'], 0, 1))) . '.' : '';
                                     $lastname = ucfirst(strtolower($row['lastname']));
                                     echo $firstname . ' ' . $middlename_initial . ' ' . $lastname;
@@ -193,6 +193,9 @@ if (isset($conn) && $conn) {
       </div>
     </div>
   </nav>
+<?php
+include "../../profile.php"
+?>
   
   <script>
     // JavaScript for sidebar, mode switch, and dropdown

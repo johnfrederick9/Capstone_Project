@@ -1,5 +1,5 @@
 <?php
-// Fetch residents and employee counts
+// Fetch counts from the database using $conn (connection must be open)
 $residents_count = $conn->query("SELECT COUNT(*) AS count FROM tb_resident")->fetch_assoc()['count'];
 $employee_count = $conn->query("SELECT COUNT(*) AS count FROM tb_employee")->fetch_assoc()['count'];
 $document_count = $conn->query("SELECT COUNT(*) AS count FROM tb_document")->fetch_assoc()['count'];
@@ -7,5 +7,4 @@ $project_count = $conn->query("SELECT COUNT(*) AS count FROM tb_project")->fetch
 $certificate_count = $conn->query("SELECT COUNT(*) AS count FROM tb_indigency")->fetch_assoc()['count'];
 $inventory_count = $conn->query("SELECT COUNT(*) AS count FROM tb_inventory")->fetch_assoc()['count'];
 $financial_count = $conn->query("SELECT COUNT(*) AS count FROM tb_financial")->fetch_assoc()['count'];
-
 ?>

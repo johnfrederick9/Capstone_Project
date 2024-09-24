@@ -3,7 +3,7 @@ include 'head.php';
 include 'database.php'; // Include your database connection
 
 // Fetch officials from the database
-$query = "SELECT user_id, lastname, firstname, middlename, sex, birthdate, barangayposition FROM tb_user";
+$query = "SELECT user_id, lastname, firstname, middlename, sex, birthdate, barangayposition, profile_picture FROM tb_user";
 $result = mysqli_query($conn, $query);
 ?>
 <html>
@@ -126,21 +126,28 @@ $result = mysqli_query($conn, $query);
         <div class="menu-item-carousel">
             <div class="col-lg-12">
                 <div class="owl-menu-item owl-carousel">
-                    <?php while($row = mysqli_fetch_assoc($result)): ?>
-                    <div class="item">
-                        <div class='card card1'>
-                            <div class='info'>
-                                <h1 class='title'><?php echo $row['barangayposition']; ?></h1>
-                                <p class='description'><?php
-                                    $firstname = ucfirst(strtolower($row['firstname']));
-                                    $middlename_initial = $row['middlename'] ? ucfirst(strtolower(substr($row['middlename'], 0, 1))) . '.' : '';
-                                    $lastname = ucfirst(strtolower($row['lastname']));
-                                    echo $firstname . ' ' . $middlename_initial . ' ' . $lastname;
-                                    ?> <br> Birthdate: <?php echo $row['birthdate']; ?> <br> Sex: <?php echo $row['sex']; ?><br> </p>
-                            </div>
-                        </div>
-                    </div>
-                    <?php endwhile; ?>
+                <?php while($row = mysqli_fetch_assoc($result)): ?>
+    <div class="item">
+    <div class='card card1' style="background-image: url('<?php echo 'uploads/profile_pictures/' . (!empty($row['profile_picture']) ? $row['profile_picture'] : 'profile_default.png'); ?>');">
+    <!-- User Information -->
+            <div class='info'>
+                <h1 class='title'><?php echo $row['barangayposition']; ?></h1>
+                <p class='description'>
+                    <?php
+                    $firstname = ucfirst(strtolower($row['firstname']));
+                    $middlename_initial = $row['middlename'] ? ucfirst(strtolower(substr($row['middlename'], 0, 1))) . '.' : '';
+                    $lastname = ucfirst(strtolower($row['lastname']));
+                    echo $firstname . ' ' . $middlename_initial . ' ' . $lastname;
+                    ?> 
+                    <br> Birthdate: <?php echo $row['birthdate']; ?> 
+                    <br> Sex: <?php echo $row['sex']; ?>
+                </p>
+            </div>
+        </div>
+    </div>
+<?php endwhile; ?>
+
+
                 </div>
             </div>
         </div>
