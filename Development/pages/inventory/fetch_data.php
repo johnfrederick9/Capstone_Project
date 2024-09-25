@@ -5,16 +5,14 @@ $output = array();
 $columns = array(
     0 => 'item_id',
     1 => 'item_name',
-    2 => 'item_description',
-    3 => 'item_brand',
-    4 => 'item_serialNo',
-    5 => 'item_custodian',
-    6 => 'item_count',
-    7 => 'item_price',
-    8 => 'item_year',
-    9 => 'item_status',
-    10 => 'lendable_count',
-    11 => 'available_count'
+    2 => 'item_serialNo',
+    3 => 'item_custodian',
+    4 => 'item_count',
+    5 => 'item_price',
+    6 => 'item_year',
+    8 => 'item_status',
+    9 => 'lendable_count',
+    10 => 'available_count'
 );
 
 // Base query to get inventory data
@@ -68,8 +66,6 @@ while ($row = mysqli_fetch_assoc($query)) {
     $sub_array = array();
     $sub_array[] = $row['item_id'];
     $sub_array[] = $row['item_name'];
-    $sub_array[] = $row['item_description'];
-    $sub_array[] = $row['item_brand'];
     $sub_array[] = $row['item_serialNo'];
     $sub_array[] = $row['item_custodian'];
     $sub_array[] = $row['item_count'];

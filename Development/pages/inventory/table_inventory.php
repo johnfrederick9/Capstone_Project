@@ -23,8 +23,6 @@ require '../../database.php';
                     <thead>
                         <th>#</th>
                         <th>Name</th>
-                        <th>Description</th>
-                        <th>Brand</th>
                         <th>Serial No:</th>
                         <th>Property Custodian</th>
                         <th>Quantity</th>
@@ -242,62 +240,66 @@ require '../../database.php';
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                        <div class="add">
                             <form id="updateUser" onsubmit="return validateForm2();">
-                            <div class="form-group">
-                                <input type="hidden" name="item_id" id="item_id" value="">
-                                <input type="hidden" name="trid" id="trid" value="">
-                                <label for="nameField">Item Name:</label>
-                                <input type="text" id="nameField" name="item_name" value="<?php echo htmlspecialchars($item_data['item_name']); ?>" required>
+                            <input type="hidden" name="item_id" id="item_id" value="">
+                            <input type="hidden" name="trid" id="trid" value="">
+                            <div class="form-grid">
+                            <div class="input-wrapper">
+                                <label for="nameField" class="input-label">Item Name:</label>
+                                <input type="text" id="nameField" name="item_name" class="input-field" value="<?php echo htmlspecialchars($item_data['item_name']); ?>" required>
                             </div>
-                            <div class="form-group">
-                                <label for="descriptionField">Item Description:</label>
-                                <input type="text" id="descriptionField" name="item_description" value="<?php echo htmlspecialchars($item_data['item_description']); ?>" required>
+                            <div class="input-wrapper">
+                                <label for="descriptionField" class="input-label">Item Description:</label>
+                                <input type="text" id="descriptionField" name="item_description" class="input-field" value="<?php echo htmlspecialchars($item_data['item_description']); ?>" required>
                             </div>
-                            <div class="form-group">
-                                <label for="brandField">Item Brand:</label>
-                                <input type="text" id="brandField" name="item_brand" value="<?php echo htmlspecialchars($item_data['item_brand']); ?>" required>
+                            <div class="input-wrapper">
+                                <label for="brandField" class="input-label">Item Brand:</label>
+                                <input type="text" id="brandField" name="item_brand" class="input-field" value="<?php echo htmlspecialchars($item_data['item_brand']); ?>" required>
                             </div>
-                            <div class="form-group">
-                                <label for="serialNoField">Serial No:</label>
-                                <input type="text" id="serialNoField" name="item_serialNo" value="<?php echo htmlspecialchars($item_data['item_serialNo']); ?>" required>
+                            <div class="input-wrapper">
+                                <label for="serialNoField" class="input-label">Serial No:</label>
+                                <input type="text" id="serialNoField" name="item_serialNo" class="input-field" value="<?php echo htmlspecialchars($item_data['item_serialNo']); ?>" required>
                             </div>
-                            <div class="form-group">
-                                <label for="custodianField">Property Custodian:</label>
-                                <input type="text" id="custodianField" name="item_custodian" value="<?php echo htmlspecialchars($item_data['item_custodian']); ?>" required>
+                            <div class="input-wrapper">
+                                <label for="custodianField" class="input-label">Property Custodian:</label>
+                                <input type="text" id="custodianField" name="item_custodian" class="input-field" value="<?php echo htmlspecialchars($item_data['item_custodian']); ?>" required>
                             </div>
-                            <div class="form-group">
-                                <label for="countField">Item Quantity:</label>
-                                <input type="number" id="countField" name="item_count" value="<?php echo htmlspecialchars($item_data['item_count']); ?>" required>
+                            <div class="input-wrapper">
+                                <label for="countField" class="input-label">Item Quantity:</label>
+                                <input type="number" id="countField" name="item_count" class="input-field" value="<?php echo htmlspecialchars($item_data['item_count']); ?>" required>
                             </div>
-                            <div class="form-group">
-                                <label for="priceField">Item Price:</label>
-                                <input type="number" id="priceField" name="item_price" value="<?php echo htmlspecialchars($item_data['item_price']); ?>" required>
+                            <div class="input-wrapper">
+                                <label for="priceField" class="input-label">Item Price:</label>
+                                <input type="number" id="priceField" name="item_price" class="input-field" value="<?php echo htmlspecialchars($item_data['item_price']); ?>" required>
                             </div>
-                            <div class="form-group">
-                                <label for="yearField">Item Year:</label>
-                                <input type="number" id="yearField" name="item_year" value="<?php echo htmlspecialchars($item_data['item_year']); ?>" required>
+                            <div class="input-wrapper">
+                                <label for="yearField" class="input-label">Item Year:</label>
+                                <input type="number" id="yearField" name="item_year" class="input-field" value="<?php echo htmlspecialchars($item_data['item_year']); ?>" required>
                             </div>
 
-                            <div class="form-group">
-                                <label for="statusField">Item Status:</label>
-                                <select id="statusField" name="item_status" required>
+                            <div class="input-wrapper">
+                                <label for="statusField" class="input-label">Item Status:</label>
+                                <select id="statusField" name="item_status" class="input-field" required>
                                     <option value="" disabled >Select Status</option>
                                     <option value="Serviceable">Serviceable</option>
                                     <option value="Unserviceable" >Unserviceable</option>
                                     <!-- Add more options as needed -->
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="lendablecountField">Lendable Quantity:</label>
-                                <input type="number" id="lendablecountField" name="lendable_count" value="<?php echo htmlspecialchars($item_data['lendable_count']); ?>" required>
+                            <div class="input-wrapper">
+                                <label for="lendablecountField" class="input-label">Lendable Quantity:</label>
+                                <input type="number" id="lendablecountField" name="lendable_count" class="input-field" value="<?php echo htmlspecialchars($item_data['lendable_count']); ?>" required>
                             </div>
-                                <div class="modal-footer">
+                            </div>
+                            <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
             <!-- Add Inventory -->
             <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -308,50 +310,52 @@ require '../../database.php';
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                        <div class="add">
                             <form id="addUser" action=""  onsubmit="return validateForm();">
-                                <div class="form-group">
-                                    <label for="itemname">Item Name:</label>
-                                    <input type="text" id="itemname" name="item_name" required>
+                            <div class="form-grid">
+                            <div class="input-wrapper">
+                                    <label for="itemname" class="input-label">Item Name:</label>
+                                    <input type="text" id="itemname" name="item_name" class="input-field" required>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="itemdescription">Item Description:</label>
-                                    <input type="text" id="itemdescription" name="item_description" required>
+                                <div class="input-wrapper">
+                                    <label for="itemdescription" class="input-label">Item Description:</label>
+                                    <input type="text" id="itemdescription" name="item_description" class="input-field" required>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="itembrand">Item Brand:</label>
-                                    <input type="text" id="itembrand" name="item_brand" required>
+                                <div class="input-wrapper">
+                                    <label for="itembrand" class="input-label">Item Brand:</label>
+                                    <input type="text" id="itembrand" name="item_brand" class="input-field" required>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="itemserialNo">Serial No:</label>
-                                    <input type="text" id="itemserialNo" name="item_serialNo" required>
+                                <div class="input-wrapper">
+                                    <label for="itemserialNo" class="input-label">Serial No:</label>
+                                    <input type="text" id="itemserialNo" name="item_serialNo" class="input-field" required>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="itemcustodian">Item Custodian:</label>
-                                    <input type="text" id="itemcustodian" name="item_custodian" required>
+                                <div class="input-wrapper">
+                                    <label for="itemcustodian" class="input-label">Item Custodian:</label>
+                                    <input type="text" id="itemcustodian" name="item_custodian" class="input-field" required>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="itemcount">Item Count:</label>
-                                    <input type="number" id="itemcount" name="item_count" required>
+                                <div class="input-wrapper">
+                                    <label for="itemcount" class="input-label">Item Count:</label>
+                                    <input type="number" id="itemcount" name="item_count" class="input-field" required>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="itemprice">Item Price:</label>
-                                    <input type="number" id="itemprice" name="item_price" required>
+                                <div class="input-wrapper">
+                                    <label for="itemprice" class="input-label">Item Price:</label>
+                                    <input type="number" id="itemprice" name="item_price" class="input-field" required>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="itemyear">Year Acquired:</label>
-                                    <input type="number" id="itemyear" name="item_year" required>
+                                <div class="input-wrapper">
+                                    <label for="itemyear" class="input-label">Year Acquired:</label>
+                                    <input type="number" id="itemyear" name="item_year" class="input-field" required>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="itemstatus">Item Status:</label>
-                                    <select id="itemstatus" name="item_status" required>
+                                <div class="input-wrapper">
+                                    <label for="itemstatus" class="input-label">Item Status:</label>
+                                    <select id="itemstatus" name="item_status" class="input-field" required>
                                         <option value="" disabled>Select Status</option>
                                         <option value="Serviceable">Serviceable</option>
                                         <option value="Unserviceable">Unserviceable</option>
@@ -359,9 +363,9 @@ require '../../database.php';
                                     </select>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="lendablecount">Lendable Quantity:</label>
-                                    <input type="number" id="lendablecount" name="lendable_count" required>
+                                <div class="input-wrapper">
+                                    <label for="lendablecount" class="input-label">Lendable Quantity:</label>
+                                    <input type="number" id="lendablecount" name="lendable_count" class="input-field" required>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -371,6 +375,7 @@ require '../../database.php';
                     </div>
                 </div>
             </div>
+        </div>
     </body> 
     <script>
         function validateForm() {
