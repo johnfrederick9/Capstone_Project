@@ -134,7 +134,7 @@ $result = mysqli_query($conn, $query);
                 <h1 class='title'><?php echo $row['barangayposition']; ?></h1>
                 <p class='description'>
                     <?php
-                    $firstname = ucfirst(strtolower($row['firstname']));
+                    $firstname = ucfirst(($row['firstname']));
                     $middlename_initial = $row['middlename'] ? ucfirst(strtolower(substr($row['middlename'], 0, 1))) . '.' : '';
                     $lastname = ucfirst(strtolower($row['lastname']));
                     echo $firstname . ' ' . $middlename_initial . ' ' . $lastname;

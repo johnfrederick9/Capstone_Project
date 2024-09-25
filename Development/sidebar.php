@@ -220,14 +220,6 @@ include "profile.php"
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       xhr.send("theme=" + theme);
     }
-
-    function openModal() {
-      document.getElementById('overlay').style.display = 'block';
-    }
-
-    function closeModal() {
-      document.getElementById('overlay').style.display = 'none';
-    }
   </script>
 
 </body>

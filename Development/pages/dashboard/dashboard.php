@@ -6,7 +6,6 @@ include "dashboard_code.php";
 ?>
 <body>
 <section class="home">
-    <div class="text">Dashboard</div>
     <div class="dashboard">
         <div class="dashboard-container">
             <header class="dashboard-header"></header>

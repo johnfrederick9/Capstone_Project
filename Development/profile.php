@@ -7,6 +7,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Check if the user is trying to delete the profile picture
     if (isset($_POST['delete_profile_picture'])) {
+        // Fetch the current profile picture from the database
+        $query = "SELECT profile_picture FROM tb_user WHERE user_id = $user_id";
+        $result = mysqli_query($conn, $query);
+        $row = mysqli_fetch_assoc($result);
+        $profile_picture = $row['profile_picture'];
+
+        // If the profile picture is not the default, delete it from the folder
+        if ($profile_picture !== 'profile_default.png') {
+            $file_path = __DIR__ . '/uploads/profile_pictures/' . $profile_picture;
+            if (file_exists($file_path)) {
+                unlink($file_path); // Delete the profile picture from the folder
+            }
+        }
+
         // Set profile picture to default
         $profile_picture_name = 'profile_default.png';
         
@@ -17,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class='toast-content'>
                     <i class='bx bxs-check-circle icon'></i>
                     <div class='message'>
-                        <span class='text'>Profile Picture Deleted Successful</span>
+                        <span class='text'>Profile Picture Deleted Successfully</span>
                     </div>
                 </div>
             </div>

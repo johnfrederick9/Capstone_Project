@@ -105,7 +105,7 @@ $confirmpassword = '';
                 </div>
 
                 <button type="submit" name="submit" class="btn log">Register</button>
-
+                <p>Already have an account? <a href="login.php">Sign in</a></p>
                 <?php
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $username = $_POST["username"] ?? '';
@@ -193,7 +193,7 @@ $confirmpassword = '';
                 }
                 ?>
             </form>
-            <p>Already have an account? <a href="login.php">Sign in</a></p>
+           
         </div>
     </section>
     <!-- register end -->

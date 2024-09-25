@@ -11,7 +11,7 @@ include '../../sidebar.php';
                             <h1>Employee Table</h1>
                         </div>
                         <div class="table-actions">    
-                        <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-popup">+ Add Resident</button>
+                        <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-popup">+ Add Employee</button>
                         <button class="print-btn " title="Print Selected">
                             <i class="bx bx-printer"></i>
                         </button>

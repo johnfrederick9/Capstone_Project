@@ -277,7 +277,13 @@ body.dark {
   border: 1px solid #f5c6cb;
   border-radius: 5px;
   margin-bottom: 10px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999; 
+  width: 300px; 
 }
+
 
 .alert-success {
   padding: 15px;
@@ -286,6 +292,11 @@ body.dark {
   border: 1px solid #c3e6cb;
   border-radius: 5px;
   margin-bottom: 10px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999; 
+  width: 300px;  
 }
 
 .edit-btn {
@@ -753,13 +764,13 @@ body.dark .home .pagination .page-link:focus{
 }
 
 .dropdown-input {
-  padding: 10px 40px 10px 10px; /* Adjusted padding to accommodate icon */
+  padding: 10px 40px 10px 10px; 
   font-size: 16px;
   border: 1px solid #ddd;
   border-radius: 4px;
   margin-top: 4px;
   margin-left: 10px;
-  width: 200px; /* Adjusted width to fit content */
+  width: 200px; 
 }
 
 .home .dropdown .bx {
@@ -986,8 +997,6 @@ body.dark .sidebar li a:hover .text {
 .sidebar .dropdown:hover .dropdown-content {
   display: block;
 }
-
-
 
 .sidebar .dropdown .arrow {
   margin-left: 30px;
@@ -2466,6 +2475,9 @@ font-size: 18px;
 13. events
 ---------------------------------------------
 */
+.goto, .today-btn{
+  visibility:hidden;
+}
 
 .calendar-event{
   overflow: hidden;
@@ -2564,7 +2576,7 @@ font-size: 18px;
   padding: 0 20px;
   font-size: 1rem;
   font-weight: 500;
-  margin-bottom: 20px;
+  margin-bottom: -10px;
 }
 .calendar .days .day {
   width: 14.28%;

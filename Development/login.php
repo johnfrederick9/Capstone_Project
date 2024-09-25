@@ -108,7 +108,7 @@ require 'database.php';
                                         setTimeout(() => {
                                             toast.classList.remove('show');
                                             window.location.href = '$redirectUrl';
-                                        }, 3000);
+                                        }, 2000);
                                     </script>
                                 ";                              
                                 exit();
@@ -124,7 +124,6 @@ require 'database.php';
                     }
                 }
                 ?>
-
           </form>
           <p>Don't have an account? <a href="register.php">Sign up</a></p>
       </div>
