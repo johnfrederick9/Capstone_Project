@@ -51,11 +51,16 @@ require '../../database.php';
                                     'url': 'fetch_data.php',
                                     'type': 'post',
                                 },
-                                "aoColumnDefs": [{
-                                    "bSortable": false,
-                                    "aTargets": [5]
-                                },
-
+                                "columnDefs": [
+                                    {
+                                        "targets": [0],  // Target the first column (aData[0])
+                                        "visible": false, // Hide the column
+                                        "searchable": false // Disable search for this column if needed
+                                    },
+                                    {
+                                        "bSortable": false,
+                                        "aTargets": [5]
+                                    }
                                 ]
                             });
                         });
@@ -292,11 +297,11 @@ require '../../database.php';
                                 <input type="number" id="lendablecountField" name="lendable_count" class="input-field" value="<?php echo htmlspecialchars($item_data['lendable_count']); ?>" required>
                             </div>
                             </div>
+                            </form>
+                        </div>
                             <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -367,12 +372,12 @@ require '../../database.php';
                                     <label for="lendablecount" class="input-label">Lendable Quantity:</label>
                                     <input type="number" id="lendablecount" name="lendable_count" class="input-field" required>
                                 </div>
+                                </div>
+                                </form>
+                                </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
-                            </form>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

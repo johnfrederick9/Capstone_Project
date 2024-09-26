@@ -170,29 +170,35 @@ $borrowedItems_json = json_encode($borrowedItems);
                     </tbody>
                     </table>
                 </div><!-- .table-container-->
-                    <script type="text/javascript">
-                        $(document).ready(function() {
-                            $('#example').DataTable({
-                                "fnCreatedRow": function(nRow, aData, iDataIndex) {
-                                    $(nRow).attr('id', aData[0]);
-                                    $(nRow).find('.deleteBtn').attr('data-transaction_id', aData[0]);
-                                },
-                                'serverSide': 'true',
-                                'processing': 'true',
-                                'paging': 'true',
-                                'order': [],
-                                'ajax': {
-                                    'url': 'fetch_data.php',
-                                    'type': 'post',
-                                },
-                                "aoColumnDefs": [{
-                                    "bSortable": false,
-                                    "aTargets": [5]
-                                },
-
-                                ]
-                            });
-                        });
+                <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#example').DataTable({
+                        "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                            // You can still use aData[0] for setting attributes
+                            $(nRow).attr('id', aData[0]);
+                            $(nRow).find('.deleteBtn').attr('data-transaction_id', aData[0]);
+                        },
+                        'serverSide': 'true',
+                        'processing': 'true',
+                        'paging': 'true',
+                        'order': [],
+                        'ajax': {
+                            'url': 'fetch_data.php',
+                            'type': 'post',
+                        },
+                        "columnDefs": [
+                            {
+                                "targets": [0],  // Target the first column (aData[0])
+                                "visible": false, // Hide the column
+                                "searchable": false // Disable search for this column if needed
+                            },
+                            {
+                                "bSortable": false,
+                                "aTargets": [5]
+                            }
+                        ]
+                    });
+                });
                         $(document).on('submit', '#addUser', function(e) {
                             e.preventDefault();
 

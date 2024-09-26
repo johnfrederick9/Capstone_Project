@@ -84,49 +84,73 @@ if (isset($conn) && $conn) {
               <span class="text nav-text">Project Monitoring</span>
             </a>
           </li>
-
-          <li class="nav-link dropdown">
-            <a href="#" title="Certificates">
-              <i class='bx bxs-certification icon'></i>
-              <span class="text nav-text">Certificate Library</span>
-              <i class='bx bx-chevron-down arrow'></i>
-            </a>
-            <ul class="nav-link dropdown-content">
-              <li><a href="../../pages/certificate/table_indigency.php" title="Indigency Certificate">
-            <i class='bx bxs-certification'></i> 
-                <span class="text nav-text">&nbsp;&nbsp;Indigency Certificate</span>
-              </a>
-              </li>
-              <li><a href="#"></a></li>
-            </ul>
-          </li>
-
-          <li class="nav-link">
-            <a href="../../pages/inventory/table_inventory.php"  title="Inventory">
-              <i class='bx bxs-briefcase icon' ></i>
-              <span class="text nav-text">Inventory</span>
-            </a>
-          </li>
-
-          <li class="nav-link">
-            <a href="../../pages/financial/table_financial.php"  title="Financial">
-              <i class='bx bxs-wallet icon'></i>
-              <span class="text nav-text">Financial Library</span>
-            </a>
-          </li>
-          
           <li class="nav-link">
             <a href="../../pages/calendar/event_calendar.php"  title="Calendar">
               <i class='bx bxs-calendar-event icon' ></i>
               <span class="text nav-text">Event Calendar</span>
             </a>
           </li>
-          <li class="nav-link">
+
+          <li class="nav-link dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Certificates">
+              <i class='bx bxs-certification icon'></i>
+              <span class="text nav-text">Certificate Library</span>
+              <i class='bx bx-chevron-down arrow'></i>
+            </a>
+            <ul class="nav-link dropdown-content">
+              <li>
+                <a href="../../pages/certificate/table_indigency.php" title="Indigency Certificate">
+                &nbsp; &nbsp; <i class='bx bx-certification'></i>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Indigency Certificate</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-link dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Inventory">
+              <i class='bx bxs-briefcase icon'></i>
+                <span class="text nav-text">Inventory Management</span>
+              <i class='bx bx-chevron-down arrow'></i>
+            </a>
+            <ul class="nav-link dropdown-content">
+              <li>
+                <a href="../../pages/inventory/table_inventory.php" title="Inventory Table">
+                &nbsp; &nbsp; <i class='bx bx-briefcase'></i>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Inventory Table</span>
+                </a>
+              </li>
+              <li>
+                <a href="../../pages/item-transactions/item_transaction.php" title="Inventory Table">
+                &nbsp; &nbsp; <i class='bx bx-briefcase'></i>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Item Transactions</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+      
+          <li class="nav-link dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Inventory">
+            <i class='bx bxs-wallet icon'></i>
+              <span class="text nav-text">Financial Library</span>
+              <i class='bx bx-chevron-down arrow'></i>
+            </a>
+            <ul class="nav-link dropdown-content">
+              <li>
+                <a href="../../pages/rao/table_rao_records.php" title="RAO Table">
+                &nbsp; &nbsp; <i class='bx bx-wallet'></i>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;RAO Table</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          
+          <!--<li class="nav-link">
             <a href="../../pages/reports/reports.php"  title="Graphs & Reports">
               <i class='bx bxs-report icon'></i>
               <span class="text nav-text">Graphs & Reports</span>
             </a>
-          </li>
+          </li>-->
 
         </ul>
       </div>
@@ -210,9 +234,39 @@ include "profile.php"
       saveUserThemePreference(theme);
     });
 
-    dropdown.addEventListener("click", () => {
-      dropdownContent.classList.toggle("show");
+// Toggle dropdown visibility on click
+document.querySelectorAll('.dropdown-toggle').forEach(function(dropdownToggle) {
+  dropdownToggle.addEventListener('click', function(e) {
+    e.preventDefault();  // Prevent the default action of anchor tags
+
+    // Get the corresponding dropdown content
+    const dropdownContent = this.nextElementSibling;
+    
+    // Toggle the visibility
+    if (dropdownContent.style.display === "block") {
+      dropdownContent.style.display = "none";
+    } else {
+      // Close other open dropdowns
+      document.querySelectorAll('.dropdown-content').forEach(function(content) {
+        content.style.display = 'none';
+      });
+      
+      dropdownContent.style.display = "block";
+    }
+  });
+});
+
+// Close dropdowns if clicked outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.dropdown')) {
+    document.querySelectorAll('.dropdown-content').forEach(function(content) {
+      content.style.display = 'none';
     });
+  }
+});
+
+    
+
 
     function saveUserThemePreference(theme) {
       const xhr = new XMLHttpRequest();

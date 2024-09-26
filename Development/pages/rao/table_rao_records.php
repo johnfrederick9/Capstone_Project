@@ -6,9 +6,11 @@ include '../../sidebar.php';
 .column-titles {
   display: grid;
   grid-template-columns: 20px repeat(9, 1fr) 50px; 
-  gap: 5px; 
-  margin-bottom: 10px; 
+  gap: 2px; 
+  margin-bottom: 5px; 
   align-items: center; 
+  justify-content: "center";
+  font-size: small;
 }
 
 .column-titles span {
@@ -78,6 +80,14 @@ include '../../sidebar.php';
     align-items: center;
     cursor: pointer;
 }
+.modal-dialog {
+    max-width: 80%; /* Set the width to 80% of the screen */
+}
+
+.modal-content {
+    width: 100%; /* Ensure the content stretches to the modal-dialog width */
+}
+
 </style>
 <body>
     <section class="home">  
@@ -125,11 +135,16 @@ include '../../sidebar.php';
                                     'url': 'fetch_data.php',
                                     'type': 'post',
                                 },
-                                "aoColumnDefs": [{
-                                    "bSortable": false,
-                                    "aTargets": [5]
-                                },
-
+                                "columnDefs": [
+                                    {
+                                        "targets": [0],  // Target the first column (aData[0])
+                                        "visible": false, // Hide the column
+                                        "searchable": false // Disable search for this column if needed
+                                    },
+                                    {
+                                        "bSortable": false,
+                                        "aTargets": [5]
+                                    }
                                 ]
                             });
                         });
@@ -506,7 +521,7 @@ include '../../sidebar.php';
                     </script>
                 </section><!-- .home-->
                 <!-- Modal -->
-                <!-- Update Project -->
+                <!-- Update RAO Record-->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -515,10 +530,15 @@ include '../../sidebar.php';
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form id="updateUser">
-                            <div class="form-group">
+                            <form id="updateUser">    
+                            <div class="add">
+                            <div class="form-grid">
+                            <div class="input-wrapper">
                                 <label for="period_covered_update">Period Covered:</label>
                                 <input type="number" id="period_covered_update" name="period_covered_update" max = "9999" min = 1700>
+                                </div>
+                            </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
 
                             <div class="form-group">
@@ -574,9 +594,6 @@ include '../../sidebar.php';
                                 
                                 <!-- Dynamic Inputs Will Be Added Here -->
                             </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
                             </form>
                         </div>
                     </div>
@@ -592,10 +609,16 @@ include '../../sidebar.php';
                         </div>
                         <div class="modal-body">
                             <form id="addUser" action="">
-                            <div class="form-group">
-                                <label for="period_covered">Period Covered:</label>
-                                <input type="number" id="period_covered" name="period_covered" required>
+                            <div class="add">
+                            <div class="form-grid">
+                            <div class="input-wrapper">
+                                <label for="period_covered_update">Period Covered:</label>
+                                <input type="number" id="period_covered_update" name="period_covered_update" max = "9999" min = 1700>
+                                </div>
                             </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                           
 
                             <div class="form-group">
                                 <div class="wrap">
@@ -651,9 +674,7 @@ include '../../sidebar.php';
                                 <!-- Dynamic Inputs Will Be Added Here -->
                             </div>
 
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
+                                
                             </form>
                         </div>
                     </div>

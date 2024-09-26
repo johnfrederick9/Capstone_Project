@@ -1,4 +1,4 @@
-// <script src="assets/js/dropdown.js"></script>
+/*// <script src="assets/js/dropdown.js"></script>
 
 document.addEventListener("DOMContentLoaded", function() {
     const dropdowns = document.querySelectorAll('.dropdown');
@@ -39,4 +39,4 @@ document.addEventListener("DOMContentLoaded", function() {
             currentOpenDropdown = null;
         }
     });
-});
+});*/
