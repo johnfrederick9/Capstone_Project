@@ -171,34 +171,34 @@ $borrowedItems_json = json_encode($borrowedItems);
                     </table>
                 </div><!-- .table-container-->
                 <script type="text/javascript">
-                $(document).ready(function() {
-                    $('#example').DataTable({
-                        "fnCreatedRow": function(nRow, aData, iDataIndex) {
-                            // You can still use aData[0] for setting attributes
-                            $(nRow).attr('id', aData[0]);
-                            $(nRow).find('.deleteBtn').attr('data-transaction_id', aData[0]);
+             $(document).ready(function() {
+                $('#example').DataTable({
+                    "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                        // Set row ID and data attribute for delete button
+                        $(nRow).attr('id', aData[0]);
+                        $(nRow).find('.deleteBtn').attr('data-transaction_id', aData[0]);
+                    },
+                    'serverSide': true, // Boolean value without quotes
+                    'processing': true,
+                    'paging': true,
+                    'order': [], // Empty array means no initial ordering
+                    'ajax': {
+                        'url': 'fetch_data.php',
+                        'type': 'POST',
+                    },
+                    "columnDefs": [
+                        {
+                            "targets": [0, 2, 4, 11],  // Target specific columns
+                            "visible": false, // Hide those columns
+                            "searchable": false // Disable search for those columns
                         },
-                        'serverSide': 'true',
-                        'processing': 'true',
-                        'paging': 'true',
-                        'order': [],
-                        'ajax': {
-                            'url': 'fetch_data.php',
-                            'type': 'post',
-                        },
-                        "columnDefs": [
-                            {
-                                "targets": [0],  // Target the first column (aData[0])
-                                "visible": false, // Hide the column
-                                "searchable": false // Disable search for this column if needed
-                            },
-                            {
-                                "bSortable": false,
-                                "aTargets": [5]
-                            }
-                        ]
-                    });
+                        {
+                            "targets": [10], // Target column 10
+                            "orderable": false // Disable sorting for column 10
+                        }
+                    ]
                 });
+            });
                         $(document).on('submit', '#addUser', function(e) {
                             e.preventDefault();
 

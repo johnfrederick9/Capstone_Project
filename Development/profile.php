@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </script>
             ";  
         } else {
-            echo "Error deleting profile picture: " . mysqli_error($conn);
+            echo "<div class='alert alert-danger'>Error deleting profile picture: </div>" . mysqli_error($conn);
         }
         exit;
     }
@@ -97,11 +97,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (move_uploaded_file($profile_picture['tmp_name'], $target_file)) {
                 // File uploaded successfully
             } else {
-                echo "Error uploading the profile picture.";
+                echo "<div class='alert alert-danger'>Error uploading the profile picture. </div>";
                 exit;
             }
         } else {
-            echo "Invalid file type for profile picture.";
+            echo "<div class='alert alert-danger'>Invalid file type for profile picture.</div>";
             exit;
         }
     }
@@ -127,31 +127,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Execute the query
     if (mysqli_query($conn, $sql)) {
         echo " 
-<div id='toast' class='toast'>   
-    <div class='toast-content'>
-        <i class='bx bxs-check-circle icon'></i>
-        <div class='message'>
-            <span class='text'>Profile Update Successful</span>
+        <div id='toast' class='toast'>   
+            <div class='toast-content'>
+                <i class='bx bxs-check-circle icon'></i>
+                <div class='message'>
+                    <span class='text'>Profile Update Successful</span>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-<script>
-    const toast = document.getElementById('toast');
-    toast.classList.add('show');
+        <script>
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
 
-    setTimeout(() => {
-        toast.classList.remove('show');
-        window.location.href = '';
-    }, 1000);
-</script>
-";  
+            setTimeout(() => {
+                toast.classList.remove('show');
+                window.location.href = '';
+            }, 1000);
+        </script>
+        ";  
     } else {
-        echo "Error updating profile: " . mysqli_error($conn);
+        echo "<div class='Error updating profile: </div>" . mysqli_error($conn);
     }
 }
 ?>
-
 <!-- Update Profile Section -->
 <section class="profile">
     <div class="modal fade" id="UpdateProfileModal" tabindex="-1" aria-labelledby="exampleModalLabelProfile" aria-hidden="true" class="editbtn">
@@ -162,88 +161,87 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <form id="updateprofile" action="" method="POST" enctype="multipart/form-data">
-                    <div class="container">
-                        <div class="profile-section">
-                        <div class="profile-picture">
-                    <?php
-                        // Check if a profile picture exists for the user in the database
-                        $profile_picture = !empty($row['profile_picture']) ? $row['profile_picture'] : 'profile_default.png';
-                        ?>
-                        <!-- Display the profile picture (either the uploaded one or the default) -->
-                        <img src="<?php echo '../../uploads/profile_pictures/' . $profile_picture; ?>" alt="Profile Picture">
-                        
-                        <!-- Buttons for choosing file and deleting image -->
-                        <div class="button-group" style="display: flex; gap: 5px;">
-                            <!-- Choose File Button -->
-                            <button type="button" class="btn" title="Choose File Image" style="background: none; border: none;" onclick="document.getElementById('profile_picture_input').click()">
-                                <i class='bx bx-image' style="font-size: 20px;"></i>
-                            </button>
-                            <input type="file" id="profile_picture_input" name="profile_picture" accept="image/*" style="display: none;">
-                            
-                            <!-- Delete Image Button -->
-                            <button type="submit" name="delete_profile_picture" title="Delete Image" class="btn" style="background: none; border: none;">
-                                <i class='bx bx-trash' style="font-size: 20px;"></i>
-                            </button>
-                        </div>
+                            <form id="updateprofile" action="" method="POST" enctype="multipart/form-data">
+                                <div class="container">
+                                    <div class="profile-section">
+                                    <div class="profile-picture">
+                                <?php
+                                    // Check if a profile picture exists for the user in the database
+                                    $profile_picture = !empty($row['profile_picture']) ? $row['profile_picture'] : 'profile_default.png';
+                                    ?>
+                                    <!-- Display the profile picture (either the uploaded one or the default) -->
+                                    <img src="<?php echo '../../uploads/profile_pictures/' . $profile_picture; ?>" alt="Profile Picture">
+                                    
+                                    <!-- Buttons for choosing file and deleting image -->
+                                    <div class="button-group" style="display: flex; gap: 5px;">
+                                        <!-- Choose File Button -->
+                                        <button type="button" class="btn" title="Choose File Image" style="background: none; border: none;" onclick="document.getElementById('profile_picture_input').click()">
+                                            <i class='bx bx-image' style="font-size: 20px;"></i>
+                                        </button>
+                                        <input type="file" id="profile_picture_input" name="profile_picture" accept="image/*" style="display: none;">
+                                        
+                                        <!-- Delete Image Button -->
+                                        <button type="submit" name="delete_profile_picture" title="Delete Image" class="btn" style="background: none; border: none;" onclick="return confirm('Are you sure you want to delete your profile picture?')" >
+                                            <i class='bx bx-trash' style="font-size: 20px;"></i>
+                                        </button>
+                                    </div>
 
-                    </div>
-                    <div class="profile-info">
-                        <p><strong><?php echo $firstname . ' ' . $middlename_initial . ' ' . $lastname;?></strong></p>
-                        <p><?php echo $row["barangayposition"];?></p>
-                        <p>Suffix: <?php echo $row["suffix"];?></p>
-                        <p>Sex: <?php echo $row["sex"];?></p>
-                        <p>Birth Date: <?php echo date("F j, Y", strtotime($row["birthdate"])); ?></p>
+                                </div>
+                                <div class="profile-info">
+                                    <p><strong><?php echo $firstname . ' ' . $middlename_initial . ' ' . $lastname;?></strong></p>
+                                    <p><?php echo $row["barangayposition"];?></p>
+                                    <p>Suffix: <?php echo $row["suffix"];?></p>
+                                    <p>Sex: <?php echo $row["sex"];?></p>
+                                    <p>Birth Date: <?php echo date("F j, Y", strtotime($row["birthdate"])); ?></p>
 
-                        <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to update your profile?')">Update</button>
-                    </div>
-                </div>
-                <div class="form-section">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="lastname">Last Name</label>
-                            <input type="text" id="lastname" name="lastname" value="<?php echo htmlspecialchars($row["lastname"]);?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="firstname">First Name</label>
-                            <input type="text" id="firstname" name="firstname" value="<?php echo htmlspecialchars($row["firstname"]);?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="middlename">Middle Name</label>
-                            <input type="text" id="middlename" name="middlename" value="<?php echo htmlspecialchars($row["middlename"]);?>">
-                        </div>
+                                    <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to update your profile?')">Update</button>
+                                </div>
+                            </div>
+                            <div class="form-section">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="lastname">Last Name</label>
+                                        <input type="text" id="lastname" name="lastname" value="<?php echo htmlspecialchars($row["lastname"]);?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="firstname">First Name</label>
+                                        <input type="text" id="firstname" name="firstname" value="<?php echo htmlspecialchars($row["firstname"]);?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="middlename">Middle Name</label>
+                                        <input type="text" id="middlename" name="middlename" value="<?php echo htmlspecialchars($row["middlename"]);?>">
+                                    </div>
 
-                        <div class="form-group">
-                            <label for="suffix">Suffix</label>
-                            <select id="suffix" class="input-field" name="suffix" required>
-                                <option value="None" <?php echo $row['suffix'] === 'None' ? 'selected' : ''; ?>>None</option>
-                                <option value="Sr." <?php echo $row['suffix'] === 'Sr.' ? 'selected' : ''; ?>>Sr.</option>
-                                <option value="Jr." <?php echo $row['suffix'] === 'Jr.' ? 'selected' : ''; ?>>Jr.</option>
-                            </select>
-                        </div>
+                                    <div class="form-group">
+                                        <label for="suffix">Suffix</label>
+                                        <select id="suffix" class="input-field" name="suffix" required>
+                                            <option value="None" <?php echo $row['suffix'] === 'None' ? 'selected' : ''; ?>>None</option>
+                                            <option value="Sr." <?php echo $row['suffix'] === 'Sr.' ? 'selected' : ''; ?>>Sr.</option>
+                                            <option value="Jr." <?php echo $row['suffix'] === 'Jr.' ? 'selected' : ''; ?>>Jr.</option>
+                                        </select>
+                                    </div>
 
-                        <div class="form-group">
-                            <label for="sex">Sex</label>
-                            <select id="sex" class="input-field" name="sex" required>
-                                <option value="" disabled <?php echo empty($row['sex']) ? 'selected' : ''; ?>>Sex</option>
-                                <option value="Male" <?php echo $row['sex'] === 'Male' ? 'selected' : ''; ?>>Male</option>
-                                <option value="Female" <?php echo $row['sex'] === 'Female' ? 'selected' : ''; ?>>Female</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="birthdate">Birth Date</label>
-                            <input type="date" id="birthdate" name="birthdate" value="<?php echo htmlspecialchars($row["birthdate"]);?>">
-                        </div>
-                    </div>
+                                    <div class="form-group">
+                                        <label for="sex">Sex</label>
+                                        <select id="sex" class="input-field" name="sex" required>
+                                            <option value="" disabled <?php echo empty($row['sex']) ? 'selected' : ''; ?>>Sex</option>
+                                            <option value="Male" <?php echo $row['sex'] === 'Male' ? 'selected' : ''; ?>>Male</option>
+                                            <option value="Female" <?php echo $row['sex'] === 'Female' ? 'selected' : ''; ?>>Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="birthdate">Birth Date</label>
+                                        <input type="date" id="birthdate" name="birthdate" value="<?php echo htmlspecialchars($row["birthdate"]);?>">
+                                    </div>
+                                </div>
 
-                    <div class="form-group full-width">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($row["username"]);?>">
-                    </div>
-                </div>
-            </div> 
-        </form>
-
+                                <div class="form-group full-width">
+                                    <label for="username">Username</label>
+                                    <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($row["username"]);?>">
+                                </div>
+                            </div>
+                        </div> 
+                    </form>
                 </div>
             </div>
         </div>
