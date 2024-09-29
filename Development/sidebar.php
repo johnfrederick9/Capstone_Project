@@ -121,7 +121,7 @@ if (isset($conn) && $conn) {
                 </a>
               </li>
               <li>
-                <a href="../../pages/item-transactions/item_transaction.php" title="Inventory Table">
+                <a href="../../pages/item-transactions/item_transaction.php" title="Item Transaction">
                 &nbsp; &nbsp; <i class='bx bx-briefcase'></i>
                   <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Item Transactions</span>
                 </a>
@@ -130,7 +130,7 @@ if (isset($conn) && $conn) {
           </li>
       
           <li class="nav-link dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Inventory">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Financial">
             <i class='bx bxs-wallet icon'></i>
               <span class="text nav-text">Financial Library</span>
               <i class='bx bx-chevron-down arrow'></i>

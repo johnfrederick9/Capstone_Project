@@ -18,8 +18,8 @@
                 datasets: [{
                     label: 'Number of Residents',
                     data: data,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(73, 196, 91, 0.5)',
+                    borderColor: 'rgba(14, 230, 45,)',
                     borderWidth: 1
                 }]
             },
@@ -63,16 +63,16 @@
                     label: 'Number of Residents',
                     data: ageCounts,
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)'
+                        'rgba(14, 230, 45, 0.4)',
+                        'rgba(6, 161, 29, 0.4)',
+                        'rgba(38, 209, 63, 0.4)',
+                        'rgba(67, 247, 93, 0.4)'
                     ],
                     borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)'
+                        'rgba(14, 230, 45)',
+                        'rgba(6, 161, 29)',
+                        'rgba(38, 209, 63)',
+                        'rgba(67, 247, 93)'
                     ],
                     borderWidth: 1
                 }]

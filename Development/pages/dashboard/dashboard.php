@@ -5,6 +5,29 @@ include "../../database.php";
 include "dashboard_code.php";
 include 'reports_code.php';
 ?>
+<style>
+    .calendar-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.calendar-navigation h3 {
+    margin: 0 20px;
+    font-size: 1.5em;
+}
+
+.calendar-container .bx {
+    font-size: 1.8em;
+    cursor: pointer;
+}
+
+.calendar-container .bx:hover {
+    color: #007bff;
+}
+
+</style>
 <body>
     <section class="home">
         <div class="dashboard">
@@ -108,27 +131,33 @@ include 'reports_code.php';
 
                     <!-- Bottom Section: Calendar and Graph Report Button -->
                     <div class="section-bottom">
-                        <div class="calendar-container">
-                            <div class="calendar-header">
-                                <h2>Calendar View</h2>
-                            </div>
-                            <div id="calendar">
-                                <h3>June</h3>
-                                <div class="calendar-grid">
-                                    <div class="calendar-day">S</div>
-                                    <div class="calendar-day">M</div>
-                                    <div class="calendar-day">T</div>
-                                    <div class="calendar-day">W</div>
-                                    <div class="calendar-day">T</div>
-                                    <div class="calendar-day">F</div>
-                                    <div class="calendar-day">S</div>
-                                    <div class="calendar-date">1</div>
-                                    <!-- Add more dates as needed -->
-                                </div>
-                            </div>
-                        </div>
+<div class="calendar-container">
+    <div class="calendar-header">
+        <h2>Calendar View</h2>
+    </div>
+    <div id="calendar">
+        <div class="calendar-navigation">
+            <i class='bx bx-left-arrow-circle' id="prevMonth"></i>
+            <h3>June</h3>
+            <i class='bx bx-right-arrow-circle' id="nextMonth"></i>
+        </div>
+        <div class="calendar-grid">
+            <div class="calendar-day">S</div>
+            <div class="calendar-day">M</div>
+            <div class="calendar-day">T</div>
+            <div class="calendar-day">W</div>
+            <div class="calendar-day">T</div>
+            <div class="calendar-day">F</div>
+            <div class="calendar-day">S</div>
+            <div class="calendar-date">1</div>
+            <!-- Add more dates as needed -->
+        </div>
+    </div>
+</div>
+
+
                         <div class="graph-report-button">
-                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#ReportsModal" class="add-popup">Graph Reports</button>
+                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#ReportsModal" class="add-popup">Resident Graph Reports</button>
                         </div>
                     </div>
 
@@ -168,7 +197,7 @@ include 'reports_code.php';
     </section>
 
     <!-- Calendar JS -->
-    <script src="calendar.js"></script>
+    <script src="../../assets/js/calendar(dashboard).js"></script>
     <?php include 'chart_report.php'; ?>
 </body>
 </html>

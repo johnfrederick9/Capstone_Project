@@ -80,11 +80,11 @@ include '../../sidebar.php';
     align-items: center;
     cursor: pointer;
 }
-.modal-dialog {
+.rao .modal-dialog {
     max-width: 80%; /* Set the width to 80% of the screen */
 }
 
-.modal-content {
+.rao .modal-content {
     width: 100%; /* Ensure the content stretches to the modal-dialog width */
 }
 
@@ -522,6 +522,7 @@ include '../../sidebar.php';
                 </section><!-- .home-->
                 <!-- Modal -->
                 <!-- Update RAO Record-->
+                 <section class="rao">
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -673,13 +674,12 @@ include '../../sidebar.php';
                                 
                                 <!-- Dynamic Inputs Will Be Added Here -->
                             </div>
-
-                                
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
+            </section>
     </body> 
     <script>
         //Today's Date Script

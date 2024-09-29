@@ -126,7 +126,11 @@ try {
 /**
  * tb_event *
  * event_id - INT_PRIMARY KEY_AUTO_INCREMENT
-
+ * event_name - VARCHAR 
+ * event_location - VARCHAR
+ * event_type - VARCHAR
+ * event_start - DATE
+ * event_end - DATE
  */
 
 
