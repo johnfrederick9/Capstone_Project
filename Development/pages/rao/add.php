@@ -85,10 +85,10 @@ try{
     // First, insert into tb_rao to get the rao_id
     $sql_rao = "INSERT INTO tb_rao (`period_covered`, `ap_total`, `ap_salary`, `ap_cash_gift`, `ap_year_end`, `ap_mid_year`, `ap_sri`, `ap_others`, 
                                 `ob_total`, `ob_salary`, `ob_cash_gift`, `ob_year_end`, `ob_mid_year`, `ob_sri`, `ob_others`, 
-                                `apbd_total`, `apbd_salary`, `apbd_cash_gift`, `apbd_year_end`, `apbd_mid_year`, `apbd_sri`, `apbd_others`) 
+                                `apbd_total`, `apbd_salary`, `apbd_cash_gift`, `apbd_year_end`, `apbd_mid_year`, `apbd_sri`, `apbd_others`, `isDisplayed`) 
                 VALUES (?, 0, 0, 0, 0, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0)";
+                        0, 0, 0, 0, 0, 0, 0, 1)";
     $stmt = mysqli_prepare($con, $sql_rao);
     mysqli_stmt_bind_param($stmt, "s", $period_covered);
 

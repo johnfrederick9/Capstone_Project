@@ -6,11 +6,9 @@ include '../../sidebar.php';
 .column-titles {
   display: grid;
   grid-template-columns: 20px repeat(9, 1fr) 50px; 
-  gap: 2px; 
-  margin-bottom: 5px; 
+  gap: 5px; 
+  margin-bottom: 10px; 
   align-items: center; 
-  justify-content: "center";
-  font-size: small;
 }
 
 .column-titles span {
@@ -80,14 +78,6 @@ include '../../sidebar.php';
     align-items: center;
     cursor: pointer;
 }
-.rao .modal-dialog {
-    max-width: 80%; /* Set the width to 80% of the screen */
-}
-
-.rao .modal-content {
-    width: 100%; /* Ensure the content stretches to the modal-dialog width */
-}
-
 </style>
 <body>
     <section class="home">  
@@ -125,6 +115,7 @@ include '../../sidebar.php';
                             $('#example').DataTable({
                                 "fnCreatedRow": function(nRow, aData, iDataIndex) {
                                     $(nRow).attr('id', aData[0]);
+                                    $(nRow).find('.deleteBtn').attr('data-rao_id', aData[0]);
                                 },
                                 'serverSide': 'true',
                                 'processing': 'true',
@@ -135,16 +126,11 @@ include '../../sidebar.php';
                                     'url': 'fetch_data.php',
                                     'type': 'post',
                                 },
-                                "columnDefs": [
-                                    {
-                                        "targets": [0],  // Target the first column (aData[0])
-                                        "visible": false, // Hide the column
-                                        "searchable": false // Disable search for this column if needed
-                                    },
-                                    {
-                                        "bSortable": false,
-                                        "aTargets": [5]
-                                    }
+                                "aoColumnDefs": [{
+                                    "bSortable": false,
+                                    "aTargets": [5]
+                                },
+
                                 ]
                             });
                         });
@@ -402,7 +388,18 @@ include '../../sidebar.php';
 
                                         if (status == 'true') {
                                             table = $('#example').DataTable();
-                                            var button = '<td><div class="buttons"><a href="javascript:void();" data-id="' + rao_id + '" class="update-btn btn-sm editbtn"><i class="bx bx-sync"></i></a></div></td>';
+                                            // var button = '<td><div class="buttons"><a href="javascript:void();" data-id="' + rao_id + '" class="update-btn btn-sm editbtn"><i class="bx bx-sync"></i></a></div></td>';
+                                            // // <a href="javascript:void();" data-id="${cashbook_id}" class="update-btn btn-sm editbtn"><i class="bx bx-sync"></i></a>
+                                            // //             <a href="!#" data-cashbook_id="${cashbook_id}" class="delete-btn btn-sm deleteBtn"><i class="bx bxs-trash"></i></a>
+                                            var button = `
+                                                <td>
+                                                    <div class="buttons">
+                                                        <a href="javascript:void();" data-id="${rao_id}" class="update-btn btn-sm editbtn"><i class="bx bx-sync"></i></a>
+                                                        <a href="!#" data-rao_id="${rao_id}" class="delete-btn btn-sm deleteBtn"><i class="bx bxs-trash"></i></a>
+                                                    </div>
+                                                </td>
+                                            `;
+
                                             var row = table.row("[id='" + trid + "']");
                                             row.row("[id='" + trid + "']").data([rao_id,period_covered, ap_total, ob_total, apbd_total, button]); // Update row with new data
                                             $('#exampleModal').modal('hide');
@@ -518,11 +515,38 @@ include '../../sidebar.php';
                             });
                         });
 
+                        $(document).on('click', '.deleteBtn', function(event) {
+                            var table = $('#example').DataTable();
+                            event.preventDefault();
+                            var rao_id = $(this).data('rao_id');
+                            console.log('RAO ID:', rao_id); 
+                            if (confirm("Are you sure want to delete this rao Record ? ")) {
+                                $.ajax({
+                                    url: "delete.php",
+                                    data: {
+                                        rao_id: rao_id,
+                                    },
+                                    type: "post",
+                                    success: function(data) {
+                                        var json = JSON.parse(data);
+                                        status = json.status;
+                                        if (status == 'success') {
+                                            $("#" + rao_id).closest('tr').remove();
+                                        } else {
+                                            alert('Failed');
+                                            return;
+                                        }
+                                    }
+                                });
+                            } else {
+                                return null;
+                            }
+                        })
+
                     </script>
                 </section><!-- .home-->
                 <!-- Modal -->
-                <!-- Update RAO Record-->
-                 <section class="rao">
+                <!-- Update Project -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -531,15 +555,10 @@ include '../../sidebar.php';
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form id="updateUser">    
-                            <div class="add">
-                            <div class="form-grid">
-                            <div class="input-wrapper">
+                            <form id="updateUser">
+                            <div class="form-group">
                                 <label for="period_covered_update">Period Covered:</label>
                                 <input type="number" id="period_covered_update" name="period_covered_update" max = "9999" min = 1700>
-                                </div>
-                            </div>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
 
                             <div class="form-group">
@@ -595,6 +614,9 @@ include '../../sidebar.php';
                                 
                                 <!-- Dynamic Inputs Will Be Added Here -->
                             </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -610,16 +632,10 @@ include '../../sidebar.php';
                         </div>
                         <div class="modal-body">
                             <form id="addUser" action="">
-                            <div class="add">
-                            <div class="form-grid">
-                            <div class="input-wrapper">
-                                <label for="period_covered_update">Period Covered:</label>
-                                <input type="number" id="period_covered_update" name="period_covered_update" max = "9999" min = 1700>
-                                </div>
+                            <div class="form-group">
+                                <label for="period_covered">Period Covered:</label>
+                                <input type="number" id="period_covered" name="period_covered" required>
                             </div>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                           
 
                             <div class="form-group">
                                 <div class="wrap">
@@ -674,12 +690,15 @@ include '../../sidebar.php';
                                 
                                 <!-- Dynamic Inputs Will Be Added Here -->
                             </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            </section>
     </body> 
     <script>
         //Today's Date Script
