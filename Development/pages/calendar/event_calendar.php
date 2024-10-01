@@ -4,21 +4,75 @@ include '../../head.php';
 include 'event_code.php';
 require '../../database.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../assets/css/styles.css">
-    <title>Event Calendar</title>
-    <style>
-        /* Add basic styling for modal and calendar */
-        /* ... Your styles here ... */
-    </style>
-</head>
+<style>
+/* Days container styling */
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+/* Day styling */
+.day {
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+/* Disabled days (outside current month) */
+.day.disabled {
+  color: #bfbfbf; /* Grey out the days outside the current month */
+  cursor: default; /* No pointer cursor on disabled days */
+}
+
+/* Hover effect only for days in the current month */
+.day:not(.disabled):hover {
+  background-color: #e0e0e0;
+}
+
+/* Active selected day styling */
+.day.active {
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  border: 2px solid #0056b3; /* Border for active date */
+}
+
+/* Style for today's date */
+.day.today {
+  background-color: #e0e0e0;
+  color: white;
+  border-radius: 5px;
+  border: 2px solid #0056b3;
+}
+
+/* Hover effect for today's date */
+.day.today:not(.disabled):hover {
+  background-color: #ffc107; /* Darker shade when hovering */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+/* Today button styling */
+.today-btn {
+  margin-top: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.today-btn:hover {
+  background-color: #0056b3;
+}
+
+</style>
 <body>
     <section class="home">
-        <div class="calendar-event">
+        <section class="calendar-event">
             <div class="container">
                 <div class="calendar">
                     <div class="month">
@@ -45,7 +99,7 @@ require '../../database.php';
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </section>
 
     <!-- Modal for Adding Event -->

@@ -6,11 +6,11 @@ include "dashboard_code.php";
 include 'reports_code.php';
 ?>
 <style>
-    .calendar-navigation {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
+.calendar-navigation {
+display: flex;
+justify-content: center;
+align-items: center;
+margin-bottom: 10px;
 }
 
 .calendar-navigation h3 {

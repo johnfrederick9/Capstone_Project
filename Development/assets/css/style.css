@@ -2617,7 +2617,6 @@ font-size: 18px;
   font-size: 1rem;
   font-weight: 500;
   text-transform: capitalize;
-  margin-top: -20px;
 }
 .calendar .month .prev,
 .calendar .month .next {
@@ -2634,8 +2633,8 @@ font-size: 18px;
   font-size: 1rem;
   font-weight: 500;
   text-transform: capitalize;
-  margin-top: -70px;
-  margin-bottom: -50px;
+  margin-top: -100px;
+  margin-bottom: -100px;
 }
 .weekdays div {
   width: 14.28%;
@@ -2652,7 +2651,6 @@ font-size: 18px;
   padding: 0 10px;
   font-size: medium;
   font-weight: 500;
-  margin-bottom: -10px;
 }
 .calendar .days .day {
   width: 14.28%;

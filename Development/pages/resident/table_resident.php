@@ -111,6 +111,7 @@ include '../../sidebar.php';
                                 printContentFromPage('print_selected.php', idsString); // Load and print content from print_selected.php
                             } else {
                                 alert('Please select at least one row to print.');
+                                
                             }
                         });
 

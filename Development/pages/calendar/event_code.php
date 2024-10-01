@@ -22,12 +22,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['save_event'])) {
                 VALUES ('$event_name', '$event_location', '$event_type', '$event_start', '$event_end')";
 
         if ($conn->query($sql) === TRUE) {
-            echo "<script>alert('New record created successfully');</script>";
+            echo " 
+                <div id='toast' class='toast'>   
+                    <div class='toast-content'>
+                        <i class='bx bxs-check-circle icon'></i>
+                        <div class='message'>
+                            <span class='text'>New Record Created Successfully</span>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    const toast = document.getElementById('toast');
+                    toast.classList.add('show');
+
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                        window.location.href = '';
+                    }, 1000);
+                </script>
+                ";  
         } else {
-            echo "<script>alert('Error: " . $sql . " - " . $conn->error . "');</script>";
+            echo "<div class='alert alert-danger'>('Error: " . $sql . " - " . $conn->error . "');</div>";
         }
     } else {
-        echo "<script>alert('Error: All fields are required.');</script>";
+        echo "<div class='alert alert-danger'>Error: All fields are required.</div>";
     }
 
     $conn->close();
