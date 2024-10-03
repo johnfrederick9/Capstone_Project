@@ -130,11 +130,16 @@ include '../../sidebar.php';
                                     'url': 'fetch_data.php',
                                     'type': 'post',
                                 },
-                                "aoColumnDefs": [{
-                                    "bSortable": false,
-                                    "aTargets": [5]
-                                },
-
+                                "columnDefs": [
+                                    {
+                                        "targets": [0],  // Target the first column (aData[0])
+                                        "visible": false, // Hide the column
+                                        "searchable": false // Disable search for this column if needed
+                                    },
+                                    {
+                                        "bSortable": false,
+                                        "aTargets": [5]
+                                    }
                                 ]
                             });
                         });
