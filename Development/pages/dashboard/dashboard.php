@@ -115,7 +115,7 @@ margin-bottom: 10px;
                                     </div>
                                 </div>
                             </div>
-                            <div class="stat-card">
+                            <!--<div class="stat-card">
                                 <div class="stat-content">
                                     <div class="icon">
                                         <i class='bx bxs-home '></i>
@@ -125,7 +125,7 @@ margin-bottom: 10px;
                                         <p>Household</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
 

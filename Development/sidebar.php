@@ -84,12 +84,6 @@ if (isset($conn) && $conn) {
               <span class="text nav-text">Project Monitoring</span>
             </a>
           </li>
-          <li class="nav-link">
-            <a href="../../pages/calendar/event_calendar.php"  title="Calendar">
-              <i class='bx bxs-calendar-event icon' ></i>
-              <span class="text nav-text">Event Calendar</span>
-            </a>
-          </li>
 
           <li class="nav-link dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Certificates">
@@ -144,14 +138,29 @@ if (isset($conn) && $conn) {
               </li>
             </ul>
           </li>
-          
-          <!--<li class="nav-link">
-            <a href="../../pages/reports/reports.php"  title="Graphs & Reports">
-              <i class='bx bxs-report icon'></i>
-              <span class="text nav-text">Graphs & Reports</span>
-            </a>
-          </li>-->
 
+          <li class="nav-link dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Reports">
+            <i class='bx bxs-report icon'></i>
+              <span class="text nav-text">Reports</span>
+              <i class='bx bx-chevron-down arrow'></i>
+            </a>
+            <ul class="nav-link dropdown-content">
+              <li>
+                <a href="../../pages/blotter/table_blotter.php" title="Blotter Table">
+                &nbsp; &nbsp; <i class='bx bxs-report'></i>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Blotter</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-link">
+            <a href="../../pages/calendar/event_calendar.php"  title="Calendar">
+              <i class='bx bxs-calendar-event icon' ></i>
+              <span class="text nav-text">Event Calendar</span>
+            </a>
+          </li>
         </ul>
       </div>
       <div class="bottom-content">
