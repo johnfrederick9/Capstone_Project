@@ -66,6 +66,7 @@ span {
 }
 .transaction .modal-dialog{
     max-width: 95% !important;
+    overflow-y: auto !important;
 }
 .cashbook-container {
     width: 100%;
@@ -234,22 +235,25 @@ span {
     background-color: #45a049;
 }
 
-.cashbook-table input[type="text"] , input[type="date"]{
+.cashbook-table input[type="text"]:disabled , input[type="date"]:disabled{
     width: 100%;
     box-sizing: border-box;
     border: none;
     font-size: 10px;
+    color: #000;
 }
-.cashbook-table input[type="number"]{
+.cashbook-table input[type="number"]:disabled{
     width: 100%;
     padding: 2px;
     box-sizing: border-box;
     border: none;
     font-size: 15px;
+    color: #000;
 }
 .hidden{
     display: none;
 }
+
 </style>
 <body>
     <section class="home">  
@@ -688,7 +692,9 @@ span {
                         $('#viewDataModal').modal('show');
 
                         $('.inp-group-view').empty(); 
-                        $('.initial-value').empty();// Clear previous data
+                        $('.initial-value').empty();
+                        $('.ending-value').empty();
+                        // Clear previous data
                         let upCounter = 1; // Initialize the counter
 
                         $.ajax({
@@ -726,6 +732,26 @@ span {
                                                 <td><input type="number" disabled></td>
                                             </tr>`;
                                         $('#viewDataTable tbody.initial-value').append(initialRow);
+
+                                        const endingRow = `
+                                            <tr>
+                                                <td><input type="number" disabled></td>
+                                                <td colspan="2"></td>
+                                                <td colspan="2"><input type="text" value=" Totals" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.clt_end_in}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.clt_end_out}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.clt_end_balance}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.cb_end_in}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.cb_end_out}" disabled></td>
+                                                <td><input type="number" name="cb_end_balance[]" value="${record.cb_end_balance}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.ca_end_receipt}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.ca_end_disbursement}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.ca_end_balance}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.pcf_end_receipt}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.pcf_end_payments}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.pcf_end_balance}" disabled></td>
+                                            </tr>`;
+                                        $('#viewDataTable tbody.ending-value').append(endingRow);
 
                                         // Populate input fields with associated records
                                         cashbookData.forEach(function(cData) {
@@ -850,6 +876,9 @@ span {
                                 </tbody>
                                 <tbody class = "inp-group-view">
                                      <!-- Dynamic rows go here -->
+                                </tbody>
+                                <tbody class = "ending-value">
+
                                 </tbody>
                             </table>
                             <!-- Action buttons -->
