@@ -279,7 +279,7 @@ if (mysqli_num_rows($result) > 0) {
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainant_no" class="input-label">Complainant's Contact No.:</label>
-                                            <input type="text" id="blotter_complainant_noField" name="blotter_complainant_no" class="input-field" required>
+                                            <input type="number" id="blotter_complainant_noField" name="blotter_complainant_no" class="input-field" required>
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainant_add" class="input-label">Complainant's Address:</label>
@@ -298,7 +298,7 @@ if (mysqli_num_rows($result) > 0) {
                                         </div> 
                                         <div class="input-wrapper">
                                             <label for="blotter_complainee_no" class="input-label">Complainee's Contact No.:</label>
-                                            <input type="text" id="blotter_complainee_noField" name="blotter_complainee_no" class="input-field" required>
+                                            <input type="number" id="blotter_complainee_noField" name="blotter_complainee_no" class="input-field" required>
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainee_add" class="input-label">Complainee's Address:</label>
@@ -369,7 +369,7 @@ if (mysqli_num_rows($result) > 0) {
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainant_no" class="input-label">Complainant's Contact No.:</label>
-                                            <input type="text" id="blotter_complainant_no" name="blotter_complainant_no" class="input-field" required>
+                                            <input type="number" id="blotter_complainant_no" name="blotter_complainant_no" class="input-field" required>
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainant_add" class="input-label">Complainant's Address:</label>
@@ -388,7 +388,7 @@ if (mysqli_num_rows($result) > 0) {
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainee_no" class="input-label">Complainee's Contact No.:</label>
-                                            <input type="text" id="blotter_complainee_no" name="blotter_complainee_no" class="input-field" required>
+                                            <input type="number" id="blotter_complainee_no" name="blotter_complainee_no" class="input-field" required>
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainee_add" class="input-label">Complainee's Address:</label>
