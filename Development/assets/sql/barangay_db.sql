@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 28, 2024 at 05:32 AM
+-- Generation Time: Oct 04, 2024 at 02:28 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,109 @@ SET time_zone = "+00:00";
 --
 -- Database: `barangay_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_blotter`
+--
+
+CREATE TABLE `tb_blotter` (
+  `blotter_id` int(11) NOT NULL,
+  `blotter_complainant` varchar(255) DEFAULT NULL,
+  `blotter_complainant_no` bigint(20) DEFAULT NULL,
+  `blotter_complainant_add` varchar(255) DEFAULT NULL,
+  `blotter_complainee` varchar(255) DEFAULT NULL,
+  `blotter_complainee_no` bigint(20) DEFAULT NULL,
+  `blotter_complainee_add` varchar(255) DEFAULT NULL,
+  `blotter_complaint` varchar(255) DEFAULT NULL,
+  `blotter_status` varchar(255) DEFAULT NULL,
+  `blotter_action` varchar(255) DEFAULT NULL,
+  `blotter_incidence` varchar(255) DEFAULT NULL,
+  `blotter_date_recorded` date DEFAULT NULL,
+  `blotter_date_settled` date DEFAULT NULL,
+  `blotter_recorded_by` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_cashbook`
+--
+
+CREATE TABLE `tb_cashbook` (
+  `cashbook_id` int(11) NOT NULL,
+  `period_covered` date NOT NULL,
+  `treasurer_name` varchar(255) NOT NULL,
+  `clt_init_balance` double NOT NULL,
+  `clt_end_in` double NOT NULL,
+  `clt_end_out` double NOT NULL,
+  `clt_end_balance` double NOT NULL,
+  `cb_init_balance` double NOT NULL,
+  `cb_end_in` double NOT NULL,
+  `cb_end_out` double NOT NULL,
+  `cb_end_balance` double NOT NULL,
+  `ca_end_receipt` double NOT NULL,
+  `ca_end_disbursement` double NOT NULL,
+  `ca_end_balance` double NOT NULL,
+  `pcf_end_receipt` double NOT NULL,
+  `pcf_end_payments` double NOT NULL,
+  `pcf_end_balance` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_cashbook`
+--
+
+INSERT INTO `tb_cashbook` (`cashbook_id`, `period_covered`, `treasurer_name`, `clt_init_balance`, `clt_end_in`, `clt_end_out`, `clt_end_balance`, `cb_init_balance`, `cb_end_in`, `cb_end_out`, `cb_end_balance`, `ca_end_receipt`, `ca_end_disbursement`, `ca_end_balance`, `pcf_end_receipt`, `pcf_end_payments`, `pcf_end_balance`, `isDisplayed`) VALUES
+(5, '2024-09-01', 'Joshua Belandres', 1000, 0, 0, 0, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
+(6, '2024-08-01', 'John Frederick Gelay', 1000, 100, 0, 1100, 1000, 100, 1000, 100, 0, 0, 0, 0, 0, 0, 1),
+(7, '2024-06-02', 'Joshua Belandres', 1000, 100, 0, 1100, 1000, 0, 0, 1000, 0, 0, 0, 0, 0, 0, 1),
+(8, '2024-05-01', 'Joshua Belandres', 1000, 100, 0, 1100, 1000, 100, 0, 1100, 0, 0, 0, 0, 0, 0, 1),
+(11, '2023-10-01', 'Joshua Belandres', 1000, 223, 323, 900, 1000, 223, 332, 891, 323, 223, 100, 223, 173, 50, 1),
+(12, '2023-11-01', 'Joshua Belandres', 12345, 123, 123, 12345, 12345, 123, 123, 12345, 123, 123, 0, 123, 123, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_cashbook_data`
+--
+
+CREATE TABLE `tb_cashbook_data` (
+  `cashbook_id` int(11) NOT NULL,
+  `cashbook_data_id` int(11) NOT NULL,
+  `date_data` varchar(255) NOT NULL,
+  `particulars_1` varchar(255) NOT NULL,
+  `particulars_2` varchar(255) NOT NULL,
+  `reference_1` varchar(255) NOT NULL,
+  `reference_2` varchar(255) NOT NULL,
+  `clt_in` double NOT NULL,
+  `clt_out` double NOT NULL,
+  `clt_balance` double NOT NULL,
+  `cb_in` double NOT NULL,
+  `cb_out` double NOT NULL,
+  `cb_balance` double NOT NULL,
+  `ca_receipt` double NOT NULL,
+  `ca_disbursement` double NOT NULL,
+  `ca_balance` double NOT NULL,
+  `pcf_receipt` double NOT NULL,
+  `pcf_payments` double NOT NULL,
+  `pcf_balance` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_cashbook_data`
+--
+
+INSERT INTO `tb_cashbook_data` (`cashbook_id`, `cashbook_data_id`, `date_data`, `particulars_1`, `particulars_2`, `reference_1`, `reference_2`, `clt_in`, `clt_out`, `clt_balance`, `cb_in`, `cb_out`, `cb_balance`, `ca_receipt`, `ca_disbursement`, `ca_balance`, `pcf_receipt`, `pcf_payments`, `pcf_balance`) VALUES
+(5, 2, '2024-09-01', 'VARIOUS PAYORS', '', '', '2024-09-3', 0, 0, 1000, 100, 0, 1100, 0, 0, 0, 0, 0, 0),
+(6, 3, '2024-08-01', 'VARIOUS PAYORS', '', 'RDC NO', '', 100, 0, 1100, 100, 1000, 100, 0, 0, 0, 0, 0, 0),
+(7, 4, '2024-06-01', 'VARIOUS PAYORS', '', 'RDC NO', '', 100, 0, 1100, 0, 0, 1000, 0, 0, 0, 0, 0, 0),
+(8, 5, '2024-05-01', 'VARIOUS PAYORS', '', 'RDC NO', '', 100, 0, 1100, 100, 0, 1100, 0, 0, 0, 0, 0, 0),
+(11, 9, '2023-10-02', 'VARIOUS PAYORS', 'COLLECTION AND DEPOSITS', 'RDC NO', '2024-09-3', 100, 200, 900, 100, 200, 900, 200, 100, 100, 100, 50, 50),
+(11, 11, '2023-10-03', 'VARIOUS PAYORS', 'COLLECTION AND DEPOSITS', 'RDC NO', '2024-09-3', 123, 123, 900, 123, 132, 891, 123, 123, 100, 123, 123, 50),
+(12, 12, '2023-11-01', 'VARIOUS PAYORS', 'COLLECTION AND DEPOSITS', 'RDC NO', '2024-09-3', 123, 123, 12345, 123, 123, 12345, 123, 123, 0, 123, 123, 0);
 
 -- --------------------------------------------------------
 
@@ -124,9 +227,19 @@ CREATE TABLE `tb_event` (
   `event_name` varchar(120) NOT NULL,
   `event_location` varchar(120) NOT NULL,
   `event_type` varchar(100) NOT NULL,
-  `event_start` time NOT NULL,
-  `event_end` time NOT NULL
+  `event_start` date NOT NULL,
+  `event_end` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_event`
+--
+
+INSERT INTO `tb_event` (`event_id`, `event_name`, `event_location`, `event_type`, `event_start`, `event_end`) VALUES
+(15, 'asdf', 'asdf', 'asdf', '2024-09-29', '2024-09-29'),
+(16, 'asdf', 'asdf', 'asdf', '2024-09-29', '2024-09-29'),
+(17, 'asdf1', '23123', '123', '2024-09-03', '2024-09-03'),
+(18, 'Liga', 'Mantalongon Complex', 'Games', '2024-09-02', '2024-09-18');
 
 -- --------------------------------------------------------
 
@@ -171,7 +284,7 @@ CREATE TABLE `tb_indigency` (
 --
 
 INSERT INTO `tb_indigency` (`indigency_id`, `indigency_cname`, `indigency_fname`, `indigency_mname`, `indigency_date`) VALUES
-(9, 'John Frederick D. Gelay', 'Fernando A. Gelay', 'Maria D. Gelay', '2024-09-13');
+(9, 'John Frederick D. Gelay', 'Fernando A. Gelay', 'Maria D. Gelay', '2024-09-21');
 
 -- --------------------------------------------------------
 
@@ -234,7 +347,7 @@ CREATE TABLE `tb_item_transaction` (
 
 INSERT INTO `tb_item_transaction` (`transaction_id`, `borrower_name`, `borrower_address`, `reserved_on`, `date_borrowed`, `return_date`, `approved_by`, `released_by`, `returned_by`, `date_returned`, `transaction_status`, `isDisplayed`) VALUES
 (12, 'Joshua Belandres', 'Mantalongon ', '2024-09-23', '2024-09-23', '2024-09-23', 'Zenaida Belandres', 'Angebon Reyes', 'John Frederick Gelay', '2024-09-25', 'Completed', 1),
-(21, 'fasdfasd', 'fsafsf', '2024-09-26', '2024-09-26', '2024-09-27', 'sfasdf', 'asdf', '12', '0000-00-00', 'Ongoing', 1);
+(21, 'fasdfasd', 'fsafsfasda', '2024-09-26', '2024-09-26', '2024-09-27', 'sfasdf', 'asdf', '12', '0000-00-00', 'Ongoing', 1);
 
 -- --------------------------------------------------------
 
@@ -285,16 +398,18 @@ CREATE TABLE `tb_rao` (
   `apbd_year_end` double NOT NULL,
   `apbd_mid_year` double NOT NULL,
   `apbd_sri` double NOT NULL,
-  `apbd_others` double NOT NULL
+  `apbd_others` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_rao`
 --
 
-INSERT INTO `tb_rao` (`rao_id`, `period_covered`, `ap_total`, `ap_salary`, `ap_cash_gift`, `ap_year_end`, `ap_mid_year`, `ap_sri`, `ap_others`, `ob_total`, `ob_salary`, `ob_cash_gift`, `ob_year_end`, `ob_mid_year`, `ob_sri`, `ob_others`, `apbd_total`, `apbd_salary`, `apbd_cash_gift`, `apbd_year_end`, `apbd_mid_year`, `apbd_sri`, `apbd_others`) VALUES
-(76, '2024', 5134533.86, 4242000, 110000, 178000, 178000, 220000, 206533.86, 1927, 312, 123, 1123, 123, 123, 123, 5132606.86, 4241688, 109877, 176877, 177877, 219877, 206410.86),
-(77, '0000', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `tb_rao` (`rao_id`, `period_covered`, `ap_total`, `ap_salary`, `ap_cash_gift`, `ap_year_end`, `ap_mid_year`, `ap_sri`, `ap_others`, `ob_total`, `ob_salary`, `ob_cash_gift`, `ob_year_end`, `ob_mid_year`, `ob_sri`, `ob_others`, `apbd_total`, `apbd_salary`, `apbd_cash_gift`, `apbd_year_end`, `apbd_mid_year`, `apbd_sri`, `apbd_others`, `isDisplayed`) VALUES
+(76, '2024', 5134533.86, 4242000, 110000, 178000, 178000, 220000, 206533.86, 1927, 312, 123, 1123, 123, 123, 123, 5132606.86, 4241688, 109877, 176877, 177877, 219877, 206410.86, 1),
+(77, '0000', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
+(78, '2024', 72, 12, 12, 12, 12, 12, 12, 61, 12, 12, 12, 12, 1, 12, 11, 0, 0, 0, 0, 11, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -322,7 +437,7 @@ CREATE TABLE `tb_rao_ap_data` (
 --
 
 INSERT INTO `tb_rao_ap_data` (`rao_id`, `rao_ap_data_id`, `ap_ref_date`, `ap_ref_no`, `ap_particulars`, `ap_total`, `ap_salary`, `ap_cash_gift`, `ap_year_end`, `ap_mid_year`, `ap_sri`, `ap_others`) VALUES
-(76, 66, '2024-09-01', 'Ao No. 02 S2020', 'Annual Budget', 5134533.86, 4242000, 110000, 178000, 178000, 220000, 206533.86);
+(78, 79, '2024-10-03', '12', '12', 72, 12, 12, 12, 12, 12, 12);
 
 -- --------------------------------------------------------
 
@@ -350,7 +465,7 @@ CREATE TABLE `tb_rao_ob_data` (
 --
 
 INSERT INTO `tb_rao_ob_data` (`rao_id`, `rao_ob_data_id`, `ob_ref_date`, `ob_ref_no`, `ob_particulars`, `ob_total`, `ob_salary`, `ob_cash_gift`, `ob_year_end`, `ob_mid_year`, `ob_sri`, `ob_others`) VALUES
-(76, 40, '2024-09-01', '12312', 'Add', 1927, 312, 123, 1123, 123, 123, 123);
+(77, 42, '0000-00-00', '', '', 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -380,7 +495,8 @@ CREATE TABLE `tb_resident` (
 --
 
 INSERT INTO `tb_resident` (`resident_id`, `resident_firstname`, `resident_middlename`, `resident_lastname`, `resident_sex`, `resident_suffixes`, `resident_address`, `resident_educationalattainment`, `resident_birthdate`, `resident_age`, `resident_status`, `resident_householdrole`, `household_id`, `resident_maidenname`) VALUES
-(8, 'John Frederick', 'Domecillo', 'Gelay', 'Male', 'None', 'Mantalongon, Dalaguete, Cebu', 'High School, Graduate', '2001-11-09', 22, 'Single', 'Son', 0, 'Domecillo');
+(8, 'John Frederick', 'Domecillo', 'Gelay', 'Male', 'None', 'Mantalongon, Dalaguete, Cebu', 'High School, Graduate', '2001-11-09', 50, 'Single', 'Son', 0, 'Domecillo'),
+(11, 'Pauline Cielo', 'Domecillo', 'Gelay', 'Female', 'None', 'Mantalongon, Dalaguete, Cebu', 'High School, Undergraduate', '2002-08-01', 22, 'Single', '12', 12, 'Domecillo');
 
 -- --------------------------------------------------------
 
@@ -439,11 +555,30 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`user_id`, `lastname`, `firstname`, `middlename`, `sex`, `birthdate`, `barangayposition`, `username`, `password`, `theme`, `suffix`, `profile_picture`) VALUES
-(34, 'Gelay', 'John Frederick', 'Domecillo', 'Male', '2001-11-09', 'Barangay Captain', 'john', '$2y$10$1LKTNgbVXe5KYFKKZvzYTO63OLLNMnSGbw8qlPi3CzSC/J2OzLdV.', 'dark', 'None', 'profile_34_1727346402.jpg');
+(61, 'Develo4', '', '', 'Male', '2024-01-01', 'Barangay Captain', 'Develo4', '$2y$10$vIYe3ucbPMKyCD26j2pS2e9SXXeloy3aArnI7xrZZtVwz6lHjggBy', '\'light\'', 'None', 'profile_default.png');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `tb_blotter`
+--
+ALTER TABLE `tb_blotter`
+  ADD PRIMARY KEY (`blotter_id`);
+
+--
+-- Indexes for table `tb_cashbook`
+--
+ALTER TABLE `tb_cashbook`
+  ADD PRIMARY KEY (`cashbook_id`);
+
+--
+-- Indexes for table `tb_cashbook_data`
+--
+ALTER TABLE `tb_cashbook_data`
+  ADD PRIMARY KEY (`cashbook_data_id`),
+  ADD KEY `cashbook_id` (`cashbook_id`);
 
 --
 -- Indexes for table `tb_certificate`
@@ -549,6 +684,24 @@ ALTER TABLE `tb_user`
 --
 
 --
+-- AUTO_INCREMENT for table `tb_blotter`
+--
+ALTER TABLE `tb_blotter`
+  MODIFY `blotter_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_cashbook`
+--
+ALTER TABLE `tb_cashbook`
+  MODIFY `cashbook_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `tb_cashbook_data`
+--
+ALTER TABLE `tb_cashbook_data`
+  MODIFY `cashbook_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT for table `tb_certificate`
 --
 ALTER TABLE `tb_certificate`
@@ -576,7 +729,7 @@ ALTER TABLE `tb_employee`
 -- AUTO_INCREMENT for table `tb_event`
 --
 ALTER TABLE `tb_event`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `tb_financial`
@@ -612,35 +765,41 @@ ALTER TABLE `tb_project`
 -- AUTO_INCREMENT for table `tb_rao`
 --
 ALTER TABLE `tb_rao`
-  MODIFY `rao_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `rao_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_ap_data`
 --
 ALTER TABLE `tb_rao_ap_data`
-  MODIFY `rao_ap_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `rao_ap_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_ob_data`
 --
 ALTER TABLE `tb_rao_ob_data`
-  MODIFY `rao_ob_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `rao_ob_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `tb_resident`
 --
 ALTER TABLE `tb_resident`
-  MODIFY `resident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `resident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `tb_cashbook_data`
+--
+ALTER TABLE `tb_cashbook_data`
+  ADD CONSTRAINT `tb_cashbook_data_ibfk_1` FOREIGN KEY (`cashbook_id`) REFERENCES `tb_cashbook` (`cashbook_id`);
 
 --
 -- Constraints for table `tb_document_files`

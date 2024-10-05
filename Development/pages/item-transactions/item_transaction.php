@@ -472,106 +472,106 @@ $borrowedItems_json = json_encode($borrowedItems);
                 <!-- Update Transaction -->
                 <section class="transaction">
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Item</h5>
-                <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Update Item</h5>
+                            <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="updateUser">
+                                <!-- First Row -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="borrowernameField">Borrower Name:</label>
+                                            <input type="text" id="borrowernameField" name="borrower_name" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="borroweraddressField">Borrower Address:</label>
+                                            <input type="text" id="borroweraddressField" name="borrower_address" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Second Row -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="reservedonField">Reserved On:</label>
+                                            <input type="date" id="reservedonField" name="reserved_on" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="dateborrowedField">Borrowed Date:</label>
+                                            <input type="date" id="dateborrowedField" name="date_borrowed" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Third Row -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="returndateField">Return Date:</label>
+                                            <input type="date" id="returndateField" name="return_date" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="approvedbyField">Approved By:</label>
+                                            <input type="text" id="approvedbyField" name="approved_by" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Fourth Row -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="releasedbyField">Released By:</label>
+                                            <input type="text" id="releasedbyField" name="released_by" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="returnedbyField">Returned By:</label>
+                                            <input type="text" id="returnedbyField" name="returned_by" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Fifth Row -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="datereturnedField">Date Returned:</label>
+                                            <input type="date" id="datereturnedField" name="date_returned" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 d-flex align-items-end">
+                                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                                    </div>
+                                </div>
+
+                                <!-- Selected Items -->
+                                <div class="form-group mt-3">
+                                    <div class="wrap">
+                                        <h2>Selected Items</h2>
+                                        <a href="#" class="add-update">+</a>
+                                    </div>
+                                    <div class="inp-group-update">
+                                        <!-- Dynamic Inputs Will Be Added Here -->
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <form id="updateUser">
-                    <!-- First Row -->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="borrowernameField">Borrower Name:</label>
-                                <input type="text" id="borrowernameField" name="borrower_name" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="borroweraddressField">Borrower Address:</label>
-                                <input type="text" id="borroweraddressField" name="borrower_address" class="form-control" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Second Row -->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="reservedonField">Reserved On:</label>
-                                <input type="date" id="reservedonField" name="reserved_on" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="dateborrowedField">Borrowed Date:</label>
-                                <input type="date" id="dateborrowedField" name="date_borrowed" class="form-control" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Third Row -->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="returndateField">Return Date:</label>
-                                <input type="date" id="returndateField" name="return_date" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="approvedbyField">Approved By:</label>
-                                <input type="text" id="approvedbyField" name="approved_by" class="form-control" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Fourth Row -->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="releasedbyField">Released By:</label>
-                                <input type="text" id="releasedbyField" name="released_by" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="returnedbyField">Returned By:</label>
-                                <input type="text" id="returnedbyField" name="returned_by" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Fifth Row -->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="datereturnedField">Date Returned:</label>
-                                <input type="date" id="datereturnedField" name="date_returned" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-6 d-flex align-items-end">
-                            <button type="submit" class="btn btn-primary w-100">Submit</button>
-                        </div>
-                    </div>
-
-                    <!-- Selected Items -->
-                    <div class="form-group mt-3">
-                        <div class="wrap">
-                            <h2>Selected Items</h2>
-                            <a href="#" class="add-update">+</a>
-                        </div>
-                        <div class="inp-group-update">
-                            <!-- Dynamic Inputs Will Be Added Here -->
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
             <!-- Add Transaction -->
             <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

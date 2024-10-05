@@ -1,16 +1,31 @@
 <?php
 include '../../head.php';
 include '../../sidebar.php';
+include '../../connection.php';
 ?>
+<?php
+// Assuming you have a database connection in $conn
+$query = "SELECT resident_id, CONCAT(resident_firstname, ' ', 
+                                     IF(resident_middlename != '' AND resident_middlename IS NOT NULL, CONCAT(LEFT(resident_middlename, 1), '.'), ''), ' ', 
+                                     resident_lastname) 
+          AS resident_fullname 
+          FROM tb_resident";
+$result = mysqli_query($conn, $query);
+
+$residents = [];
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $residents[] = $row;
+    }
+}
+?>
+
+
+
 <body>
-    <style>
-        .blooterM .modal-lg{
-            max-width: 90%;
-        }
-    </style>
     <section class="home">  
         <div class="certificate">
-                <div class="table-container">
+        <div class="table-container" style="overflow: visible;">
                     <div class="table-header">
                     <div class="head">
                             <h1>Blotter Table</h1>
@@ -37,7 +52,7 @@ include '../../sidebar.php';
                         <th>Date Recorded</th>
                         <th>Date Settled</th>
                         <th>Recorded By</th>
-                        <th>Update</th>
+                        <th>Buttons</th>
                     </thead>
                     <tbody>
                     </tbody>
@@ -57,29 +72,54 @@ include '../../sidebar.php';
                                     'url': 'fetch_data.php',
                                     'type': 'post',
                                 },
-                                "aoColumnDefs": [{
+                                "aoColumnDefs": [
+                                    {
+                                        "targets": [10, 11, 12],  
+                                        "visible": false, 
+                                        "searchable": false, 
+                                    },
+                                    {
                                     "bSortable": false,
-                                    "aTargets": [4]
-                                },
-
+                                    "aTargets": [13]
+                                    },
                                 ]
                             });
                         });
-                        $(document).on('submit', '#addUser', function(e) {
+                     $(document).on('submit', '#addBlotter', function(e) {
                             e.preventDefault();
-                            var indigency_cname = $('#indigency_cname').val();
-                            var indigency_mname = $('#indigency_mname').val();
-                            var indigency_fname = $('#indigency_fname').val();
-                            var indigency_date = $('#indigency_date').val();
-                            if (indigency_cname != '' && indigency_mname != '' && indigency_fname != '' && indigency_date != '') {
+                            var blotter_complainant = $('#blotter_complainant').val();
+                            var blotter_complainant_no = $('#blotter_complainant_no').val();
+                            var blotter_complainant_add = $('#blotter_complainant_add').val();
+                            var blotter_complainee = $('#blotter_complainee').val();
+                            var blotter_complainee_no = $('#blotter_complainee_no').val();
+                            var blotter_complainee_add = $('#blotter_complainee_add').val();
+                            var blotter_complaint = $('#blotter_complaint').val();
+                            var blotter_status = $('#blotter_status').val();
+                            var blotter_action = $('#blotter_action').val();
+                            var blotter_incidence = $('#blotter_incidence').val();
+                            var blotter_date_recorded = $('#blotter_date_recorded').val();
+                            var blotter_date_settled = $('#blotter_date_settled').val();
+                            var blotter_recorded_by = $('#blotter_recorded_by').val();
+                            if (
+                                blotter_complainant !== ''
+                            ) {
                                 $.ajax({
                                     url: "add.php",
                                     type: "post",
                                     data: {
-                                        indigency_cname: indigency_cname,
-                                        indigency_mname: indigency_mname,
-                                        indigency_fname: indigency_fname,
-                                        indigency_date: indigency_date,
+                                        blotter_complainant: blotter_complainant,
+                                        blotter_complainant_no: blotter_complainant_no,
+                                        blotter_complainant_add: blotter_complainant_add,
+                                        blotter_complainee: blotter_complainee,
+                                        blotter_complainee_no: blotter_complainee_no,
+                                        blotter_complainee_add: blotter_complainee_add,
+                                        blotter_complaint: blotter_complaint,
+                                        blotter_status: blotter_status,
+                                        blotter_action: blotter_action,
+                                        blotter_incidence: blotter_incidence,
+                                        blotter_date_recorded: blotter_date_recorded,
+                                        blotter_date_settled: blotter_date_settled,
+                                        blotter_recorded_by: blotter_recorded_by
                                     },
                                     success: function(data) {
                                         var json = JSON.parse(data);
@@ -97,37 +137,55 @@ include '../../sidebar.php';
                                 alert('Fill all the required fields');
                             }
                         });
-                       $(document).on('submit', '#updateUser', function(e) {
+                        $(document).on('submit', '#updateBlotter', function(e) {
                             e.preventDefault();
-                            //var tr = $(this).closest('tr');
-                            var indigency_cname = $('#cnameField').val();
-                            var indigency_mname = $('#mnameField').val();
-                            var indigency_fname = $('#fnameField').val();
-                            var indigency_date = $('#dateField').val();
+
+                            var blotter_complainant = $('#blotter_complainantField').val();
+                            var blotter_complainant_no = $('#blotter_complainant_noField').val();
+                            var blotter_complainant_add = $('#blotter_complainant_addField').val();
+                            var blotter_complainee = $('#blotter_complaineeField').val();
+                            var blotter_complainee_no = $('#blotter_complainee_noField').val();
+                            var blotter_complainee_add = $('#blotter_complainee_addField').val();
+                            var blotter_complaint = $('#blotter_complaintField').val();
+                            var blotter_status = $('#blotter_statusField').val();
+                            var blotter_action = $('#blotter_actionField').val();
+                            var blotter_incidence = $('#blotter_incidenceField').val();
+                            var blotter_date_recorded = $('#blotter_date_recordedField').val();
+                            var blotter_date_settled = $('#blotter_date_settledField').val();
+                            var blotter_recorded_by = $('#blotter_recorded_byField').val();
                             var trid = $('#trid').val();
-                            var indigency_id = $('#indigency_id').val();
-                            if (indigency_cname != '' && indigency_mname != '' && indigency_fname != '' && indigency_date != '') {
+                            var blotter_id = $('#blotter_id').val();
+
+                            if (blotter_complainant !== '') {
                                 $.ajax({
                                     url: "update.php",
                                     type: "post",
                                     data: {
-                                        indigency_cname: indigency_cname,
-                                        indigency_mname: indigency_mname,
-                                        indigency_fname: indigency_fname,
-                                        indigency_date: indigency_date,
-                                        indigency_id: indigency_id
+                                        blotter_complainant: blotter_complainant,
+                                        blotter_complainant_no: blotter_complainant_no,
+                                        blotter_complainant_add: blotter_complainant_add,
+                                        blotter_complainee: blotter_complainee,
+                                        blotter_complainee_no: blotter_complainee_no,
+                                        blotter_complainee_add: blotter_complainee_add,
+                                        blotter_complaint: blotter_complaint,
+                                        blotter_status: blotter_status,
+                                        blotter_action: blotter_action,
+                                        blotter_incidence: blotter_incidence,
+                                        blotter_date_recorded: blotter_date_recorded,
+                                        blotter_date_settled: blotter_date_settled,
+                                        blotter_recorded_by: blotter_recorded_by,
+                                        blotter_id: blotter_id
                                     },
                                     success: function(data) {
                                         var json = JSON.parse(data);
-                                        var status = json.status;
-                                        if (status == 'true') {
+                                        if (json.status == 'true') {
                                             table = $('#example').DataTable();
-                                            var button = '<td><div class= "buttons"> <a href="javascript:void();" data-id="'+ indigency_id +'"  class="update-btn btn-sm editbtn" ><i class="bx bx-sync"></i></a> <button class="print-btn" data-id="'+indigency_id+'" title="Print Selected"> <i class="bx bx-printer"></i></button></div></td>';
+                                            var button = '<td><div class="buttons"> <a href="javascript:void();" data-id="'+ blotter_id +'" class="update-btn btn-sm editbtn" ><i class="bx bx-sync"></i></a> <button class="print-btn" data-id="'+blotter_id+'" title="Print Selected"> <i class="bx bx-printer"></i></button></div></td>';
                                             var row = table.row("[id='" + trid + "']");
-                                            row.row("[id='" + trid + "']").data([indigency_cname, indigency_mname, indigency_fname, indigency_date, button]);
+                                            row.data([blotter_complainant, blotter_complainant_no, blotter_complainant_add, blotter_complainee, blotter_complainee_no, blotter_complainee_add, blotter_complaint, blotter_status, blotter_action, blotter_incidence, blotter_date_recorded, blotter_date_settled, blotter_recorded_by, button]);
                                             $('#exampleModal').modal('hide');
                                         } else {
-                                            alert('failed');
+                                            alert('Update failed: ' + json.message);
                                         }
                                     }
                                 });
@@ -139,22 +197,31 @@ include '../../sidebar.php';
                         var table = $('#example').DataTable();
                         var trid = $(this).closest('tr').attr('id');
                         // console.log(selectedRow);
-                        var indigency_id = $(this).data('id');
+                        var blotter_id = $(this).data('id');
                         $('#exampleModal').modal('show');
 
                         $.ajax({
                             url: "get_single_data.php",
                             data: {
-                                indigency_id: indigency_id
+                                blotter_id: blotter_id
                             },
                             type: 'post',
                             success: function(data) {
                                 var json = JSON.parse(data);
-                                $('#cnameField').val(json.indigency_cname);
-                                $('#mnameField').val(json.indigency_mname);
-                                $('#fnameField').val(json.indigency_fname);
-                                $('#dateField').val(json.indigency_date);
-                                $('#indigency_id').val(indigency_id);
+                                $('#blotter_complainantField').val(json.blotter_complainant);
+                                $('#blotter_complainant_noField').val(json.blotter_complainant_no);
+                                $('#blotter_complainant_addField').val(json.blotter_complainant_add);
+                                $('#blotter_complaineeField').val(json.blotter_complainee);
+                                $('#blotter_complainee_noField').val(json.blotter_complainee_no);
+                                $('#blotter_complainee_addField').val(json.blotter_complainee_add);
+                                $('#blotter_complaintField').val(json.blotter_complaint);
+                                $('#blotter_statusField').val(json.blotter_status);
+                                $('#blotter_actionField').val(json.blotter_action);
+                                $('#blotter_incidenceField').val(json.blotter_incidence);
+                                $('#blotter_date_recordedField').val(json.blotter_date_recorded);
+                                $('#blotter_date_settledField').val(json.blotter_date_settled);
+                                $('#blotter_recorded_byField').val(json.blotter_recorded_by);
+                                $('#blotter_id').val(blotter_id);
                                 $('#trid').val(trid);
                             }
                         })
@@ -162,13 +229,13 @@ include '../../sidebar.php';
                     $(document).ready(function() {
                     // Event listener for the print button
                     $(document).on('click', '.print-btn', function() {
-                        var indigencyId = $(this).data('id'); // Get the indigency_id
+                        var blotterId = $(this).data('id'); // Get the indigency_id
 
                         // Make an AJAX request to fetch the certificate content
                         $.ajax({
-                            url: 'fetch_indigency.php', // URL to fetch the certificate HTML
+                            url: 'fetch_blotter.php', // URL to fetch the certificate HTML
                             type: 'POST',
-                            data: {id: indigencyId},
+                            data: {id: blotterId},
                             success: function(response) {
                                 // Create a new window to print the content
                                 var printWindow = window.open('', '', 'height=600,width=800');
@@ -184,34 +251,88 @@ include '../../sidebar.php';
                     </script>
                 </section><!-- .home-->
                 <!-- Modal -->
-                <!-- Update Indigency -->
+                <!-- Update Blotter -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Indigency Issued Update Form</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Blotter Issued Update Form</h5>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form id="updateUser">
-                                <input type="hidden" name="indigency_id" id="indigency_id" value="">
+                            <form id="updateBlotter">
+                                <input type="hidden" name="blotter_id" id="blotter_id" value="">
                                 <input type="hidden" name="trid" id="trid" value="">
-                                <div class="certificate">
-                                <div class="form-group">
-                                    <label for="certificatedate"> Child's Name:</label>
-                                    <input type="text" id="cnameField" name="indigency_cname">
-                                </div>
-                                <div class="form-group">
-                                    <label for="certificate">Mother's Name:</label>
-                                    <input type="text" id="mnameField" name="indigency_mname" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="certificatedate"> Father's Name:</label>
-                                    <input type="text" id="fnameField" name="indigency_fname" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="certificatedate"> Issued Date:</label>
-                                    <input type="date" id="dateField" name="indigency_date" required>
+                                <div class="blotter">
+                                <div class="add">
+                                    <div class="form-grid">
+                                    <div class="input-wrapper">
+                                            <label for="blotter_complainant" class="input-label">Complainant's Name:</label>
+                                            <select id="blotter_complainantField" name="blotter_complainant" class="input-field" required>
+                                                <option value="" disabled selected>Select a complainant</option>
+                                                <?php foreach ($residents as $resident): ?>
+                                                    <option value="<?php echo $resident['resident_fullname']; ?>">
+                                                        <?php echo htmlspecialchars($resident['resident_fullname']); ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_complainant_no" class="input-label">Complainant's Contact No.:</label>
+                                            <input type="text" id="blotter_complainant_noField" name="blotter_complainant_no" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_complainant_add" class="input-label">Complainant's Address:</label>
+                                            <input type="text" id="blotter_complainant_addField" name="blotter_complainant_add" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_complainee" class="input-label">Complainee's Name:</label>
+                                            <select id="blotter_complaineeField" name="blotter_complainee" class="input-field" required>
+                                                <option value="" disabled selected>Select a complainee</option>
+                                                <?php foreach ($residents as $resident): ?>
+                                                    <option value="<?php echo $resident['resident_fullname']; ?>">
+                                                        <?php echo htmlspecialchars($resident['resident_fullname']); ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div> 
+                                        <div class="input-wrapper">
+                                            <label for="blotter_complainee_no" class="input-label">Complainee's Contact No.:</label>
+                                            <input type="text" id="blotter_complainee_noField" name="blotter_complainee_no" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_complainee_add" class="input-label">Complainee's Address:</label>
+                                            <input type="text" id="blotter_complainee_addField" name="blotter_complainee_add" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_complaint" class="input-label">Complaint:</label>
+                                            <input type="text" id="blotter_complaintField" name="blotter_complaint" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_status" class="input-label">Status:</label>
+                                            <input type="text" id="blotter_statusField" name="blotter_status" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_action" class="input-label">Action Taken:</label>
+                                            <input type="text" id="blotter_actionField" name="blotter_action" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_incidence" class="input-label">Incidence:</label>
+                                            <input type="text" id="blotter_incidenceField" name="blotter_incidence" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_date_recorded" class="input-label">Date Recorded:</label>
+                                            <input type="date" id="blotter_date_recordedField" name="blotter_date_recorded" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_date_settled" class="input-label">Date Settled:</label>
+                                            <input type="date" id="blotter_date_settledField" name="blotter_date_settled"  class="input-field">
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_recorded_by" class="input-label">Recorded By:</label>
+                                            <input type="text" id="blotter_recorded_byField" name="blotter_recorded_by" class="input-field" required>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                                 <div class="modal-footer">
@@ -222,109 +343,111 @@ include '../../sidebar.php';
                     </div>
                 </div>
             </div>
-            <!-- Add Indigency -->
-             <section class="blotterM">
-            <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Blotter Record Form</h5>
-                <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="addBlotter" action="">
-                    <div class="certificate">
-                        <!-- First Row -->
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="blotter_complainant">Complainant's Name:</label>
-                                <input type="text" id="blotter_complainant" name="blotter_complainant" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="blotter_complainant_no">Complainant's Contact No.:</label>
-                                <input type="text" id="blotter_complainant_no" name="blotter_complainant_no" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="blotter_complainant_add">Complainant's Address:</label>
-                                <input type="text" id="blotter_complainant_add" name="blotter_complainant_add" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="blotter_complainee">Complainee's Name:</label>
-                                <input type="text" id="blotter_complainee" name="blotter_complainee" required>
-                            </div>
-                        </div>
-                        
-                        <!-- Second Row -->
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="blotter_complainee_no">Complainee's Contact No.:</label>
-                                <input type="text" id="blotter_complainee_no" name="blotter_complainee_no" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="blotter_complainee_add">Complainee's Address:</label>
-                                <input type="text" id="blotter_complainee_add" name="blotter_complainee_add" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="blotter_complaint">Complaint:</label>
-                                <input type="text" id="blotter_complaint" name="blotter_complaint" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="blotter_status">Status:</label>
-                                <input type="text" id="blotter_status" name="blotter_status" required>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="blotter_action">Action Taken:</label>
-                                <input type="text" id="blotter_action" name="blotter_action" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="blotter_incidence">Incidence:</label>
-                                <input type="text" id="blotter_incidence" name="blotter_incidence" required>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="blotter_date_recorded">Date Recorded:</label>
-                                <input type="date" id="blotter_date_recorded" name="blotter_date_recorded" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="blotter_date_settled">Date Settled:</label>
-                                <input type="date" id="blotter_date_settled" name="blotter_date_settled">
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="blotter_recorded_by">Recorded By:</label>
-                                <input type="text" id="blotter_recorded_by" name="blotter_recorded_by" required>
-                            </div>
-                        </div>
+           <!-- Add Blotter -->
+        <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Blotter Record Form</h5>
+                        <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="modal-body">
+                        <form id="addBlotter" action="">
+                            <div class="certificate">                              
+                                <div class="add">
+                                    <div class="form-grid">                                      
+                                        <div class="input-wrapper">
+                                            <label for="blotter_complainant" class="input-label">Complainant's Name:</label>
+                                            <select id="blotter_complainant" name="blotter_complainant" class="input-field" required>
+                                                <option value="" disabled selected>Select a complainant</option>
+                                                <?php foreach ($residents as $resident): ?>
+                                                    <option value="<?php echo $resident['resident_fullname']; ?>">
+                                                        <?php echo htmlspecialchars($resident['resident_fullname']); ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_complainant_no" class="input-label">Complainant's Contact No.:</label>
+                                            <input type="text" id="blotter_complainant_no" name="blotter_complainant_no" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_complainant_add" class="input-label">Complainant's Address:</label>
+                                            <input type="text" id="blotter_complainant_add" name="blotter_complainant_add" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_complainee" class="input-label">Complainee's Name:</label>
+                                            <select id="blotter_complainee" name="blotter_complainee" class="input-field" required>
+                                                <option value="" disabled selected>Select a complainee</option>
+                                                <?php foreach ($residents as $resident): ?>
+                                                    <option value="<?php echo $resident['resident_fullname']; ?>">
+                                                        <?php echo htmlspecialchars($resident['resident_fullname']); ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_complainee_no" class="input-label">Complainee's Contact No.:</label>
+                                            <input type="text" id="blotter_complainee_no" name="blotter_complainee_no" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_complainee_add" class="input-label">Complainee's Address:</label>
+                                            <input type="text" id="blotter_complainee_add" name="blotter_complainee_add" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_complaint" class="input-label">Complaint:</label>
+                                            <input type="text" id="blotter_complaint" name="blotter_complaint" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_status" class="input-label">Status:</label>
+                                            <input type="text" id="blotter_status" name="blotter_status" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_action" class="input-label">Action Taken:</label>
+                                            <input type="text" id="blotter_action" name="blotter_action" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_incidence" class="input-label">Incidence:</label>
+                                            <input type="text" id="blotter_incidence" name="blotter_incidence" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_date_recorded" class="input-label">Date Recorded:</label>
+                                            <input type="date" id="blotter_date_recorded" name="blotter_date_recorded" class="input-field" required>
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_date_settled" class="input-label">Date Settled:</label>
+                                            <input type="date" id="blotter_date_settled" name="blotter_date_settled" class="input-field">
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_recorded_by" class="input-label">Recorded By:</label>
+                                            <input type="text" id="blotter_recorded_by" name="blotter_recorded_by" class="input-field" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-            </section>
-
     </body> 
     <script>
-    function printCertificate(id) {
-        window.open('indigency_certificate.php?indigency_id=' + id, '_blank');
-    }
-    </script>
+            document.getElementById('blotter_complainant').addEventListener('change', function() {
+                let complainantId = this.value;
+                let complaineeSelect = document.getElementById('blotter_complainee');
+                
+                // Reset complainee options
+                complaineeSelect.innerHTML = `<option value="" disabled selected>Select a complainee</option>`;
+                
+                <?php foreach ($residents as $resident): ?>
+                    if (complainantId !== "<?php echo $resident['resident_fullname']; ?>") {
+                        complaineeSelect.innerHTML += `<option value="<?php echo $resident['resident_fullname']; ?>"><?php echo htmlspecialchars($resident['resident_fullname']); ?></option>`;
+                    }
+                <?php endforeach; ?>
+            });
+        </script>
 </html>
 

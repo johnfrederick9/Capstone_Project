@@ -1,12 +1,20 @@
 <?php 
 include('../../connection.php');
-$indigency_cname = $_POST["indigency_cname"];
-$indigency_mname = $_POST["indigency_mname"];
-$indigency_fname = $_POST["indigency_fname"];
-$indigency_date = $_POST["indigency_date"];
-
+$blotter_complainant = $_POST["blotter_complainant"];
+$blotter_complainant_no = $_POST["blotter_complainant_no"];
+$blotter_complainant_add = $_POST["blotter_complainant_add"];
+$blotter_complainee = $_POST["blotter_complainee"];
+$blotter_complainee_no = $_POST["blotter_complainee_no"];
+$blotter_complainee_add = $_POST["blotter_complainee_add"];
+$blotter_complaint = $_POST["blotter_complaint"];
+$blotter_status = $_POST["blotter_status"];
+$blotter_action = $_POST["blotter_action"];
+$blotter_incidence = $_POST["blotter_incidence"];
+$blotter_date_recorded = $_POST["blotter_date_recorded"];
+$blotter_date_settled = $_POST["blotter_date_settled"];
+$blotter_recorded_by = $_POST["blotter_recorded_by"];
         
-$sql = "INSERT INTO `tb_indigency` (`indigency_cname`,`indigency_mname`,`indigency_fname`,`indigency_date`) values ('$indigency_cname', '$indigency_mname', '$indigency_fname', '$indigency_date')";
+$sql = "INSERT INTO `tb_blotter` (`blotter_complainant`,`blotter_complainant_no`,`blotter_complainant_add`,`blotter_complainee`,`blotter_complainee_no`,`blotter_complainee_add`,`blotter_complaint`,`blotter_status`,`blotter_action`,`blotter_incidence`,`blotter_date_recorded`,`blotter_date_settled`,`blotter_recorded_by`) values ('$blotter_complainant', '$blotter_complainant_no', '$blotter_complainant_add', '$blotter_complainee', '$blotter_complainee_no', '$blotter_complainee_add', '$blotter_complaint', '$blotter_status', '$blotter_action', '$blotter_incidence', '$blotter_date_recorded', '$blotter_date_settled', '$blotter_recorded_by')";
 $query= mysqli_query($con,$sql);
 $lastId = mysqli_insert_id($con);
 if($query ==true)

@@ -9,9 +9,10 @@ require '../../database.php';
 .column-titles {
   display: grid;
   grid-template-columns: auto repeat(14, 1fr);
-  gap: 10px; 
+  gap: 5px; 
   font-weight: bold;
-  margin-bottom: 10px; 
+  margin-bottom: 5px; 
+  font-size: small;
 }
 span {
   text-align: center; 
@@ -63,7 +64,7 @@ span {
     align-items: center;
     cursor: pointer;
 }
-.modal-dialog{
+.transaction .modal-dialog{
     max-width: 95% !important;
 }
 .cashbook-container {
@@ -292,7 +293,13 @@ span {
                                     'url': 'fetch_data.php',
                                     'type': 'post',
                                 },
-                                "aoColumnDefs": [{
+                                "aoColumnDefs": [
+                                {
+                                    "targets": [0],  
+                                    "visible": false, 
+                                    "searchable": false, 
+                                },
+                                {
                                     "bSortable": false,
                                     "aTargets": [3]
                                 },
@@ -768,6 +775,7 @@ span {
                 </section><!-- .home-->
                 <!-- Modal -->
                  <!-- View Transaction -->
+                  <section class="transaction">
                  <div class="modal fade" id="viewDataModal" tabindex="-1" aria-labelledby="viewDataModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                     <div class="modal-content">
@@ -863,33 +871,41 @@ span {
                         </div>
                         <div class="modal-body">
                             <form id="updateUser">
-                                <div class="form-group">
                                     <input type="hidden" name="cashbook_id" id="cashbook_id" value="">
                                     <input type="hidden" name="trid" id="trid" value="">
-                                </div>
-                                <div class="form-group">
-                                <label for="periodcoveredField">Period Covered:</label>
-                                <input type="date" id="periodcoveredField" name="period_covered" required>
-                            </div>
-
-                                <div class="form-group">
-                                    <label for="treasurernameField">Treasurer Name:</label>
-                                    <input type="text" id="treasurernameField" name="treasurer_name" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="cltinitbalanceField">Cash in Local Treasurer Beginning Balance:</label>
-                                    <input type="number" id="cltinitbalanceField" name="clt_init_balance" step="0.01"  required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="cbinitbalanceField">Cash in Bank Beginning Balance:</label>
-                                    <input type="number" id="cbinitbalanceField" name="cb_init_balance" step="0.01" required>
-                                </div>
+                               
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                        <label for="periodcoveredField">Period Covered:</label>
+                                        <input type="date" id="periodcoveredField" name="period_covered" required>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="treasurernameField">Treasurer Name:</label>
+                                            <input type="text" id="treasurernameField" name="treasurer_name" required>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="cltinitbalanceField">Cash in Local Treasurer Beginning Balance:</label>
+                                        <input type="number" id="cltinitbalanceField" name="clt_init_balance" step="0.01"  required>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="cbinitbalanceField">Cash in Bank Beginning Balance:</label>
+                                        <input type="number" id="cbinitbalanceField" name="cb_init_balance" step="0.01" required>
+                                    </div>
+                                    </div>
+                                    </div>
 
                                 <div class="form-group">
                                     <div class="wrap">
-                                        <h2>UPDATE RECORDS</h2>
+                                        <h4>UPDATE RECORDS</h4>
                                         <a href="#" class="add">+</a>
                                     </div>
                                     <div class="column-titles">
@@ -935,25 +951,34 @@ span {
                         </div>
                         <div class="modal-body">
                             <form id="addUser" action="">
-                            <div class="form-group">
-                                <label for="periodcovered">Period Covered:</label>
-                                <input type="date" id="periodcovered" name="period_covered" required>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="periodcovered">Period Covered:</label>
+                                        <input type="date" id="periodcovered" name="period_covered" required>
+                                    </div>
+                                </div>
+                                 <div class="col-md-6">
+                                     <div class="form-group">
+                                        <label for="treasurername">Treasurer Name:</label>
+                                         <input type="text" id="treasurername" name="treasurer_name" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="cltinitbalance">Cash in Local Treasurer Beginning Balance:</label>
+                                            <input type="number" id="cltinitbalance" name="clt_init_balance" step="0.01"  required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="cbinitbalance">Cash in Bank Beginning Balance:</label>
+                                        <input type="number" id="cbinitbalance" name="cb_init_balance" step="0.01" required>
+                                    </div>
+                                </div>
                             </div>
-
-                                <div class="form-group">
-                                    <label for="treasurername">Treasurer Name:</label>
-                                    <input type="text" id="treasurername" name="treasurer_name" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="cltinitbalance">Cash in Local Treasurer Beginning Balance:</label>
-                                    <input type="number" id="cltinitbalance" name="clt_init_balance" step="0.01"  required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="cbinitbalance">Cash in Bank Beginning Balance:</label>
-                                    <input type="number" id="cbinitbalance" name="cb_init_balance" step="0.01" required>
-                                </div>
 
                                 <div class="form-group">
                                     <div class="wrap">
@@ -994,6 +1019,7 @@ span {
                     </div>
                 </div>
             </div>
+            </section>
     </body> 
     <script>
         function validateForm() {

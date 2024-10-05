@@ -136,6 +136,12 @@ if (isset($conn) && $conn) {
                   <span class="text nav-text"> &nbsp; &nbsp; &nbsp;RAO Table</span>
                 </a>
               </li>
+              <li>
+                <a href="../../pages/cashbook/table_cashbook_records.php" title="Cashbook Table">
+                &nbsp; &nbsp; <i class='bx bx-wallet'></i>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Cashbook Table</span>
+                </a>
+              </li>
             </ul>
           </li>
 
