@@ -32,13 +32,18 @@ if (mysqli_num_rows($result) > 0) {
                         </div>
                         <div class="table-actions">    
                             <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-popup">+ Add Blotter</button>
-                            <!--<button class="print-btn" title="Print">
+                            <button class="print-btn " title="Print Selected">
                                 <i class="bx bx-printer"></i>
-                            </button>-->
+                            </button>
                         </div>
                     </div>
                     <table id="example" class="table-table">
                     <thead>
+                        <th>
+                        <button class="print-all-btn" title="Print All">
+                                    <i class="bx bx-printer"></i>
+                            </button>
+                        </th>
                         <th>Complainant Name</th>
                         <th>Complainant Contact No.</th>
                         <th>Complainant Address</th>
@@ -52,7 +57,7 @@ if (mysqli_num_rows($result) > 0) {
                         <th>Date Recorded</th>
                         <th>Date Settled</th>
                         <th>Recorded By</th>
-                        <th>Buttons</th>
+                        <th>Update</th>
                     </thead>
                     <tbody>
                     </tbody>
@@ -74,17 +79,79 @@ if (mysqli_num_rows($result) > 0) {
                                 },
                                 "aoColumnDefs": [
                                     {
-                                        "targets": [10, 11, 12],  
+                                        "targets": [9, 10, 11, 12],  
                                         "visible": false, 
                                         "searchable": false, 
                                     },
                                     {
                                     "bSortable": false,
-                                    "aTargets": [13]
+                                    "aTargets": [14]
                                     },
                                 ]
                             });
                         });
+                        $('#selectAll').click(function() {
+                            var checkedStatus = this.checked;
+                            $('.row-checkbox').each(function() {
+                                $(this).prop('checked', checkedStatus);
+                            });
+                        });
+
+                        // Function to trigger the print dialog with the loaded HTML content
+                        function printContentFromPage(url, ids = '') {
+                            $.ajax({
+                                url: url,
+                                type: 'GET',
+                                data: { ids: ids }, // Pass IDs if needed (for print_selected.php)
+                                success: function(response) {
+                                    // Create an iframe to print the content
+                                    var iframe = document.createElement('iframe');
+                                    iframe.style.position = 'absolute';
+                                    iframe.style.width = '0px';
+                                    iframe.style.height = '0px';
+                                    iframe.style.border = 'none';
+                                    document.body.appendChild(iframe);
+
+                                    // Write the content into the iframe
+                                    var doc = iframe.contentWindow.document;
+                                    doc.open();
+                                    doc.write(response);
+                                    doc.close();
+
+                                    // Trigger print dialog
+                                    iframe.contentWindow.focus();
+                                    iframe.contentWindow.print();
+
+                                    // Remove iframe after printing
+                                    document.body.removeChild(iframe);
+                                },
+                                error: function() {
+                                    alert('Failed to load print content.');
+                                }
+                            });
+                        }
+
+                        // Print selected rows
+                        $('.print-btn').click(function() {
+                            var selectedIds = [];
+                            $('.row-checkbox:checked').each(function() {
+                                selectedIds.push($(this).val());
+                            });
+
+                            if (selectedIds.length > 0) {
+                                var idsString = selectedIds.join(',');
+                                printContentFromPage('print_selected.php', idsString); // Load and print content from print_selected.php
+                            } else {
+                                alert('Please select at least one row to print.');
+                                
+                            }
+                        });
+
+                        // Print all rows
+                        $('.print-all-btn').click(function() {
+                            printContentFromPage('print_all.php'); // Load and print content from print_all.php
+                        });
+                  
                      $(document).on('submit', '#addBlotter', function(e) {
                             e.preventDefault();
                             var blotter_complainant = $('#blotter_complainant').val();
@@ -180,9 +247,10 @@ if (mysqli_num_rows($result) > 0) {
                                         var json = JSON.parse(data);
                                         if (json.status == 'true') {
                                             table = $('#example').DataTable();
-                                            var button = '<td><div class="buttons"> <a href="javascript:void();" data-id="'+ blotter_id +'" class="update-btn btn-sm editbtn" ><i class="bx bx-sync"></i></a> <button class="print-btn" data-id="'+blotter_id+'" title="Print Selected"> <i class="bx bx-printer"></i></button></div></td>';
+                                            var checkbox = '<td><input type="checkbox" class="row-checkbox" value="'+blotter_id+'"></td>';
+                                            var button = '<td><div class="buttons"> <a href="javascript:void();" data-id="'+ blotter_id +'" class="update-btn btn-sm editbtn" ><i class="bx bx-sync"></i></a></td>';
                                             var row = table.row("[id='" + trid + "']");
-                                            row.data([blotter_complainant, blotter_complainant_no, blotter_complainant_add, blotter_complainee, blotter_complainee_no, blotter_complainee_add, blotter_complaint, blotter_status, blotter_action, blotter_incidence, blotter_date_recorded, blotter_date_settled, blotter_recorded_by, button]);
+                                            row.data([checkbox, blotter_complainant, blotter_complainant_no, blotter_complainant_add, blotter_complainee, blotter_complainee_no, blotter_complainee_add, blotter_complaint, blotter_status, blotter_action, blotter_incidence, blotter_date_recorded, blotter_date_settled, blotter_recorded_by, button]);
                                             $('#exampleModal').modal('hide');
                                         } else {
                                             alert('Update failed: ' + json.message);
