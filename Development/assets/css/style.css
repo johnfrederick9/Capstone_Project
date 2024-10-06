@@ -1724,25 +1724,25 @@ table{
 }
 
 .dashboard .calendar-container {
-  background: #44c95a;
+  background: #f0f0f0;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  color: #fff;
+  color: #222222;
   text-align: center;
   margin-bottom: 20px;
 }
 
 .dashboard .calendar-header h2 {
   font-size: 20px;
-  color: #fff;
+  color: #252525;
   margin-bottom: 10px;
 }
 
 .dashboard #calendar h3 {
   font-size: 18px;
   margin-bottom: 10px;
-  color: #fff;
+  color: #030303;
 }
 
 .dashboard .calendar-grid {
@@ -1754,7 +1754,7 @@ table{
 
 .dashboard .calendar-day {
   font-weight: bold;
-  color: #fff;
+  color: #333;
 }
 
 .dashboard .calendar-date {
@@ -1769,6 +1769,11 @@ table{
 
 .dashboard .graph-report-button {
   margin-top: 3px;
+}
+
+body.dark .home .dashboard .calendar-container{
+    color: rgb(46, 46, 46);
+    background-color: #d6d6d6
 }
 /* 
 ---------------------------------------------

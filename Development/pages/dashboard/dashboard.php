@@ -21,12 +21,12 @@ margin-bottom: 10px;
 .calendar-container .bx {
     font-size: 1.8em;
     cursor: pointer;
+    color: #030303;
 }
 
 .calendar-container .bx:hover {
-    color: #007bff;
+    color: #44c95a;
 }
-
 </style>
 <body>
     <section class="home">

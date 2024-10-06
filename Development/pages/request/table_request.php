@@ -24,8 +24,6 @@ if (mysqli_num_rows($result) > 0) {
         margin-top: -5px;
     }
 </style>
-
-
 <body>
     <section class="home">  
         <div class="certificate">
