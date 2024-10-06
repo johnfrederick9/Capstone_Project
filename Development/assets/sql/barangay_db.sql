@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 04, 2024 at 02:28 AM
+-- Generation Time: Oct 06, 2024 at 04:42 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -284,7 +284,8 @@ CREATE TABLE `tb_indigency` (
 --
 
 INSERT INTO `tb_indigency` (`indigency_id`, `indigency_cname`, `indigency_fname`, `indigency_mname`, `indigency_date`) VALUES
-(9, 'John Frederick D. Gelay', 'Fernando A. Gelay', 'Maria D. Gelay', '2024-09-21');
+(9, 'John Frederick D. Gelay', 'Fernando A. Gelay', 'Maria D. Gelay', '2024-09-21'),
+(10, 'asdf', 'asdf', 'asdf', '2024-10-05');
 
 -- --------------------------------------------------------
 
@@ -470,6 +471,21 @@ INSERT INTO `tb_rao_ob_data` (`rao_id`, `rao_ob_data_id`, `ob_ref_date`, `ob_ref
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tb_request`
+--
+
+CREATE TABLE `tb_request` (
+  `request_id` int(11) NOT NULL,
+  `requester_name` varchar(255) NOT NULL,
+  `request_type` varchar(255) NOT NULL,
+  `request_description` varchar(255) DEFAULT NULL,
+  `request_date` datetime DEFAULT NULL,
+  `request_status` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tb_resident`
 --
 
@@ -496,7 +512,8 @@ CREATE TABLE `tb_resident` (
 
 INSERT INTO `tb_resident` (`resident_id`, `resident_firstname`, `resident_middlename`, `resident_lastname`, `resident_sex`, `resident_suffixes`, `resident_address`, `resident_educationalattainment`, `resident_birthdate`, `resident_age`, `resident_status`, `resident_householdrole`, `household_id`, `resident_maidenname`) VALUES
 (8, 'John Frederick', 'Domecillo', 'Gelay', 'Male', 'None', 'Mantalongon, Dalaguete, Cebu', 'High School, Graduate', '2001-11-09', 50, 'Single', 'Son', 0, 'Domecillo'),
-(11, 'Pauline Cielo', 'Domecillo', 'Gelay', 'Female', 'None', 'Mantalongon, Dalaguete, Cebu', 'High School, Undergraduate', '2002-08-01', 22, 'Single', '12', 12, 'Domecillo');
+(11, 'Pauline Cielo', 'Domecillo', 'Gelay', 'Female', 'None', 'Mantalongon, Dalaguete, Cebu', 'High School, Undergraduate', '2002-08-01', 22, 'Single', '12', 12, 'Domecillo'),
+(15, 'asdf', 'asdf', 'asdf', 'Male', 'Jr', 'asdf', 'Elementary', '2024-10-05', 12, 'Single', 'asdf', 12, 'sadf');
 
 -- --------------------------------------------------------
 
@@ -555,7 +572,7 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`user_id`, `lastname`, `firstname`, `middlename`, `sex`, `birthdate`, `barangayposition`, `username`, `password`, `theme`, `suffix`, `profile_picture`) VALUES
-(61, 'Develo4', '', '', 'Male', '2024-01-01', 'Barangay Captain', 'Develo4', '$2y$10$vIYe3ucbPMKyCD26j2pS2e9SXXeloy3aArnI7xrZZtVwz6lHjggBy', '\'light\'', 'None', 'profile_default.png');
+(61, 'Develo4', '', '', 'Male', '2024-01-01', 'Barangay Captain', 'Develo4', '$2y$10$vIYe3ucbPMKyCD26j2pS2e9SXXeloy3aArnI7xrZZtVwz6lHjggBy', 'dark', 'None', 'profile_default.png');
 
 --
 -- Indexes for dumped tables
@@ -662,6 +679,12 @@ ALTER TABLE `tb_rao_ob_data`
   ADD KEY `rao_id` (`rao_id`);
 
 --
+-- Indexes for table `tb_request`
+--
+ALTER TABLE `tb_request`
+  ADD PRIMARY KEY (`request_id`);
+
+--
 -- Indexes for table `tb_resident`
 --
 ALTER TABLE `tb_resident`
@@ -687,7 +710,7 @@ ALTER TABLE `tb_user`
 -- AUTO_INCREMENT for table `tb_blotter`
 --
 ALTER TABLE `tb_blotter`
-  MODIFY `blotter_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `blotter_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `tb_cashbook`
@@ -741,7 +764,7 @@ ALTER TABLE `tb_financial`
 -- AUTO_INCREMENT for table `tb_indigency`
 --
 ALTER TABLE `tb_indigency`
-  MODIFY `indigency_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `indigency_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tb_inventory`
@@ -780,10 +803,16 @@ ALTER TABLE `tb_rao_ob_data`
   MODIFY `rao_ob_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
+-- AUTO_INCREMENT for table `tb_request`
+--
+ALTER TABLE `tb_request`
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `tb_resident`
 --
 ALTER TABLE `tb_resident`
-  MODIFY `resident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `resident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tb_user`

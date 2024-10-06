@@ -158,6 +158,12 @@ if (isset($conn) && $conn) {
                   <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Blotter</span>
                 </a>
               </li>
+              <li>
+                <a href="../../pages/request/table_request.php" title="Request Table">
+                &nbsp; &nbsp; <i class='bx bxs-report'></i>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Request</span>
+                </a>
+              </li>
             </ul>
           </li>
 
