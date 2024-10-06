@@ -294,28 +294,6 @@ if (mysqli_num_rows($result) > 0) {
                             }
                         })
                     });
-                    $(document).ready(function() {
-                    // Event listener for the print button
-                    $(document).on('click', '.print-btn', function() {
-                        var blotterId = $(this).data('id'); // Get the indigency_id
-
-                        // Make an AJAX request to fetch the certificate content
-                        $.ajax({
-                            url: 'fetch_blotter.php', // URL to fetch the certificate HTML
-                            type: 'POST',
-                            data: {id: blotterId},
-                            success: function(response) {
-                                // Create a new window to print the content
-                                var printWindow = window.open('', '', 'height=600,width=800');
-                                printWindow.document.write(response);
-                                printWindow.document.close();
-                                printWindow.focus();
-                                printWindow.print();
-                                printWindow.close();
-                            }
-                        });
-                    });
-                });
                     </script>
                 </section><!-- .home-->
                 <!-- Modal -->

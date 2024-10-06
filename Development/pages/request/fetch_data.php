@@ -44,6 +44,7 @@ $count_rows = mysqli_num_rows($query);
 $data = array();
 while ($row = mysqli_fetch_assoc($query)) {
     $sub_array = array();
+    $sub_array[] = '<input type="checkbox" class="row-checkbox" value="'.$row['request_id'].'">';
     $sub_array[] = $row['requester_name'];
     $sub_array[] = $row['request_type'];
     $sub_array[] = $row['request_description'];
@@ -51,9 +52,6 @@ while ($row = mysqli_fetch_assoc($query)) {
     $sub_array[] = $row['request_status'];
     $sub_array[] = '<div class="buttons">
                         <a href="javascript:void(0);" data-id="'.$row['request_id'].'" class="update-btn btn-sm editbtn"><i class="bx bx-sync"></i></a>
-                        <button class="print-btn" data-id="'.$row['request_id'].'" title="Print Selected">
-                            <i class="bx bx-printer"></i>
-                        </button>
                     </div>';
     $data[] = $sub_array;
 }
