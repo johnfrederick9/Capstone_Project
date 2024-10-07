@@ -27,14 +27,6 @@ margin-bottom: 10px;
 .calendar-container .bx:hover {
     color: #44c95a;
 }
-<<<<<<< HEAD
-
-marquee{
-    color: white;
-}
-
-=======
->>>>>>> 021f3fd227e24504daeca78585ea248a83faac08
 </style>
 <body>
     <section class="home">
