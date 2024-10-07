@@ -195,7 +195,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="profile-info">
                                     <p><strong><?php echo $firstname . ' ' . $middlename_initial . ' ' . $lastname;?></strong></p>
                                     <p><?php echo $row["barangayposition"];?></p>
-                                    <p>Suffix: <?php echo $row["suffix"];?></p>
                                     <p>Sex: <?php echo $row["sex"];?></p>
                                     <p>Birth Date: <?php echo date("F j, Y", strtotime($row["birthdate"])); ?></p>
 

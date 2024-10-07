@@ -225,15 +225,15 @@ include '../../sidebar.php';
                                 </div>
                                 <div class="form-group">
                                     <label for="certificate">Mother's Name:</label>
-                                    <input type="text" id="indigency_mname" name="indigency_mname" required>
+                                    <input type="text" id="indigency_mname" name="indigency_mname">
                                 </div>
                                 <div class="form-group">
                                     <label for="certificatedate"> Father's Name:</label>
-                                    <input type="text" id="indigency_fname" name="indigency_fname" required>
+                                    <input type="text" id="indigency_fname" name="indigency_fname">
                                 </div>
                                 <div class="form-group">
                                     <label for="certificatedate"> Issued Date:</label>
-                                    <input type="date" id="indigency_date" name="indigency_date" required>
+                                    <input type="date" id="indigency_date" name="indigency_date">
                                 </div>
                             </div>
                                 <div class="modal-footer">
@@ -245,10 +245,5 @@ include '../../sidebar.php';
                 </div>
             </div>
     </body> 
-    <script>
-    function printCertificate(id) {
-        window.open('indigency_certificate.php?indigency_id=' + id, '_blank');
-    }
-    </script>
 </html>
 

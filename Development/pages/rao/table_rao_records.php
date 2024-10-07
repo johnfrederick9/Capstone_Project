@@ -3,12 +3,13 @@ include '../../head.php';
 include '../../sidebar.php';
 ?>
 <style>
+
 .column-titles {
   display: grid;
   grid-template-columns: 20px repeat(9, 1fr) 50px; 
-  gap: 5px; 
-  margin-bottom: 10px; 
+  gap: 10px; 
   align-items: center; 
+  font-size: small;
 }
 
 .column-titles span {
@@ -78,6 +79,9 @@ include '../../sidebar.php';
     align-items: center;
     cursor: pointer;
 }
+.rao .modal-lg {
+  max-width: 80%; /* Make the modal wider */
+}
 </style>
 <body>
     <section class="home">  
@@ -126,11 +130,16 @@ include '../../sidebar.php';
                                     'url': 'fetch_data.php',
                                     'type': 'post',
                                 },
-                                "aoColumnDefs": [{
-                                    "bSortable": false,
-                                    "aTargets": [5]
-                                },
-
+                                "columnDefs": [
+                                    {
+                                        "targets": [0],  // Target the first column (aData[0])
+                                        "visible": false, // Hide the column
+                                        "searchable": false // Disable search for this column if needed
+                                    },
+                                    {
+                                        "bSortable": false,
+                                        "aTargets": [5]
+                                    }
                                 ]
                             });
                         });
@@ -546,19 +555,23 @@ include '../../sidebar.php';
                     </script>
                 </section><!-- .home-->
                 <!-- Modal -->
-                <!-- Update Project -->
+                <!-- Update RAO -->
+                <section class="rao">
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Update employee</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Update Report of Appropriations and Obligations (RAO)</h5>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form id="updateUser">
-                            <div class="form-group">
-                                <label for="period_covered_update">Period Covered:</label>
-                                <input type="number" id="period_covered_update" name="period_covered_update" max = "9999" min = 1700>
+                            <div class="form-group" style="display: flex; justify-content: flex-start; align-items: center;">
+                                <div style="margin-right: 15px;">
+                                    <label for="period_covered" class="form-label" style="margin-right: 10px;">Period Covered:</label>
+                                    <input type="number" id="period_covered_update" name="period_covered_update" max = "9999" min = 1700>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
 
                             <div class="form-group">
@@ -624,7 +637,7 @@ include '../../sidebar.php';
             </div>
             <!-- Add RAO Record -->
             <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Add Report of Appropriations and Obligations (RAO)</h5>
@@ -632,9 +645,12 @@ include '../../sidebar.php';
                         </div>
                         <div class="modal-body">
                             <form id="addUser" action="">
-                            <div class="form-group">
-                                <label for="period_covered">Period Covered:</label>
-                                <input type="number" id="period_covered" name="period_covered" required>
+                            <div class="form-group" style="display: flex; justify-content: flex-start; align-items: center;">
+                                <div style="margin-right: 15px;">
+                                    <label for="period_covered" class="form-label" style="margin-right: 10px;">Period Covered:</label>
+                                    <input type="number" id="period_covered" name="period_covered" class="form-control" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
 
                             <div class="form-group">
@@ -690,15 +706,12 @@ include '../../sidebar.php';
                                 
                                 <!-- Dynamic Inputs Will Be Added Here -->
                             </div>
-
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
+            </section>
     </body> 
     <script>
         //Today's Date Script

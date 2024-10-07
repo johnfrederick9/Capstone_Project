@@ -9,9 +9,10 @@ require '../../database.php';
 .column-titles {
   display: grid;
   grid-template-columns: auto repeat(14, 1fr);
-  gap: 10px; 
+  gap: 5px; 
   font-weight: bold;
-  margin-bottom: 10px; 
+  margin-bottom: 5px; 
+  font-size: small;
 }
 span {
   text-align: center; 
@@ -63,6 +64,196 @@ span {
     align-items: center;
     cursor: pointer;
 }
+.transaction .modal-dialog{
+    max-width: 95% !important;
+    overflow-y: auto !important;
+}
+.cashbook-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-x: auto; /* Ensures table doesn't overflow horizontally */
+}
+
+.cashbook-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cashbook-header .details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.details .info {
+    margin: 0 10px;
+}
+
+.cashbook-table {
+    width: 100%; /* Ensures the table fills the width of the container */
+    max-width: 100%; /* Prevents it from overflowing */
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    table-layout: fixed;
+    border: 3px solid #000 /* Ensures the table columns fit within the container */
+}
+
+.cashbook-table th, .cashbook-table td {
+    border: 1px solid #000;
+    padding: 5px;
+    text-align: center;
+    box-sizing: border-box; /* Ensures padding is included within the element width */
+}
+
+.cashbook-table th {
+    background-color: #f0f0f0; /* Background color for headers */
+    text-align: center; /* Center text in headers */
+    padding: 10px; /* Padding for header cells */
+}
+
+.details input[type="text"], 
+.details input[type="date"] {
+    width: 100%;           /* Full width */
+    padding: 5px;         /* Padding for better spacing */
+    border: none;         /* Remove borders */
+    background: none;     /* Ensure background is transparent (if needed) */
+    outline: none;        /* Remove outline on focus */         /* Prevent resizing if desired */
+    font-size: 15px;
+    text-align: center;
+}
+
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(1),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(2),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(3),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(4),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(5),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(6),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(7),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(8),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(9),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(10),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(11),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(12),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(13),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(14),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(15),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(16) {
+    font-size: 10px; /* Same for all cash category columns */
+}
+
+
+/* Additional styling for borders and spacing */
+.cashbook-table th {
+    border: none; /* Border for all header cells */
+}
+
+.cashbook-table thead tr:nth-of-type(1) th:nth-child(1),
+.cashbook-table thead tr:nth-of-type(1) th:nth-child(2),
+.cashbook-table thead tr:nth-of-type(1) th:nth-child(3),
+.cashbook-table thead tr:nth-of-type(1) th:nth-child(4),
+.cashbook-table thead tr:nth-of-type(1) th:nth-child(5),
+.cashbook-table thead tr:nth-of-type(1) th:nth-child(6),
+.cashbook-table thead tr:nth-of-type(1) th:nth-child(7),
+.cashbook-table thead tr:nth-of-type(1) th:nth-child(8),
+.cashbook-table thead tr:nth-of-type(1) th:nth-child(9),
+
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(1),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(3),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(5),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(6),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(7),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(8),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(9),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(10),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(11),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(12),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(13),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(14),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(15),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(16) {
+    border: 1px solid black; /* Same for all cash category columns */
+}
+/* Remove borders between Particulars % Reference 1 and 2 */
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(1) {
+    border-right: none; /* Removes border between Particulars 1 and 2 */
+}
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(3){
+    border-right: none; /* Removes border between Particulars 1 and 2 */
+}
+
+/* Add visible border between Particulars 1 and References */
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(2) {
+    border-right: 1px solid #000; /* Adds a border between Particulars 2 and Reference 1 */
+}
+
+/* Remove the bottom border from the Particulars and References headers */
+.cashbook-table thead tr:nth-of-type(1) th:nth-child(2),
+.cashbook-table thead tr:nth-of-type(1) th:nth-child(3), /* For Particulars */
+.cashbook-table thead tr:nth-of-type(1) th:nth-child(4),
+.cashbook-table thead tr:nth-of-type(1) th:nth-child(5) { /* For References */
+    border-bottom: none; /* Remove the bottom border */
+}
+
+/* Remove the bottom border from the Particulars and References headers */
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(1),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(2),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(3), /* For Particulars */
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(4),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(5) { /* For References */
+    border-bottom: 1px solid #000; /* Remove the bottom border */
+}
+
+/* Hide text for Particulars 1, 2, and Reference 1, 2 */
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(1),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(2),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(3),
+.cashbook-table thead tr:nth-of-type(2) th:nth-child(4) {
+    border-top: none; /* Removes border between Particulars 1 and 2 */
+    color: transparent; /* Hides text */
+}
+
+/* Action button styles */
+.cashbook-actions {
+    text-align: right;
+}
+
+.cashbook-actions button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.cashbook-actions button:hover {
+    background-color: #45a049;
+}
+
+.cashbook-table input[type="text"]:disabled , input[type="date"]:disabled{
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    font-size: 10px;
+    color: #000;
+}
+.cashbook-table input[type="number"]:disabled{
+    width: 100%;
+    padding: 2px;
+    box-sizing: border-box;
+    border: none;
+    font-size: 15px;
+    color: #000;
+}
+.hidden{
+    display: none;
+}
+
 </style>
 <body>
     <section class="home">  
@@ -95,7 +286,8 @@ span {
                             $('#example').DataTable({
                                 "fnCreatedRow": function(nRow, aData, iDataIndex) {
                                     $(nRow).attr('id', aData[0]);
-                                    $(nRow).find('.deleteBtn').attr('data-cashbook_id', aData[0]);
+                                    $(nRow).find('.deleteBtn').attr('data-cashbook-id', aData[0]);
+                                    $(nRow).find('.infoBtn').attr('data-item-id', aData[0]);
                                 },
                                 'serverSide': 'true',
                                 'processing': 'true',
@@ -105,7 +297,13 @@ span {
                                     'url': 'fetch_data.php',
                                     'type': 'post',
                                 },
-                                "aoColumnDefs": [{
+                                "aoColumnDefs": [
+                                {
+                                    "targets": [0],  
+                                    "visible": false, 
+                                    "searchable": false, 
+                                },
+                                {
                                     "bSortable": false,
                                     "aTargets": [3]
                                 },
@@ -484,9 +682,214 @@ span {
                                 return null;
                             }
                         })
+
+                        $('#example').on('click', '.infoBtn', function(event) {
+                        let trid = $(this).closest('tr').attr('id');
+                        let cashbook_id = $(this).data('item-id');
+
+                        $('#cashbook_id').val(cashbook_id);
+                        $('#trid').val(trid);
+                        $('#viewDataModal').modal('show');
+
+                        $('.inp-group-view').empty(); 
+                        $('.initial-value').empty();
+                        $('.ending-value').empty();
+                        // Clear previous data
+                        let upCounter = 1; // Initialize the counter
+
+                        $.ajax({
+                            url: "get_single_data.php",
+                            data: { cashbook_id: cashbook_id },
+                            type: 'post',
+                            success: function(data) {
+                                try {
+                                    let json = JSON.parse(data);
+                                    console.log("Full Data:", json);
+
+                                    if (json.status === 'true') {
+                                        let record = json.record;
+                                        let cashbookData = json.cashbook_data;
+
+                                        // Populate input fields with the main record data
+                                        $('#periodcoveredView').val(record.period_covered);
+                                        $('#treasurernameView').val(record.treasurer_name);
+                                        $('#cltinitbalanceView').val(record.clt_init_balance);
+                                        $('#cbinitbalanceView').val(record.cb_init_balance);
+
+                                        // Append initial values for "Initial" and "Balances"
+                                        const initialRow = `
+                                            <tr>
+                                                <td><input type="number" disabled></td>
+                                                <td colspan="2"></td>
+                                                <td colspan="2"><input type="text" value="Initial Balances" disabled></td>
+                                                <td colspan="2"></td>
+                                                <td><input type="number" name="clt_init_balance[]" value="${record.clt_init_balance}" disabled></td>
+                                                <td colspan="2"></td>
+                                                <td><input type="number" name="cb_init_balance[]" value="${record.cb_init_balance}" disabled></td>
+                                                <td colspan="2"></td>
+                                                <td><input type="number" disabled></td>
+                                                <td colspan="2"></td>
+                                                <td><input type="number" disabled></td>
+                                            </tr>`;
+                                        $('#viewDataTable tbody.initial-value').append(initialRow);
+
+                                        const endingRow = `
+                                            <tr>
+                                                <td><input type="number" disabled></td>
+                                                <td colspan="2"></td>
+                                                <td colspan="2"><input type="text" value=" Totals" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.clt_end_in}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.clt_end_out}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.clt_end_balance}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.cb_end_in}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.cb_end_out}" disabled></td>
+                                                <td><input type="number" name="cb_end_balance[]" value="${record.cb_end_balance}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.ca_end_receipt}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.ca_end_disbursement}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.ca_end_balance}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.pcf_end_receipt}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.pcf_end_payments}" disabled></td>
+                                                <td><input type="number" name="clt_end_balance[]" value="${record.pcf_end_balance}" disabled></td>
+                                            </tr>`;
+                                        $('#viewDataTable tbody.ending-value').append(endingRow);
+
+                                        // Populate input fields with associated records
+                                        cashbookData.forEach(function(cData) {
+                                            const inputGroupRow = `
+                                                <tr>
+                                                    <td class="hidden"><input type="hidden" name="up_counter[]" value="${upCounter}"></td>
+                                                    <td class="hidden"><input type="hidden" name="cashbook_data_id[]" value="${cData.cashbook_data_id}"></td>
+                                                    <td><input type="date" name="date_data[]" value="${cData.date_data}" disabled></td>
+                                                    <td><input type="text" name="particulars_1[]" value="${cData.particulars_1}" disabled></td>
+                                                    <td><input type="text" name="particulars_2[]" value="${cData.particulars_2}" disabled></td>
+                                                    <td><input type="text" name="reference_1[]" value="${cData.reference_1}" disabled></td>
+                                                    <td><input type="text" name="reference_2[]" value="${cData.reference_2}" disabled></td>
+                                                    <td><input type="number" name="clt_in_data[]" value="${cData.clt_in}" disabled></td>
+                                                    <td><input type="number" name="clt_out_data[]" value="${cData.clt_out}" disabled></td>
+                                                    <td><input type="number" name="clt_balance[]" value="${cData.clt_balance}" disabled></td>
+                                                    <td><input type="number" name="cb_in_data[]" value="${cData.cb_in}" disabled></td>
+                                                    <td><input type="number" name="cb_out_data[]" value="${cData.cb_out}" disabled></td>
+                                                    <td><input type="number" name="cb_balance[]" value="${cData.cb_balance}" disabled></td>
+                                                    <td><input type="number" name="ca_receipt_data[]" value="${cData.ca_receipt}" disabled></td>
+                                                    <td><input type="number" name="ca_disbursement_data[]" value="${cData.ca_disbursement}" disabled></td>
+                                                    <td><input type="number" name="ca_balance[]" value="${cData.ca_balance}" disabled></td>
+                                                    <td><input type="number" name="pcf_receipt_data[]" value="${cData.pcf_receipt}" disabled></td>
+                                                    <td><input type="number" name="pcf_payments_data[]" value="${cData.pcf_payments}" disabled></td>
+                                                    <td><input type="number" name="pcf_balance[]" value="${cData.pcf_balance}" disabled></td>
+                                                </tr>`;
+                                            $('#viewDataTable tbody.inp-group-view').append(inputGroupRow);
+                                            upCounter++; // Increment the counter for the next row
+                                        });
+
+                                    } else {
+                                        console.error('Error in JSON response:', json.message);
+                                        alert("Error: " + json.message); // Alert user if there's an error message
+                                    }
+                                } catch (e) {
+                                    console.error("Failed to parse JSON:", e);
+                                    alert("An error occurred while processing the data.");
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("AJAX Error: " + status + ": " + error);
+                                alert("An error occurred while fetching data.");
+                            }
+                        });
+                    });
+
                     </script>
                 </section><!-- .home-->
                 <!-- Modal -->
+                 <!-- View Transaction -->
+                  <section class="transaction">
+                 <div class="modal fade" id="viewDataModal" tabindex="-1" aria-labelledby="viewDataModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="viewDataModalLabel">CASHBOOK</h5>
+                            <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="cashbook-container">
+                            <!-- Header Section -->
+                            <div class="cashbook-header">
+                                <h1>Cashbook Record</h1>
+                                <div class="details">
+                                    <div class="info">
+                                        <label>Barangay Treasurer:</label> <input type="text" id="treasurernameView" name="treasurer_name" disabled />
+                                    </div>
+                                    <div class="info">
+                                        <label>Barangay:</label> <input type="text" value="MANTALONGON" disabled/>
+                                        
+                                    </div>
+                                    <div class="info">
+                                        <label>Municipality:</label> <input type="text" value="DALAGUETE" disabled />
+                                    </div>
+                                    <div class="info">
+                                        <label>Province:</label> <input type="text" value="CEBU" disabled />
+                                    </div>
+                                    <div class="info">
+                                        <label>Period Covered:</label> <input type="date" id = "periodcoveredView" name = "period_covered" disabled />
+                                    </div>
+                                </div>
+                            </div>
+
+                               <!-- Cashbook Table -->
+                            <table id = "viewDataTable" class="cashbook-table">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" class="hidden">Counter</th>
+                                        <th rowspan="2" class="hidden">ID</th>
+                                        <th rowspan="2">Date</th>
+                                        <th colspan="2">Particulars</th> <!-- Combined Particulars -->
+                                        <th colspan="2">References</th>  <!-- Combined References -->
+                                        <th colspan="3">Cash in Local Treasury</th>
+                                        <th colspan="3">Cash in Bank</th>
+                                        <th colspan="3">Cash Advances</th>
+                                        <th colspan="3">Petty Cash Fund</th>
+                                    </tr>
+                                    <tr>
+                                        <!-- Sub-columns for Particulars and References -->
+                                        <th >Particular 1</th>
+                                        <th >Particular 2</th>
+                                        <th>Reference 1</th>
+                                        <th>Reference 2</th>
+                                        <th>Collection</th>
+                                        <th>Deposit</th>
+                                        <th>Balance</th>
+
+                                        <th>Deposit</th>
+                                        <th>Check Issued</th>
+                                        <th>Balance</th>
+
+                                        <th>Receipt</th>
+                                        <th>Disbursement</th>
+                                        <th>Balance</th>
+
+                                        <th>Receipt Replenishment</th>
+                                        <th>Payments</th>
+                                        <th>Balance</th>
+                                    </tr>
+                                </thead>
+                                <tbody class = "initial-value">
+
+                                </tbody>
+                                <tbody class = "inp-group-view">
+                                     <!-- Dynamic rows go here -->
+                                </tbody>
+                                <tbody class = "ending-value">
+
+                                </tbody>
+                            </table>
+                            <!-- Action buttons -->
+                            <div class="cashbook-actions">
+                                <button id="print-btn">Print</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
                 <!-- Update Transaction -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -497,33 +900,41 @@ span {
                         </div>
                         <div class="modal-body">
                             <form id="updateUser">
-                                <div class="form-group">
                                     <input type="hidden" name="cashbook_id" id="cashbook_id" value="">
                                     <input type="hidden" name="trid" id="trid" value="">
-                                </div>
-                                <div class="form-group">
-                                <label for="periodcoveredField">Period Covered:</label>
-                                <input type="date" id="periodcoveredField" name="period_covered" required>
-                            </div>
-
-                                <div class="form-group">
-                                    <label for="treasurernameField">Treasurer Name:</label>
-                                    <input type="text" id="treasurernameField" name="treasurer_name" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="cltinitbalanceField">Cash in Local Treasurer Beginning Balance:</label>
-                                    <input type="number" id="cltinitbalanceField" name="clt_init_balance" step="0.01"  required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="cbinitbalanceField">Cash in Bank Beginning Balance:</label>
-                                    <input type="number" id="cbinitbalanceField" name="cb_init_balance" step="0.01" required>
-                                </div>
+                               
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                        <label for="periodcoveredField">Period Covered:</label>
+                                        <input type="date" id="periodcoveredField" name="period_covered" required>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="treasurernameField">Treasurer Name:</label>
+                                            <input type="text" id="treasurernameField" name="treasurer_name" required>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="cltinitbalanceField">Cash in Local Treasurer Beginning Balance:</label>
+                                        <input type="number" id="cltinitbalanceField" name="clt_init_balance" step="0.01"  required>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="cbinitbalanceField">Cash in Bank Beginning Balance:</label>
+                                        <input type="number" id="cbinitbalanceField" name="cb_init_balance" step="0.01" required>
+                                    </div>
+                                    </div>
+                                    </div>
 
                                 <div class="form-group">
                                     <div class="wrap">
-                                        <h2>UPDATE RECORDS</h2>
+                                        <h4>UPDATE RECORDS</h4>
                                         <a href="#" class="add">+</a>
                                     </div>
                                     <div class="column-titles">
@@ -560,34 +971,43 @@ span {
                 </div>
             </div>
             <!-- Add Transaction -->
-            <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add Cashbook Record</h5>
+                            <h5 class="modal-title" id="addUserModalLabel">Add Cashbook Record</h5>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form id="addUser" action="">
-                            <div class="form-group">
-                                <label for="periodcovered">Period Covered:</label>
-                                <input type="date" id="periodcovered" name="period_covered" required>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="periodcovered">Period Covered:</label>
+                                        <input type="date" id="periodcovered" name="period_covered" required>
+                                    </div>
+                                </div>
+                                 <div class="col-md-6">
+                                     <div class="form-group">
+                                        <label for="treasurername">Treasurer Name:</label>
+                                         <input type="text" id="treasurername" name="treasurer_name" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="cltinitbalance">Cash in Local Treasurer Beginning Balance:</label>
+                                            <input type="number" id="cltinitbalance" name="clt_init_balance" step="0.01"  required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="cbinitbalance">Cash in Bank Beginning Balance:</label>
+                                        <input type="number" id="cbinitbalance" name="cb_init_balance" step="0.01" required>
+                                    </div>
+                                </div>
                             </div>
-
-                                <div class="form-group">
-                                    <label for="treasurername">Treasurer Name:</label>
-                                    <input type="text" id="treasurername" name="treasurer_name" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="cltinitbalance">Cash in Local Treasurer Beginning Balance:</label>
-                                    <input type="number" id="cltinitbalance" name="clt_init_balance" step="0.01"  required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="cbinitbalance">Cash in Bank Beginning Balance:</label>
-                                    <input type="number" id="cbinitbalance" name="cb_init_balance" step="0.01" required>
-                                </div>
 
                                 <div class="form-group">
                                     <div class="wrap">
@@ -628,6 +1048,7 @@ span {
                     </div>
                 </div>
             </div>
+            </section>
     </body> 
     <script>
         function validateForm() {

@@ -3,7 +3,8 @@ const calendar = document.querySelector(".calendar"),
   daysContainer = document.querySelector(".days"),
   prev = document.querySelector(".prev"),
   next = document.querySelector(".next"),
-  eventModal = new bootstrap.Modal(document.getElementById('eventModal'), {}),
+  todayBtn = document.querySelector(".today-btn"),
+  eventModal = new bootstrap.Modal(document.getElementById("eventModal"), {}),
   eventStartInput = document.getElementById("event_start"),
   eventEndInput = document.getElementById("event_end");
 
@@ -21,26 +22,46 @@ const months = [
 function initCalendar() {
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
+  const prevMonthLastDay = new Date(year, month, 0).getDate();
   const lastDate = lastDay.getDate();
   const day = firstDay.getDay();
+  const lastWeekday = lastDay.getDay();
+  const currentDay = today.getDate();
+  const currentMonth = today.getMonth();
+  const currentYear = today.getFullYear();
 
   // Set the current month and year in the header
   date.innerHTML = months[month] + " " + year;
 
   let days = "";
 
+  // Add days from the previous month
+  for (let i = day - 1; i >= 0; i--) {
+    days += `<div class="day disabled">${prevMonthLastDay - i}</div>`;
+  }
+
   // Create the days for the current month
   for (let i = 1; i <= lastDate; i++) {
-    days += `<div class="day" data-day="${i}">${i}</div>`;
+    const dateValue = new Date(year, month, i);
+    const isSelected = selectedDates.some(date => date.getTime() === dateValue.getTime());
+    const isToday = i === currentDay && month === currentMonth && year === currentYear;
+
+    days += `<div class="day${isSelected ? " active" : ""}${isToday ? " today" : ""}" data-day="${i}">${i}</div>`;
+  }
+
+  // Add days from the next month
+  for (let i = lastWeekday + 1; i <= 6; i++) {
+    days += `<div class="day disabled">${i - lastWeekday}</div>`;
   }
 
   daysContainer.innerHTML = days;
   addDayListener();
 }
 
+
 // Add click listeners to the days
 function addDayListener() {
-  const days = document.querySelectorAll(".day");
+  const days = document.querySelectorAll(".day:not(.disabled)");
 
   days.forEach((day) => {
     day.addEventListener("click", (e) => {
@@ -67,7 +88,7 @@ function addDayListener() {
   });
 
   // Listen for 'Enter' key press to show the modal
-  document.addEventListener("keydown", function(event) {
+  document.addEventListener("keydown", function (event) {
     if (event.key === "Enter" && selectedDates.length > 0) {
       // Get the first and last selected dates
       const startDate = selectedDates[0];
@@ -110,6 +131,20 @@ next.addEventListener("click", () => {
     year++;
   }
   initCalendar(); // Reinitialize the calendar for the new month/year
+});
+
+// Handle 'Go to Today' button
+todayBtn.addEventListener("click", () => {
+  // Set the current month and year to today
+  today = new Date();
+  month = today.getMonth();
+  year = today.getFullYear();
+
+  // Clear selected dates
+  selectedDates = [];
+
+  // Reinitialize the calendar for the current month and year
+  initCalendar();
 });
 
 // Initialize the calendar on page load

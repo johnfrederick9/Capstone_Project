@@ -59,11 +59,12 @@ while ($row = mysqli_fetch_assoc($query)) {
     $sub_array[] = $row['treasurer_name'];
     $sub_array[] = '<div class="buttons">
                         <a href="javascript:void(0);" data-id="' . $row['cashbook_id'] . '" class="update-btn btn-sm editbtn"><i class="bx bx-sync"></i></a>  
-                        <a href="javascript:void(0);" data-item_id="' . $row['cashbook_id'] . '" class="delete-btn btn-sm deleteBtn"><i class="bx bxs-trash"></i></a>
+                        <a href="javascript:void(0);" data-cashbook_id="' . $row['cashbook_id'] . '" class="delete-btn btn-sm deleteBtn"><i class="bx bxs-trash"></i></a>
+                        <a href="javascript:void(0);" data-item-id="' . $row['cashbook_id'] . '" class="update-btn btn-sm infoBtn"><i class="bx bx-info-circle"></i></a>
                     </div>';
     $data[] = $sub_array;
 }
-
+//<a href="javascript:void(0);" data-item_id="' . $row['cashbook_id'] . '" class="update-btn btn-sm infoBtn"><i class="bx bx-info-circle"></i></a>
 // Output response
 $output = array(
     'draw' => intval($_POST['draw']),

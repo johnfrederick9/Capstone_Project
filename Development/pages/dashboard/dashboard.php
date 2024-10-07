@@ -6,11 +6,11 @@ include "dashboard_code.php";
 include 'reports_code.php';
 ?>
 <style>
-    .calendar-navigation {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
+.calendar-navigation {
+display: flex;
+justify-content: center;
+align-items: center;
+margin-bottom: 10px;
 }
 
 .calendar-navigation h3 {
@@ -21,15 +21,24 @@ include 'reports_code.php';
 .calendar-container .bx {
     font-size: 1.8em;
     cursor: pointer;
+    color: #030303;
 }
 
 .calendar-container .bx:hover {
-    color: #007bff;
+    color: #44c95a;
+}
+<<<<<<< HEAD
+
+marquee{
+    color: white;
 }
 
+=======
+>>>>>>> 021f3fd227e24504daeca78585ea248a83faac08
 </style>
 <body>
     <section class="home">
+        <marquee>DASHBOARD</marquee>
         <div class="dashboard">
             <div class="dashboard-container">
                 <header class="dashboard-header"></header>
@@ -115,7 +124,7 @@ include 'reports_code.php';
                                     </div>
                                 </div>
                             </div>
-                            <div class="stat-card">
+                            <!--<div class="stat-card">
                                 <div class="stat-content">
                                     <div class="icon">
                                         <i class='bx bxs-home '></i>
@@ -125,7 +134,7 @@ include 'reports_code.php';
                                         <p>Household</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
 

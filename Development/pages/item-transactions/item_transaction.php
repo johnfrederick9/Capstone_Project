@@ -87,6 +87,15 @@ $borrowedItems_json = json_encode($borrowedItems);
 
 
 <style>
+.transaction .modal-lg {
+    max-width: 70%; /* Make the modal wider */
+}
+
+.transaction .modal-body {
+    max-height: 90vh; /* Set maximum height */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
 .inp-group, .inp-group-update{
     height: 110px;
     overflow: auto;
@@ -461,8 +470,9 @@ $borrowedItems_json = json_encode($borrowedItems);
                 </section><!-- .home-->
                 <!-- Modal -->
                 <!-- Update Transaction -->
+                <section class="transaction">
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Update Item</h5>
@@ -470,47 +480,85 @@ $borrowedItems_json = json_encode($borrowedItems);
                         </div>
                         <div class="modal-body">
                             <form id="updateUser">
-                                <div class="form-group">
-                                    <input type="hidden" name="transaction_id" id="transaction_id" value="">
-                                    <input type="hidden" name="trid" id="trid" value="">
+                                <!-- First Row -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="borrowernameField">Borrower Name:</label>
+                                            <input type="text" id="borrowernameField" name="borrower_name" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="borroweraddressField">Borrower Address:</label>
+                                            <input type="text" id="borroweraddressField" name="borrower_address" class="form-control" required>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="borrowernameField">Borrower Name:</label>
-                                    <input type="text" id="borrowernameField" name="borrower_name" required>
+
+                                <!-- Second Row -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="reservedonField">Reserved On:</label>
+                                            <input type="date" id="reservedonField" name="reserved_on" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="dateborrowedField">Borrowed Date:</label>
+                                            <input type="date" id="dateborrowedField" name="date_borrowed" class="form-control" required>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="borroweraddressField">Borrower Address:</label>
-                                    <input type="text" id="borroweraddressField" name="borrower_address" required>
+
+                                <!-- Third Row -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="returndateField">Return Date:</label>
+                                            <input type="date" id="returndateField" name="return_date" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="approvedbyField">Approved By:</label>
+                                            <input type="text" id="approvedbyField" name="approved_by" class="form-control" required>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="reservedonField">Reserved On:</label>
-                                    <input type="date" id="reservedonField" name="reserved_on" required>
+
+                                <!-- Fourth Row -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="releasedbyField">Released By:</label>
+                                            <input type="text" id="releasedbyField" name="released_by" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="returnedbyField">Returned By:</label>
+                                            <input type="text" id="returnedbyField" name="returned_by" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="dateborrowedField">Borrowed Date:</label>
-                                    <input type="date" id="dateborrowedField" name="date_borrowed" required>
+
+                                <!-- Fifth Row -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="datereturnedField">Date Returned:</label>
+                                            <input type="date" id="datereturnedField" name="date_returned" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 d-flex align-items-end">
+                                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="returndateField">Return Date:</label>
-                                    <input type="date" id="returndateField" name="return_date" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="approvedbyField">Approved By:</label>
-                                    <input type="text" id="approvedbyField" name="approved_by" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="releasedbyField">Released By:</label>
-                                    <input type="text" id="releasedbyField" name="released_by" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="returnedbyField">Returned By:</label>
-                                    <input type="text" id="returnedbyField" name="returned_by">
-                                </div>
-                                <div class="form-group">
-                                    <label for="datereturnedField">Date Returned:</label>
-                                    <input type="date" id="datereturnedField" name="date_returned">
-                                </div>
-                                <div class="form-group">
+
+                                <!-- Selected Items -->
+                                <div class="form-group mt-3">
                                     <div class="wrap">
                                         <h2>Selected Items</h2>
                                         <a href="#" class="add-update">+</a>
@@ -519,9 +567,6 @@ $borrowedItems_json = json_encode($borrowedItems);
                                         <!-- Dynamic Inputs Will Be Added Here -->
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
                             </form>
                         </div>
                     </div>
@@ -529,75 +574,105 @@ $borrowedItems_json = json_encode($borrowedItems);
             </div>
             <!-- Add Transaction -->
             <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
-                            <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="addUser" action="">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
+                <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addUser" action="">
+                    <!-- First Row -->
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="borrowername">Borrower Name:</label>
-                                <input type="text" id="borrowername" name="borrower_name" required>
+                                <input type="text" id="borrowername" name="borrower_name" class="form-control" required>
                             </div>
-
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="borroweraddress">Borrower Address:</label>
-                                <input type="text" id="borroweraddress" name="borrower_address" required>
+                                <input type="text" id="borroweraddress" name="borrower_address" class="form-control" required>
                             </div>
-
-                            <div class="form-group">
-                                <label for="reservedon">Reserved On:</label>
-                                <input type="date" id="reservedon" name="reserved_on" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="dateborrowed">Date Borrowed:</label>
-                                <input type="date" id="dateborrowed" name="date_borrowed" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="returndate">Return Date:</label>
-                                <input type="date" id="returndate" name="return_date" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="approvedby">Approved By:</label>
-                                <input type="text" id="approvedby" name="approved_by" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="releasedby">Released By:</label>
-                                <input type="text" id="releasedby" name="released_by" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <div class="wrap">
-                                    <h2>Select Items</h2>
-                                    <a href="#" class="add">+</a>
-                                </div>
-                                
-                                <!-- Default Item Selection -->
-                                <div class="inp-group">
-                                    <div class="flex">
-                                        <select name="items[]" onchange="updateMaxQuantity(this)">
-                                            <!-- Options will be populated here by JavaScript -->
-                                        </select>
-                                        <input type="number" name="borrow_quantity[]" placeholder="Enter Quantity" required>
-                                    </div>
-                                </div>
-                                
-                                <!-- Dynamic Inputs Will Be Added Here -->
-                            </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
-                </div>
+
+                    <!-- Second Row -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="reservedon">Reserved On:</label>
+                                <input type="date" id="reservedon" name="reserved_on" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="dateborrowed">Date Borrowed:</label>
+                                <input type="date" id="dateborrowed" name="date_borrowed" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Third Row -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="returndate">Return Date:</label>
+                                <input type="date" id="returndate" name="return_date" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="approvedby">Approved By:</label>
+                                <input type="text" id="approvedby" name="approved_by" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fourth Row (Released By & Submit Button) -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="releasedby">Released By:</label>
+                                <input type="text" id="releasedby" name="released_by" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary w-100">Submit</button>
+                        </div>
+                    </div>
+
+                    <!-- Item Selection -->
+                    <div class="form-group mt-3">
+                        <div class="wrap">
+                            <h2>Select Items</h2>
+                            <a href="#" class="add">+</a>
+                        </div>
+
+                        <!-- Default Item Selection -->
+                        <div class="inp-group">
+                            <div class="flex">
+                                <select name="items[]" class="form-control" onchange="updateMaxQuantity(this)">
+                                    <!-- Options will be populated here by JavaScript -->
+                                </select>
+                                <input type="number" name="borrow_quantity[]" class="form-control" placeholder="Enter Quantity" required>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Inputs Will Be Added Here -->
+                    </div>
+
+                    <div class="modal-footer">
+                    </div>
+                </form>
             </div>
+        </div>
+    </div>
+</div>
+
+</section>
+
     </body> 
     <script>
         function validateForm() {

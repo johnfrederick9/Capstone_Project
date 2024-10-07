@@ -111,6 +111,7 @@ include '../../sidebar.php';
                                 printContentFromPage('print_selected.php', idsString); // Load and print content from print_selected.php
                             } else {
                                 alert('Please select at least one row to print.');
+                                
                             }
                         });
 
@@ -376,7 +377,7 @@ include '../../sidebar.php';
                             <div class="form-grid">
                             <div class="input-wrapper">
                                 <label for="Last Name" class="input-label">Last Name:</label>
-                                <input type="text" placeholder="Last Name" id="resident_lastname" name="resident_lastname" class="input-field" require>
+                                <input type="text" placeholder="Last Name" id="resident_lastname" name="resident_lastname" class="input-field">
                             </div>
                             <div class="input-wrapper">
                                 <label for="First Name" class="input-label">First Name:</label>
