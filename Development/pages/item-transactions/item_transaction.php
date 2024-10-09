@@ -153,14 +153,17 @@ $borrowedItems_json = json_encode($borrowedItems);
                         </div>
                         <div class="table-actions">    
                             <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-popup">+ Add Item</button>
-                            <!--<button class="print-btn" title="Print">
-                                <i class="bx bx-printer"></i>
-                            </button>-->
+                            <button class="print-btn " title="Print Selected">
+                            <i class="bx bx-printer"></i>
                         </div>
                     </div>
                     <table id="example" class="table-table">
                     <thead>
                         <th>#</th>
+                        <th><button class="print-all-btn" title="Print All">
+                                    <i class="bx bx-printer"></i>
+                                </button>
+                            </th>
                         <th>Name</th>
                         <th>Address</th>
                         <th>Items</th>
@@ -353,8 +356,9 @@ $borrowedItems_json = json_encode($borrowedItems);
                                                     </div>
                                                 </td>
                                             `;
+                                            var checkbox = '<td><input type="checkbox" class="row-checkbox" value="'+transaction_id+'"></td>';
                                             var row = table.row("[id='" + trid + "']");
-                                            row.data([transaction_id, borrower_name, borrower_address, reserved_on, date_borrowed, return_date, approved_by, released_by, returned_by, date_returned, available_count, button]);
+                                            row.data([transaction_id, checkbox, borrower_name, borrower_address, reserved_on, date_borrowed, return_date, approved_by, released_by, returned_by, date_returned, available_count, button]);
 
                                             // Close the modal
                                             $('#exampleModal').modal('hide');
@@ -370,6 +374,68 @@ $borrowedItems_json = json_encode($borrowedItems);
                             } else {
                                 alert('Please fill all the required fields');
                             }
+                        });
+
+                        $('#selectAll').click(function() {
+                            var checkedStatus = this.checked;
+                            $('.row-checkbox').each(function() {
+                                $(this).prop('checked', checkedStatus);
+                            });
+                        });
+
+                        // Function to trigger the print dialog with the loaded HTML content
+                        function printContentFromPage(url, ids = '') {
+                            $.ajax({
+                                url: url,
+                                type: 'GET',
+                                data: { ids: ids }, // Pass IDs if needed (for print_selected.php)
+                                success: function(response) {
+                                    // Create an iframe to print the content
+                                    var iframe = document.createElement('iframe');
+                                    iframe.style.position = 'absolute';
+                                    iframe.style.width = '0px';
+                                    iframe.style.height = '0px';
+                                    iframe.style.border = 'none';
+                                    document.body.appendChild(iframe);
+
+                                    // Write the content into the iframe
+                                    var doc = iframe.contentWindow.document;
+                                    doc.open();
+                                    doc.write(response);
+                                    doc.close();
+
+                                    // Trigger print dialog
+                                    iframe.contentWindow.focus();
+                                    iframe.contentWindow.print();
+
+                                    // Remove iframe after printing
+                                    document.body.removeChild(iframe);
+                                },
+                                error: function() {
+                                    alert('Failed to load print content.');
+                                }
+                            });
+                        }
+
+                        // Print selected rows
+                        $('.print-btn').click(function() {
+                            var selectedIds = [];
+                            $('.row-checkbox:checked').each(function() {
+                                selectedIds.push($(this).val());
+                            });
+
+                            if (selectedIds.length > 0) {
+                                var idsString = selectedIds.join(',');
+                                printContentFromPage('print_selected.php', idsString); // Load and print content from print_selected.php
+                            } else {
+                                alert('Please select at least one row to print.');
+                                
+                            }
+                        });
+
+                        // Print all rows
+                        $('.print-all-btn').click(function() {
+                            printContentFromPage('print_all.php'); // Load and print content from print_all.php
                         });
 
                         $('#example').on('click', '.editbtn', function(event) {

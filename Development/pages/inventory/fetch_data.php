@@ -65,6 +65,7 @@ $data = array();
 while ($row = mysqli_fetch_assoc($query)) {
     $sub_array = array();
     $sub_array[] = $row['item_id'];
+    $sub_array[] = '<input type="checkbox" class="row-checkbox" value="'.$row['item_id'].'">';
     $sub_array[] = $row['item_name'];
     $sub_array[] = $row['item_serialNo'];
     $sub_array[] = $row['item_custodian'];

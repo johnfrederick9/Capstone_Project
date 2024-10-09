@@ -94,6 +94,7 @@ $data = array();
 while ($row = mysqli_fetch_assoc($query)) {
     $sub_array = array();
     $sub_array[] = $row['transaction_id'];
+    $sub_array[] = '<input type="checkbox" class="row-checkbox" value="'.$row['transaction_id'].'">';
     $sub_array[] = $row['borrower_name'];
     $sub_array[] = $row['borrower_address'];
     $sub_array[] = $row['borrowed_items'];  // Use alias
