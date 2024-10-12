@@ -30,7 +30,6 @@ margin-bottom: 10px;
 </style>
 <body>
     <section class="home">
-        <marquee>DASHBOARD</marquee>
         <div class="dashboard">
             <div class="dashboard-container">
                 <header class="dashboard-header"></header>
