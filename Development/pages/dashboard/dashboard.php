@@ -48,10 +48,6 @@ margin-bottom: 5px;
 .calendar-date {
     text-align: center;
     padding: 10px;
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
 }
 
 /* Hover effect on all dates */
