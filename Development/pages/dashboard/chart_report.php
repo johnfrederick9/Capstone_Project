@@ -1,3 +1,32 @@
+   <!-- Reports Modal -->
+   <section class="report-content">
+        <div class="modal fade" id="ReportsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Reports</h5>
+                        <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="section-top">
+                            <div class="projects">
+                                <div class="projects-header">
+                                    <h2>Residents Educational Attainment Distribution</h2>
+                                </div>
+                                <div class="chart-area-container">
+                                    <canvas id="educationBarChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="reports">
+                                <h2>Residents Age Distribution</h2>
+                                <canvas id="doughnutChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 <script>
         // Data for Educational Attainment Bar Chart
         var educationalData = <?php echo json_encode($educational_data); ?>;
