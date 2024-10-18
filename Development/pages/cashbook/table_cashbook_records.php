@@ -66,6 +66,7 @@ span {
 }
 .transaction .modal-dialog{
     max-width: 95% !important;
+    max-height: 95% !important;
     overflow-y: auto !important;
 }
 .cashbook-container {
@@ -99,7 +100,7 @@ span {
     border-collapse: collapse;
     margin-bottom: 20px;
     table-layout: fixed;
-    border: 3px solid #000 /* Ensures the table columns fit within the container */
+    border: 3px solid #000; /* Ensures the table columns fit within the container */
 }
 
 .cashbook-table th, .cashbook-table td {
@@ -235,7 +236,7 @@ span {
     background-color: #45a049;
 }
 
-.cashbook-table input[type="text"]:disabled , input[type="date"]:disabled{
+.cashbook-table input[type="text"]:disabled ,.cashbook-table input[type="date"]:disabled{
     width: 100%;
     box-sizing: border-box;
     border: none;
@@ -247,13 +248,91 @@ span {
     padding: 2px;
     box-sizing: border-box;
     border: none;
-    font-size: 15px;
+    font-size: 10px;
+    color: #000;
+}
+.cashbook-table input[type="text"] , .cashbook-table input[type="date"]{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: none;
+    font-size: 10px;
+    color: #000;
+}
+.cashbook-table input[type="number"]{
+    width: 100%;
+    height: 100%;
+    padding: 2px;
+    box-sizing: border-box;
+    border: none;
+    font-size: 10px;
     color: #000;
 }
 .hidden{
     display: none;
 }
+.certification {
+    text-align: center;
+    margin-top: 50px;
+}
 
+.certification p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.signature-section {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.signature-section .name {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 5px;
+}
+
+.signature-section .title {
+    font-style: italic;
+}
+.action-buttons {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center the buttons horizontally */
+    align-items: center; /* Center the buttons vertically */
+}
+
+.action-buttons .add a{
+    margin: 0 5px; /* Add some spacing between buttons */
+    padding: 5px 10px; /* Add padding to buttons */
+    border: 1px solid #007bff; /* Add border for button */
+    border-radius: 4px; /* Round the corners of the buttons */
+    text-decoration: none; /* Remove underline from links */
+    background-color: #f8f9fa; /* Background color */
+    text-decoration: none;
+    display: inline-block;
+    background: #8bc34a;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s; /* Smooth background change */
+}
+
+.action-buttons a:hover {
+    background-color: #007bff; /* Change background color on hover */
+    color: white; /* Change text color on hover */
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 </style>
 <body>
     <section class="home">  
@@ -399,6 +478,12 @@ span {
                             formData.append('ca_disbursement_data', JSON.stringify(ca_disbursement_data));
                             formData.append('pcf_receipt_data', JSON.stringify(pcf_receipt_data));
                             formData.append('pcf_payments_data', JSON.stringify(pcf_payments_data));
+
+                            console.log("Period Covered: ", period_covered);
+                            console.log("Treasurer Name: ", treasurer_name);
+                            console.log("clt_init_balance: ", clt_init_balance);
+                            console.log("cb_init_balance: ", cb_init_balance);
+
 
                             // Check if all required fields are filled
                             if (period_covered !== '' &&  treasurer_name !== '' && clt_init_balance !== '' && 
@@ -576,6 +661,8 @@ span {
                             }
                         });
 
+                        
+
                         $('#example').on('click', '.editbtn', function(event) {
                             var table = $('#example').DataTable();
                             var trid = $(this).closest('tr').attr('id');
@@ -585,10 +672,15 @@ span {
                             $('#trid').val(trid);
                             $('#exampleModal').modal('show');
 
-                            $('.inp-group-up').empty();
+                            $('.inp-group-view').empty();
+
+                            // $('#clt_last_balance').val('');
+                            // $('#cb_last_balance').val('');
+                            // $('#ca_last_balance').val('');
+                            // $('#pcf_last_balance').val('');
                             window.upCounter = 1; // Initialize the counter
 
-                            $.ajax({
+                           $.ajax({
                                 url: "get_single_data.php",
                                 data: { cashbook_id: cashbook_id },
                                 type: 'post',
@@ -607,39 +699,37 @@ span {
                                             $('#cltinitbalanceField').val(record.clt_init_balance);
                                             $('#cbinitbalanceField').val(record.cb_init_balance);
 
-                                            // Populate input fields with associated records
-                                            cashbookData.forEach(function(cData) {
-                                                var InputGroup = `
-                                                <div class="flex">
-                                                    <input type="hidden" name="up_counter[]" value="${window.upCounter}">
-                                                    <input type="hidden" name="cashbook_data_id[]" value="${cData.cashbook_data_id}">
-                                                    <label>${window.upCounter}</label>
-                                                    <input type="date" name="date_data[]" value="${cData.date_data}">
-                                                    <input type="text" name="particulars_1[]" value="${cData.particulars_1}">
-                                                    <input type="text" name="particulars_2[]" value="${cData.particulars_2}">
-                                                    <input type="text" name="reference_1[]" value="${cData.reference_1}">
-                                                    <input type="text" name="reference_2[]" value="${cData.reference_2}">
-                                                    <input type="number" name="clt_in_data[]" value="${cData.clt_in}">
-                                                    <input type="number" name="clt_out_data[]" value="${cData.clt_out}">
-                                                    <input type="number" name="cb_in_data[]" value="${cData.cb_in}">
-                                                    <input type="number" name="cb_out_data[]" value="${cData.cb_out}">
-                                                    <input type="number" name="ca_receipt_data[]" value="${cData.ca_receipt}">
-                                                    <input type="number" name="ca_disbursement_data[]" value="${cData.ca_disbursement}">
-                                                    <input type="number" name="pcf_receipt_data[]" value="${cData.pcf_receipt}">
-                                                    <input type="number" name="pcf_payments_data[]" value="${cData.pcf_payments}">
-                                                    <div class="action-buttons">
-                                                        <a href="#" class="add">+</a>
-                                                        <a href="#" class="delete">x</a>
-                                                    </div>
-                                                </div>`;
-
-                                                // Append the new input group to the modal
-                                                $('#exampleModal .inp-group-up').append(InputGroup);
-
-                                                window.upCounter++;  // Increment the counter
-                                            });
-                                             
-
+                                        // Populate input fields with associated records
+                                        cashbookData.forEach(function(cData) {
+                                            const inputGroupRow = `
+                                               <tr>
+                                                    <td class="hidden"><input type="hidden" name="up_counter[]" value="${window.upCounter}"></td>
+                                                    <td class="hidden"><input type="hidden" name="cashbook_data_id[]" value="${cData.cashbook_data_id}"></td>
+                                                    <td><input type="date" name="date_data[]" value="${cData.date_data}"></td>
+                                                    <td><input type="text" name="particulars_1[]" value="${cData.particulars_1}" ></td>
+                                                    <td><input type="text" name="particulars_2[]" value="${cData.particulars_2}"></td>
+                                                    <td><input type="text" name="reference_1[]" value="${cData.reference_1}"></td>
+                                                    <td><input type="text" name="reference_2[]" value="${cData.reference_2}"></td>
+                                                    <td><input type="number" name="clt_in_data[]" value="${cData.clt_in}" step="0.01"></td>
+                                                    <td><input type="number" name="clt_out_data[]" value="${cData.clt_out}" step="0.01"></td>
+                                                    <td><input type="number" name="clt_balance[]" value="${cData.clt_balance}" step="0.01"></td>
+                                                    <td><input type="number" name="cb_in_data[]" value="${cData.cb_in}" step="0.01"></td>
+                                                    <td><input type="number" name="cb_out_data[]" value="${cData.cb_out}" step="0.01"></td>
+                                                    <td><input type="number" name="cb_balance[]" value="${cData.cb_balance}" step="0.01"></td>
+                                                    <td><input type="number" name="ca_receipt_data[]" value="${cData.ca_receipt}" step="0.01"></td>
+                                                    <td><input type="number" name="ca_disbursement_data[]" value="${cData.ca_disbursement}" step="0.01"></td>
+                                                    <td><input type="number" name="ca_balance[]" value="${cData.ca_balance}" step="0.01"></td>
+                                                    <td><input type="number" name="pcf_receipt_data[]" value="${cData.pcf_receipt}" step="0.01"></td>
+                                                    <td><input type="number" name="pcf_payments_data[]" value="${cData.pcf_payments}" step="0.01"></td>
+                                                    <td><input type="number" name="pcf_balance[]" value="${cData.pcf_balance}" step="0.01"></td>
+                                                </tr>`;
+                                            $('#exampleModal #viewDataTable tbody.inp-group-view').append(inputGroupRow);
+                                            window.upCounter++; // Increment the counter for the next row
+                                        });
+                                          // <td class="action-buttons">
+                                                    //     <a href="#" class="add">+</a>
+                                                    //     <a href="#" class="delete">X</a>
+                                                    // </td>
                                         } else {
                                             console.error('Error in JSON response:', json.message);
                                         }
@@ -654,6 +744,624 @@ span {
                             });
                         });
 
+                        document.addEventListener('DOMContentLoaded', function () {
+                            let modalInitialized = false;
+                            let addInputHandler;
+                            window.cashbookFunctions = {};
+
+                            $('#exampleModal').on('shown.bs.modal', function () {
+                                if (!modalInitialized) {
+                                    initializeModal();
+                                    modalInitialized = true;
+
+                                }
+                            });
+
+                            $('#exampleModal').on('hidden.bs.modal', function () {
+                                modalInitialized = false;
+                                // Clear input fields
+                                $('#exampleModal input').val('');
+                                // Remove dynamically added rows
+                                $('#exampleModal .inp-group-view tr:not(:first)').remove();
+                                if (addInputHandler) {
+                                    const addButton = document.querySelector('#exampleModal .modal-footer .add');
+                                    addButton.removeEventListener('click', addInputHandler);
+                                }
+
+                            });
+
+                            let FunctionForModal2;
+                            function initializeModal() {
+                                console.log('Modal 2 is triggered');
+
+                                if (!FunctionForModal2) {
+                                FunctionForModal2 = function() {
+                                    window.upCounter = document.querySelectorAll('#exampleModal .inp-group-view tr').length + 1;
+                                    const periodCoveredInput = document.querySelector('#periodcoveredField');
+                                    const inpGroup = document.querySelector('#exampleModal .inp-group-view');
+
+
+                                    // Function to format date as YYYY-MM-DD
+                                    function formatDate(date) {
+                                        return date.toISOString().split('T')[0];
+                                    }
+
+                                    // Function to get the last day of a month
+                                    function getLastDayOfMonth(year, month) {
+                                        return new Date(year, month + 1, 0).getDate();
+                                    }
+
+                                    // Update min and max attributes for date inputs based on the selected period
+                                    function updateDateInputs() {
+                                        const selectedDate = new Date(periodCoveredInput.value);
+                                        if (isNaN(selectedDate.getTime())) return; // No valid date selected
+
+                                        const month = selectedDate.getMonth(); // 0-based month
+                                        const year = selectedDate.getFullYear();
+
+                                        const startOfMonth = new Date(year, month, 2);
+                                        const lastDay = getLastDayOfMonth(year, month);
+                                        const endOfMonth = new Date(year, month, lastDay+1);
+
+                                        const minDate = formatDate(startOfMonth);
+                                        const maxDate = formatDate(endOfMonth);
+
+                                        const dateInputs = document.querySelectorAll('#exampleModal input[name="date_data[]"]');
+                                        dateInputs.forEach(input => {
+                                            input.setAttribute('min', minDate);
+                                            input.setAttribute('max', maxDate);
+
+                                            // Validate the input value
+                                        // Validate the input value only if it exists
+                                            if (input.value) {
+                                                const currentDate = new Date(input.value);
+                                                if (currentDate < startOfMonth || currentDate > endOfMonth) {
+                                                    // You can choose to alert the user instead of clearing the value
+                                                    console.log(`Date ${input.value} is outside the valid range.`);
+                                                }
+                                            }
+                                        });
+                                    }
+
+                                    // Event listener for period covered input change
+                                    periodCoveredInput.addEventListener('change', updateDateInputs);
+
+                                    addInputHandler = function(event) {
+                                            event.preventDefault();
+                                            addInput();
+                                            updateDateInputs();
+                                            updateAllRowBalances();
+                                        };
+
+                                        // Add event listener for adding new input groups
+                                        const addButton = document.querySelector('#exampleModal .modal-footer .add');
+                                        addButton.addEventListener('click', addInputHandler);
+
+                                    // // Add event listener for adding new input groups
+                                    // document.querySelector('#exampleModal  .modal-footer .add').addEventListener('click', function(event) {
+                                    //     event.preventDefault();
+                                    //     addInput();
+                                    //     updateDateInputs(); // Ensure new inputs are validated
+                                    // });
+
+                                    // Initial call to set the correct date range
+                                    updateDateInputs();
+
+                                    // Remove an input group
+                                    function removeInput(event) {
+                                        event.preventDefault(); // Prevent default link behavior
+                                        if (confirm("Are you sure you want to remove this row?")) {
+                                            // Remove the closest .flex (the group containing the inputs)
+                                            const inputGroup = event.target.closest('#exampleModal tr');
+                                            if (inputGroup) {
+                                                inputGroup.remove();
+                                                update_up_Counter();
+                                            }
+                                        }
+                                    }
+
+                                    // Function to update the counters after a row is removed
+                                    function update_up_Counter() {
+                                        const rows = document.querySelectorAll("#exampleModal .inp-group-view tr");
+                                        let updatedCounter = 1;  // Start counter from 1
+
+                                        rows.forEach(function(row) {
+                                            const hiddenInput = row.querySelector("input[name='up_counter[]']");
+                                            // Update the hidden input value to match the new counter
+                                            if (hiddenInput) {
+                                                hiddenInput.value = updatedCounter; // Update hidden input value
+                                            }
+
+                                            updatedCounter++;  // Increment counter for the next row
+                                        });
+
+                                        // Update global counter to match the number of rows
+                                        window.upCounter = updatedCounter;
+                                    }
+
+                                    // Update all existing rows
+                                    function updateExistingRows() {
+                                        const existingRows = $('#exampleModal #viewDataTable tbody.inp-group-view tr');
+                                        console.log(`Total existing rows: ${existingRows.length}`);
+                                        existingRows.each((index, row) => {
+                                            console.log(`Processing Row Number: ${index + 1}`);
+                                            setupRowEventListeners(row);
+                                        });
+                                    }
+
+                                    // Add event listeners to the initial balance fields
+                                    $('#cltinitbalanceField, #cbinitbalanceField').on('input', function() {
+                                        updateAllBalances();
+                                        updateAllRowBalances();
+                                    });
+
+                                    // Function to set up event listeners for all rows
+                                    function setupAllRowEventListeners() {
+                                        const rows = $('#exampleModal #viewDataTable tbody.inp-group-view tr');
+                                        console.log(`Setting up listeners for ${rows.length} rows`);
+                                        rows.each((index, row) => setupRowEventListeners(row));
+                                    }
+
+                                    // Function to set up event listeners for a row
+                                    function setupRowEventListeners(row) {
+                                        const inputFields = [
+                                            'clt_in_data[]', 'clt_out_data[]',
+                                            'cb_in_data[]', 'cb_out_data[]',
+                                            'ca_receipt_data[]', 'ca_disbursement_data[]',
+                                            'pcf_receipt_data[]', 'pcf_payments_data[]'
+                                        ];
+
+                                        inputFields.forEach(fieldName => {
+                                            const input = $(row).find(`input[name="${fieldName}"]`);
+                                            input.off('input').on('input', function() {
+                                                updateAllBalances(row);
+                                            });
+                                        });
+                                    }
+
+
+                                    // Function to update all balances
+                                    function updateAllBalances(startRow = null) {
+                                        let initial_clt_balance = parseFloat($('#cltinitbalanceField').val()) || 0;
+                                        let initial_cb_balance = parseFloat($('#cbinitbalanceField').val()) || 0;
+
+                                        let previous_clt_balance = initial_clt_balance;
+                                        let previous_cb_balance = initial_cb_balance;
+                                        let previous_ca_balance = 0;
+                                        let previous_pcf_balance = 0;
+
+                                        const rows = $('#exampleModal #viewDataTable tbody.inp-group-view tr');
+                                        const startIndex = startRow ? rows.index(startRow) : 0;
+
+                                        console.log("Total rows to process:", rows.length);
+                                        console.log("Starting from index:", startIndex);
+
+                                        let lastBalances = {
+                                            clt: initial_clt_balance,
+                                            cb: initial_cb_balance,
+                                            ca: 0,
+                                            pcf: 0
+                                        };
+
+                                        // Check if there are any rows to process
+                                        if (rows.length === 0) {
+                                            // If no rows, set last balances to initial balances
+                                            $('#exampleModal #clt_last_balance').val(lastBalances.clt.toFixed(2));
+                                            $('#exampleModal #cb_last_balance').val(lastBalances.cb.toFixed(2));
+                                            $('#exampleModal #ca_last_balance').val(lastBalances.ca.toFixed(2));
+                                            $('#exampleModal #pcf_last_balance').val(lastBalances.pcf.toFixed(2));
+
+                                            console.log("No rows to process. Setting last balances to initial balances.");
+                                            console.log("Last CLT:", lastBalances.clt, "Last CB:", lastBalances.cb, "Last CA:", lastBalances.ca, "Last PCF:", lastBalances.pcf);
+
+                                            return {
+                                                lastBalances: lastBalances,
+                                                rowCount: 0
+                                            };
+                                        }
+
+
+                                        rows.each(function(index) {
+                                            if (index < startIndex) {
+                                                // For rows before the start row, just update the previous balances
+                                                previous_clt_balance = parseFloat($(this).find('input[name="clt_balance[]"]').val()) || 0;
+                                                previous_cb_balance = parseFloat($(this).find('input[name="cb_balance[]"]').val()) || 0;
+                                                previous_ca_balance = parseFloat($(this).find('input[name="ca_balance[]"]').val()) || 0;
+                                                previous_pcf_balance = parseFloat($(this).find('input[name="pcf_balance[]"]').val()) || 0;
+                                            } else {
+                                                console.log("Processing Index: ", index, "Row Element: ", $(this)[0]);
+
+                                                const clt_in = parseFloat($(this).find('input[name="clt_in_data[]"]').val()) || 0;
+                                                const clt_out = parseFloat($(this).find('input[name="clt_out_data[]"]').val()) || 0;
+                                                const cb_in = parseFloat($(this).find('input[name="cb_in_data[]"]').val()) || 0;
+                                                const cb_out = parseFloat($(this).find('input[name="cb_out_data[]"]').val()) || 0;
+                                                const ca_receipt = parseFloat($(this).find('input[name="ca_receipt_data[]"]').val()) || 0;
+                                                const ca_disbursement = parseFloat($(this).find('input[name="ca_disbursement_data[]"]').val()) || 0;
+                                                const pcf_receipt = parseFloat($(this).find('input[name="pcf_receipt_data[]"]').val()) || 0;
+                                                const pcf_payments = parseFloat($(this).find('input[name="pcf_payments_data[]"]').val()) || 0;
+
+                                                console.log("Previous CLT balance: ", previous_clt_balance, " Clt in: ", clt_in, " Clt out: ", clt_out);
+
+                                                // Calculate current balances
+                                                const current_clt_balance = previous_clt_balance + clt_in - clt_out;
+                                                const current_cb_balance = previous_cb_balance + cb_in - cb_out;
+                                                const current_ca_balance = previous_ca_balance + ca_receipt - ca_disbursement;
+                                                const current_pcf_balance = previous_pcf_balance + pcf_receipt - pcf_payments;
+
+                                                // Update the current row's balance fields
+                                                $(this).find('input[name="clt_balance[]"]').val(current_clt_balance.toFixed(2));
+                                                $(this).find('input[name="cb_balance[]"]').val(current_cb_balance.toFixed(2));
+                                                $(this).find('input[name="ca_balance[]"]').val(current_ca_balance.toFixed(2));
+                                                $(this).find('input[name="pcf_balance[]"]').val(current_pcf_balance.toFixed(2));
+
+                                                // Update previous balances for the next iteration
+                                                previous_clt_balance = current_clt_balance;
+                                                previous_cb_balance = current_cb_balance;
+                                                previous_ca_balance = current_ca_balance;
+                                                previous_pcf_balance = current_pcf_balance;
+
+                                                // Update lastBalances object
+                                                lastBalances.clt = current_clt_balance;
+                                                lastBalances.cb = current_cb_balance;
+                                                lastBalances.ca = current_ca_balance;
+                                                lastBalances.pcf = current_pcf_balance;
+
+                                                // At the end of the function, after processing all rows:
+                                                $('#exampleModal #clt_last_balance').val(lastBalances.clt.toFixed(2));
+                                                $('#exampleModal #cb_last_balance').val(lastBalances.cb.toFixed(2));
+                                                $('#exampleModal #ca_last_balance').val(lastBalances.ca.toFixed(2));
+                                                $('#exampleModal #pcf_last_balance').val(lastBalances.pcf.toFixed(2));
+
+                                                console.log("Last CLT:", lastBalances.clt, "Last CB:", lastBalances.cb, "Last CA:", lastBalances.ca, "Last PCF:", lastBalances.pcf);
+
+                                            }
+                                        });
+                                        return {
+                                            lastBalances: lastBalances,
+                                            rowCount: rows.length
+                                        };
+                                        
+                                    }
+
+                                    const table_result = updateAllBalances();
+                                    let rowCount = table_result.rowCount;
+                                    let lastCLTBalance = table_result.lastBalances.clt;
+                                    let lastCBBalance = table_result.lastBalances.cb;
+                                    let lastCABalance = table_result.lastBalances.ca;
+                                    let lastPCFBalance = table_result.lastBalances.pcf;
+
+                                    console.log("Returned Rows:", table_result.rowCount);
+                                    // Call this function after populating the table
+                                    updateExistingRows();
+
+                                    
+
+                                    // Add a new input group
+                                    function addInput(afterElement = null) {
+                                        const newRow = document.createElement("tr");
+
+                                        console.log("Add Input is triggered");
+
+                                        const cells = [
+                                            createCell('input', '', {type: 'date', name: 'date_data[]', required: true}),
+                                            createCell('input', '', {type: 'text', name: 'particulars_1[]' , required: false}),
+                                            createCell('input', '', {type: 'text', name: 'particulars_2[]', required: false}),
+                                            createCell('input', '', {type: 'text', name: 'reference_1[]' ,required: false}),
+                                            createCell('input', '', {type: 'text', name: 'reference_2[]' ,required: false}),
+                                            createCell('input', '', {type: 'number', name: 'clt_in_data[]', required: false,  step: "0.01", value: 0}),
+                                            createCell('input', '', {type: 'number', name: 'clt_out_data[]', required: false,  step: "0.01", value: 0}),
+                                            createCell('input', '', {type: 'number', name: 'clt_balance_data[]', required: false, step: "0.01",  value: 0}),
+                                            createCell('input', '', {type: 'number', name: 'cb_in_data[]', required: false,  step: "0.01", value: 0}),
+                                            createCell('input', '', {type: 'number', name: 'cb_out_data[]', required: false,  step: "0.01", value: 0}),
+                                            createCell('input', '', {type: 'number', name: 'cb_balance_data[]', required: false,  step: "0.01",  value: 0}),
+                                            createCell('input', '', {type: 'number', name: 'ca_receipt_data[]', required: false,  step: "0.01", value: 0}),
+                                            createCell('input', '', {type: 'number', name: 'ca_disbursement_data[]', required: false, step: "0.01", value: 0}),
+                                            createCell('input', '', {type: 'number', name: 'ca_balance_data[]', required: false,  step: "0.01",  value: 0}),
+                                            createCell('input', '', {type: 'number', name: 'pcf_receipt_data[]', required: false, step: "0.01", value: 0}),
+                                            createCell('input', '', {type: 'number', name: 'pcf_payments_data[]', required: false,  step: "0.01", value: 0}),
+                                            createCell('input', '', {type: 'number', name: 'pcf_balance_data[]', required: false,  step: "0.01",  value: 0}),
+                                            // ... create cells for all other inputs ...
+                                        ];
+
+                                        setupRowEventListeners(newRow);
+                                        cells.forEach(cell => newRow.appendChild(cell));
+
+                                        // Create action buttons
+                                        const hiddenInput = document.createElement('input');
+                                        hiddenInput.type = 'hidden';
+                                        hiddenInput.name = 'up_counter[]';
+                                        hiddenInput.value = window.upCounter;
+                                        newRow.appendChild(hiddenInput);
+
+                                        const actionCell = document.createElement('td');
+                                        actionCell.classList.add('action-buttons');
+                                        actionCell.innerHTML = `
+                                            <a href="#" class="add">+</a>
+                                            <a href="#" class="delete">X</a>
+                                        `;
+                                        newRow.appendChild(actionCell);
+
+                                        console.log("Received Rows:", rowCount);
+
+                                        // Add event listeners for calculating clt balance
+                                        const cltInInput = newRow.querySelector('input[name="clt_in_data[]"]');
+                                        const cltOutInput = newRow.querySelector('input[name="clt_out_data[]"]');
+                                        const cltBalanceInput = newRow.querySelector('input[name="clt_balance_data[]"]');
+
+                                        cltInInput.addEventListener('input', updateCLTBalances);
+                                        cltOutInput.addEventListener('input', updateCLTBalances);
+
+                                        const cltLastBalanceInput = document.getElementById('clt_last_balance');
+                                        cltLastBalanceInput.addEventListener('change', updateCLTBalances);
+
+
+                                        function updateCLTBalances() {
+                                            // Get the latest initial balance
+                                            const initialBalance = parseFloat(cltLastBalanceInput.value) || 0; // Default to 0 if NaN
+                                            const rows = document.querySelectorAll("#exampleModal .inp-group-view tr"); // Get all rows
+                                            let previousBalance = initialBalance; // Start with the initial balance
+
+                                            rows.forEach((row) => {
+                                                const cltInInput = row.querySelector('input[name="clt_in_data[]"]');
+                                                const cltOutInput = row.querySelector('input[name="clt_out_data[]"]');
+                                                const balanceInput = row.querySelector('input[name="clt_balance_data[]"]');
+
+                                                if (cltInInput && cltOutInput && balanceInput) {
+                                                    const cltInValue = parseFloat(cltInInput.value) || 0; // CLT In
+                                                    const cltOutValue = parseFloat(cltOutInput.value) || 0; // CLT Out
+
+                                                    // Calculate new balance
+                                                    const newBalance = previousBalance + cltInValue - cltOutValue; 
+                                                    balanceInput.value = newBalance; // Update balance input
+
+                                                    // Update previousBalance for the next iteration
+                                                    previousBalance = newBalance; 
+                                                    // Log for debugging
+
+                                                    // Alert if the balance is negative
+                                                    if (newBalance < 0) {
+                                                        alert('Warning: A Cash in Local Treasury Balance is negative! Please check your inputs.');
+                                                    }
+                                                }
+                                            });
+                                        }
+
+                                        // Add event listeners for calculating cb balance
+                                        const cbInInput = newRow.querySelector('input[name="cb_in_data[]"]');
+                                        const cbOutInput = newRow.querySelector('input[name="cb_out_data[]"]');
+                                        const cbBalanceInput = newRow.querySelector('input[name="cb_balance_data[]"]');
+
+                                        cbInInput.addEventListener('input', updateCBBalances);
+                                        cbOutInput.addEventListener('input', updateCBBalances);
+
+                                        // Add event listener to the initial balance input
+                                        const cbLastBalanceInput = document.getElementById('cb_last_balance');
+                                        cbLastBalanceInput.addEventListener('change', updateCBBalances);
+
+                                        function updateCBBalances() {
+                                            // Get the latest initial balance
+                                            const initialBalance = parseFloat(cbLastBalanceInput.value) || 0; // Default to 0 if NaN
+                                            const rows = document.querySelectorAll("#exampleModal .inp-group-view tr"); // Get all rows
+                                            let previousBalance = initialBalance; // Start with the initial balance
+
+                                            rows.forEach((row) => {
+                                                const cbInInput = row.querySelector('input[name="cb_in_data[]"]');
+                                                const cbOutInput = row.querySelector('input[name="cb_out_data[]"]');
+                                                const balanceInput = row.querySelector('input[name="cb_balance_data[]"]');
+
+                                                if (cbInInput && cbOutInput && balanceInput) {
+                                                    const cbInValue = parseFloat(cbInInput.value) || 0; // Cash In
+                                                    const cbOutValue = parseFloat(cbOutInput.value) || 0; // Cash Out
+
+                                                    // Calculate new balance
+                                                    const newBalance = previousBalance + cbInValue - cbOutValue; 
+                                                    balanceInput.value = newBalance; // Update balance input
+
+                                                    // Update previousBalance for the next iteration
+                                                    previousBalance = newBalance; 
+
+                                                    // Alert if the balance is negative
+                                                    if (newBalance < 0) {
+                                                        alert('Warning: A Cash in Bank Balance is negative! Please check your inputs.');
+                                                    }
+                                                }
+                                            });
+                                        }
+
+
+                                            // Add event listeners for calculating ca balance
+                                        const caInInput = newRow.querySelector('input[name="ca_receipt_data[]"]');
+                                        const caOutInput = newRow.querySelector('input[name="ca_disbursement_data[]"]');
+                                        const caBalanceInput = newRow.querySelector('input[name="ca_balance_data[]"]');
+
+                                        caInInput.addEventListener('input', updateCABalances);
+                                        caOutInput.addEventListener('input', updateCABalances);
+
+                                        // Add event listener to the initial balance input
+                                        const caLastBalanceInput = document.getElementById('ca_last_balance');
+                                        caLastBalanceInput.addEventListener('change', updateCABalances);
+
+                                        function updateCABalances() {
+                                            let initialBalance = parseFloat(caLastBalanceInput.value) || 0;
+                                            const rows = document.querySelectorAll("#exampleModal .inp-group-view tr"); // Get all rows
+                                            let previousBalance = initialBalance; // Start with the initial balance
+
+                                            rows.forEach((row) => {
+                                                const caInInput = row.querySelector('input[name="ca_receipt_data[]"]');
+                                                const caOutInput = row.querySelector('input[name="ca_disbursement_data[]"]');
+                                                const balanceInput = row.querySelector('input[name="ca_balance_data[]"]');
+
+                                                if (caInInput && caOutInput && balanceInput) {
+                                                    const caInValue = parseFloat(caInInput.value) || 0; // Cash Advance In
+                                                    const caOutValue = parseFloat(caOutInput.value) || 0; // Cash Advance Out
+
+                                                    // Calculate new balance
+                                                    const newBalance = previousBalance + caInValue - caOutValue; 
+                                                    balanceInput.value = newBalance; // Update balance input
+
+                                                    // Update previousBalance for the next iteration
+                                                    previousBalance = newBalance; 
+
+                                                    // Alert if the balance is negative
+                                                    if (newBalance < 0) {
+                                                        alert('Warning: A Cash Advance Balance is negative! Please check your inputs.');
+                                                    }
+                                                }
+                                            });
+                                        }
+
+
+                                        // Add event listeners for calculating pcf balance
+                                        const pcfInInput = newRow.querySelector('input[name="pcf_receipt_data[]"]');
+                                        const pcfOutInput = newRow.querySelector('input[name="pcf_payments_data[]"]');
+                                        const pcfBalanceInput = newRow.querySelector('input[name="pcf_balance_data[]"]');
+
+                                        pcfInInput.addEventListener('input', updatePCFBalances);
+                                        pcfOutInput.addEventListener('input', updatePCFBalances);
+
+                                        // Add event listener to the initial balance input
+                                        const pcfLastBalanceInput = document.getElementById('pcf_last_balance');
+                                        pcfLastBalanceInput.addEventListener('change', updatePCFBalances);
+
+                                        function updatePCFBalances() {
+                                            let initialBalance = parseFloat(pcfLastBalanceInput.value) || 0;
+                                            const rows = document.querySelectorAll("#exampleModal .inp-group-view tr"); // Get all rows
+                                            let previousBalance = initialBalance; // Start with the initial balance
+
+                                            rows.forEach((row) => {
+                                                const pcfInInput = row.querySelector('input[name="pcf_receipt_data[]"]');
+                                                const pcfOutInput = row.querySelector('input[name="pcf_payments_data[]"]');
+                                                const balanceInput = row.querySelector('input[name="pcf_balance_data[]"]');
+
+                                                if (pcfInInput && pcfOutInput && balanceInput) {
+                                                    const pcfInValue = parseFloat(pcfInInput.value) || 0; // Petty Cash In
+                                                    const pcfOutValue = parseFloat(pcfOutInput.value) || 0; // Petty Cash Out
+
+                                                    // Calculate new balance
+                                                    const newBalance = previousBalance + pcfInValue - pcfOutValue; 
+                                                    balanceInput.value = newBalance; // Update balance input
+
+                                                    // Update previousBalance for the next iteration
+                                                    previousBalance = newBalance; 
+
+                                                    // Alert if the balance is negative
+                                                    if (newBalance < 0) {
+                                                        alert('Warning: A Petty Cash Balance is negative! Please check your inputs.');
+                                                    }
+                                                }
+                                            });
+                                        }
+
+
+                                        // Add event listener to delete button
+                                        actionCell.querySelector('.delete').addEventListener('click', function(event) {
+                                            event.preventDefault();
+                                            if (confirm("Are you sure you want to remove this row?")) {
+                                                newRow.remove(); // Remove the row
+                                                updateCLTBalances();
+                                                updateCBBalances();
+                                                updateCABalances();
+                                                updatePCFBalances();
+                                                update_up_Counter(); 
+                                            }
+                                        });
+                                        update_up_Counter(); 
+
+                                        actionCell.querySelector('.add').addEventListener('click', function(event) {
+                                            event.preventDefault(); // Prevent default action
+                                            addInput(newRow); // Call to add a new row
+                                        });
+
+                                    
+                                        // Add the new group to the form
+                                        if (afterElement) {
+                                        afterElement.insertAdjacentElement('afterend', newRow);
+                                        } else {
+                                            document.querySelector("#exampleModal .inp-group-view").appendChild(newRow);
+                                        }
+                                        window.upCounter++; 
+                                        update_up_Counter(); 
+                                        updateDateInputs();
+
+                                    }
+                                    updateAllBalances();
+                                    update_up_Counter(); 
+
+                                    function createCell(elementType, textContent = '', attributes = {}) {
+                                    const cell = document.createElement('td');
+                                    const element = document.createElement(elementType);
+                                    
+                                    if (textContent) element.textContent = textContent;
+                                    
+                                    for (const [key, value] of Object.entries(attributes)) {
+                                        element.setAttribute(key, value);
+                                    }
+                                    
+                                    cell.appendChild(element);
+                                    return cell;
+                                    }
+
+                                    function updateAllRowBalances() {
+                                            const balanceTypes = [
+                                                { name: 'clt', in: 'clt_in_data[]', out: 'clt_out_data[]', balance: 'clt_balance_data[]', lastBalance: 'clt_last_balance' },
+                                                { name: 'cb', in: 'cb_in_data[]', out: 'cb_out_data[]', balance: 'cb_balance_data[]', lastBalance: 'cb_last_balance' },
+                                                { name: 'ca', in: 'ca_receipt_data[]', out: 'ca_disbursement_data[]', balance: 'ca_balance_data[]', lastBalance: 'ca_last_balance' },
+                                                { name: 'pcf', in: 'pcf_receipt_data[]', out: 'pcf_payments_data[]', balance: 'pcf_balance_data[]', lastBalance: 'pcf_last_balance' }
+                                            ];
+
+                                            balanceTypes.forEach(type => {
+                                                const lastBalanceInput = document.getElementById(type.lastBalance);
+                                                let initialBalance = parseFloat(lastBalanceInput.value) || 0;
+                                                let previousBalance = initialBalance;
+
+                                                const rows = document.querySelectorAll("#exampleModal .inp-group-view tr");
+
+                                                rows.forEach((row) => {
+                                                    const inInput = row.querySelector(`input[name="${type.in}"]`);
+                                                    const outInput = row.querySelector(`input[name="${type.out}"]`);
+                                                    const balanceInput = row.querySelector(`input[name="${type.balance}"]`);
+
+                                                    if (inInput && outInput && balanceInput) {
+                                                        const inValue = parseFloat(inInput.value) || 0;
+                                                        const outValue = parseFloat(outInput.value) || 0;
+
+                                                        const newBalance = previousBalance + inValue - outValue;
+                                                        balanceInput.value = newBalance.toFixed(2);
+
+                                                        previousBalance = newBalance.toFixed(2);
+
+                                                        if (newBalance < 0) {
+                                                            alert(`Warning: A ${type.name.toUpperCase()} Balance is negative! Please check your inputs.`);
+                                                        }
+                                                    }
+                                                });
+                                            });
+                                        }
+
+                                        // Add event listeners
+                                        document.querySelectorAll('#exampleModal .inp-group-view input').forEach(input => {
+                                            input.addEventListener('input', updateAllRowBalances);
+                                        });
+
+                                        document.querySelectorAll('#clt_last_balance, #cb_last_balance, #ca_last_balance, #pcf_last_balance, #cltinitbalanceField, #cbinitbalanceField').forEach(input => {
+                                            input.addEventListener('change', (event) => {
+                                                console.log("Balance field changed:", event.target.id);
+                                                updateAllRowBalances();
+                                            });
+                                        });
+
+                                        // Call the function initially to set up initial balances
+                                        updateAllRowBalances();
+                                    
+                                };
+                            }
+
+                                // Call FunctionForModal2 to set up the modal
+                            FunctionForModal2();
+                            }
+                            window.FunctionForModal2 = FunctionForModal2;
+                        
+                        });
 
                         $(document).on('click', '.deleteBtn', function(event) {
                             var table = $('#example').DataTable();
@@ -683,6 +1391,14 @@ span {
                             }
                         })
 
+                        // Function to format the period covered
+                        function formatPeriodCovered(dateString) {
+                            const date = new Date(dateString);
+                            const month = date.toLocaleString('default', { month: 'long' }).toUpperCase();
+                            const year = date.getFullYear();
+                            const lastDay = new Date(year, date.getMonth() + 1, 0).getDate();
+                            return `${month} 1-${lastDay}, ${year}`;
+                        }
                         $('#example').on('click', '.infoBtn', function(event) {
                         let trid = $(this).closest('tr').attr('id');
                         let cashbook_id = $(this).data('item-id');
@@ -710,11 +1426,16 @@ span {
                                         let record = json.record;
                                         let cashbookData = json.cashbook_data;
 
+                                        let formattedPeriod = formatPeriodCovered(record.period_covered);
+
                                         // Populate input fields with the main record data
                                         $('#periodcoveredView').val(record.period_covered);
                                         $('#treasurernameView').val(record.treasurer_name);
                                         $('#cltinitbalanceView').val(record.clt_init_balance);
                                         $('#cbinitbalanceView').val(record.cb_init_balance);
+
+                                        $('#treasurernameCertView').text(record.treasurer_name);
+                                        $('#periodcoveredCertView').text(formattedPeriod);
 
                                         // Append initial values for "Initial" and "Balances"
                                         const initialRow = `
@@ -880,7 +1601,21 @@ span {
                                 <tbody class = "ending-value">
 
                                 </tbody>
+                                
                             </table>
+                            <div class="certification">
+                                <p>Certification:</p>
+                                <p>
+                                    I hereby certify that the foregoing is a correct and complete record of all my collections, deposits, 
+                                    remittances, and balances of my accounts, in the Cash-In Local Treasury, Cash in Bank, Cash Advances, 
+                                    and Petty Cash as of <strong id="periodcoveredCertView"></strong>.
+                                </p>
+                            </div>
+
+                            <div class="signature-section">
+                                <p class="name" id="treasurernameCertView"></p>
+                                <p class="title">Barangay Treasurer</p>
+                            </div>
                             <!-- Action buttons -->
                             <div class="cashbook-actions">
                                 <button id="print-btn">Print</button>
@@ -902,6 +1637,11 @@ span {
                             <form id="updateUser">
                                     <input type="hidden" name="cashbook_id" id="cashbook_id" value="">
                                     <input type="hidden" name="trid" id="trid" value="">
+
+                                    <input type="hidden" name="clt_last_balance" id="clt_last_balance" value="">
+                                    <input type="hidden" name="cb_last_balance" id="cb_last_balance" value="">
+                                    <input type="hidden" name="ca_last_balance" id="ca_last_balance" value="">
+                                    <input type="hidden" name="pcf_last_balance" id="pcf_last_balance" value="">
                                
                                 <div class="row">
                                     <div class="col-md-6">
@@ -932,37 +1672,51 @@ span {
                                     </div>
                                     </div>
 
-                                <div class="form-group">
-                                    <div class="wrap">
-                                        <h4>UPDATE RECORDS</h4>
-                                        <a href="#" class="add">+</a>
-                                    </div>
-                                    <div class="column-titles">
-                                        <span>#</span>
-                                        <span>Date</span>
-                                        <span>Particulars 1</span>
-                                        <span>Particulars 2</span>
-                                        <span>Reference 1</span>
-                                        <span>Reference 2</span>
-                                        <span>CLT In</span>
-                                        <span>CLT Out</span>
-                                        <span>CB In</span>
-                                        <span>CB Out</span>
-                                        <span>CA Receipt</span>
-                                        <span>CA Disbursement</span>
-                                        <span>PCF Receipt</span>
-                                        <span>PCF Payments</span>
-                                        <span>Action</span>
-                                    </div>
+                                  <!-- Cashbook Table -->
+                            <table id = "viewDataTable" class="cashbook-table">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" class="hidden">Counter</th>
+                                        <th rowspan="2" class="hidden">ID</th>
+                                        <th rowspan="2">Date</th>
+                                        <th colspan="2">Particulars</th> <!-- Combined Particulars -->
+                                        <th colspan="2">References</th>  <!-- Combined References -->
+                                        <th colspan="3">Cash in Local Treasury</th>
+                                        <th colspan="3">Cash in Bank</th>
+                                        <th colspan="3">Cash Advances</th>
+                                        <th colspan="3">Petty Cash Fund</th>
+                                        <th rowspan="3">Action</th>
+                                    </tr>
+                                    <tr>
+                                        <!-- Sub-columns for Particulars and References -->
+                                        <th >Particular 1</th>
+                                        <th >Particular 2</th>
+                                        <th>Reference 1</th>
+                                        <th>Reference 2</th>
+                                        <th>Collection</th>
+                                        <th>Deposit</th>
+                                        <th>Balance</th>
 
-                                    <div class="inp-group-up">
-                                        <!-- Populate in the form -->
-                                        
-                                    </div>
-                                    
-                                    <!-- Dynamic Inputs Will Be Added Here -->
-                                </div>
+                                        <th>Deposit</th>
+                                        <th>Check Issued</th>
+                                        <th>Balance</th>
+
+                                        <th>Receipt</th>
+                                        <th>Disbursement</th>
+                                        <th>Balance</th>
+
+                                        <th>Receipt Replenishment</th>
+                                        <th>Payments</th>
+                                        <th>Balance</th>
+                                    </tr>
+                                </thead>
+                                <tbody class = "inp-group-view">
+                                     <!-- Dynamic rows go here -->
+                                </tbody>
+                                
+                            </table>
                                 <div class="modal-footer">
+                                    <button class="add">+</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>
@@ -1009,39 +1763,55 @@ span {
                                 </div>
                             </div>
 
-                                <div class="form-group">
-                                    <div class="wrap">
-                                        <h2>ADD RECORDS</h2>
-                                        <a href="#" class="add">+</a>
-                                    </div>
-                                    <div class="column-titles">
-                                        <span>#</span>
-                                        <span>Date</span>
-                                        <span>Particulars 1</span>
-                                        <span>Particulars 2</span>
-                                        <span>Reference 1</span>
-                                        <span>Reference 2</span>
-                                        <span>CLT In</span>
-                                        <span>CLT Out</span>
-                                        <span>CB In</span>
-                                        <span>CB Out</span>
-                                        <span>CA Receipt</span>
-                                        <span>CA Disbursement</span>
-                                        <span>PCF Receipt</span>
-                                        <span>PCF Payments</span>
-                                        <span>Action</span>
-                                    </div>
+                            <table id = "viewDataTable" class="cashbook-table">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" class="hidden">Counter</th>
+                                        <th rowspan="2" class="hidden">ID</th>
+                                        <th rowspan="2">Date</th>
+                                        <th colspan="2">Particulars</th> <!-- Combined Particulars -->
+                                        <th colspan="2">References</th>  <!-- Combined References -->
+                                        <th colspan="3">Cash in Local Treasury</th>
+                                        <th colspan="3">Cash in Bank</th>
+                                        <th colspan="3">Cash Advances</th>
+                                        <th colspan="3">Petty Cash Fund</th>
+                                        <th rowspan="3">Action</th>
 
-                                    <div class="inp-group-add">
-                                        <!-- Populate in the form -->
-                                        
-                                    </div>
-                                    
-                                    <!-- Dynamic Inputs Will Be Added Here -->
-                                </div>
+                                    </tr>
+                                    <tr>
+                                        <!-- Sub-columns for Particulars and References -->
+                                        <th >Particular 1</th>
+                                        <th >Particular 2</th>
+                                        <th>Reference 1</th>
+                                        <th>Reference 2</th>
+                                        <th>Collection</th>
+                                        <th>Deposit</th>
+                                        <th>Balance</th>
 
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                        <th>Deposit</th>
+                                        <th>Check Issued</th>
+                                        <th>Balance</th>
+
+                                        <th>Receipt</th>
+                                        <th>Disbursement</th>
+                                        <th>Balance</th>
+
+                                        <th>Receipt Replenishment</th>
+                                        <th>Payments</th>
+                                        <th>Balance</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class = "inp-group-view">
+                                     <!-- Dynamic rows go here -->
+                                </tbody>
+                                
+                            </table>
+
+                            <div class="modal-footer">
+                                <button class="add">+</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                                 </div>
                             </form>
                         </div>
@@ -1050,562 +1820,330 @@ span {
             </div>
             </section>
     </body> 
+    
     <script>
-        function validateForm() {
-                var itemCount = parseInt(document.getElementById('itemcount').value);
-                var lendableCount = parseInt(document.getElementById('lendablecount').value);
-
-                var itemCountField = parseInt(document.getElementById('countField').value);
-                var lendableCountField = parseInt(document.getElementById('lendablecountField').value);
-
-                if (lendableCount > itemCount) {
-                    alert("Lendable count cannot be more than item count.");
-                    return false;
-                }
-
-                if (lendableCountField > itemCountField) {
-                    alert("Lendable count cannot be more than item count.");
-                    return false;
-                }
-
-                return true;
-            }
-    </script>
-
-    <script>
-
-
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            $('#addUserModal').on('shown.bs.modal', function () {
-                console.log('Modal 1 is triggered');
-
-                (function FunctionForModal1() {
-
-                    const periodCoveredInput = document.querySelector('#periodcovered');
-                    const inpGroup = document.querySelector('#addUserModal .inp-group-add');
-                    let addCounter = 1;
-
-                    // Function to format date as YYYY-MM-DD
-                    function formatDate(date) {
-                        return date.toISOString().split('T')[0];
-                    }
-
-                    // Function to get the last day of a month
-                    function getLastDayOfMonth(year, month) {
-                        return new Date(year, month + 1, 0).getDate();
-                    }
-
-                    // Update min and max attributes for date inputs based on the selected period
-                    function updateDateInputs() {
-                        const selectedDate = new Date(periodCoveredInput.value);
-                        if (isNaN(selectedDate.getTime())) return; // No valid date selected
-
-                        const month = selectedDate.getMonth(); // 0-based month
-                        const year = selectedDate.getFullYear();
-
-                        const startOfMonth = new Date(year, month, 2);
-                        const lastDay = getLastDayOfMonth(year, month);
-                        const endOfMonth = new Date(year, month, lastDay+1);
-
-                        const minDate = formatDate(startOfMonth);
-                        const maxDate = formatDate(endOfMonth);
-
-                        const dateInputs = document.querySelectorAll('#addUserModal input[name="date_data[]"]');
-                        dateInputs.forEach(input => {
-                            input.setAttribute('min', minDate);
-                            input.setAttribute('max', maxDate);
-
-                            // Validate the input value
-                        // Validate the input value only if it exists
-                            if (input.value) {
-                                const currentDate = new Date(input.value);
-                                if (currentDate < startOfMonth || currentDate > endOfMonth) {
-                                    // You can choose to alert the user instead of clearing the value
-                                    console.log(`Date ${input.value} is outside the valid range.`);
-                                }
-                            }
-                        });
-                    }
-
-                     // Event listener for period covered input change
-                    periodCoveredInput.addEventListener('change', updateDateInputs);
-
-                    // Add event listener for adding new input groups
-                    document.querySelector('#addUserModal  .add').addEventListener('click', function(event) {
-                        event.preventDefault();
-                        addInput();
-                        updateDateInputs(); // Ensure new inputs are validated
-                    });
-
-                    // Initial call to set the correct date range
-                    updateDateInputs();
-
-                    // Remove an input group
-                    function removeInput(event) {
-                        event.preventDefault(); // Prevent default link behavior
-                        if (confirm("Are you sure you want to remove this row?")) {
-                            // Remove the closest .flex (the group containing the inputs)
-                            const inputGroup = event.target.closest('#addUserModal .flex');
-                            if (inputGroup) {
-                                inputGroup.remove();
-                                update_add_Counter();
-                            }
-                        }
-                    }
-
-                    // Function to update the counters after a row is removed
-                    function update_add_Counter() {
-                        const rows = document.querySelectorAll("#addUserModal .inp-group-add .flex");
-                        let updatedCounter = 1;  // Start counter from 1 or any other base
-
-                        rows.forEach(function(row) {
-                            const label = row.querySelector("label");
-                            const hiddenInput = row.querySelector("#addUserModal input[type='hidden']");
-
-                            // Update the label text and hidden input value to match the new counter
-                            label.textContent = updatedCounter;
-                            hiddenInput.value = updatedCounter;
-
-                            updatedCounter++;  // Increment counter for the next row
-                        });
-
-                        // Update global counter to match the number of rows
-                        addCounter = updatedCounter;
-                    }
-
-
-
-                    // Add a new input group
-                    function addInput(afterElement = null) {
-                        const newGroup = document.createElement("div");
-                        newGroup.classList.add("flex");
-
-                        const counter = document.createElement("label");
-                        counter.textContent = addCounter;
-
-                        const hiddenCounter = document.createElement("input");
-                        hiddenCounter.type = "hidden";
-                        hiddenCounter.name = "add_counter[]";
-                        hiddenCounter.id = "add_counter";
-                        hiddenCounter.value = addCounter;
-
-                        const date_data = document.createElement("input");
-                        date_data.type = "date";
-                        date_data.name = "date_data[]";
-                        date_data.required = true;
-                        date_data.min = 1;
-                        
-                        const particulars_1 = document.createElement("input");
-                        particulars_1.type = "text";
-                        particulars_1.name = "particulars_1[]";
-                        particulars_1.required = false;
-                        particulars_1.min = 1;
-
-                        const particulars_2 = document.createElement("input");
-                        particulars_2.type = "text";
-                        particulars_2.name = "particulars_2[]";
-                        particulars_2.required = false;
-                        particulars_2.min = 1;
-
-                        const reference_1 = document.createElement("input");
-                        reference_1.type = "text";
-                        reference_1.name = "reference_1[]";
-                        reference_1.required = false;
-                        reference_1.min = 1;
-
-                        const reference_2 = document.createElement("input");
-                        reference_2.type = "text";
-                        reference_2.name = "reference_2[]";
-                        reference_2.required = false;
-                        reference_2.min = 1;
-
-                        const clt_in_data = document.createElement("input");
-                        clt_in_data.type = "number";
-                        clt_in_data.name = "clt_in_data[]";
-                        clt_in_data.required = false;
-                        clt_in_data.min = 1;
-
-                        const clt_out_data = document.createElement("input");
-                        clt_out_data.type = "number";
-                        clt_out_data.name = "clt_out_data[]";
-                        clt_out_data.required = false;
-                        clt_out_data.min = 1;
-
-                        const cb_in_data = document.createElement("input");
-                        cb_in_data.type = "number";
-                        cb_in_data.name = "cb_in_data[]";
-                        cb_in_data.required = false;
-                        cb_in_data.min = 1;
-
-                        const cb_out_data = document.createElement("input");
-                        cb_out_data.type = "number";
-                        cb_out_data.name = "cb_out_data[]";
-                        cb_out_data.required = false;
-                        cb_out_data.min = 1;
-
-                        const ca_receipt_data = document.createElement("input");
-                        ca_receipt_data.type = "number";
-                        ca_receipt_data.name = "ca_receipt_data[]";
-                        ca_receipt_data.required = false;
-                        ca_receipt_data.min = 1;
-
-                        const ca_disbursement_data = document.createElement("input");
-                        ca_disbursement_data.type = "number";
-                        ca_disbursement_data.name = "ca_disbursement_data[]";
-                        ca_disbursement_data.required = false;
-                        ca_disbursement_data.min = 1;
-
-                        const pcf_receipt_data = document.createElement("input");
-                        pcf_receipt_data.type = "number";
-                        pcf_receipt_data.name = "pcf_receipt_data[]";
-                        pcf_receipt_data.required = false;
-                        pcf_receipt_data.min = 1;
-
-                        const pcf_payments_data = document.createElement("input");
-                        pcf_payments_data.type = "number";
-                        pcf_payments_data.name = "pcf_payments_data[]";
-                        pcf_payments_data.required = false;
-                        pcf_payments_data.min = 1;
-
-
-                        // Create remove button
-                        const removeButton = document.createElement("a");
-                        removeButton.href = "#";
-                        removeButton.textContent = "X";
-                        removeButton.classList.add("delete");
-                        removeButton.onclick = (event) => removeInput(event);
-
-                        // Create add button
-                        const addButton = document.createElement("a");
-                        addButton.href = "#";
-                        addButton.textContent = "+";
-                        addButton.classList.add("add");
-                        addButton.onclick = function (e) {
-                            e.preventDefault();
-                            addInput(newGroup); // Insert next to current row
-                            update_add_Counter(); 
-                        };
-
-                        // Create the action column
-                        const actionColumn = document.createElement("div");
-                        actionColumn.classList.add("action-buttons");
-                        actionColumn.appendChild(addButton);
-                        actionColumn.appendChild(removeButton);
-
-                        // Append elements to the new group
-                        newGroup.appendChild(counter);
-                        newGroup.appendChild(hiddenCounter);
-                        newGroup.appendChild(date_data);
-                        newGroup.appendChild(particulars_1);
-                        newGroup.appendChild(particulars_2);
-                        newGroup.appendChild(reference_1);
-                        newGroup.appendChild(reference_2);
-                        newGroup.appendChild(clt_in_data);
-                        newGroup.appendChild(clt_out_data);
-                        newGroup.appendChild(cb_in_data);
-                        newGroup.appendChild(cb_out_data);
-                        newGroup.appendChild(ca_receipt_data);
-                        newGroup.appendChild(ca_disbursement_data);
-                        newGroup.appendChild(pcf_receipt_data);
-                        newGroup.appendChild(pcf_payments_data);
-
-                        // Append the action buttons column
-                        newGroup.appendChild(actionColumn);
-
-                        // Add the new group to the form
-                        if (afterElement) {
-                        afterElement.insertAdjacentElement('afterend', newGroup);
-                        } else {
-                            document.querySelector("#addUserModal .inp-group-add").appendChild(newGroup);
-                        }
-                        addCounter++;
-                        update_add_Counter(); 
-                        updateDateInputs();
-
-                    }
-
-                })()
-            });
-        });
-    </script>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        $('#exampleModal').on('shown.bs.modal', function () {
-            console.log('Modal 2 is triggered');
-            (function FunctionForModal2() {
-                const periodCoveredInput = document.querySelector('#periodcoveredField');
-                const inpGroup = document.querySelector('#exampleModal .inp-group-up');
-
-                // Function to format date as YYYY-MM-DD
-                function formatDate(date) {
-                    return date.toISOString().split('T')[0];
-                }
-
-                // Function to get the last day of a month
-                function getLastDayOfMonth(year, month) {
-                    return new Date(year, month + 1, 0).getDate();
-                }
-
-                // Update min and max attributes for date inputs based on the selected period
-                function updateDateInputs() {
-                const selectedDate = new Date(periodCoveredInput.value);
-                if (isNaN(selectedDate.getTime())) return; // No valid date selected
-
-                const month = selectedDate.getMonth(); // 0-based month
-                const year = selectedDate.getFullYear();
-
-                const startOfMonth = new Date(year, month, 2); // First day of the month
-                const lastDay = getLastDayOfMonth(year, month);
-                const endOfMonth = new Date(year, month, lastDay+1); // Last day of the month
-
-                const minDate = formatDate(startOfMonth);
-                const maxDate = formatDate(endOfMonth);
-
-                const dateInputs = document.querySelectorAll('#exampleModal input[name="date_data[]"]');
-                dateInputs.forEach(input => {
-                    // Only set min and max attributes, don't clear the value
-                    input.setAttribute('min', minDate);
-                    input.setAttribute('max', maxDate);
-
-                    // Validate the input value only if it exists
-                    if (input.value) {
-                        const currentDate = new Date(input.value);
-                        if (currentDate < startOfMonth || currentDate > endOfMonth) {
-                            // You can choose to alert the user instead of clearing the value
-                            console.log(`Date ${input.value} is outside the valid range.`);
-                        }
-                    }
-                });
-            }
-
-                // Event listener for period covered input change
-                periodCoveredInput.addEventListener('change', updateDateInputs);
-
-                // Add event listener for adding new input groups
-               // Add event listener for adding new input groups within inp-group-up
-                // $('#exampleModal .inp-group-up').on('click', '.add', function(event) {
-                //     event.preventDefault();
-                //     console.log("Add button clicked in inp-group-up"); // Check if this is logged
-                //     addInput($(this).closest('.flex')); // Pass the closest '.flex'
-                //     update_up_Counter();
-                //     updateDateInputs();
-                // });
-
-                // Add event listener for the main add button in the modal header
-                document.querySelector('#exampleModal .add').addEventListener('click', function(event) {
-                    event.preventDefault();
-                    console.log("Main add button clicked"); // Check if this is logged
-                    addInput(); // Call addInput without parameters
-                    updateDateInputs(); // Ensure new inputs are validated
-                });
-
-                // Initial call to set the correct date range
-                updateDateInputs();
-
-
-                // Remove an input group
-                $('#exampleModal .inp-group-up').on('click', '.delete', function(event) {
-                    event.preventDefault();
-                    // Confirm before removing the row
-                    if (confirm("Are you sure you want to remove this row?")) {
-                        // Remove the closest '.flex' container
-                        $(this).closest('.flex').remove();
-                        // Update counter after removing
-                        update_up_Counter();
-                    }
-                });
-
-                // Function to update the counters after a row is removed
-                function update_up_Counter() {
-                    const rows = document.querySelectorAll("#exampleModal .inp-group-up .flex");
-                    let updatedCounter = 1;  // Start counter from 1 or any other base
-
-                    rows.forEach(function(row) {
-                        const label = row.querySelector("label");
-                        const hiddenInput = row.querySelector("#exampleModal input[type='hidden']");
-
-                        // Update the label text and hidden input value to match the new counter
-                        label.textContent = updatedCounter;
-                        hiddenInput.value = updatedCounter;
-
-                        updatedCounter++;  // Increment counter for the next row
-                    });
-
-                    // Update global counter to match the number of rows
-                    window.upCounter = updatedCounter;
-                }
-                
-
-                // Add a new input group
-                function addInput(afterElement = null) {
-                        const newGroup = document.createElement("div");
-                        newGroup.classList.add("flex");
-
-                         // Make sure upCounter is initialized properly
-                        if (typeof window.upCounter === 'undefined') {
-                            window.upCounter = document.querySelectorAll('#exampleModal .inp-group-up .flex').length + 1;
-                        }
-
-                        const counter = document.createElement("label");
-                        counter.textContent = upCounter;
-
-                        const hiddenCounter = document.createElement("input");
-                        hiddenCounter.type = "hidden";
-                        hiddenCounter.name = "up_counter[]";
-                        hiddenCounter.id = "up_counter";
-                        hiddenCounter.value = upCounter;
-
-                        const date_data = document.createElement("input");
-                        date_data.type = "date";
-                        date_data.name = "date_data[]";
-                        date_data.required = true;
-                        date_data.min = 1;
-                        
-                        const particulars_1 = document.createElement("input");
-                        particulars_1.type = "text";
-                        particulars_1.name = "particulars_1[]";
-                        particulars_1.required = false;
-                        particulars_1.min = 1;
-
-                        const particulars_2 = document.createElement("input");
-                        particulars_2.type = "text";
-                        particulars_2.name = "particulars_2[]";
-                        particulars_2.required = false;
-                        particulars_2.min = 1;
-
-                        const reference_1 = document.createElement("input");
-                        reference_1.type = "text";
-                        reference_1.name = "reference_1[]";
-                        reference_1.required = false;
-                        reference_1.min = 1;
-
-                        const reference_2 = document.createElement("input");
-                        reference_2.type = "text";
-                        reference_2.name = "reference_2[]";
-                        reference_2.required = false;
-                        reference_2.min = 1;
-
-                        const clt_in_data = document.createElement("input");
-                        clt_in_data.type = "number";
-                        clt_in_data.name = "clt_in_data[]";
-                        clt_in_data.required = false;
-                        clt_in_data.min = 1;
-
-                        const clt_out_data = document.createElement("input");
-                        clt_out_data.type = "number";
-                        clt_out_data.name = "clt_out_data[]";
-                        clt_out_data.required = false;
-                        clt_out_data.min = 1;
-
-                        const cb_in_data = document.createElement("input");
-                        cb_in_data.type = "number";
-                        cb_in_data.name = "cb_in_data[]";
-                        cb_in_data.required = false;
-                        cb_in_data.min = 1;
-
-                        const cb_out_data = document.createElement("input");
-                        cb_out_data.type = "number";
-                        cb_out_data.name = "cb_out_data[]";
-                        cb_out_data.required = false;
-                        cb_out_data.min = 1;
-
-                        const ca_receipt_data = document.createElement("input");
-                        ca_receipt_data.type = "number";
-                        ca_receipt_data.name = "ca_receipt_data[]";
-                        ca_receipt_data.required = false;
-                        ca_receipt_data.min = 1;
-
-                        const ca_disbursement_data = document.createElement("input");
-                        ca_disbursement_data.type = "number";
-                        ca_disbursement_data.name = "ca_disbursement_data[]";
-                        ca_disbursement_data.required = false;
-                        ca_disbursement_data.min = 1;
-
-                        const pcf_receipt_data = document.createElement("input");
-                        pcf_receipt_data.type = "number";
-                        pcf_receipt_data.name = "pcf_receipt_data[]";
-                        pcf_receipt_data.required = false;
-                        pcf_receipt_data.min = 1;
-
-                        const pcf_payments_data = document.createElement("input");
-                        pcf_payments_data.type = "number";
-                        pcf_payments_data.name = "pcf_payments_data[]";
-                        pcf_payments_data.required = false;
-                        pcf_payments_data.min = 1;
-
-
-                        // Create remove button
-                        const removeButton = document.createElement('a');
-                            removeButton.href = '#';
-                            removeButton.textContent = 'X';
-                            removeButton.classList.add('delete');
-                            removeButton.addEventListener('click', function(event) {
-                                event.preventDefault();
-                                if (confirm("Are you sure you want to remove this row?")) {
-                                    newGroup.remove();
-                                    update_up_Counter();
-                                }
-                            });
-
-                        // Create add button
-                        const addButton = document.createElement('a');
-                        addButton.href = '#';
-                        addButton.textContent = '+';
-                        addButton.classList.add('add');
-                        addButton.addEventListener('click', function(event) {
-                            event.preventDefault();
-                            addInput(newGroup);
-                            update_up_Counter();
-                            console.log("Addbutton clicked ");
-                            updateDateInputs();
-                        });
-
-                        // Create the action column
-                        const actionColumn = document.createElement("div");
-                        actionColumn.classList.add("action-buttons");
-                        actionColumn.appendChild(addButton);
-                        actionColumn.appendChild(removeButton);
-
-                        // Append elements to the new group
-                        newGroup.appendChild(counter);
-                        newGroup.appendChild(hiddenCounter);
-                        newGroup.appendChild(date_data);
-                        newGroup.appendChild(particulars_1);
-                        newGroup.appendChild(particulars_2);
-                        newGroup.appendChild(reference_1);
-                        newGroup.appendChild(reference_2);
-                        newGroup.appendChild(clt_in_data);
-                        newGroup.appendChild(clt_out_data);
-                        newGroup.appendChild(cb_in_data);
-                        newGroup.appendChild(cb_out_data);
-                        newGroup.appendChild(ca_receipt_data);
-                        newGroup.appendChild(ca_disbursement_data);
-                        newGroup.appendChild(pcf_receipt_data);
-                        newGroup.appendChild(pcf_payments_data);
-
-                        // Append the action buttons column
-                        newGroup.appendChild(actionColumn);
-
-                        // Add the new group to the form
-                        if (afterElement) {
-                            afterElement.insertAdjacentElement('afterend', newGroup);
-                        } else {
-                            document.querySelector("#exampleModal .inp-group-up").appendChild(newGroup);
-                        }
-                        console.log("New input group added to the DOM.");
-                        window.upCounter++;
-                        update_up_Counter(); 
-                        updateDateInputs();
-
-                    }
-
-            })();
-        });
+document.addEventListener('DOMContentLoaded', function () {
+    const modal1 = document.getElementById('addUserModal');
+    let modal1Initialized = false;
+    let addInputHandler;
+
+    $('#addUserModal').on('show.bs.modal', function () {
+        if (!modal1Initialized) {
+            initializeModal1();
+            modal1Initialized = true;
+        }
     });
-</script>
+
+    $('#addUserModal').on('hidden.bs.modal', function () {
+        // Clean up event listeners when the modal is closed
+        if (addInputHandler) {
+            const addButton = document.querySelector('#addUserModal .modal-footer .add');
+            addButton.removeEventListener('click', addInputHandler);
+        }
+    });
+
+    function initializeModal1() {
+        console.log('Modal 1 is initialized');
+
+        const periodCoveredInput = document.querySelector('#periodcovered');
+        const inpGroup = document.querySelector('#addUserModal .inp-group-view');
+        let addCounter = 1;
+
+        // Function to format date as YYYY-MM-DD
+        function formatDate(date) {
+            return date.toISOString().split('T')[0];
+        }
+
+        // Function to get the last day of a month
+        function getLastDayOfMonth(year, month) {
+            return new Date(year, month + 1, 0).getDate();
+        }
+
+        // Update min and max attributes for date inputs based on the selected period
+        function updateDateInputs() {
+            const selectedDate = new Date(periodCoveredInput.value);
+            if (isNaN(selectedDate.getTime())) return; // No valid date selected
+
+            const month = selectedDate.getMonth(); // 0-based month
+            const year = selectedDate.getFullYear();
+
+            const startOfMonth = new Date(year, month, 2);
+            const lastDay = getLastDayOfMonth(year, month);
+            const endOfMonth = new Date(year, month, lastDay+1);
+
+            const minDate = formatDate(startOfMonth);
+            const maxDate = formatDate(endOfMonth);
+
+            const dateInputs = document.querySelectorAll('#addUserModal input[name="date_data[]"]');
+            dateInputs.forEach(input => {
+                input.setAttribute('min', minDate);
+                input.setAttribute('max', maxDate);
+
+                // Validate the input value only if it exists
+                if (input.value) {
+                    const currentDate = new Date(input.value);
+                    if (currentDate < startOfMonth || currentDate > endOfMonth) {
+                        console.log(`Date ${input.value} is outside the valid range.`);
+                    }
+                }
+            });
+        }
+
+        // Event listener for period covered input change
+        periodCoveredInput.addEventListener('change', updateDateInputs);
+
+        function addInputHandler(event) {
+            event.preventDefault();
+            addInput();
+            updateDateInputs();
+        }
+
+        // Add event listener for adding new input groups
+        const addButton = document.querySelector('#addUserModal .modal-footer .add');
+        addButton.addEventListener('click', addInputHandler);
+
+        // Remove an input group
+        function removeInput(event) {
+            event.preventDefault(); // Prevent default link behavior
+            if (confirm("Are you sure you want to remove this row?")) {
+                const inputGroup = event.target.closest('#addUserModal tr');
+                if (inputGroup) {
+                    inputGroup.remove();
+                    update_add_Counter();
+                }
+            }
+        }
+
+        // Function to update the counters after a row is removed
+        function update_add_Counter() {
+            const rows = document.querySelectorAll("#addUserModal .inp-group-view tr");
+            let updatedCounter = 1;  // Start counter from 1
+
+            rows.forEach(function(row) {
+                const label = row.querySelector("label");
+                const hiddenInput = row.querySelector("input[type='hidden']");
+
+                if (label) {
+                    label.textContent = updatedCounter; // Update label text
+                }
+                if (hiddenInput) {
+                    hiddenInput.value = updatedCounter; // Update hidden input value
+                }
+                updatedCounter++;  // Increment counter for the next row
+            });
+
+            addCounter = updatedCounter;
+        }
+
+        // Add a new input group
+        function addInput(afterElement = null) {
+            const newRow = document.createElement("tr");
+
+            const cells = [
+                createCell('input', '', {type: 'date', name: 'date_data[]', required: true}),
+                createCell('input', '', {type: 'text', name: 'particulars_1[]' , required: false}),
+                createCell('input', '', {type: 'text', name: 'particulars_2[]', required: false}),
+                createCell('input', '', {type: 'text', name: 'reference_1[]' ,required: false}),
+                createCell('input', '', {type: 'text', name: 'reference_2[]' ,required: false}),
+                createCell('input', '', {type: 'number', name: 'clt_in_data[]', required: false, min: 0, step: "0.01", value: 0}),
+                createCell('input', '', {type: 'number', name: 'clt_out_data[]', required: false, min: 0, step: "0.01", value: 0}),
+                createCell('input', '', {type: 'number', name: 'clt_balance_data[]', required: false, min: 0, step: "0.01", disabled: true, value: 0}),
+                createCell('input', '', {type: 'number', name: 'cb_in_data[]', required: false, min: 0, step: "0.01", value: 0}),
+                createCell('input', '', {type: 'number', name: 'cb_out_data[]', required: false, min: 0, step: "0.01", value: 0}),
+                createCell('input', '', {type: 'number', name: 'cb_balance_data[]', required: false, min: 0, step: "0.01", disabled: true, value: 0}),
+                createCell('input', '', {type: 'number', name: 'ca_receipt_data[]', required: false, min: 0, step: "0.01", value: 0}),
+                createCell('input', '', {type: 'number', name: 'ca_disbursement_data[]', required: false, min: 0, step: "0.01", value: 0}),
+                createCell('input', '', {type: 'number', name: 'ca_balance_data[]', required: false, min: 0, step: "0.01", disabled: true, value: 0}),
+                createCell('input', '', {type: 'number', name: 'pcf_receipt_data[]', required: false, min: 0, step: "0.01", value: 0}),
+                createCell('input', '', {type: 'number', name: 'pcf_payments_data[]', required: false, min: 0, step: "0.01", value: 0}),
+                createCell('input', '', {type: 'number', name: 'pcf_balance_data[]', required: false, min: 0, step: "0.01", disabled: true, value: 0}),
+            ];
+
+            cells.forEach(cell => newRow.appendChild(cell));
+
+            // Create action buttons
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'add_counter[]';
+            hiddenInput.value = document.querySelectorAll("#addUserModal .inp-group-view tr").length + 1;
+            newRow.appendChild(hiddenInput);
+
+            const actionCell = document.createElement('td');
+            actionCell.classList.add('action-buttons');
+            actionCell.innerHTML = `
+                <a href="#" class="add">+</a>
+                <a href="#" class="delete">X</a>
+            `;
+            newRow.appendChild(actionCell);
+
+            // Add event listeners for calculating clt balance
+            const cltInInput = newRow.querySelector('input[name="clt_in_data[]"]');
+            const cltOutInput = newRow.querySelector('input[name="clt_out_data[]"]');
+            const cltBalanceInput = newRow.querySelector('input[name="clt_balance_data[]"]');
+
+            cltInInput.addEventListener('input', updateCLTBalances);
+            cltOutInput.addEventListener('input', updateCLTBalances);
+
+            // Add event listener to the initial balance input
+            const cltInitBalanceInput = document.getElementById('cltinitbalance');
+            cltInitBalanceInput.addEventListener('input', updateCLTBalances);
+
+            function updateCLTBalances() {
+                const initialBalance = parseFloat(cltInitBalanceInput.value) || 0;
+                const rows = document.querySelectorAll("#addUserModal .inp-group-view tr");
+                let previousBalance = initialBalance;
+
+                rows.forEach((row) => {
+                    const cltInValue = parseFloat(row.querySelector('input[name="clt_in_data[]"]').value) || 0;
+                    const cltOutValue = parseFloat(row.querySelector('input[name="clt_out_data[]"]').value) || 0;
+
+                    const newBalance = previousBalance + cltInValue - cltOutValue; 
+                    row.querySelector('input[name="clt_balance_data[]"]').value = newBalance;
+
+                    previousBalance = newBalance; 
+
+                    if (newBalance < 0) {
+                        alert('Warning: A Cash in Local Treasury Balance is negative! Please check your inputs.');
+                    }
+                });
+            }
+
+            // Add event listeners for calculating cb balance
+            const cbInInput = newRow.querySelector('input[name="cb_in_data[]"]');
+            const cbOutInput = newRow.querySelector('input[name="cb_out_data[]"]');
+            const cbBalanceInput = newRow.querySelector('input[name="cb_balance_data[]"]');
+
+            cbInInput.addEventListener('input', updateCBBalances);
+            cbOutInput.addEventListener('input', updateCBBalances);
+
+            // Add event listener to the initial balance input
+            const cbInitBalanceInput = document.getElementById('cbinitbalance');
+            cbInitBalanceInput.addEventListener('input', updateCBBalances);
+
+            function updateCBBalances() {
+                const initialBalance = parseFloat(cbInitBalanceInput.value) || 0;
+                const rows = document.querySelectorAll("#addUserModal .inp-group-view tr");
+                let previousBalance = initialBalance;
+
+                rows.forEach((row) => {
+                    const cbInValue = parseFloat(row.querySelector('input[name="cb_in_data[]"]').value) || 0; 
+                    const cbOutValue = parseFloat(row.querySelector('input[name="cb_out_data[]"]').value) || 0;
+
+                    const newBalance = previousBalance + cbInValue - cbOutValue; 
+                    row.querySelector('input[name="cb_balance_data[]"]').value = newBalance;
+
+                    previousBalance = newBalance; 
+
+                    if (newBalance < 0) {
+                        alert('Warning: A Cash in Bank Balance is negative! Please check your inputs.');
+                    }
+                });
+            }
+
+            // Add event listeners for calculating ca balance
+            const caInInput = newRow.querySelector('input[name="ca_receipt_data[]"]');
+            const caOutInput = newRow.querySelector('input[name="ca_disbursement_data[]"]');
+            const caBalanceInput = newRow.querySelector('input[name="ca_balance_data[]"]');
+
+            caInInput.addEventListener('input', updateCABalances);
+            caOutInput.addEventListener('input', updateCABalances);
+
+            function updateCABalances() {
+                let initialBalance = 0; 
+                const rows = document.querySelectorAll("#addUserModal .inp-group-view tr");
+                let previousBalance = initialBalance;
+
+                rows.forEach((row) => {
+                    const caInValue = parseFloat(row.querySelector('input[name="ca_receipt_data[]"]').value) || 0; 
+                    const caOutValue = parseFloat(row.querySelector('input[name="ca_disbursement_data[]"]').value) || 0;
+
+                    const newBalance = previousBalance + caInValue - caOutValue; 
+                    row.querySelector('input[name="ca_balance_data[]"]').value = newBalance;
+
+                    previousBalance = newBalance; 
+
+                    if (newBalance < 0) {
+                        alert('Warning: A Cash Advance Balance is negative! Please check your inputs.');
+                    }
+                });
+            }
+
+            // Add event listeners for calculating pcf balance
+            const pcfInInput = newRow.querySelector('input[name="pcf_receipt_data[]"]');
+            const pcfOutInput = newRow.querySelector('input[name="pcf_payments_data[]"]');
+            const pcfBalanceInput = newRow.querySelector('input[name="pcf_balance_data[]"]');
+
+            pcfInInput.addEventListener('input', updatePCFBalances);
+            pcfOutInput.addEventListener('input', updatePCFBalances);
+
+            function updatePCFBalances() {
+                let initialBalance = 0;
+                const rows = document.querySelectorAll("#addUserModal .inp-group-view tr");
+                let previousBalance = initialBalance;
+
+                rows.forEach((row) => {
+                    const pcfInValue = parseFloat(row.querySelector('input[name="pcf_receipt_data[]"]').value) || 0; 
+                    const pcfOutValue = parseFloat(row.querySelector('input[name="pcf_payments_data[]"]').value) || 0;
+
+                    const newBalance = previousBalance + pcfInValue - pcfOutValue; 
+                    row.querySelector('input[name="pcf_balance_data[]"]').value = newBalance;
+
+                    previousBalance = newBalance; 
+
+                    if (newBalance < 0) {
+                        alert('Warning: A Petty Cash Balance is negative! Please check your inputs.');
+                    }
+                });
+            }
+
+            // Add event listener to delete button
+            actionCell.querySelector('.delete').addEventListener('click', function(event) {
+                event.preventDefault();
+                if (confirm("Are you sure you want to remove this row?")) {
+                    newRow.remove();
+                    updateCLTBalances();
+                    updateCBBalances();
+                    updateCABalances();
+                    updatePCFBalances();
+                }
+            });
+
+            actionCell.querySelector('.add').addEventListener('click', function(event) {
+                event.preventDefault();
+                addInput(newRow);
+            });
+
+            // Add the new group to the form
+            if (afterElement) {
+                afterElement.insertAdjacentElement('afterend', newRow);
+            } else {
+                document.querySelector("#addUserModal .inp-group-view").appendChild(newRow);
+            }
+            update_add_Counter(); 
+            updateDateInputs();
+
+            console.log("New Row Added");
+        }
+
+        function createCell(elementType, textContent = '', attributes = {}) {
+            const cell = document.createElement('td');
+            const element = document.createElement(elementType);
+
+            if (textContent) element.textContent = textContent;
+
+            for (const [key, value] of Object.entries(attributes)) {
+                element.setAttribute(key, value);
+            }
+
+            cell.appendChild(element);
+            return cell;
+        }
+
+        // Initial call to set the correct date range
+        updateDateInputs();
+    }
+});
+
+    </script>
 
 </html>
