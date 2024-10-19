@@ -41,7 +41,7 @@ $confirmpassword = '';
                     </div>
                     <div class="grid-item">
                         <div>
-                            <input type="text" name="middlename" placeholder="Middle Name" id="middlename" class="input-field" required value="<?php echo htmlspecialchars($middlename); ?>" />
+                            <input type="text" name="middlename" placeholder="Middle Name" id="middlename" class="input-field"  value="<?php echo htmlspecialchars($middlename); ?>" />
                         </div>
                     </div>
                     <div class="grid-item">
@@ -112,7 +112,7 @@ $confirmpassword = '';
                     $password = $_POST["password"] ?? '';
                     $confirmpassword = $_POST["confirmPassword"] ?? '';
 
-                    if (!empty($lastname) && !empty($middlename) && !empty($firstname) && !empty($sex) && !empty($birthdate) && !empty($barangayposition) && !empty($username) && !empty($password) && !empty($confirmpassword)) {
+                    if (!empty($lastname) && !empty($firstname) && !empty($sex) && !empty($birthdate) && !empty($barangayposition) && !empty($username) && !empty($password) && !empty($confirmpassword)) {
 
                         // Check if username already exists
                         $stmt = $conn->prepare("SELECT * FROM tb_user WHERE username = ?");

@@ -5,29 +5,6 @@ include "../../database.php";
 include "dashboard_code.php";
 include 'reports_code.php';
 ?>
-<style>
-.calendar-navigation {
-display: flex;
-justify-content: center;
-align-items: center;
-margin-bottom: 10px;
-}
-
-.calendar-navigation h3 {
-    margin: 0 20px;
-    font-size: 1.5em;
-}
-
-.calendar-container .bx {
-    font-size: 1.8em;
-    cursor: pointer;
-    color: #030303;
-}
-
-.calendar-container .bx:hover {
-    color: #44c95a;
-}
-</style>
 <body>
     <section class="home">
         <div class="dashboard">
@@ -131,32 +108,30 @@ margin-bottom: 10px;
 
                     <!-- Bottom Section: Calendar and Graph Report Button -->
                     <div class="section-bottom">
-<div class="calendar-container">
-    <div class="calendar-header">
-        <h2>Calendar View</h2>
-    </div>
-    <div id="calendar">
-        <div class="calendar-navigation">
-            <i class='bx bx-left-arrow-circle' id="prevMonth"></i>
-            <h3>June</h3>
-            <i class='bx bx-right-arrow-circle' id="nextMonth"></i>
-        </div>
-        <div class="calendar-grid">
-            <div class="calendar-day">S</div>
-            <div class="calendar-day">M</div>
-            <div class="calendar-day">T</div>
-            <div class="calendar-day">W</div>
-            <div class="calendar-day">T</div>
-            <div class="calendar-day">F</div>
-            <div class="calendar-day">S</div>
-            <div class="calendar-date">1</div>
-            <!-- Add more dates as needed -->
-        </div>
-    </div>
-</div>
-
-
-                        <div class="graph-report-button">
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <h2>Calendar View</h2>
+                        </div>
+                        <div id="calendar">
+                            <div class="calendar-navigation">
+                                <i class='bx bx-left-arrow-circle' id="prevMonth"></i>
+                                <h3>June</h3>
+                                <i class='bx bx-right-arrow-circle' id="nextMonth"></i>
+                            </div>
+                            <div class="calendar-grid">
+                                <div class="calendar-day">S</div>
+                                <div class="calendar-day">M</div>
+                                <div class="calendar-day">T</div>
+                                <div class="calendar-day">W</div>
+                                <div class="calendar-day">T</div>
+                                <div class="calendar-day">F</div>
+                                <div class="calendar-day">S</div>
+                                <div class="calendar-date">1</div>
+                                <!-- Add more dates as needed -->
+                            </div>
+                        </div>
+                    </div>
+                       <div class="graph-report-button">
                             <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#ReportsModal" class="add-popup">Resident Graph Reports</button>
                         </div>
                     </div>
@@ -165,39 +140,9 @@ margin-bottom: 10px;
             </div>
         </div>
     </section>
-
-    <!-- Reports Modal -->
-    <section class="report-content">
-        <div class="modal fade" id="ReportsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Reports</h5>
-                        <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="section-top">
-                            <div class="projects">
-                                <div class="projects-header">
-                                    <h2>Residents Educational Attainment Distribution</h2>
-                                </div>
-                                <div class="chart-area-container">
-                                    <canvas id="educationBarChart"></canvas>
-                                </div>
-                            </div>
-                            <div class="reports">
-                                <h2>Residents Age Distribution</h2>
-                                <canvas id="doughnutChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php include 'chart_report.php'; ?>
 
     <!-- Calendar JS -->
     <script src="../../assets/js/calendar(dashboard).js"></script>
-    <?php include 'chart_report.php'; ?>
 </body>
 </html>
