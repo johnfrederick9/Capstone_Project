@@ -64,11 +64,6 @@ span {
     align-items: center;
     cursor: pointer;
 }
-.transaction .modal-dialog{
-    max-width: 95% !important;
-    max-height: 95% !important;
-    overflow-y: auto !important;
-}
 .cashbook-container {
     width: 100%;
     margin: 0 auto;
@@ -92,6 +87,10 @@ span {
 
 .details .info {
     margin: 0 10px;
+}
+
+.transaction .modal-dialog{
+  max-width: 95% !important;
 }
 
 .cashbook-table {
