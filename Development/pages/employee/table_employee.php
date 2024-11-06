@@ -281,18 +281,18 @@ include '../../sidebar.php';
                 </div>
             </div>
             <section class="delete-modal">
-        <!-- Delete Confirmation Modal -->
-        <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-body text-center">
-                <h5 class="modal-title" id="deleteConfirmationModalLabel">Remove for you</h5>
-                <p>This data will be removed, Would you like to remove it ?</p>
-                <button type="button" class="btn btn-primary" id="confirmDeleteBtn">Remove</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <!-- Delete Confirmation Modal -->
+            <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Remove for you</h5>
+                    <p>This data will be removed, Would you like to remove it ?</p>
+                    <button type="button" class="btn btn-primary" id="confirmDeleteBtn">Remove</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+                </div>
             </div>
-            </div>
-        </div>
         </div>
         </section>
     </body> 

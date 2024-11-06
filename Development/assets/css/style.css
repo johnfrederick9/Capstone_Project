@@ -20,7 +20,7 @@ Table of contents
 11. financial
 12. inventory
 13. events
-14. certificate
+14. 
 15. indigency-certificate
 16. reports
 17. admin_login
@@ -1415,7 +1415,7 @@ body.dark .home .calendar-event .event-scheduler label {
   font-size: 25px;
 }
 
-.view-btn, .update-btn, .delete-btn, .add-table-btn {
+.view-btn, .print-btn, .update-btn, .delete-btn, .add-table-btn {
   border: none;
   margin-top: 1px;
   color: white;
@@ -1432,10 +1432,15 @@ body.dark .home .calendar-event .event-scheduler label {
   font-size: 20px;
 }
 
+.print {
+  width: 25px;
+  height: 25px;
+  background-color: #007bff;
+}
+
 .print-btn {
   width: 25px;
   height: 25px;
-  margin-top: -5px;
   background-color: #007bff;
 }
 
@@ -2675,40 +2680,9 @@ font-size: 18px;
   cursor: pointer;
 }
 
-.inventory .form-container {
-  position: relative;
-  width: 520px;
-  height: 520px;
-  background-color: #fff;
- /* background: transparent; */
-  border: 2px solid rgba(0, 0, 0, 0.5);
-  border-radius: 20px;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 0 30px rgba(0, 0, 0, .5);
-  display: flex;
-  overflow: hidden; 
-  transform: scale(0);
-  transition: transform .5s ease, height .2s ease;
-  z-index: 100;
-}
-
-.inventory .form-container{
-  display: flex;
-  position:fixed;
-  justify-content: center;
-  align-items: center;
-  background-size: cover;
-  background-position: center;
-  top: 20%;
-  left: 40%;
-  z-index: 100;
-}
-
 .form-header {
   margin-bottom: 20px;
-
 }
-
 .form-group {
   margin-bottom: 20px;
 }
@@ -2803,34 +2777,6 @@ font-size: 18px;
   margin-left: -10px;
   margin-right: -25px;
 }
-
-.inventory .buttons button {
-  padding: 10px 10px;
-  font-size: 15px;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.inventory .buttons button i {
-  font-size: 18px;
-}
-
-.inventory .add-btn {
-  background-color: #28a745;
-}
-
-.inventory .update-btn {
-  background-color: #17a2b8;
-}
-
-.inventory .delete-btn {
-  background-color: #dc3545;
-}
-
 
 /*
 ---------------------------------------------

@@ -6,21 +6,19 @@ require '../../database.php';
 
 <body>
     <section class="home">  
-        <div class="inventory">
                 <div class="table-container">
                     <div class="table-header">
                     <div class="head">
                             <h1>Inventory Table</h1>
                         </div>
                         <div class="table-actions">    
-                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-popup">+ Add Item</button>
+                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-table-btn">+ Add</button>
                             <button class="print-btn " title="Print Selected">
                             <i class="bx bx-printer"></i>
                         </button>
                         </div>
                     </div>
                     <table id="example" class="table-table">
-                        
                     <thead>
                     <th>#</th>
                     <th><button class="print-all-btn" title="Print All">
@@ -276,32 +274,49 @@ require '../../database.php';
                             }
                         })
                     });
-                        $(document).on('click', '.deleteBtn', function(event) {
-                            var table = $('#example').DataTable();
-                            event.preventDefault();
-                            var item_id = $(this).data('item_id');
-                            if (confirm("Are you sure want to delete this Item ? ")) {
-                                $.ajax({
-                                    url: "delete.php",
-                                    data: {
-                                        item_id: item_id
-                                    },
-                                    type: "post",
-                                    success: function(data) {
-                                        var json = JSON.parse(data);
-                                        status = json.status;
-                                        if (status == 'success') {
-                                            $("#" + item_id).closest('tr').remove();
-                                        } else {
-                                            alert('Failed');
-                                            return;
-                                        }
-                                    }
-                                });
-                            } else {
-                                return null;
-                            }
-                        })
+                    $(document).on('click', '.deleteBtn', function(event) {
+                    event.preventDefault();
+                    var item_id = $(this).data('id'); // Get item ID from data attribute
+                    var table = $('#example').DataTable();
+
+                    // Open the modal
+                    $('#deleteConfirmationModal').modal('show');
+
+                    // Handle the confirmation
+                    $('#confirmDeleteBtn').off('click').on('click', function() {
+                    $.ajax({
+                        url: "delete.php",
+                        type: "POST",
+                        data: { item_id: item_id },
+                        success: function(response) {
+                        var json = JSON.parse(response);
+                        if (json.status === 'success') {
+                            // Remove the row from DataTable
+                            table.row($(event.target).closest('tr')).remove().draw();
+                        } else {
+                            alert('Deletion failed');
+                        }
+                        // Close the modal
+                        $('#deleteConfirmationModal').modal('hide');
+                        }
+                    });
+                    });
+                });
+                // Function to show alert
+                function showAlert(message, alertClass) {
+                    var alertDiv = $('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' + message +
+                                    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+                    alertDiv.css({
+                        "position": "fixed",
+                        "top": "10px",
+                        "right": "10px",
+                        "z-index": "9999",
+                        "background-color": alertClass === "alert-danger" ? "#f8d7da" : "#d4edda",
+                        "border-color": alertClass === "alert-danger" ? "#f5c6cb" : "#c3e6cb"
+                    });
+                    $("body").append(alertDiv);
+                    setTimeout(function() { alertDiv.alert('close'); }, 900);
+                }
                     </script>
                 </section><!-- .home-->
                 <!-- Modal -->
@@ -443,6 +458,21 @@ require '../../database.php';
                     </div>
                 </div>
             </div>
+            <section class="delete-modal">
+            <!-- Delete Confirmation Modal -->
+            <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Remove for you</h5>
+                    <p>This data will be removed, Would you like to remove it ?</p>
+                    <button type="button" class="btn btn-primary" id="confirmDeleteBtn">Remove</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        </section>
     </body> 
     <script>
         function validateForm() {

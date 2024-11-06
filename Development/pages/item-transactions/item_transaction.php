@@ -91,11 +91,6 @@ $borrowedItems_json = json_encode($borrowedItems);
     max-width: 70%; /* Make the modal wider */
 }
 
-.transaction .modal-body {
-    max-height: 90vh; /* Set maximum height */
-    overflow-y: auto; /* Enable vertical scrolling */
-}
-
 .inp-group, .inp-group-update{
     height: 110px;
     overflow: auto;
@@ -145,7 +140,6 @@ $borrowedItems_json = json_encode($borrowedItems);
 </style>
 <body>
     <section class="home">  
-        <div class="inventory">
                 <div class="table-container">
                     <div class="table-header">
                     <div class="head">
