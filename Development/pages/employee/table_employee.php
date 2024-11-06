@@ -4,14 +4,14 @@ include '../../sidebar.php';
 ?>
 <body>
     <section class="home">  
-        <div class="inventory">
+        <div class="employee">
                 <div class="table-container">
                     <div class="table-header">
                     <div class="head">
                             <h1>Employee Table</h1>
                         </div>
                         <div class="table-actions">    
-                        <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-popup">+ Add Employee</button>
+                        <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-table-btn">+ Add</button>
                         <button class="print-btn " title="Print Selected">
                             <i class="bx bx-printer"></i>
                         </button>
@@ -19,6 +19,7 @@ include '../../sidebar.php';
                     </div>
                     <table id="example" class="table-table">
                     <thead>
+                        <th>#</th>
                         <th><button class="print-all-btn" title="Print All">
                                 <i class="bx bx-printer"></i>
                             </button>
@@ -26,241 +27,20 @@ include '../../sidebar.php';
                         <th>First Name</th>
                         <th>Middle Name</th>
                         <th>Last Name</th>
-                        <th>Maiden Name</th>
                         <th>Address</th>
                         <th>Educational Attainment</th>
+                        <th>Position</th>
                         <th>Birth Date</th>
                         <th>Age</th>
+                        <th>Contact Number</th>
                         <th>Status</th>
-                        <th>Update</th>
+                        <th>Buttons</th>
                     </thead>
                     <tbody>
                     </tbody>
                     </table>
-                </div><!-- .table-container-->
-                    <script type="text/javascript">
-                        $(document).ready(function() {
-                        var table = $('#example').DataTable({
-                            "fnCreatedRow": function(nRow, aData, iDataIndex) {
-                                $(nRow).attr('id', aData[0]);
-                            },
-                            'serverSide': 'true',
-                            'processing': 'true',
-                            'paging': 'true',
-                            'order': [],
-                            'ajax': {
-                                'url': 'fetch_data.php',
-                                'type': 'post',
-                            },
-                            "aoColumnDefs": [{
-                                "bSortable": false,
-                                "aTargets": [10]
-                            }]
-                        });
-
-                        $('#selectAll').click(function() {
-                            var checkedStatus = this.checked;
-                            $('.row-checkbox').each(function() {
-                                $(this).prop('checked', checkedStatus);
-                            });
-                        });
-
-                        // Function to trigger the print dialog with the loaded HTML content
-                        function printContentFromPage(url, ids = '') {
-                            $.ajax({
-                                url: url,
-                                type: 'GET',
-                                data: { ids: ids }, // Pass IDs if needed (for print_selected.php)
-                                success: function(response) {
-                                    // Create an iframe to print the content
-                                    var iframe = document.createElement('iframe');
-                                    iframe.style.position = 'absolute';
-                                    iframe.style.width = '0px';
-                                    iframe.style.height = '0px';
-                                    iframe.style.border = 'none';
-                                    document.body.appendChild(iframe);
-
-                                    // Write the content into the iframe
-                                    var doc = iframe.contentWindow.document;
-                                    doc.open();
-                                    doc.write(response);
-                                    doc.close();
-
-                                    // Trigger print dialog
-                                    iframe.contentWindow.focus();
-                                    iframe.contentWindow.print();
-
-                                    // Remove iframe after printing
-                                    document.body.removeChild(iframe);
-                                },
-                                error: function() {
-                                    alert('Failed to load print content.');
-                                }
-                            });
-                        }
-
-                        // Print selected rows
-                        $('.print-btn').click(function() {
-                            var selectedIds = [];
-                            $('.row-checkbox:checked').each(function() {
-                                selectedIds.push($(this).val());
-                            });
-
-                            if (selectedIds.length > 0) {
-                                var idsString = selectedIds.join(',');
-                                printContentFromPage('print_selected.php', idsString); // Load and print content from print_selected.php
-                            } else {
-                                alert('Please select at least one row to print.');
-                            }
-                        });
-
-                        // Print all rows
-                        $('.print-all-btn').click(function() {
-                            printContentFromPage('print_all.php'); // Load and print content from print_all.php
-                        });
-                    });
-                        $(document).on('submit', '#addUser', function(e) {
-                            e.preventDefault();
-                            var employee_firstname = $('#employee_firstname').val();
-                            var employee_middlename = $('#employee_middlename').val();
-                            var employee_lastname = $('#employee_lastname').val();
-                            var employee_maidenname = $('#employee_maidenname').val();
-                            var employee_sex = $('#employee_sex').val();
-                            var employee_suffixes = $('#employee_suffixes').val();
-                            var employee_address = $('#employee_address').val();
-                            var employee_educationalattainment = $('#employee_educationalattainment').val();
-                            var employee_birthdate = $('#employee_birthdate').val();
-                            var employee_age = $('#employee_age').val();
-                            var employee_status = $('#employee_status').val();
-                            var employee_householdrole = $('#employee_householdrole').val();
-                            var household_id = $('#household_id').val();
-                            if (employee_firstname != '' && employee_middlename != '' && employee_lastname != '' && employee_maidenname != '' && employee_sex != '' && employee_suffixes != '' && employee_address != '' && employee_educationalattainment != '' && employee_birthdate != '' && employee_age != '' && employee_status != '' && employee_householdrole != '' && household_id != '') {
-                                $.ajax({
-                                    url: "add.php",
-                                    type: "post",
-                                    data: {
-                                        employee_firstname: employee_firstname,
-                                        employee_middlename: employee_middlename,
-                                        employee_lastname: employee_lastname,
-                                        employee_maidenname: employee_maidenname,
-                                        employee_sex: employee_sex,
-                                        employee_suffixes: employee_suffixes,
-                                        employee_address: employee_address,
-                                        employee_educationalattainment: employee_educationalattainment,
-                                        employee_birthdate: employee_birthdate,
-                                        employee_age: employee_age,
-                                        employee_status: employee_status,
-                                        employee_householdrole: employee_householdrole,
-                                        household_id: household_id,
-                                    },
-                                    success: function(data) {
-                                        var json = JSON.parse(data);
-                                        var status = json.status;
-                                        if (status == 'true') {
-                                            mytable = $('#example').DataTable();
-                                            mytable.draw();
-                                            $('#addUserModal').modal('hide');
-                                        } else {
-                                            alert('failed');
-                                        }
-                                    }
-                                });
-                            } else {
-                                alert('Fill all the required fields');
-                            }
-                        });
-                        $(document).on('submit', '#updateUser', function(e) {
-                            e.preventDefault();
-                            //var tr = $(this).closest('tr');
-                            var employee_firstname = $('#fnameField').val();
-                            var employee_middlename = $('#minameField').val();
-                            var employee_lastname = $('#lnameField').val();
-                            var employee_maidenname = $('#manameField').val();
-                            var employee_sex = $('#sexField').val();
-                            var employee_suffixes = $('#suffixesField').val();
-                            var employee_address = $('#addressField').val();
-                            var employee_educationalattainment = $('#educField').val();
-                            var employee_birthdate = $('#birthField').val();
-                            var employee_age = $('#ageField').val();
-                            var employee_status = $('#statusField').val();
-                            var employee_householdrole = $('#roleField').val();
-                            var household_id = $('#idField').val();
-                            var trid = $('#trid').val();
-                            var employee_id = $('#employee_id').val();
-                            if (employee_firstname != '' && employee_middlename != '' && employee_lastname != '' && employee_maidenname != '' && employee_sex != '' && employee_suffixes != '' && employee_address != '' && employee_educationalattainment != '' && employee_birthdate != '' && employee_age != '' && employee_status != '' && employee_householdrole != '' && household_id != '') {
-                                $.ajax({
-                                    url: "update.php",
-                                    type: "post",
-                                    data: {
-                                        employee_firstname: employee_firstname,
-                                        employee_middlename: employee_middlename,
-                                        employee_lastname: employee_lastname,
-                                        employee_maidenname: employee_maidenname,
-                                        employee_sex: employee_sex,
-                                        employee_suffixes: employee_suffixes,
-                                        employee_address: employee_address,
-                                        employee_educationalattainment: employee_educationalattainment,
-                                        employee_birthdate: employee_birthdate,
-                                        employee_age: employee_age,
-                                        employee_status: employee_status,
-                                        employee_householdrole: employee_householdrole,
-                                        household_id: household_id,
-                                        employee_id: employee_id
-                                    },
-                                    success: function(data) {
-                                        var json = JSON.parse(data);
-                                        var status = json.status;
-                                        if (status == 'true') {
-                                            table = $('#example').DataTable();
-                                            var checkbox = '<td><input type="checkbox" class="row-checkbox" value="'+employee_id+'"></td>';
-                                            var button = '<td><div class= "buttons"> <a href="javascript:void();" data-id="'+ employee_id +'"  class="update-btn btn-sm editbtn" ><i class="bx bx-sync"></i></a></div></td>';
-                                            var row = table.row("[id='" + trid + "']");
-                                            row.row("[id='" + trid + "']").data([checkbox, employee_firstname, employee_middlename, employee_lastname, employee_maidenname, employee_address, employee_educationalattainment, employee_birthdate, employee_age, employee_status, button]);
-                                            $('#exampleModal').modal('hide');
-                                        } else {
-                                            alert('failed');
-                                        }
-                                    }
-                                });
-                            } else {
-                                alert('Fill all the required fields');
-                            }
-                        });
-                        $('#example').on('click', '.editbtn ', function(event) {
-                        var table = $('#example').DataTable();
-                        var trid = $(this).closest('tr').attr('id');
-                        // console.log(selectedRow);
-                        var employee_id = $(this).data('id');
-                        $('#exampleModal').modal('show');
-
-                        $.ajax({
-                            url: "get_single_data.php",
-                            data: {
-                                employee_id: employee_id
-                            },
-                            type: 'post',
-                            success: function(data) {
-                                var json = JSON.parse(data);
-                                $('#fnameField').val(json.employee_firstname);
-                                $('#lnameField').val(json.employee_lastname);
-                                $('#manameField').val(json.employee_maidenname);
-                                $('#minameField').val(json.employee_middlename);
-                                $('#sexField').val(json.employee_sex);
-                                $('#suffixesField').val(json.employee_suffixes);
-                                $('#addressField').val(json.employee_address);
-                                $('#educField').val(json.employee_educationalattainment);
-                                $('#birthField').val(json.employee_birthdate);
-                                $('#ageField').val(json.employee_age);
-                                $('#statusField').val(json.employee_status);
-                                $('#roleField').val(json.employee_householdrole);
-                                $('#idField').val(json.household_id);
-                                $('#employee_id').val(employee_id);
-                                $('#trid').val(trid);
-                            }
-                        })
-                    });
-
-                    </script>
+         
+                <?php include 'function.php';?>
                 </section><!-- .home-->
                 <!-- Modal -->
                 <!-- Update employee -->
@@ -304,24 +84,39 @@ include '../../sidebar.php';
                             <div class="input-wrapper">
                                 <label for="Suffixes" class="input-label">Suffixes:</label>
                                 <select id="suffixesField" class="input-field" name="employee_suffixes" require>
-                                    <option value="None">None</option>
+                                    <option value=" ">None</option>
                                     <option value="Jr">Jr</option>
                                     <option value="Sr">Sr</option>
                                 </select>
                             </div>
 
-                            <div class="input-wrapper address">
-                            <label for="" class="input-label">Address and Educational Attainment:</label>
-                                <input type="text" placeholder= "Address" id="addressField" name="employee_address" class="input-field" require>
+                            <div class="input-wrapper">
+                            <label for="" class="input-label">Address:</label>
+                            <select id="addressField" name="employee_address" class="input-field" require>
+                                    <option value="" disabled selected>Address</option>
+                                    <option value="Sitio Sto. Nino">Sitio Sto. Nino</option>
+                                    <option value="Sitio Suwa">Sitio Suwa</option>
+                                    <option value="Sitio Private">Sitio Private</option>
+                                    <option value="Sitio Lahug">Sitio Lahug</option>
+                                    <option value="Sitio Lapa">Sitio Lapa</option>
+                                    <option value="Sitio Sampig">Sitio Sampig</option>
+                                    <option value="Sitio Alang-Alang">Sitio Alang-Alang</option>
+                                    <option value="Sitio Granchina">Sitio Granchina</option>
+                                    <option value="Sitio Catambisan">Sitio Catambisan</option>
+                                    <option value="Sitio Mag-Alambac">Sitio Mag-Alambac</option>
+                                </select> 
+                            </div>
+                            <div class="input-wrapper">
+                            <label for="" class="input-label">Educational Attainment:</label>
                                 <select id="educField" name="employee_educationalattainment" class="input-field" require>
                                     <option value="" disabled selected>Education Attainment</option>
                                     <option value="Elementary">Elementary</option>
-                                    <option value="High School, Undergraduate">High School, Undergrad</option>
+                                    <option value="High School, Undergrad">High School, Undergrad</option>
                                     <option value="High School, Graduate">High School, Graduate</option>
                                     <option value="College, Undergrad">College, Undergrad</option>
                                     <option value="Vocational">Vocational</option>
-                                    <option value="Bacherlor's Degree">Bacherlor's Degree</option>
-                                    <option value="Master's Degree">Master's Degree</option>
+                                    <option value="Bacherlor Degree">Bacherlor Degree</option>
+                                    <option value="Master Degree">Master Degree</option>
                                     <option value="Doctorate Degree">Doctorate Degree</option>
                                 </select> 
                             </div>
@@ -329,6 +124,12 @@ include '../../sidebar.php';
                             <div class="input-wrapper ">
                             <label for="birthdate" class="input-label">Birth Date:</label>
                                 <input type="date" id="birthField" name="employee_birthdate" class="input-field" require>
+                            </div>
+
+                            <div class="input-wrapper">
+                            <label for="resident_contact" class="input-label">Contact Number:</label>
+                                <input type="tel" placeholder="Enter 10-digit number" id="contactField" name="employee_contact" class="input-field" maxlength="16" require 
+                                    style="flex: 1; border: 1px solid #ccc; border-left: none;">
                             </div>
 
                             <div class="input-wrapper">
@@ -341,17 +142,15 @@ include '../../sidebar.php';
                                 </select>
                             </div>
                             <div class="input-wrapper">
-                                <label for="age" class="input-label">Age:</label>
-                                <input type="number" placeholder="Age" id="ageField" name="employee_age" class="input-field" require>
-                            </div>
-                            
-                            <div class="input-wrapper">
-                                <label for="householdrole" class="input-label">Household Role:</label>
-                                <input type="text" placeholder="Household Role" id="roleField" name="employee_householdrole" class="input-field" require>
-                            </div>
-                            <div class="input-wrapper">
-                                <label for="householdid" class="input-label">Household ID:</label>
-                                <input type="Number" placeholder="Household ID" id="idField" name="household_id" class="input-field" disabled>
+                                <label for="position" class="input-label">Position:</label>
+                                <select id="positionField" class="input-field" name="employee_position" require>
+                                    <option value=" " disabled selected>Enter Position</option>
+                                    <option value="Barangay Captain">Barangay Captain</option>
+                                    <option value="Barangay Secretary">Barangay Secretary</option>
+                                    <option value="Barangay Treasurer">Barangay Treasurer</option>
+                                    <option value="Barangay Treasurer">Barangay Personnel</option>
+                                    <option value="Barangay Treasurer">Barangay Health Worker</option>
+                                </select>
                             </div>
                         </div>
                         </div>
@@ -399,6 +198,7 @@ include '../../sidebar.php';
                                     <option value="Female">Female</option>
                                 </select>
                             </div>
+
                             <div class="input-wrapper">
                                 <label for="Suffixes" class="input-label">Suffixes:</label>
                                 <select id="employee_suffixes" class="input-field" name="employee_suffixes" require>
@@ -408,18 +208,33 @@ include '../../sidebar.php';
                                 </select>
                             </div>
 
-                            <div class="input-wrapper address">
-                            <label for="" class="input-label">Address and Educational Attainment:</label>
-                                <input type="text" placeholder= "Address" id="employee_address" name="employee_address" class="input-field" require>
+                            <div class="input-wrapper">
+                            <label for="" class="input-label">Address:</label>
+                            <select id="employee_address" name="employee_address" class="input-field" require>
+                                    <option value="" disabled selected>Address</option>
+                                    <option value="Sitio Sto. Nino">Sitio Sto. Nino</option>
+                                    <option value="Sitio Suwa">Sitio Suwa</option>
+                                    <option value="Sitio Private">Sitio Private</option>
+                                    <option value="Sitio Lahug">Sitio Lahug</option>
+                                    <option value="Sitio Lapa">Sitio Lapa</option>
+                                    <option value="Sitio Sampig">Sitio Sampig</option>
+                                    <option value="Sitio Alang-Alang">Sitio Alang-Alang</option>
+                                    <option value="Sitio Granchina">Sitio Granchina</option>
+                                    <option value="Sitio Catambisan">Sitio Catambisan</option>
+                                    <option value="Sitio Mag-Alambac">Sitio Mag-Alambac</option>
+                                </select> 
+                            </div>
+                            <div class="input-wrapper">
+                            <label for="" class="input-label">Educational Attainment:</label>
                                 <select id="employee_educationalattainment" name="employee_educationalattainment" class="input-field" require>
                                     <option value="" disabled selected>Education Attainment</option>
                                     <option value="Elementary">Elementary</option>
-                                    <option value="High School, Undergraduate">High School, Undergrad</option>
+                                    <option value="High School, Undergrad">High School, Undergrad</option>
                                     <option value="High School, Graduate">High School, Graduate</option>
                                     <option value="College, Undergrad">College, Undergrad</option>
                                     <option value="Vocational">Vocational</option>
-                                    <option value="Bacherlor's Degree">Bacherlor's Degree</option>
-                                    <option value="Master's Degree">Master's Degree</option>
+                                    <option value="Bacherlor Degree">Bacherlor Degree</option>
+                                    <option value="Master Degree">Master Degree</option>
                                     <option value="Doctorate Degree">Doctorate Degree</option>
                                 </select> 
                             </div>
@@ -427,6 +242,12 @@ include '../../sidebar.php';
                             <div class="input-wrapper ">
                             <label for="birthdate" class="input-label">Birth Date:</label>
                                 <input type="date" id="employee_birthdate" name="employee_birthdate" class="input-field" require>
+                            </div>
+
+                             <div class="input-wrapper">
+                            <label for="resident_contact" class="input-label">Contact Number:</label>
+                                <input type="tel" placeholder="Enter 10-digit number" id="employee_contact" name="employee_contact" class="input-field" maxlength="16" require 
+                                    style="flex: 1; border: 1px solid #ccc; border-left: none;">
                             </div>
 
                             <div class="input-wrapper">
@@ -439,17 +260,15 @@ include '../../sidebar.php';
                                 </select>
                             </div>
                             <div class="input-wrapper">
-                                <label for="age" class="input-label">Age:</label>
-                                <input type="number" placeholder="Age" id="employee_age" name="employee_age" class="input-field" require>
-                            </div>
-                            
-                            <div class="input-wrapper">
-                                <label for="householdrole" class="input-label">Household Role:</label>
-                                <input type="text" placeholder="Household Role" id="employee_householdrole" name="employee_householdrole" class="input-field" require>
-                            </div>
-                            <div class="input-wrapper">
-                                <label for="householdid" class="input-label">Household ID:</label>
-                                <input type="Number" placeholder="Household ID" id="household_id" name="household_id" class="input-field" require>
+                                <label for="position" class="input-label">Position:</label>
+                                <select id="employee_position" class="input-field" name="employee_position" require>
+                                    <option value=" " disabled selected>Enter Position</option>
+                                    <option value="Barangay Captain">Barangay Captain</option>
+                                    <option value="Barangay Secretary">Barangay Secretary</option>
+                                    <option value="Barangay Treasurer">Barangay Treasurer</option>
+                                    <option value="Barangay Treasurer">Barangay Personnel</option>
+                                    <option value="Barangay Treasurer">Barangay Health Worker</option>
+                                </select>
                             </div>
                         </div>
                         </div>
@@ -461,5 +280,20 @@ include '../../sidebar.php';
                     </div>
                 </div>
             </div>
+            <section class="delete-modal">
+        <!-- Delete Confirmation Modal -->
+        <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-body text-center">
+                <h5 class="modal-title" id="deleteConfirmationModalLabel">Remove for you</h5>
+                <p>This data will be removed, Would you like to remove it ?</p>
+                <button type="button" class="btn btn-primary" id="confirmDeleteBtn">Remove</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+            </div>
+        </div>
+        </div>
+        </section>
     </body> 
 </html>

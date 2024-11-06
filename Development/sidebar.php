@@ -93,7 +93,7 @@ if (isset($conn) && $conn) {
             </a>
             <ul class="nav-link dropdown-content">
               <li>
-                <a href="../../pages/certificate/table_indigency.php" title="Indigency Certificate">
+                <a href="../../pages/indigency/table_indigency.php" title="Indigency Certificate">
                 &nbsp; &nbsp; <i class='bx bx-certification'></i>
                   <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Indigency Certificate</span>
                 </a>
@@ -217,101 +217,94 @@ if (isset($conn) && $conn) {
 include "profile.php"
 ?>
 <script>
-  // JavaScript for sidebar, mode switch, and dropdown
-  const body = document.querySelector('body'),
-        sidebar = body.querySelector('nav'),
-        toggle = body.querySelector(".Logo"),
-        searchBtn = body.querySelector(".name"),
-        modeSwitch = body.querySelector(".toggle-switch"),
-        modeText = body.querySelector(".mode-text"),
-        dropdown = body.querySelector(".dropdown"),
-        dropdownContent = body.querySelector(".dropdown-content");
+    // JavaScript for sidebar, mode switch, and dropdown with rotating chevron
+    document.addEventListener("DOMContentLoaded", function () {
+      const body = document.querySelector('body'),
+            sidebar = body.querySelector('nav'),
+            toggle = body.querySelector(".Logo"),
+            modeSwitch = body.querySelector(".toggle-switch"),
+            modeText = body.querySelector(".mode-text"),
+            dropdowns = document.querySelectorAll('.dropdown');
 
-  // Retrieve and apply saved sidebar state from local storage
-  if (localStorage.getItem('sidebarState') === 'open') {
-    sidebar.classList.remove("close");
-  } else {
-    sidebar.classList.add("close");
-  }
+      closeAllDropdowns();
 
-  // Handle sidebar toggle
-  toggle.addEventListener("click", () => {
-    sidebar.classList.toggle("close");
-    saveSidebarState();
-  });
-
-  // Save sidebar state to local storage
-  function saveSidebarState() {
-    if (sidebar.classList.contains("close")) {
-      localStorage.setItem('sidebarState', 'closed');
-    } else {
-      localStorage.setItem('sidebarState', 'open');
-    }
-  }
-
-  // Handle dark/light mode toggle
-  if (body.classList.contains("dark")) {
-    modeText.innerText = "Light mode";
-  } else {
-    modeText.innerText = "Dark mode";
-  }
-
-  modeSwitch.addEventListener("click", () => {
-    body.classList.toggle("dark");
-    let theme = "light";
-    if (body.classList.contains("dark")) {
-      theme = "dark";
-      modeText.innerText = "Light mode";
-    } else {
-      theme = "light";
-      modeText.innerText = "Dark mode";
-    }
-    // Save user preference in the database
-    saveUserThemePreference(theme);
-  });
-
-  // Toggle dropdown visibility on click
-  document.querySelectorAll('.dropdown-toggle').forEach(function(dropdownToggle) {
-    dropdownToggle.addEventListener('click', function(e) {
-      e.preventDefault();  // Prevent the default action of anchor tags
-
-      // Get the corresponding dropdown content
-      const dropdownContent = this.nextElementSibling;
-
-      // Toggle the visibility
-      if (dropdownContent.style.display === "block") {
-        dropdownContent.style.display = "none";
+      if (localStorage.getItem('sidebarState') === 'open') {
+        sidebar.classList.remove("close");
       } else {
-        // Close other open dropdowns
-        document.querySelectorAll('.dropdown-content').forEach(function(content) {
-          content.style.display = 'none';
-        });
-
-        dropdownContent.style.display = "block";
+        sidebar.classList.add("close");
       }
-    });
-  });
 
-  // Close dropdowns if clicked outside
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.dropdown')) {
-      document.querySelectorAll('.dropdown-content').forEach(function(content) {
-        content.style.display = 'none';
+      toggle.addEventListener("click", () => {
+        sidebar.classList.toggle("close");
+        saveSidebarState();
       });
-    }
-  });
 
-  function saveUserThemePreference(theme) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "../../save_theme.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send("theme=" + theme);
-  }
-</script>
+      function saveSidebarState() {
+        if (sidebar.classList.contains("close")) {
+          localStorage.setItem('sidebarState', 'closed');
+        } else {
+          localStorage.setItem('sidebarState', 'open');
+        }
+      }
 
+      modeSwitch.addEventListener("click", () => {
+        body.classList.toggle("dark");
+        const theme = body.classList.contains("dark") ? "dark" : "light";
+        modeText.innerText = theme === "dark" ? "Light mode" : "Dark mode";
+        saveUserThemePreference(theme);
+      });
 
+      function saveUserThemePreference(theme) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "../../save_theme.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send("theme=" + theme);
+      }
+
+      // Dropdown toggle logic with chevron rotation
+      dropdowns.forEach(dropdown => {
+        const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+        const chevron = dropdown.querySelector('.arrow'); // Select the chevron icon
+
+        dropdownToggle.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          const isVisible = dropdownContent.style.display === "block";
+          closeAllDropdowns();
+
+          if (!isVisible) {
+            dropdownContent.style.display = "block";
+            dropdownContent.style.opacity = "1";
+            dropdownContent.style.transform = "translateY(0)";
+            dropdownContent.style.pointerEvents = "auto";
+            chevron.classList.add("rotate"); // Add rotate class to chevron
+          } else {
+            chevron.classList.remove("rotate"); // Remove rotate class from chevron if closing
+          }
+        });
+      });
+
+      function closeAllDropdowns() {
+        dropdowns.forEach(dropdown => {
+          const content = dropdown.querySelector('.dropdown-content');
+          const chevron = dropdown.querySelector('.arrow');
+          content.style.display = "none";
+          content.style.opacity = "0";
+          content.style.transform = "translateY(-10px)";
+          content.style.pointerEvents = "none";
+          chevron.classList.remove("rotate"); // Remove rotate class when closing
+        });
+      }
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.dropdown')) {
+          closeAllDropdowns();
+        }
+      });
+    });
+  </script>
 </body>
-
 </html>
 
 

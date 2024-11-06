@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
     let currentDate = new Date();
-    let currentMonth = currentDate.getMonth();  // 0 = January
-    let currentYear = currentDate.getFullYear();  // e.g., 2024
+    let currentMonth = currentDate.getMonth(); // 0 = January
+    let currentYear = currentDate.getFullYear(); // e.g., 2024
 
-    const monthNames = ["January", "February", "March", "April", "May", "June", 
-                        "July", "August", "September", "October", "November", "December"];
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
 
     // Function to fetch events from the database
     function fetchEvents(callback) {
-        fetch('../../pages/dashboard/fetch_events.php')
+        fetch('../../dashboard/fetch_events.php')
             .then(response => response.json())
             .then(data => {
                 const filteredEvents = data.filter(event => isEventValid(event)); // Filter past events
@@ -19,12 +19,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Check if an event is valid (i.e., in the current or future months)
     function isEventValid(event) {
-        const eventDate = new Date(event.event_end);  // Use the event's end date
+        const eventDate = new Date(event.event_end); // Use the event's end date
         const today = new Date();
 
-        // Return true if the event ends in the current or future month
-        return eventDate.getFullYear() > today.getFullYear() || 
-               (eventDate.getFullYear() === today.getFullYear() && eventDate.getMonth() >= today.getMonth());
+        return eventDate.getFullYear() > today.getFullYear() ||
+            (eventDate.getFullYear() === today.getFullYear() && eventDate.getMonth() >= today.getMonth());
     }
 
     // Render the calendar for a given month and year
@@ -33,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const calendarHeader = document.querySelector("#calendar h3");
 
         calendarHeader.textContent = `${monthNames[month]} ${year}`;
-        calendarGrid.innerHTML = "";  // Clear previous content
+        calendarGrid.innerHTML = ""; // Clear previous content
 
         // Add day headers
         ['S', 'M', 'T', 'W', 'T', 'F', 'S'].forEach(day => {
@@ -69,10 +68,28 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Show event details in an alert (you can replace this with a modal if needed)
     function showEventDetails(event) {
-        alert(`Event: ${event.event_name}\nLocation: ${event.event_location}\nType: ${event.event_type}\nDate: ${event.event_start} to ${event.event_end}`);
+        const modal = document.getElementById('customAlert');
+        document.getElementById('eventName').textContent = `Event: ${event.event_name}`;
+        document.getElementById('eventLocation').textContent = `Location: ${event.event_location}`;
+        document.getElementById('eventType').textContent = `Type: ${event.event_type}`;
+        document.getElementById('eventDate').textContent = `Date: ${event.event_start} to ${event.event_end}`;
+    
+        modal.classList.add('show'); // Add show class to trigger animation
+        modal.style.display = 'block';
+    
+        document.querySelector('.close-btn').onclick = () => {
+            modal.classList.remove('show');
+            modal.style.display = 'none';
+        };
+        window.onclick = (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+                modal.style.display = 'none';
+            }
+        };
     }
+    
 
     // Handle month changes
     function changeMonth(offset) {

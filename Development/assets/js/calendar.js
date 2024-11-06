@@ -13,6 +13,9 @@ let month = today.getMonth();
 let year = today.getFullYear();
 let selectedDates = [];
 
+// Use the events passed from PHP
+const existingEvents = window.existingEvents || [];
+
 const months = [
   "January", "February", "March", "April", "May", "June", "July",
   "August", "September", "October", "November", "December"
@@ -45,8 +48,12 @@ function initCalendar() {
     const dateValue = new Date(year, month, i);
     const isSelected = selectedDates.some(date => date.getTime() === dateValue.getTime());
     const isToday = i === currentDay && month === currentMonth && year === currentYear;
+    const isPast = dateValue < new Date(currentYear, currentMonth, currentDay); // Check if the date is in the past
+    const hasEvent = checkIfHasEvent(dateValue); // Check if there is an event on this date
 
-    days += `<div class="day${isSelected ? " active" : ""}${isToday ? " today" : ""}" data-day="${i}">${i}</div>`;
+    days += `<div class="day${isSelected ? " active" : ""}${isToday ? " today" : ""}${isPast || hasEvent ? " disabled" : ""}" data-day="${i}">
+              ${i}${hasEvent ? "<span class='event-indicator'>●</span>" : ""}
+            </div>`;
   }
 
   // Add days from the next month
@@ -58,7 +65,6 @@ function initCalendar() {
   addDayListener();
 }
 
-
 // Add click listeners to the days
 function addDayListener() {
   const days = document.querySelectorAll(".day:not(.disabled)");
@@ -67,6 +73,18 @@ function addDayListener() {
     day.addEventListener("click", (e) => {
       const dayValue = parseInt(e.target.dataset.day);
       const dateValue = new Date(year, month, dayValue);
+
+      // Prevent selection of past dates, but allow today
+      if (dateValue < new Date(today.getFullYear(), today.getMonth(), today.getDate())) {
+        alert("You cannot select a date before today.");
+        return;
+      }
+
+      // Prevent selection if there's already an event on that date
+      if (checkIfHasEvent(dateValue)) {
+        alert("There is already an event on this date.");
+        return;
+      }
 
       // Toggle the date selection
       if (selectedDates.some(date => date.getTime() === dateValue.getTime())) {
@@ -101,6 +119,15 @@ function addDayListener() {
       // Show the modal
       eventModal.show();
     }
+  });
+}
+
+// Check if the date has an event
+function checkIfHasEvent(dateValue) {
+  return existingEvents.some(event => {
+    const eventStart = new Date(event.event_start);
+    const eventEnd = new Date(event.event_end);
+    return dateValue >= eventStart && dateValue <= eventEnd;
   });
 }
 

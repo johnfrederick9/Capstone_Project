@@ -1,35 +1,36 @@
 <?php 
 include('../../connection.php');
-$project_name = $_POST["project_name"];
-$project_start = $_POST["project_start"];
-$project_end = $_POST["project_end"];
-$project_budget = $_POST["project_budget"];
-$project_source = $_POST["project_source"];
-$project_location = $_POST["project_location"];
-$project_description = $_POST["project_description"];
-$project_managers = $_POST["project_managers"];
-$project_stakeholders = $_POST["project_stakeholders"];
-$project_status = $_POST["project_status"];
+
+$project_name = mysqli_real_escape_string($con, $_POST["project_name"]);
+
+// Check for duplicate project
+$check_sql = "SELECT * FROM `tb_project` WHERE `project_name` = '$project_name'";
+$check_query = mysqli_query($con, $check_sql);
+
+if (mysqli_num_rows($check_query) > 0) {
+    // Document exists
+    echo json_encode(array('status' => 'duplicate'));
+    exit;
+}
+
+$project_start = mysqli_real_escape_string($con, $_POST["project_start"]);
+$project_end = mysqli_real_escape_string($con, $_POST["project_end"]);
+$project_budget = mysqli_real_escape_string($con, $_POST["project_budget"]);
+$project_source = mysqli_real_escape_string($con, $_POST["project_source"]);
+$project_location = mysqli_real_escape_string($con, $_POST["project_location"]);
+$project_description = mysqli_real_escape_string($con, $_POST["project_description"]);
+$project_managers = mysqli_real_escape_string($con, $_POST["project_managers"]);
+$project_stakeholders = mysqli_real_escape_string($con, $_POST["project_stakeholders"]);
+$project_status = mysqli_real_escape_string($con, $_POST["project_status"]);
 
 
         
-$sql = "INSERT INTO `tb_project` (`project_name`,`project_start`,`project_end`,`project_budget`,`project_source`,`project_location`,`project_managers`,`project_stakeholders`,`project_status`,`project_description`) values ('$project_name', '$project_start', '$project_end', '$project_budget', '$project_source', '$project_location', '$project_managers', '$project_stakeholders', '$project_status', '$project_description')";
-$query= mysqli_query($con,$sql);
-$lastId = mysqli_insert_id($con);
-if($query ==true)
-{
-    $data = array(
-        'status'=>'true',
-    );
-    echo json_encode($data);
+$sql = "INSERT INTO `tb_project` (`project_name`,`project_start`,`project_end`,`project_budget`,`project_source`,`project_location`,`project_managers`,`project_stakeholders`,`project_status`,`project_description`,`isDisplayed`) values ('$project_name', '$project_start', '$project_end', '$project_budget', '$project_source', '$project_location', '$project_managers', '$project_stakeholders', '$project_status', '$project_description',1)";
+$query = mysqli_query($con, $sql);
+    
+if ($query) {
+    echo json_encode(array('status' => 'true'));
+} else {
+    echo json_encode(array('status' => 'false'));
 }
-else
-{
-     $data = array(
-        'status'=>'false',
-    );
-
-    echo json_encode($data);
-} 
-
 ?>

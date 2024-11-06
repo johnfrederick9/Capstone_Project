@@ -11,7 +11,7 @@ include '../../sidebar.php';
             <h1>Resident Table</h1>
         </div>
                     <div class="table-actions">    
-                        <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-popup">+ Add Resident</button>
+                        <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-table-btn">+ Add</button>
                         <button class="print-btn " title="Print Selected">
                             <i class="bx bx-printer"></i>
                         </button>
@@ -19,6 +19,7 @@ include '../../sidebar.php';
                     </div>
                     <table id="example" class="table-table">
                         <thead>
+                        <th>#</th>
                             <th><button class="print-all-btn" title="Print All">
                                     <i class="bx bx-printer"></i>
                                 </button>
@@ -31,239 +32,18 @@ include '../../sidebar.php';
                             <th>Educational Attainment</th>
                             <th>Birth Date</th>
                             <th>Age</th>
+                            <th>Contact Number</th>
                             <th>Status</th>
-                            <th>Update</th>
+                            <th>Buttons</th>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
-
-                    <script type="text/javascript">
-                      $(document).ready(function() {
-                        var table = $('#example').DataTable({
-                            "fnCreatedRow": function(nRow, aData, iDataIndex) {
-                                $(nRow).attr('id', aData[0]);
-                            },
-                            'serverSide': 'true',
-                            'processing': 'true',
-                            'paging': 'true',
-                            'order': [],
-                            'ajax': {
-                                'url': 'fetch_data.php',
-                                'type': 'post',
-                            },
-                            "aoColumnDefs": [{
-                                "bSortable": false,
-                                "aTargets": [10]
-                            }]
-                        });
-
-                        $('#selectAll').click(function() {
-                            var checkedStatus = this.checked;
-                            $('.row-checkbox').each(function() {
-                                $(this).prop('checked', checkedStatus);
-                            });
-                        });
-
-                        // Function to trigger the print dialog with the loaded HTML content
-                        function printContentFromPage(url, ids = '') {
-                            $.ajax({
-                                url: url,
-                                type: 'GET',
-                                data: { ids: ids }, // Pass IDs if needed (for print_selected.php)
-                                success: function(response) {
-                                    // Create an iframe to print the content
-                                    var iframe = document.createElement('iframe');
-                                    iframe.style.position = 'absolute';
-                                    iframe.style.width = '0px';
-                                    iframe.style.height = '0px';
-                                    iframe.style.border = 'none';
-                                    document.body.appendChild(iframe);
-
-                                    // Write the content into the iframe
-                                    var doc = iframe.contentWindow.document;
-                                    doc.open();
-                                    doc.write(response);
-                                    doc.close();
-
-                                    // Trigger print dialog
-                                    iframe.contentWindow.focus();
-                                    iframe.contentWindow.print();
-
-                                    // Remove iframe after printing
-                                    document.body.removeChild(iframe);
-                                },
-                                error: function() {
-                                    alert('Failed to load print content.');
-                                }
-                            });
-                        }
-
-                        // Print selected rows
-                        $('.print-btn').click(function() {
-                            var selectedIds = [];
-                            $('.row-checkbox:checked').each(function() {
-                                selectedIds.push($(this).val());
-                            });
-
-                            if (selectedIds.length > 0) {
-                                var idsString = selectedIds.join(',');
-                                printContentFromPage('print_selected.php', idsString); // Load and print content from print_selected.php
-                            } else {
-                                alert('Please select at least one row to print.');
-                                
-                            }
-                        });
-
-                        // Print all rows
-                        $('.print-all-btn').click(function() {
-                            printContentFromPage('print_all.php'); // Load and print content from print_all.php
-                        });
-                    });
-                        $(document).on('submit', '#addUser', function(e) {
-                            e.preventDefault();
-                            var resident_firstname = $('#resident_firstname').val();
-                            var resident_middlename = $('#resident_middlename').val();
-                            var resident_lastname = $('#resident_lastname').val();
-                            var resident_maidenname = $('#resident_maidenname').val();
-                            var resident_sex = $('#resident_sex').val();
-                            var resident_suffixes = $('#resident_suffixes').val();
-                            var resident_address = $('#resident_address').val();
-                            var resident_educationalattainment = $('#resident_educationalattainment').val();
-                            var resident_birthdate = $('#resident_birthdate').val();
-                            var resident_age = $('#resident_age').val();
-                            var resident_status = $('#resident_status').val();
-                            var resident_householdrole = $('#resident_householdrole').val();
-                            var household_id = $('#household_id').val();
-                            if (resident_firstname != '' && resident_middlename != '' && resident_lastname != '' && resident_maidenname != '' && resident_sex != '' && resident_suffixes != '' && resident_address != '' && resident_educationalattainment != '' && resident_birthdate != '' && resident_age != '' && resident_status != '' && resident_householdrole != '' && household_id != '') {
-                                $.ajax({
-                                    url: "add.php",
-                                    type: "post",
-                                    data: {
-                                        resident_firstname: resident_firstname,
-                                        resident_middlename: resident_middlename,
-                                        resident_lastname: resident_lastname,
-                                        resident_maidenname: resident_maidenname,
-                                        resident_sex: resident_sex,
-                                        resident_suffixes: resident_suffixes,
-                                        resident_address: resident_address,
-                                        resident_educationalattainment: resident_educationalattainment,
-                                        resident_birthdate: resident_birthdate,
-                                        resident_age: resident_age,
-                                        resident_status: resident_status,
-                                        resident_householdrole: resident_householdrole,
-                                        household_id: household_id,
-                                    },
-                                    success: function(data) {
-                                        var json = JSON.parse(data);
-                                        var status = json.status;
-                                        if (status == 'true') {
-                                            mytable = $('#example').DataTable();
-                                            mytable.draw();
-                                            $('#addUserModal').modal('hide');
-                                        } else {
-                                            alert('failed');
-                                        }
-                                    }
-                                });
-                            } else {
-                                alert('Fill all the required fields');
-                            }
-                        });
-                        $(document).on('submit', '#updateUser', function(e) {
-                            e.preventDefault();
-                            //var tr = $(this).closest('tr');
-                            var resident_firstname = $('#fnameField').val();
-                            var resident_middlename = $('#minameField').val();
-                            var resident_lastname = $('#lnameField').val();
-                            var resident_maidenname = $('#manameField').val();
-                            var resident_sex = $('#sexField').val();
-                            var resident_suffixes = $('#suffixesField').val();
-                            var resident_address = $('#addressField').val();
-                            var resident_educationalattainment = $('#educField').val();
-                            var resident_birthdate = $('#birthField').val();
-                            var resident_age = $('#ageField').val();
-                            var resident_status = $('#statusField').val();
-                            var resident_householdrole = $('#roleField').val();
-                            var household_id = $('#idField').val();
-                            var trid = $('#trid').val();
-                            var resident_id = $('#resident_id').val();
-                            if (resident_firstname != '' && resident_middlename != '' && resident_lastname != '' && resident_maidenname != '' && resident_sex != '' && resident_suffixes != '' && resident_address != '' && resident_educationalattainment != '' && resident_birthdate != '' && resident_age != '' && resident_status != '' && resident_householdrole != '' && household_id != '') {
-                                $.ajax({
-                                    url: "update.php",
-                                    type: "post",
-                                    data: {
-                                        resident_firstname: resident_firstname,
-                                        resident_middlename: resident_middlename,
-                                        resident_lastname: resident_lastname,
-                                        resident_maidenname: resident_maidenname,
-                                        resident_sex: resident_sex,
-                                        resident_suffixes: resident_suffixes,
-                                        resident_address: resident_address,
-                                        resident_educationalattainment: resident_educationalattainment,
-                                        resident_birthdate: resident_birthdate,
-                                        resident_age: resident_age,
-                                        resident_status: resident_status,
-                                        resident_householdrole: resident_householdrole,
-                                        household_id: household_id,
-                                        resident_id: resident_id
-                                    },
-                                    success: function(data) {
-                                        var json = JSON.parse(data);
-                                        var status = json.status;
-                                        if (status == 'true') {
-                                            table = $('#example').DataTable();
-                                            var checkbox = '<td><input type="checkbox" class="row-checkbox" value="'+resident_id+'"></td>';
-                                            var button = '<td><div class= "buttons"> <a href="javascript:void();" data-id="'+ resident_id +'"  class="update-btn btn-sm editbtn" ><i class="bx bx-sync"></i></a></div></td>';
-                                            var row = table.row("[id='" + trid + "']");
-                                            row.row("[id='" + trid + "']").data([checkbox, resident_firstname, resident_middlename, resident_lastname, resident_maidenname, resident_address, resident_educationalattainment, resident_birthdate, resident_age, resident_status, button]);
-                                            $('#exampleModal').modal('hide');
-                                        } else {
-                                            alert('failed');
-                                        }
-                                    }
-                                });
-                            } else {
-                                alert('Fill all the required fields');
-                            }
-                        });
-                        $('#example').on('click', '.editbtn ', function(event) {
-                        var table = $('#example').DataTable();
-                        var trid = $(this).closest('tr').attr('id');
-                        // console.log(selectedRow);
-                        var resident_id = $(this).data('id');
-                        $('#exampleModal').modal('show');
-
-                        $.ajax({
-                            url: "get_single_data.php",
-                            data: {
-                                resident_id: resident_id
-                            },
-                            type: 'post',
-                            success: function(data) {
-                                var json = JSON.parse(data);
-                                $('#fnameField').val(json.resident_firstname);
-                                $('#lnameField').val(json.resident_lastname);
-                                $('#manameField').val(json.resident_maidenname);
-                                $('#minameField').val(json.resident_middlename);
-                                $('#sexField').val(json.resident_sex);
-                                $('#suffixesField').val(json.resident_suffixes);
-                                $('#addressField').val(json.resident_address);
-                                $('#educField').val(json.resident_educationalattainment);
-                                $('#birthField').val(json.resident_birthdate);
-                                $('#ageField').val(json.resident_age);
-                                $('#statusField').val(json.resident_status);
-                                $('#roleField').val(json.resident_householdrole);
-                                $('#idField').val(json.household_id);
-                                $('#resident_id').val(resident_id);
-                                $('#trid').val(trid);
-                            }
-                        })
-                    });
-                    </script>
+                    <?php include 'function.php';?>
                 </section><!-- .home-->
                 <!-- Modal -->
                 <!-- Update Resident -->
+                <section class="resident_modal">
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -310,20 +90,36 @@ include '../../sidebar.php';
                                 </select>
                             </div>
 
-                            <div class="input-wrapper address">
-                            <label for="" class="input-label">Address and Educational Attainment:</label>
-                                <input type="text" placeholder= "Address" id="addressField" name="resident_address" class="input-field" require>
-                                <select id="educField" name="resident_educationalattainment" class="input-field" require>
+                            <div class="input-wrapper">
+                                <label for="" class="input-label">Address:</label>
+                                <select id="addressField" name="resident_address" class="input-field" require>
                                     <option value="" disabled selected>Education Attainment</option>
-                                    <option value="Elementary">Elementary</option>
-                                    <option value="High School, Undergraduate">High School, Undergrad</option>
-                                    <option value="High School, Graduate">High School, Graduate</option>
-                                    <option value="College, Undergrad">College, Undergrad</option>
-                                    <option value="Vocational">Vocational</option>
-                                    <option value="Bacherlor's Degree">Bacherlor's Degree</option>
-                                    <option value="Master's Degree">Master's Degree</option>
-                                    <option value="Doctorate Degree">Doctorate Degree</option>
+                                    <option value="Sitio Sto. Nino">Sitio Sto. Nino</option>
+                                    <option value="Sitio Suwa">Sitio Suwa</option>
+                                    <option value="Sitio Private">Sitio Private</option>
+                                    <option value="Sitio Lahug">Sitio Lahug</option>
+                                    <option value="Sitio Lapa">Sitio Lapa</option>
+                                    <option value="Sitio Sampig">Sitio Sampig</option>
+                                    <option value="Sitio Alang-Alang">Sitio Alang-Alang</option>
+                                    <option value="Sitio Granchina">Sitio Granchina</option>
+                                    <option value="Sitio Catambisan">Sitio Catambisan</option>
+                                    <option value="Sitio Mag-Alambac">Sitio Mag-Alambac</option>
                                 </select> 
+                            </div>
+
+                            <div class="input-wrapper">
+                                <label for="" class="input-label">Educational Attainment:</label>
+                                    <select id="educField" name="resident_educationalattainment" class="input-field" require>
+                                        <option value="" disabled selected>Address</option>
+                                        <option value="Elementary">Elementary</option>
+                                        <option value="High School, Undergrad">High School, Undergrad</option>
+                                        <option value="High School, Graduate">High School, Graduate</option>
+                                        <option value="College, Undergrad">College, Undergrad</option>
+                                        <option value="Vocational">Vocational</option>
+                                        <option value="Bachelor Degree">Bacherlor Degree</option>
+                                        <option value="Master Degree">Master Degree</option>
+                                        <option value="Doctorate Degree">Doctorate Degree</option>
+                                    </select> 
                             </div>
                             
                             <div class="input-wrapper ">
@@ -340,10 +136,38 @@ include '../../sidebar.php';
                                     <option value="Widowed">Widowed</option>
                                 </select>
                             </div>
+
                             <div class="input-wrapper">
-                                <label for="age" class="input-label">Age:</label>
-                                <input type="number" placeholder="Age" id="ageField" name="resident_age" class="input-field" require>
+                            <label for="resident_contact" class="input-label">Contact Number:</label>
+                                <input type="tel" placeholder="Enter 10-digit number" id="contactField" name="resident_contact" class="input-field" maxlength="16" require 
+                                    style="flex: 1; border: 1px solid #ccc; border-left: none;">
                             </div>
+                    
+                            <div class="input-wrapper">
+                                <label for="age" class="input-label">Occupation:</label>
+                                <input type="text" placeholder="Occupation" id="occupationField" name="resident_occupation" class="input-field" require>
+                            </div>
+
+                            <div class="input-wrapper">
+                                <label for="age" class="input-label">Religion:</label>
+                                <input type="text" placeholder="Religion" id="religionField" name="resident_religion" class="input-field" require>
+                            </div>
+
+                            <div class="input-wrapper">
+                                <label for="Social_pensioner" class="input-label">Social Pensioner</label>
+                                <input type="text" placeholder="Social Pensioner" id="pensionerField" name="resident_pension" class="input-field" require>
+                            </div>
+
+                            <div class="input-wrapper">
+                                <label for="Beneficiaries" class="input-label">Beneficiaries:</label>
+                                <input type="text" placeholder="Beneficiaries" id="beneficiariesField" name="resident_beneficiaries" class="input-field" require>
+                            </div>
+
+                            <div class="input-wrapper">
+                                <label for="age" class="input-label">Indigenous:</label>
+                                <input type="text" placeholder="Indigenous" id="indigenousField" name="resident_indigenous" class="input-field" require>
+                            </div>
+                            
                             
                             <div class="input-wrapper">
                                 <label for="householdrole" class="input-label">Household Role:</label>
@@ -408,18 +232,34 @@ include '../../sidebar.php';
                                 </select>
                             </div>
 
-                            <div class="input-wrapper address">
-                            <label for="" class="input-label">Address and Educational Attainment:</label>
-                                <input type="text" placeholder= "Address" id="resident_address" name="resident_address" class="input-field" require>
+                            <div class="input-wrapper">
+                                <label for="" class="input-label">Address:</label>
+                                <select id="resident_address" name="resident_address" class="input-field" require>
+                                    <option value="" disabled selected>Address</option>
+                                    <option value="Sitio Sto. Nino">Sitio Sto. Nino</option>
+                                    <option value="Sitio Suwa">Sitio Suwa</option>
+                                    <option value="Sitio Private">Sitio Private</option>
+                                    <option value="Sitio Lahug">Sitio Lahug</option>
+                                    <option value="Sitio Lapa">Sitio Lapa</option>
+                                    <option value="Sitio Sampig">Sitio Sampig</option>
+                                    <option value="Sitio Alang-Alang">Sitio Alang-Alang</option>
+                                    <option value="Sitio Granchina">Sitio Granchina</option>
+                                    <option value="Sitio Catambisan">Sitio Catambisan</option>
+                                    <option value="Sitio Mag-Alambac">Sitio Mag-Alambac</option>
+                                </select> 
+                            </div>
+
+                            <div class="input-wrapper">
+                            <label for="" class="input-label">Educational Attainment:</label>
                                 <select id="resident_educationalattainment" name="resident_educationalattainment" class="input-field" require>
                                     <option value="" disabled selected>Education Attainment</option>
                                     <option value="Elementary">Elementary</option>
-                                    <option value="High School, Undergraduate">High School, Undergrad</option>
+                                    <option value="High School, Undergrad">High School, Undergrad</option>
                                     <option value="High School, Graduate">High School, Graduate</option>
                                     <option value="College, Undergrad">College, Undergrad</option>
                                     <option value="Vocational">Vocational</option>
-                                    <option value="Bacherlor's Degree">Bacherlor's Degree</option>
-                                    <option value="Master's Degree">Master's Degree</option>
+                                    <option value="Bacherlor Degree">Bacherlor Degree</option>
+                                    <option value="Master Degree">Master Degree</option>
                                     <option value="Doctorate Degree">Doctorate Degree</option>
                                 </select> 
                             </div>
@@ -439,8 +279,33 @@ include '../../sidebar.php';
                                 </select>
                             </div>
                             <div class="input-wrapper">
-                                <label for="age" class="input-label">Age:</label>
-                                <input type="number" placeholder="Age" id="resident_age" name="resident_age" class="input-field" require>
+                            <label for="resident_contact" class="input-label">Contact Number:</label>
+                                <input type="tel" placeholder="Enter 11-digit number" id="resident_contact" name="resident_contact" class="input-field" maxlength="11" require
+                                    style="flex: 1; border: 1px solid #ccc; border-left: none;">
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="age" class="input-label">Occupation:</label>
+                                <input type="text" placeholder="Occupation" id="resident_occupation" name="resident_occupation" class="input-field" require>
+                            </div>
+
+                            <div class="input-wrapper">
+                                <label for="age" class="input-label">Religion:</label>
+                                <input type="text" placeholder="Religion" id="resident_religion" name="resident_religion" class="input-field" require>
+                            </div>
+
+                            <div class="input-wrapper">
+                                <label for="Social_pensioner" class="input-label">Social Pensioner:</label>
+                                <input type="text" placeholder="" id="resident_pension" name="resident_pension" class="input-field" require>
+                            </div>
+
+                            <div class="input-wrapper">
+                                <label for="Beneficiaries" class="input-label">Beneficiaries:</label>
+                                <input type="text" placeholder="" id="resident_beneficiaries" name="resident_beneficiaries" class="input-field" require>
+                            </div>
+
+                            <div class="input-wrapper">
+                                <label for="age" class="input-label">Indigenous:</label>
+                                <input type="text" placeholder="Indigenous" id="resident_indigenous" name="resident_indigenous" class="input-field" require>
                             </div>
                             
                             <div class="input-wrapper">
@@ -461,5 +326,21 @@ include '../../sidebar.php';
                     </div>
                 </div>
             </div>
+        </section>
+        <section class="delete-modal">
+        <!-- Delete Confirmation Modal -->
+        <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-body text-center">
+                <h5 class="modal-title" id="deleteConfirmationModalLabel">Remove for you</h5>
+                <p>This data will be removed, Would you like to remove it ?</p>
+                <button type="button" class="btn btn-primary" id="confirmDeleteBtn">Remove</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+            </div>
+        </div>
+        </div>
+        </section>
     </body> 
 </html>

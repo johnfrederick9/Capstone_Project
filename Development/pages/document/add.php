@@ -1,11 +1,22 @@
 <?php
 include('../../connection.php');
 
-// Retrieve form data
-$document_name = $_POST['document_name'];
-$document_date = $_POST['document_date'];
-$document_info = $_POST['document_info'];
-$document_type = $_POST['document_type'];
+$document_name = mysqli_real_escape_string($con, $_POST['document_name']);
+
+// Check for duplicate document
+$check_sql = "SELECT * FROM `tb_document` WHERE `document_name` = '$document_name'";
+$check_query = mysqli_query($con, $check_sql);
+
+if (mysqli_num_rows($check_query) > 0) {
+    // Document exists
+    echo json_encode(array('status' => 'duplicate'));
+    exit;
+}
+
+// Retrieve form data only if no duplicate
+$document_date = mysqli_real_escape_string($con, $_POST['document_date']);
+$document_info = mysqli_real_escape_string($con, $_POST['document_info']);
+$document_type = mysqli_real_escape_string($con, $_POST['document_type']);
 
 // File upload directory
 $targetDir = "file_uploads/";
@@ -30,19 +41,19 @@ if (!empty($_FILES['document_files']['name'][0])) {
     }
 }
 
-// Proceed only if no non-image files were uploaded
+// Proceed only if there are valid image files and no non-image files
 if (!empty($uploadedFiles) && empty($errorFiles)) {
     // Insert document data into the database
-    $sql = "INSERT INTO `tb_document` (`document_name`, `document_date`, `document_info`, `document_type`) 
-            VALUES ('$document_name', '$document_date', '$document_info', '$document_type')";
+    $sql = "INSERT INTO `tb_document` (`document_name`, `document_date`, `document_info`, `document_type`, `isDisplayed`) 
+            VALUES ('$document_name', '$document_date', '$document_info', '$document_type', 1)";
     $query = mysqli_query($con, $sql);
-    $lastId = mysqli_insert_id($con);
 
-    if ($query == true) {
+    if ($query) {
+        $lastId = mysqli_insert_id($con);
         // Insert uploaded files into the database
         foreach ($uploadedFiles as $filePath) {
-            $sql = "INSERT INTO `tb_document_files` (`document_id`, `filepath`) VALUES ('$lastId', '$filePath')";
-            mysqli_query($con, $sql);
+            $fileSql = "INSERT INTO `tb_document_files` (`document_id`, `filepath`) VALUES ('$lastId', '$filePath')";
+            mysqli_query($con, $fileSql);
         }
         $data = array('status' => 'true');
     } else {
@@ -55,5 +66,6 @@ if (!empty($uploadedFiles) && empty($errorFiles)) {
     $data = array('status' => 'false', 'error' => 'Please upload at least one valid image file.');
 }
 
+// Output the response
 echo json_encode($data);
 ?>

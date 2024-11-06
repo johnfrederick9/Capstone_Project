@@ -9,16 +9,16 @@ $query = mysqli_query($con, $sql);
 
 echo '<html>
 <head>
-    <title>Print Selected Employees</title>
-    <style>
+    <title>Employees Data</title>
+   <style>
         @page {
-            size: A4 portrait; /* Keeps the default portrait size */
-            margin: 5mm; /* Slight margin to prevent content from touching the edges */
+            size: 8.5in 11in; /* Short bond paper size */
+            margin: 15mm 10mm; /* Standard margins: 15mm top/bottom, 10mm sides */
         }
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0; /* Removed padding to fit content better */
+            padding: 0;
         }
         table {
             width: 100%;
@@ -30,15 +30,15 @@ echo '<html>
             padding: 8px;
             text-align: left;
             font-size: 12px;
-            page-break-inside: avoid; /* Prevents page break within table rows */
+            page-break-inside: avoid;
         }
         th {
             background-color: #f2f2f2;
         }
         .header {
             text-align: center;
-            margin: 0; /* Removed margin */
-            padding: 10px 0; /* Added padding */
+            margin: 0;
+            padding: 10px 0;
         }
         .header h1 {
             font-size: 18px;
@@ -55,11 +55,11 @@ echo '<html>
                 margin: 0;
             }
             html, body {
-                height: auto; /* Adjusted to avoid unnecessary space */
-                overflow: visible; /* Allow content to render properly */
+                height: auto;
+                overflow: visible;
             }
             .header, table {
-                page-break-after: avoid; /* Avoid page break after the header and table */
+                page-break-after: avoid;
             }
         }
     </style>

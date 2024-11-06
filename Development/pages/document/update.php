@@ -1,12 +1,32 @@
 <?php
 include('../../connection.php');
 
+$document_name = $_POST["document_name"];
+$response = [];
+
+// Check for duplicate document
+$check_sql = "SELECT * FROM `tb_document` WHERE `document_name` = '$document_name'";
+$check_query = mysqli_query($con, $check_sql);
+
+if (mysqli_num_rows($check_query) > 0) {
+    $existing_document = mysqli_fetch_assoc($check_query);
+    
+    // Check if the duplicate is not the same as the current document being updated
+    if (!isset($_POST['document_id']) || $existing_document['document_id'] != $_POST['document_id']) {
+        $response['status'] = 'duplicate';
+        echo json_encode($response);
+        exit;
+    }
+}
+
+if (isset($_POST['document_id'])) {
+$document_id = $_POST['document_id'];
 // Retrieve document details from POST request
 $document_name = $_POST['document_name'];
 $document_date = $_POST['document_date'];
 $document_info = $_POST['document_info'];
 $document_type = $_POST['document_type'];
-$document_id = $_POST['document_id'];
+}
 
 // Update document details in the tb_document table
 $sql = "UPDATE `tb_document` 

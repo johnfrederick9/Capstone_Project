@@ -1,0 +1,77 @@
+<?php
+include('../../connection.php');
+
+$output = array();
+$columns = array(
+    0 => 'cashbook_id',
+    1 => 'period_covered',
+    2 => 'treasurer_name',
+);
+
+// Base query to get transaction data
+$sql = "SELECT 
+    cashbook_id,
+    period_covered,
+    treasurer_name
+    FROM tb_cashbook
+    WHERE isDisplayed = 1";  // No need for "1 = 1"
+
+// Capture search value
+$search_value = '';
+if (isset($_POST['search']['value']) && !empty($_POST['search']['value'])) {
+    $search_value = $_POST['search']['value'];
+    // Append search conditions
+    $sql .= " AND (period_covered LIKE '%" . $search_value . "%' ";
+    $sql .= " OR treasurer_name LIKE '%" . $search_value . "%')";
+}
+
+// Order by clause
+if (isset($_POST['order'])) {
+    $column_name = $columns[$_POST['order'][0]['column']];
+    $order = $_POST['order'][0]['dir'];
+    $sql .= " ORDER BY " . $column_name . " " . $order;
+} else {
+    $sql .= " ORDER BY cashbook_id DESC";
+}
+
+// Pagination
+if ($_POST['length'] != -1) {
+    $start = $_POST['start'];
+    $length = $_POST['length'];
+    $sql .= " LIMIT " . $start . ", " . $length;
+}
+
+// Execute query
+$query = mysqli_query($con, $sql);
+$count_filtered_rows = mysqli_num_rows($query); // Filtered rows
+
+// Fetch total rows for DataTables pagination (no search applied)
+$totalQuery = mysqli_query($con, "SELECT COUNT(cashbook_id) AS total FROM tb_cashbook WHERE isDisplayed = 1");
+$totalRow = mysqli_fetch_assoc($totalQuery);
+$total_all_rows = $totalRow['total'];
+
+// Prepare data for DataTable
+$data = array();
+while ($row = mysqli_fetch_assoc($query)) {
+    $sub_array = array();
+    $sub_array[] = $row['cashbook_id'];
+    $sub_array[] = $row['period_covered'];
+    $sub_array[] = $row['treasurer_name'];
+    $sub_array[] = '<div class="buttons">
+                        <a href="javascript:void(0);" data-id="' . $row['cashbook_id'] . '" class="update-btn btn-sm editbtn"><i class="bx bx-sync"></i></a>  
+                        <a href="javascript:void(0);" data-cashbook_id="' . $row['cashbook_id'] . '" class="delete-btn btn-sm deleteBtn"><i class="bx bxs-trash"></i></a>
+                        <a href="javascript:void(0);" data-item-id="' . $row['cashbook_id'] . '" class="update-btn btn-sm infoBtn"><i class="bx bx-info-circle"></i></a>
+                    </div>';
+    $data[] = $sub_array;
+}
+//<a href="javascript:void(0);" data-item_id="' . $row['cashbook_id'] . '" class="update-btn btn-sm infoBtn"><i class="bx bx-info-circle"></i></a>
+// Output response
+$output = array(
+    'draw' => intval($_POST['draw']),
+    'recordsTotal' => $total_all_rows,
+    'recordsFiltered' => $count_filtered_rows, // Corrected to show filtered records count
+    'data' => $data,
+);
+
+echo json_encode($output);
+?>
