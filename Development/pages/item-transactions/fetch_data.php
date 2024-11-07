@@ -41,42 +41,35 @@ $sql = "SELECT
         tb_transaction_items i 
     ON 
         t.transaction_id = i.transaction_id
-    WHERE 1 = 1 AND isDisplayed = 1";  // Add a placeholder to simplify appending conditions later
+    WHERE t.isDisplayed = 1";  // Add a placeholder to simplify appending conditions later
 
 // Capture search value
 if (isset($_POST['search']['value']) && !empty($_POST['search']['value'])) {
-    $search_value = $_POST['search']['value'];
+    $search_value = mysqli_real_escape_string($con, $_POST['search']['value']);
     // Append search conditions
-    $sql .= " AND (t.borrower_name LIKE '%" . $search_value . "%' ";
-    $sql .= " OR t.borrower_address LIKE '%" . $search_value . "%' ";
-    $sql .= " OR GROUP_CONCAT(i.item_name SEPARATOR ', ') LIKE '%" . $search_value . "%' ";
-    $sql .= " OR GROUP_CONCAT(i.borrow_quantity SEPARATOR ', ') LIKE '%" . $search_value . "%' ";
-    $sql .= " OR t.reserved_on LIKE '%" . $search_value . "%' ";
-    $sql .= " OR t.date_borrowed LIKE '%" . $search_value . "%' ";
-    $sql .= " OR t.return_date LIKE '%" . $search_value . "%' ";
-    $sql .= " OR t.approved_by LIKE '%" . $search_value . "%' ";
-    $sql .= " OR t.released_by LIKE '%" . $search_value . "%' ";
-    $sql .= " OR t.date_returned LIKE '%" . $search_value . "%' ";
-    $sql .= " OR GROUP_CONCAT(i.return_quantity SEPARATOR ', ') LIKE '%" . $search_value . "%' ";
-    $sql .= " OR t.transaction_status LIKE '%" . $search_value . "%')";
+    $sql .= " AND (
+        t.borrower_name LIKE '%" . $search_value . "%' 
+        OR t.borrower_address LIKE '%" . $search_value . "%' 
+        OR i.item_name LIKE '%" . $search_value . "%' 
+        OR i.borrow_quantity LIKE '%" . $search_value . "%' 
+        OR t.reserved_on LIKE '%" . $search_value . "%' 
+        OR t.date_borrowed LIKE '%" . $search_value . "%' 
+        OR t.return_date LIKE '%" . $search_value . "%' 
+        OR t.approved_by LIKE '%" . $search_value . "%' 
+        OR t.released_by LIKE '%" . $search_value . "%' 
+        OR t.date_returned LIKE '%" . $search_value . "%' 
+        OR i.return_quantity LIKE '%" . $search_value . "%' 
+        OR t.transaction_status LIKE '%" . $search_value . "%'
+    )";
 }
 
-// Add GROUP BY clause
+// Group by transaction ID to ensure unique transactions
 $sql .= " GROUP BY t.transaction_id";
-
-// Order by clause
-if (isset($_POST['order'])) {
-    $column_name = $columns[$_POST['order'][0]['column']];
-    $order = $_POST['order'][0]['dir'];
-    $sql .= " ORDER BY " . $column_name . " " . $order;
-} else {
-    $sql .= " ORDER BY t.transaction_id DESC";
-}
 
 // Pagination
 if ($_POST['length'] != -1) {
-    $start = $_POST['start'];
-    $length = $_POST['length'];
+    $start = intval($_POST['start']);
+    $length = intval($_POST['length']);
     $sql .= " LIMIT " . $start . ", " . $length;
 }
 
@@ -85,7 +78,7 @@ $query = mysqli_query($con, $sql);
 $count_rows = mysqli_num_rows($query);
 
 // Fetch total rows for DataTables pagination
-$totalQuery = mysqli_query($con, "SELECT COUNT(DISTINCT transaction_id) AS total FROM tb_item_transaction");
+$totalQuery = mysqli_query($con, "SELECT COUNT(DISTINCT transaction_id) AS total FROM tb_item_transaction WHERE isDisplayed = 1");
 $totalRow = mysqli_fetch_assoc($totalQuery);
 $total_all_rows = $totalRow['total'];
 
@@ -107,10 +100,19 @@ while ($row = mysqli_fetch_assoc($query)) {
     $sub_array[] = $row['date_returned'];
     $sub_array[] = $row['returned_quantities'];
     $sub_array[] = $row['transaction_status'];
-    $sub_array[] = '<div class="buttons">
-                        <a href="javascript:void(0);" data-id="' . $row['transaction_id'] . '" class="update-btn btn-sm editbtn"><i class="bx bx-sync"></i></a>  
-                        <a href="javascript:void(0);" data-item_id="' . $row['transaction_id'] . '" class="delete-btn btn-sm deleteBtn"><i class="bx bxs-trash"></i></a>
-                    </div>';
+    $sub_array[] = '<div class="dropdown">
+                    <button class="action-btn" onclick="toggleDropdown(this)">
+                        ACTIONS <i class="bx bx-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="javascript:void(0);" data-id="' . $row['transaction_id'] . '" class="dropdown-item update-btn editbtn">
+                            <i class="bx bx-edit"></i>
+                        </a>
+                        <a href="javascript:void(0);" data-id="' . $row['transaction_id'] . '" class="dropdown-item delete-btn deleteBtn">
+                            <i class="bx bx-trash"></i>
+                        </a>
+                    </div>
+                </div>';
     $data[] = $sub_array;
 }
 
@@ -118,7 +120,7 @@ while ($row = mysqli_fetch_assoc($query)) {
 $output = array(
     'draw' => intval($_POST['draw']),
     'recordsTotal' => $total_all_rows,
-    'recordsFiltered' => $total_all_rows,
+    'recordsFiltered' => $count_rows,
     'data' => $data,
 );
 

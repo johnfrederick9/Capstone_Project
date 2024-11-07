@@ -1,6 +1,6 @@
    <!-- Event Modal -->
 <section class="eventmodal">
- <div id="customAlert" class="modal">
+ <div id="customAlert" class="modal fade">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <h2 id="eventName"></h2>
