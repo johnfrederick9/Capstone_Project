@@ -89,8 +89,9 @@ if (mysqli_num_rows($result) > 0) {
                                             </select>
                                         </div>
                                         <div class="input-wrapper">
-                                            <label for="blotter_complainant_no" class="input-label">Complainant's Contact No.:</label>
-                                            <input type="number" id="blotter_complainant_noField" name="blotter_complainant_no" class="input-field"  >
+                                        <label for="resident_contact" class="input-label">Complainant's Contact No.:</label>
+                                            <input type="tel" placeholder="Enter 11-digit number" id="blotter_complainant_noField" name="blotter_complainant_no" class="input-field" maxlength="16" require 
+                                                style="flex: 1; border: 1px solid #ccc; border-left: none;">
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainant_add" class="input-label">Complainant's Address:</label>
@@ -108,8 +109,9 @@ if (mysqli_num_rows($result) > 0) {
                                             </select>
                                         </div> 
                                         <div class="input-wrapper">
-                                            <label for="blotter_complainee_no" class="input-label">Complainee's Contact No.:</label>
-                                            <input type="number" id="blotter_complainee_noField" name="blotter_complainee_no" class="input-field"  >
+                                        <label for="resident_contact" class="input-label">Complainee's Contact No.:</label>
+                                            <input type="tel" placeholder="Enter 11-digit number" id="blotter_complainee_noField" name="blotter_complainee_no" class="input-field" maxlength="16" require 
+                                                style="flex: 1; border: 1px solid #ccc; border-left: none;">
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainee_add" class="input-label">Complainee's Address:</label>
@@ -179,8 +181,9 @@ if (mysqli_num_rows($result) > 0) {
                                             </select>
                                         </div>
                                         <div class="input-wrapper">
-                                            <label for="blotter_complainant_no" class="input-label">Complainant's Contact No.:</label>
-                                            <input type="number" id="blotter_complainant_no" name="blotter_complainant_no" class="input-field"  >
+                                        <label for="blotter_complainant_no" class="input-label">Complainant's Contact No.:</label>
+                                            <input type="tel" placeholder="Enter 11-digit number" id="blotter_complainant_no" name="blotter_complainant_no" class="input-field" maxlength="16" require 
+                                                style="flex: 1; border: 1px solid #ccc; border-left: none;">
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainant_add" class="input-label">Complainant's Address:</label>
@@ -198,8 +201,9 @@ if (mysqli_num_rows($result) > 0) {
                                             </select>
                                         </div>
                                         <div class="input-wrapper">
-                                            <label for="blotter_complainee_no" class="input-label">Complainee's Contact No.:</label>
-                                            <input type="number" id="blotter_complainee_no" name="blotter_complainee_no" class="input-field"  >
+                                        <label for="blotter_complainee_no" class="input-label">Complainee's Contact No.:</label>
+                                            <input type="tel" placeholder="Enter 11-digit number" id="blotter_complainee_no" name="blotter_complainee_no" class="input-field" maxlength="16" require 
+                                                style="flex: 1; border: 1px solid #ccc; border-left: none;">
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainee_add" class="input-label">Complainee's Address:</label>

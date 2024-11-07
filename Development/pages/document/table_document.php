@@ -139,6 +139,7 @@ object-fit: cover;
                 </div>
             </div>
             <!-- View Modal -->
+            <section class="delete-modal">
             <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -154,7 +155,8 @@ object-fit: cover;
                     </div>
                 </div>
             </div>
-            <section class="delete-modal">
+        </section>
+        <section class="delete-modal">
         <!-- Delete Confirmation Modal -->
         <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

@@ -153,10 +153,8 @@ $(document).ready(function() {
         var blotter_recorded_by = $('#blotter_recorded_by').val();
         if (
             blotter_complainant &&
-            blotter_complainant_no &&
             blotter_complainant_add &&
             blotter_complainee &&
-            blotter_complainee_no &&
             blotter_complainee_add &&
             blotter_complaint &&
             blotter_status &&
@@ -187,6 +185,56 @@ $(document).ready(function() {
                 success: function(data) {
                     var json = JSON.parse(data);
                     var status = json.status;
+                    // Validate blotter_complainant_no if it has a value
+                    var blotter_complainant_no = $('#blotter_complainant_no').val() || $('#complainantContactField').val(); // Check both fields for add and update
+
+                    if (blotter_complainant_no) { // Only run validation if a contact number is provided
+                        // Ensure the contact starts with either '0' or '+63'
+                        if (!blotter_complainant_no.startsWith('0') && !blotter_complainant_no.startsWith('+63')) {
+                            showAlert("Complainant contact should start with '0' or '+63'.", "alert-danger");
+                            return;
+                        }
+
+                        // Check if it starts with "+63" and remove the prefix for validation
+                        if (blotter_complainant_no.startsWith('+63')) {
+                            blotter_complainant_no = blotter_complainant_no.replace('+63', '0'); // Replace "+63" with "0" for consistent length validation
+                        }
+
+                        // Remove all non-numeric characters (like spaces, dashes, etc.)
+                        var blotter_complainant_no_digits = blotter_complainant_no.replace(/\D/g, '');
+
+                        // Check if blotter_complainant_no has exactly 11 digits
+                        if (blotter_complainant_no_digits.length !== 11) {
+                            showAlert("Complainant contact should have exactly 11 digits after formatting.", "alert-danger");
+                            return;
+                        }
+                    }
+
+                    // Validate blotter_complainee_no if it has a value
+                    var blotter_complainee_no = $('#blotter_complainee_no').val() || $('#complaineeContactField').val(); // Check both fields for add and update
+
+                    if (blotter_complainee_no) { // Only run validation if a contact number is provided
+                        // Ensure the contact starts with either '0' or '+63'
+                        if (!blotter_complainee_no.startsWith('0') && !blotter_complainee_no.startsWith('+63')) {
+                            showAlert("Complainee contact should start with '0' or '+63'.", "alert-danger");
+                            return;
+                        }
+
+                        // Check if it starts with "+63" and remove the prefix for validation
+                        if (blotter_complainee_no.startsWith('+63')) {
+                            blotter_complainee_no = blotter_complainee_no.replace('+63', '0'); // Replace "+63" with "0" for consistent length validation
+                        }
+
+                        // Remove all non-numeric characters (like spaces, dashes, etc.)
+                        var blotter_complainee_no_digits = blotter_complainee_no.replace(/\D/g, '');
+
+                        // Check if blotter_complainee_no has exactly 11 digits
+                        if (blotter_complainee_no_digits.length !== 11) {
+                            showAlert("Complainee contact should have exactly 11 digits after formatting.", "alert-danger");
+                            return;
+                        }
+                    }
+
                     if (status === 'duplicate') {
                     showAlert("Blotter with the same name already exists.", "alert-danger");
                     } else if (status == 'true') {
@@ -204,78 +252,108 @@ $(document).ready(function() {
         }
     });
     $(document).on('submit', '#updateBlotter', function(e) {
-        e.preventDefault();
+    e.preventDefault();
 
-        var blotter_complainant = $('#blotter_complainantField').val();
-        var blotter_complainant_no = $('#blotter_complainant_noField').val();
-        var blotter_complainant_add = $('#blotter_complainant_addField').val();
-        var blotter_complainee = $('#blotter_complaineeField').val();
-        var blotter_complainee_no = $('#blotter_complainee_noField').val();
-        var blotter_complainee_add = $('#blotter_complainee_addField').val();
-        var blotter_complaint = $('#blotter_complaintField').val();
-        var blotter_status = $('#blotter_statusField').val();
-        var blotter_action = $('#blotter_actionField').val();
-        var blotter_incidence = $('#blotter_incidenceField').val();
-        var blotter_date_recorded = $('#blotter_date_recordedField').val();
-        var blotter_date_settled = $('#blotter_date_settledField').val();
-        var blotter_recorded_by = $('#blotter_recorded_byField').val();
-        var trid = $('#trid').val();
-        var blotter_id = $('#blotter_id').val();
-        if (
-            blotter_complainant &&
-            blotter_complainant_no &&
-            blotter_complainant_add &&
-            blotter_complainee &&
-            blotter_complainee_no &&
-            blotter_complainee_add &&
-            blotter_complaint &&
-            blotter_status &&
-            blotter_action &&
-            blotter_incidence &&
-            blotter_date_recorded &&
-            blotter_date_settled &&
-            blotter_recorded_by
-        ) {
-            $.ajax({
-                url: "update.php",
-                type: "post",
-                data: {
-                    blotter_complainant: blotter_complainant,
-                    blotter_complainant_no: blotter_complainant_no,
-                    blotter_complainant_add: blotter_complainant_add,
-                    blotter_complainee: blotter_complainee,
-                    blotter_complainee_no: blotter_complainee_no,
-                    blotter_complainee_add: blotter_complainee_add,
-                    blotter_complaint: blotter_complaint,
-                    blotter_status: blotter_status,
-                    blotter_action: blotter_action,
-                    blotter_incidence: blotter_incidence,
-                    blotter_date_recorded: blotter_date_recorded,
-                    blotter_date_settled: blotter_date_settled,
-                    blotter_recorded_by: blotter_recorded_by,
-                    blotter_id: blotter_id
-                },
-                success: function(data) {
-                    var json = JSON.parse(data);
-                    var status = json.status;
-                    if (status === 'duplicate') {
-                        showAlert("Blotter with the same name already exists.", "alert-danger");
-                    } else if (status === 'true') {
-                        $('#example').DataTable().draw();
-                        $('#exampleModal').modal('hide');
-                        showAlert("Blotter update successfully.", "alert-success");
-                    } else {
-                        showAlert("Failed to Update blotter.", "alert-danger");
-                    }
-                    },
-                    error: function() {
-                    showAlert("Error updating record.", "alert-danger");
-                }
-            });
-        } else {
-            showAlert("Fill all the required fields", "alert-danger");
+    var blotter_complainant = $('#blotter_complainantField').val();
+    var blotter_complainant_no = $('#blotter_complainant_noField').val();
+    var blotter_complainant_add = $('#blotter_complainant_addField').val();
+    var blotter_complainee = $('#blotter_complaineeField').val();
+    var blotter_complainee_no = $('#blotter_complainee_noField').val();
+    var blotter_complainee_add = $('#blotter_complainee_addField').val();
+    var blotter_complaint = $('#blotter_complaintField').val();
+    var blotter_status = $('#blotter_statusField').val();
+    var blotter_action = $('#blotter_actionField').val();
+    var blotter_incidence = $('#blotter_incidenceField').val();
+    var blotter_date_recorded = $('#blotter_date_recordedField').val();
+    var blotter_date_settled = $('#blotter_date_settledField').val();
+    var blotter_recorded_by = $('#blotter_recorded_byField').val();
+    var trid = $('#trid').val();
+    var blotter_id = $('#blotter_id').val();
+
+    // Validate contact numbers
+    function validateContactNumber(contact, fieldName) {
+        // Ensure the contact starts with either '0' or '+63'
+        if (!contact.startsWith('0') && !contact.startsWith('+63')) {
+            showAlert(`${fieldName} should start with '0' or '+63'.`, "alert-danger");
+            return false;
         }
-    });
+
+        // Check if it starts with "+63" and remove the prefix for validation
+        if (contact.startsWith('+63')) {
+            contact = contact.replace('+63', '0'); // Replace "+63" with "0" for consistent length validation
+        }
+
+        // Remove all non-numeric characters (like spaces, dashes, etc.)
+        var contact_digits = contact.replace(/\D/g, '');
+
+        // Check if the contact has exactly 11 digits
+        if (contact_digits.length !== 11) {
+            showAlert(`${fieldName} should have exactly 11 digits after formatting.`, "alert-danger");
+            return false;
+        }
+
+        return true;
+    }
+
+    // Run validation on both contacts
+    if (blotter_complainant_no && !validateContactNumber(blotter_complainant_no, "Complainant contact")) return;
+    if (blotter_complainee_no && !validateContactNumber(blotter_complainee_no, "Complainee contact")) return;
+
+    // Check if other required fields are filled
+    if (
+        blotter_complainant &&
+        blotter_complainant_add &&
+        blotter_complainee &&
+        blotter_complainee_add &&
+        blotter_complaint &&
+        blotter_status &&
+        blotter_action &&
+        blotter_incidence &&
+        blotter_date_recorded &&
+        blotter_date_settled &&
+        blotter_recorded_by
+    ) {
+        // Proceed with the AJAX request
+        $.ajax({
+            url: "update.php",
+            type: "post",
+            data: {
+                blotter_complainant: blotter_complainant,
+                blotter_complainant_no: blotter_complainant_no,
+                blotter_complainant_add: blotter_complainant_add,
+                blotter_complainee: blotter_complainee,
+                blotter_complainee_no: blotter_complainee_no,
+                blotter_complainee_add: blotter_complainee_add,
+                blotter_complaint: blotter_complaint,
+                blotter_status: blotter_status,
+                blotter_action: blotter_action,
+                blotter_incidence: blotter_incidence,
+                blotter_date_recorded: blotter_date_recorded,
+                blotter_date_settled: blotter_date_settled,
+                blotter_recorded_by: blotter_recorded_by,
+                blotter_id: blotter_id
+            },
+            success: function(data) {
+                var json = JSON.parse(data);
+                var status = json.status;
+                if (status === 'duplicate') {
+                    showAlert("Blotter with the same name already exists.", "alert-danger");
+                } else if (status === 'true') {
+                    $('#example').DataTable().draw();
+                    $('#exampleModal').modal('hide');
+                    showAlert("Blotter update successful.", "alert-success");
+                } else {
+                    showAlert("Failed to update blotter.", "alert-danger");
+                }
+            },
+            error: function() {
+                showAlert("Error updating record.", "alert-danger");
+            }
+        });
+    } else {
+        showAlert("Fill all the required fields", "alert-danger");
+    }
+});
     
     $(document).on('click', '.deleteBtn', function(event) {
     event.preventDefault();
@@ -407,3 +485,12 @@ window.onclick = function(event) {
     }
 }
 </script>
+<script>
+    // Add event listener for the Enter key when the modal is open
+document.addEventListener('keydown', function(event) {
+    const modalOpen = document.getElementById('deleteConfirmationModal').classList.contains('show');
+    if (modalOpen && event.key === 'Enter') {
+        event.preventDefault();
+        document.getElementById('confirmDeleteBtn').click();
+    }
+});

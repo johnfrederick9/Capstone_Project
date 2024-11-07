@@ -121,8 +121,7 @@ $(document).ready(function() {
 
         // Function to show alert
         function showAlert(message, alertClass) {
-            var alertDiv = $('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' + message +
-                '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+            var alertDiv = $('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' + message +'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
             alertDiv.css({
                 "position": "fixed",
                 "top": "10px",
@@ -392,6 +391,62 @@ function showAlert(message, alertClass) {
             }
         })
     });
+    $(document).ready(function() {
+    $('#example').on('click', '.viewbtn', function(event) {
+        var table = $('#example').DataTable();
+        var resident_id = $(this).data('id');
+        
+        // Debugging: Check if resident_id is found
+        console.log("Resident ID:", resident_id);
+        
+        if (!resident_id) {
+            console.error("Resident ID is not defined.");
+            alert("Resident ID is missing. Please try again.");
+            return;
+        }
+
+        $('#viewModal').modal('show');
+        $.ajax({
+            url: "fetch_details.php",
+            data: {
+                resident_id: resident_id
+            },
+            type: 'post',
+            success: function(data) {
+                console.log("AJAX data response:", data);
+                try {
+                    var json = JSON.parse(data);
+                    $('#view_firstname').text(json.resident_firstname || "N/A");
+                    $('#view_middlename').text(json.resident_middlename || "N/A");
+                    $('#view_lastname').text(json.resident_lastname || "N/A");
+                    $('#view_suffixes').text(json.resident_suffixes || "N/A");
+                    $('#view_sex').text(json.resident_sex || "N/A");
+                    $('#view_birthdate').text(json.resident_birthdate || "N/A");
+                    $('#view_age').text(json.resident_age || "N/A");
+                    $('#view_contact').text(json.resident_contact || "N/A");
+                    $('#view_status').text(json.resident_status || "N/A");
+                    $('#view_householdrole').text(json.resident_householdrole || "N/A");
+                    $('#view_household_id').text(json.household_id || "N/A");
+                    $('#view_address').text(json.resident_address || "N/A");
+                    $('#view_educationalattainment').text(json.resident_educationalattainment || "N/A");
+                    $('#view_maidenname').text(json.resident_maidenname || "N/A");
+                    $('#view_occupation').text(json.resident_occupation || "N/A");
+                    $('#view_religion').text(json.resident_religion || "N/A");
+                    $('#view_indigenous').text(json.resident_indigenous || "N/A");
+                    $('#view_pension').text(json.resident_pension || "N/A");
+                    $('#view_beneficiaries').text(json.resident_beneficiaries || "N/A");
+                } catch (e) {
+                    console.error("JSON parsing error:", e);
+                    alert("An error occurred while processing the data.");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error:", error);
+                alert("Failed to fetch details: " + error);
+            }
+        });
+    });
+});
 
 </script>
 <script>
@@ -431,4 +486,14 @@ window.onclick = function(event) {
         }
     }
 }
+</script>
+<script>
+    // Add event listener for the Enter key when the modal is open
+document.addEventListener('keydown', function(event) {
+    const modalOpen = document.getElementById('deleteConfirmationModal').classList.contains('show');
+    if (modalOpen && event.key === 'Enter') {
+        event.preventDefault();
+        document.getElementById('confirmDeleteBtn').click();
+    }
+});
 </script>

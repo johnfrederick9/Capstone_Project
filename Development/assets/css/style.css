@@ -205,8 +205,73 @@ body.dark {
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
+
+.delete-modal .btn-primary {
+  background-color: #d9534f;
+  border-color: #d9534f;
+}
+
+.delete-modal .btn-primary:hover {
+  background-color: #c9302c;
+  border-color: #ac2925;
+}
+
+.delete-modal .btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.view-modal .row {
+  display: flex;
+  margin: 10px;
+}
+
+.view-modal .col-md-6 {
+  width: 50%;
+  padding: 10px;
+}
+
+.view-modal p {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #383838;
+}
+
+.view-modal strong {
+  color: #333;
+}
+
+.view-modal span {
+  color: #2e2e2e;
+}
+
+.view-modal p {
+  border-bottom: 1px solid #c0c0c0;
+  padding: 8px 0;
+  margin: 0;
+}
+
+.view-modal .row .col-md-6 {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  margin-bottom: 10px;
+}
+
+.view-modal .row .col-md-6:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+
+.view-modal .row {
+  justify-content: space-between;
+}
+
+.view-modal p:last-child {
+  border-bottom: none;
+}
+
 
 @media (max-width: 991px) {
   html, body {
@@ -1958,8 +2023,6 @@ margin-bottom: 5px;
 .eventmodal .close-btn:hover {
   color: #ff0000;
 }
-
-
 
 /* Calendar Date Hover (Cool Effect) */
 .dashboard .calendar-date.has-event {

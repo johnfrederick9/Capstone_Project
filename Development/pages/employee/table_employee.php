@@ -128,7 +128,7 @@ include '../../sidebar.php';
 
                             <div class="input-wrapper">
                             <label for="resident_contact" class="input-label">Contact Number:</label>
-                                <input type="tel" placeholder="Enter 10-digit number" id="contactField" name="employee_contact" class="input-field" maxlength="16" require 
+                                <input type="tel" placeholder="Enter 11-digit number" id="contactField" name="employee_contact" class="input-field" maxlength="16" require 
                                     style="flex: 1; border: 1px solid #ccc; border-left: none;">
                             </div>
 
@@ -246,7 +246,7 @@ include '../../sidebar.php';
 
                              <div class="input-wrapper">
                             <label for="resident_contact" class="input-label">Contact Number:</label>
-                                <input type="tel" placeholder="Enter 10-digit number" id="employee_contact" name="employee_contact" class="input-field" maxlength="16" require 
+                                <input type="tel" placeholder="Enter 11-digit number" id="employee_contact" name="employee_contact" class="input-field" maxlength="16" require 
                                     style="flex: 1; border: 1px solid #ccc; border-left: none;">
                             </div>
 

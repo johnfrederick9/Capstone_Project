@@ -322,3 +322,12 @@ $(document).ready(function() {
             }
         }
 </script>
+<script>
+    // Add event listener for the Enter key when the modal is open
+document.addEventListener('keydown', function(event) {
+    const modalOpen = document.getElementById('deleteConfirmationModal').classList.contains('show');
+    if (modalOpen && event.key === 'Enter') {
+        event.preventDefault();
+        document.getElementById('confirmDeleteBtn').click();
+    }
+});

@@ -129,11 +129,13 @@ require '../../database.php';
             <table id="example" class="table-table">         
               <thead>
                   <tr>
+                    <th>#</th>
                       <th>Event Name</th>
                       <th>Location</th>
                       <th>Type</th>
                       <th>Start Date</th>
                       <th>End Date</th>
+                      <th>Buttons</th>
                   </tr>
               </thead>
               <tbody>
@@ -156,96 +158,54 @@ require '../../database.php';
                         'type': 'POST',
                     },
                     "columnDefs": [{
+                    "targets": [0,2,3],  // Target the first column (aData[0])
+                    "visible": false, // Hide the column
+                    "searchable": false // Disable search for this column if needed
+                    },{
                         "orderable": false,
                         "targets": [4] // Adjust index as needed for columns that shouldn’t be sortable
                     }]
                 });
             });
                $(document).on('submit', '#updateUser', function(e) {
-                            e.preventDefault();
-                            //var tr = $(this).closest('tr');
-                            var document_name = $('#nameField').val();
-                            var document_date = $('#dateField').val();
-                            var document_info = $('#infoField').val();
-                            var document_type = $('#typeField').val();
-                            var trid = $('#trid').val();
-                            var document_id = $('#document_id').val();
-                            if (document_name != '' && document_date != '' && document_info != '' && document_type != '') {
-                                $.ajax({
-                                    url: "update.php",
-                                    type: "post",
-                                    data: {
-                                        document_name: document_name,
-                                        document_date: document_date,
-                                        document_info: document_info,
-                                        document_type: document_type,
-                                        document_id: document_id
-                                    },
-                                    success: function(data) {
-                                        var json = JSON.parse(data);
-                                        var status = json.status;
-                                        if (status == 'true') {
-                                            table = $('#example').DataTable();
-                                            var checkbox = '<input type="checkbox" class="row-checkbox" value="' +document_id+'">';
-                                            var button = '<td><div class= "buttons"> <a href="javascript:void(0);" data-id="'+ document_id +'"  class="update-btn btn-sm editbtn" ><i class="bx bx-sync"></i></a><a href="javascript:void(0);" onclick="openViewModal(' + document_id +');" class="view-btn btn-sm viewbtn"><i class="bx bx-show"></i></div></td>';
-                                            var row = table.row("[id='" + trid + "']");
-                                            row.row("[id='" + trid + "']").data([checkbox, document_name, document_date, document_info, document_type, button]);
-                                            $('#exampleModal').modal('hide');
-                                        } else {
-                                            alert('failed');
-                                        }
-                                    }
-                                });
-                            } else {
-                                alert('Fill all the required fields');
+                    e.preventDefault();
+                    //var tr = $(this).closest('tr');
+                    var document_name = $('#nameField').val();
+                    var document_date = $('#dateField').val();
+                    var document_info = $('#infoField').val();
+                    var document_type = $('#typeField').val();
+                    var trid = $('#trid').val();
+                    var document_id = $('#document_id').val();
+                    if (document_name != '' && document_date != '' && document_info != '' && document_type != '') {
+                        $.ajax({
+                            url: "update.php",
+                            type: "post",
+                            data: {
+                                document_name: document_name,
+                                document_date: document_date,
+                                document_info: document_info,
+                                document_type: document_type,
+                                document_id: document_id
+                            },
+                            success: function(data) {
+                                var json = JSON.parse(data);
+                                var status = json.status;
+                                if (status == 'true') {
+                                    table = $('#example').DataTable();
+                                    var checkbox = '<input type="checkbox" class="row-checkbox" value="' +document_id+'">';
+                                    var button = '<td><div class= "buttons"> <a href="javascript:void(0);" data-id="'+ document_id +'"  class="update-btn btn-sm editbtn" ><i class="bx bx-sync"></i></a><a href="javascript:void(0);" onclick="openViewModal(' + document_id +');" class="view-btn btn-sm viewbtn"><i class="bx bx-show"></i></div></td>';
+                                    var row = table.row("[id='" + trid + "']");
+                                    row.row("[id='" + trid + "']").data([checkbox, document_name, document_date, document_info, document_type, button]);
+                                    $('#exampleModal').modal('hide');
+                                } else {
+                                    alert('failed');
+                                }
                             }
                         });
-                        $(document).on('submit', '#UpdateForm', function(e) {
-                        e.preventDefault();
-                        
-                        // Get values from the modal form fields
-                        var event_name = $('#Fieldname').val();
-                        var event_location = $('#Fieldlocation').val();
-                        var event_type = $('#Fieldtype').val();
-                        var event_start = $('#Fieldstart').val();
-                        var event_end = $('#Fieldend').val();
-                        var trid = $('#trid').val();
-                        var event_id = $('#event_id').val();
-
-                        // Ensure all fields are filled
-                        if (event_name !== '' && event_location !== '' && event_type !== '' && event_start !== '' && event_end !== '') {
-                            $.ajax({
-                                url: "update.php",
-                                type: "post",
-                                data: {
-                                    event_name: event_name,
-                                    event_location: event_location,
-                                    event_type: event_type,
-                                    event_start: event_start,
-                                    event_end: event_end,
-                                    event_id: event_id
-                                },
-                                success: function(data) {
-                                    var json = JSON.parse(data);
-                                    var status = json.status;
-                                    
-                                    if (status === 'true') {
-                                        table = $('#example').DataTable();
-                                        // Update the specific row in the DataTable
-                                        var row = table.row("[id='" + trid + "']");
-                                        row.data([event_name, event_location, event_type, event_start, event_end]);
-
-                                        // Hide the modal after updating
-                                        $('#eventUser').modal('hide');
-                                    } else {
-                                        alert('Update failed');
-                                    }
-                                }
-                            });
-                        } else {
-                            alert('Please fill all required fields');
-                        }
-                    });
+                    } else {
+                        alert('Fill all the required fields');
+                    }
+                });
                 $('#example tbody').on('click', 'tr', function() {
                 var table = $('#example').DataTable();
                 var data = table.row(this).data();
@@ -276,7 +236,7 @@ require '../../database.php';
         </section>
     </section>
      <!-- Modal for Updating Event -->
-     <div class="modal fade" id="eventUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal fade" id="updateUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">

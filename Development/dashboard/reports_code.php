@@ -6,9 +6,9 @@ $query = "
         COUNT(*) as count 
     FROM tb_resident 
     WHERE isDisplayed = 1 
-    AND resident_educationalattainment IN ('Elementary', 'High School, Undergraduate', 'High School, Graduate', 'College, Undergrad', 'Vocational', 'Bachelor\'s Degree', 'Master\'s Degree', 'Doctorate Degree')
+    AND resident_educationalattainment IN ('Elementary', 'High School, Undergrad', 'High School, Graduate', 'College, Undergrad', 'Vocational', 'Bachelor Degree', 'Master Degree', 'Doctorate Degree')
     GROUP BY resident_educationalattainment
-    ORDER BY FIELD(resident_educationalattainment, 'Elementary', 'High School, Undergraduate', 'High School, Graduate', 'College, Undergrad', 'Vocational', 'Bachelor\'s Degree', 'Master\'s Degree', 'Doctorate Degree')
+    ORDER BY FIELD(resident_educationalattainment, 'Elementary', 'High School, Undergrad', 'High School, Graduate', 'College, Undergrad', 'Vocational', 'Bachelor Degree', 'Master Degree', 'Doctorate Degree')
 ";
 $result = mysqli_query($conn, $query);
 

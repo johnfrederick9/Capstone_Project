@@ -93,7 +93,7 @@ include '../../sidebar.php';
                             <div class="input-wrapper">
                                 <label for="" class="input-label">Address:</label>
                                 <select id="addressField" name="resident_address" class="input-field" require>
-                                    <option value="" disabled selected>Education Attainment</option>
+                                    <option value="" disabled selected>Address</option>
                                     <option value="Sitio Sto. Nino">Sitio Sto. Nino</option>
                                     <option value="Sitio Suwa">Sitio Suwa</option>
                                     <option value="Sitio Private">Sitio Private</option>
@@ -110,7 +110,7 @@ include '../../sidebar.php';
                             <div class="input-wrapper">
                                 <label for="" class="input-label">Educational Attainment:</label>
                                     <select id="educField" name="resident_educationalattainment" class="input-field" require>
-                                        <option value="" disabled selected>Address</option>
+                                        <option value="" disabled selected>Educational Attainment</option>
                                         <option value="Elementary">Elementary</option>
                                         <option value="High School, Undergrad">High School, Undergrad</option>
                                         <option value="High School, Graduate">High School, Graduate</option>
@@ -322,6 +322,47 @@ include '../../sidebar.php';
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- View Modal -->
+        <section class="view-modal">
+            <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="viewModalLabel">Resident Details</h5>
+                            <button type="button" class="bx bxs-x-circle icon" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>First Name:</strong> <span id="view_firstname"></span></p>
+                                    <p><strong>Middle Name:</strong> <span id="view_middlename"></span></p>
+                                    <p><strong>Last Name:</strong> <span id="view_lastname"></span></p>
+                                    <p><strong>Suffixes:</strong> <span id="view_suffixes"></span></p>
+                                    <p><strong>Sex:</strong> <span id="view_sex"></span></p>
+                                    <p><strong>Birth Date:</strong> <span id="view_birthdate"></span></p>
+                                    <p><strong>Age:</strong> <span id="view_age"></span></p>
+                                    <p><strong>Contact:</strong> <span id="view_contact"></span></p>
+                                    <p><strong>Status:</strong> <span id="view_status"></span></p>
+                                    <p><strong>Household Role:</strong> <span id="view_householdrole"></span></p>
+                                    <p><strong>Household ID:</strong> <span id="view_household_id"></span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Address:</strong> <span id="view_address"></span></p>
+                                    <p><strong>Educational Attainment:</strong> <span id="view_educationalattainment"></span></p>
+                                    <p><strong>Maiden Name:</strong> <span id="view_maidenname"></span></p>
+                                    <p><strong>Occupation:</strong> <span id="view_occupation"></span></p>
+                                    <p><strong>Religion:</strong> <span id="view_religion"></span></p>
+                                    <p><strong>Indigenous:</strong> <span id="view_indigenous"></span></p>
+                                    <p><strong>Is Displayed:</strong> <span id="view_isDisplayed"></span></p>
+                                    <p><strong>Pension:</strong> <span id="view_pension"></span></p>
+                                    <p><strong>Beneficiaries:</strong> <span id="view_beneficiaries"></span></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
