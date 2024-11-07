@@ -347,18 +347,17 @@ include '../../sidebar.php';
                                     <p><strong>Birth Date:</strong> <span id="view_birthdate"></span></p>
                                     <p><strong>Age:</strong> <span id="view_age"></span></p>
                                     <p><strong>Contact:</strong> <span id="view_contact"></span></p>
-                                    <p><strong>Status:</strong> <span id="view_status"></span></p>
                                     <p><strong>Household Role:</strong> <span id="view_householdrole"></span></p>
                                     <p><strong>Household ID:</strong> <span id="view_household_id"></span></p>
                                 </div>
                                 <div class="col-md-6">
+                                    <p><strong>Status:</strong> <span id="view_status"></span></p>
                                     <p><strong>Address:</strong> <span id="view_address"></span></p>
                                     <p><strong>Educational Attainment:</strong> <span id="view_educationalattainment"></span></p>
                                     <p><strong>Maiden Name:</strong> <span id="view_maidenname"></span></p>
                                     <p><strong>Occupation:</strong> <span id="view_occupation"></span></p>
                                     <p><strong>Religion:</strong> <span id="view_religion"></span></p>
                                     <p><strong>Indigenous:</strong> <span id="view_indigenous"></span></p>
-                                    <p><strong>Is Displayed:</strong> <span id="view_isDisplayed"></span></p>
                                     <p><strong>Pension:</strong> <span id="view_pension"></span></p>
                                     <p><strong>Beneficiaries:</strong> <span id="view_beneficiaries"></span></p>
                                 </div>

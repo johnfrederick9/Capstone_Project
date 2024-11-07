@@ -192,6 +192,37 @@ include '../../sidebar.php';
                     </div>
                 </div>
             </div>
+            <!-- View Modal -->
+            <section class="view-modal">
+                <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="viewModalLabel">Resident Details</h5>
+                                <button type="button" class="bx bxs-x-circle icon" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Project Name:</strong> <span id="view_name"></span></p>
+                                        <p><strong>Project Start:</strong> <span id="view_start"></span></p>
+                                        <p><strong>Project End:</strong> <span id="view_end"></span></p>
+                                        <p><strong>Budjet:</strong> <span id="view_budget"></span></p>
+                                        <p><strong>Source:</strong> <span id="view_source"></span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Project Location:</strong> <span id="view_location"></span></p>
+                                        <p><strong>Managers:</strong> <span id="view_managers"></span></p>
+                                        <p><strong>Stakeholders:</strong> <span id="view_stakeholders"></span></p>
+                                        <p><strong>Project Status:</strong> <span id="view_status"></span></p>
+                                        <p><strong>Project Description:</strong> <span id="view_description"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <section class="delete-modal">
                 <!-- Delete Confirmation Modal -->
                 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">

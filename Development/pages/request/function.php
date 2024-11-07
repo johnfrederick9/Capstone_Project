@@ -331,3 +331,4 @@ document.addEventListener('keydown', function(event) {
         document.getElementById('confirmDeleteBtn').click();
     }
 });
+</script>

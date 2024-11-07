@@ -413,6 +413,56 @@ function showAlert(message, alertClass) {
             }
         })
     });
+    $(document).ready(function() {
+    $('#example').on('click', '.viewbtn', function(event) {
+        var table = $('#example').DataTable();
+        var employee_id = $(this).data('id');
+        
+        // Debugging: Check if employee_id is found
+        console.log("employee ID:", employee_id);
+        
+        if (!employee_id) {
+            console.error("employee ID is not defined.");
+            alert("employee ID is missing. Please try again.");
+            return;
+        }
+
+        $('#viewModal').modal('show');
+        $.ajax({
+            url: "fetch_details.php",
+            data: {
+                employee_id: employee_id
+            },
+            type: 'post',
+            success: function(data) {
+                console.log("AJAX data response:", data);
+                try {
+                    var json = JSON.parse(data);
+                    $('#view_firstname').text(json.employee_firstname || "N/A");
+                    $('#view_middlename').text(json.employee_middlename || "N/A");
+                    $('#view_lastname').text(json.employee_lastname || "N/A");
+                    $('#view_suffixes').text(json.employee_suffixes || "N/A");
+                    $('#view_sex').text(json.employee_sex || "N/A");
+                    $('#view_birthdate').text(json.employee_birthdate || "N/A");
+                    $('#view_age').text(json.employee_age || "N/A");
+                    $('#view_contact').text(json.employee_contact || "N/A");
+                    $('#view_status').text(json.employee_status || "N/A");
+                    $('#view_address').text(json.employee_address || "N/A");
+                    $('#view_educationalattainment').text(json.employee_educationalattainment || "N/A");
+                    $('#view_maidenname').text(json.employee_maidenname || "N/A");
+                    $('#view_position').text(json.employee_position || "N/A");
+                } catch (e) {
+                    console.error("JSON parsing error:", e);
+                    alert("An error occurred while processing the data.");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error:", error);
+                alert("Failed to fetch details: " + error);
+            }
+        });
+    });
+});
 
 </script>
 <script>
@@ -462,3 +512,4 @@ document.addEventListener('keydown', function(event) {
         document.getElementById('confirmDeleteBtn').click();
     }
 });
+</script>

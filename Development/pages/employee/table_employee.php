@@ -280,6 +280,40 @@ include '../../sidebar.php';
                     </div>
                 </div>
             </div>
+            <!-- View Modal -->
+            <section class="view-modal">
+                <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="viewModalLabel">Employee Details</h5>
+                                <button type="button" class="bx bxs-x-circle icon" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>First Name:</strong> <span id="view_firstname"></span></p>
+                                        <p><strong>Middle Name:</strong> <span id="view_middlename"></span></p>
+                                        <p><strong>Last Name:</strong> <span id="view_lastname"></span></p>
+                                        <p><strong>Maiden Name:</strong> <span id="view_maidenname"></span></p>
+                                        <p><strong>Suffixes:</strong> <span id="view_suffixes"></span></p>
+                                        <p><strong>Sex:</strong> <span id="view_sex"></span></p>
+                                        <p><strong>Birth Date:</strong> <span id="view_birthdate"></span></p> 
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Age:</strong> <span id="view_age"></span></p>
+                                        <p><strong>Contact:</strong> <span id="view_contact"></span></p>
+                                        <p><strong>Status:</strong> <span id="view_status"></span></p>
+                                        <p><strong>Address:</strong> <span id="view_address"></span></p>
+                                        <p><strong>Educational Attainment:</strong> <span id="view_educationalattainment"></span></p>
+                                        <p><strong>Position:</strong> <span id="view_position"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <section class="delete-modal">
             <!-- Delete Confirmation Modal -->
             <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">

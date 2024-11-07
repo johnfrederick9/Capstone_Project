@@ -311,6 +311,54 @@ $(document).on('click', '.deleteBtn', function(event) {
         }
     })
 });
+$(document).ready(function() {
+    $('#example').on('click', '.viewbtn', function(event) {
+        var table = $('#example').DataTable();
+        var project_id = $(this).data('id');
+        
+        // Debugging: Check if project_id is found
+        console.log("project ID:", project_id);
+        
+        if (!project_id) {
+            console.error("project ID is not defined.");
+            alert("project ID is missing. Please try again.");
+            return;
+        }
+
+        $('#viewModal').modal('show');
+        $.ajax({
+            url: "fetch_details.php",
+            data: {
+                project_id: project_id
+            },
+            type: 'post',
+            success: function(data) {
+                console.log("AJAX data response:", data);
+                try {
+                    var json = JSON.parse(data);
+                    $('#view_name').text(json.project_name || "N/A");
+                    $('#view_start').text(json.project_start || "N/A");
+                    $('#view_end').text(json.project_end || "N/A");
+                    $('#view_budget').text(json.project_budget || "N/A");
+                    $('#view_source').text(json.project_source || "N/A");
+                    $('#view_location').text(json.project_location || "N/A");
+                    $('#view_managers').text(json.project_managers || "N/A");
+                    $('#view_stakeholders').text(json.project_stakeholders || "N/A");
+                    $('#view_status').text(json.project_status || "N/A");
+                    $('#view_description').text(json.project_description || "N/A");
+                } catch (e) {
+                    console.error("JSON parsing error:", e);
+                    alert("An error occurred while processing the data.");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error:", error);
+                alert("Failed to fetch details: " + error);
+            }
+        });
+    });
+});
+
 </script>
 <script>
  function toggleDropdown(button) {
@@ -359,3 +407,4 @@ document.addEventListener('keydown', function(event) {
         document.getElementById('confirmDeleteBtn').click();
     }
 });
+</script>
