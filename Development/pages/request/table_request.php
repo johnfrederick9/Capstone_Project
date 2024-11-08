@@ -100,7 +100,7 @@ if (mysqli_num_rows($result) > 0) {
                     </div>
                 </div>
             </div>
-            <!-- Add Request -->
+            <!-- Add Modal -->
             <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">

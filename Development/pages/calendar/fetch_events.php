@@ -1,5 +1,5 @@
 <?php
-include '../../database.php'; // Adjust based on your structure
+include 'connection.php'; // Adjust based on your structure
 
 $sql = "SELECT * FROM tb_event";
 $result = $conn->query($sql);

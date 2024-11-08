@@ -1,40 +1,9 @@
 <?php
 include '../../sidebar.php';
 include '../../head.php';
-include 'event_code.php';
 require '../../database.php';
 ?>
 <style>
-/* Days container styling */
-.label {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.event-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.event-table th, .event-table td {
-  padding: 10px;
-  text-align: left;
-  border: 1px solid #ddd;
-}
-
-.event-table th {
-  background-color: #007bff;
-  color: white;
-}
-
-.event-table tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.event-table tr:hover {
-  background-color: #e0e0e0;
-}
 
 .days {
   display: grid;
@@ -42,7 +11,7 @@ require '../../database.php';
 }
 
 /* Day styling */
-.day {
+.calendar-event .day {
   padding: 10px;
   text-align: center;
   cursor: pointer;
@@ -50,8 +19,21 @@ require '../../database.php';
   transition: all 0.3s ease;
 }
 
+.calendar-event .dataTables_filter{
+    margin-top: 15px;
+}
+
+.calendar-event .pagination{
+    display:none;
+}
+
+.calendar-event .dataTables_filter label, .dataTables_info{
+    color:black;
+}
+
+
 /* Disabled days (outside current month) */
-.day.disabled {
+.calendar-event .day.disabled {
   color: #bfbfbf; /* Grey out the days outside the current month */
   cursor: default; /* No pointer cursor on disabled days */
 }
@@ -142,101 +124,12 @@ require '../../database.php';
               </tbody>
           </table>
         </div>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                // DataTable initialization
-                var table = $('#example').DataTable({
-                    "fnCreatedRow": function(nRow, aData, iDataIndex) {
-                        $(nRow).attr('data-event-id', aData[0]); // Set row data attribute to event ID
-                    },
-                    'serverSide': true,
-                    'processing': true,
-                    'paging': true,
-                    'order': [],
-                    'ajax': {
-                        'url': 'fetch_data.php',
-                        'type': 'POST',
-                    },
-                    "columnDefs": [{
-                    "targets": [0,2,3],  // Target the first column (aData[0])
-                    "visible": false, // Hide the column
-                    "searchable": false // Disable search for this column if needed
-                    },{
-                        "orderable": false,
-                        "targets": [4] // Adjust index as needed for columns that shouldn’t be sortable
-                    }]
-                });
-            });
-               $(document).on('submit', '#updateUser', function(e) {
-                    e.preventDefault();
-                    //var tr = $(this).closest('tr');
-                    var document_name = $('#nameField').val();
-                    var document_date = $('#dateField').val();
-                    var document_info = $('#infoField').val();
-                    var document_type = $('#typeField').val();
-                    var trid = $('#trid').val();
-                    var document_id = $('#document_id').val();
-                    if (document_name != '' && document_date != '' && document_info != '' && document_type != '') {
-                        $.ajax({
-                            url: "update.php",
-                            type: "post",
-                            data: {
-                                document_name: document_name,
-                                document_date: document_date,
-                                document_info: document_info,
-                                document_type: document_type,
-                                document_id: document_id
-                            },
-                            success: function(data) {
-                                var json = JSON.parse(data);
-                                var status = json.status;
-                                if (status == 'true') {
-                                    table = $('#example').DataTable();
-                                    var checkbox = '<input type="checkbox" class="row-checkbox" value="' +document_id+'">';
-                                    var button = '<td><div class= "buttons"> <a href="javascript:void(0);" data-id="'+ document_id +'"  class="update-btn btn-sm editbtn" ><i class="bx bx-sync"></i></a><a href="javascript:void(0);" onclick="openViewModal(' + document_id +');" class="view-btn btn-sm viewbtn"><i class="bx bx-show"></i></div></td>';
-                                    var row = table.row("[id='" + trid + "']");
-                                    row.row("[id='" + trid + "']").data([checkbox, document_name, document_date, document_info, document_type, button]);
-                                    $('#exampleModal').modal('hide');
-                                } else {
-                                    alert('failed');
-                                }
-                            }
-                        });
-                    } else {
-                        alert('Fill all the required fields');
-                    }
-                });
-                $('#example tbody').on('click', 'tr', function() {
-                var table = $('#example').DataTable();
-                var data = table.row(this).data();
-                
-                if (data) {
-                    var event_id = $(this).data('id'); // Ensure this matches your event_id index
-                    $('#eventUser').modal('show'); // Show the update modal
-
-                    $.ajax({
-                        url: "get_single_data.php",
-                        type: 'post',
-                        data: { event_id: event_id },
-                        success: function(data) {
-                            var json = JSON.parse(data);
-                            $('#Fieldname').val(json.event_name);
-                            $('#Fieldlocation').val(json.event_location);
-                            $('#Fieldtype').val(json.event_type);
-                            $('#Fieldstart').val(json.event_start);
-                            $('#Fieldend').val(json.event_end);
-                            $('#event_id').val(event_id);
-                            $('#trid').val(trid);
-                        }
-                    });
-                }
-            });
-</script>
-
+        <?php include 'function.php'?>
         </section>
     </section>
-     <!-- Modal for Updating Event -->
-     <div class="modal fade" id="updateUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <section class="event">
+    <!-- Modal for Updating Event -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
@@ -244,28 +137,28 @@ require '../../database.php';
                 <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="UpdateForm" method="POST" action="">
+                <form id="updateUser" method="POST" action="">
                 <input type="hidden" name="event_id" id="event_id" value="">
-                <input  name="trid" id="trid" value="">
+                <input  type="hidden" name="trid" id="trid" value="">
                 <div class="form-group">
                     <label for="event_name">Event Name:</label>
-                    <input type="text" id="Fieldname" name="event_name" required>
+                    <input type="text" id="Fieldname" name="event_name" require>
                 </div>
                 <div class="form-group">
                     <label for="event_location">Event Location:</label>
-                    <input type="text" id="Fieldlocation" name="event_location" required>
+                    <input type="text" id="Fieldlocation" name="event_location" require>
                 </div>
                 <div class="form-group">
                     <label for="event_type">Event Type:</label>
-                    <input type="text" id="Fieldtype" name="event_type" required>
+                    <input type="text" id="Fieldtype" name="event_type" require>
                 </div>
                 <div class="form-group">
                     <label for="event_start">Event Start:</label>
-                    <input type="date" id="Fieldstart" name="event_start">
+                    <input type="date" id="Fieldstart" name="event_start" readonly>
                 </div>
                 <div class="form-group">
                     <label for="event_end">Event End:</label>
-                    <input type="date" id="Fieldend" name="event_end">
+                    <input type="date" id="Fieldend" name="event_end" readonly>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn primary-btn">Update Event</button>
@@ -275,8 +168,7 @@ require '../../database.php';
             </div>
         </div>
         </div>
-    <!-- Modal for Adding Event -->
-    <section class="event">
+     <!-- Add Modal -->
         <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -285,37 +177,49 @@ require '../../database.php';
                 <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="eventForm" method="POST" action="">
-                <div class="form-group">
-                    <label for="event_name">Event Name:</label>
-                    <input type="text" id="event_name" name="event_name" required>
-                </div>
-                <div class="form-group">
-                    <label for="event_location">Event Location:</label>
-                    <input type="text" id="event_location" name="event_location" required>
-                </div>
-                <div class="form-group">
-                    <label for="event_type">Event Type:</label>
-                    <input type="text" id="event_type" name="event_type" required>
-                </div>
-                <div class="form-group">
-                    <label for="event_start">Event Start:</label>
-                    <input type="date" id="event_start" name="event_start" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="event_end">Event End:</label>
-                    <input type="date" id="event_end" name="event_end" readonly>
-                </div>
-                <div class="modal-footer">
-                    <form method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="save_event" value="true">
-                    <button type="submit" class="btn primary-btn">Save Event</button>
-                    </form>
-                </div>
+                <form id="addUser" method="POST" action="">
+                    <div class="form-group">
+                        <label for="event_name">Event Name:</label>
+                        <input type="text" id="event_name" name="event_name" require>
+                    </div>
+                    <div class="form-group">
+                        <label for="event_location">Event Location:</label>
+                        <input type="text" id="event_location" name="event_location" require>
+                    </div>
+                    <div class="form-group">
+                        <label for="event_type">Event Type:</label>
+                        <input type="text" id="event_type" name="event_type" require>
+                    </div>
+                    <div class="form-group">
+                        <label for="event_start">Event Start:</label>
+                        <input type="date" id="event_start" name="event_start" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="event_end">Event End:</label>
+                        <input type="date" id="event_end" name="event_end" readonly>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn primary-btn">Save Event</button>
+                    </div>
                 </form>
             </div>
             </div>
         </div>
+        </div>
+    </section>
+    <section class="delete-modal">
+                <!-- Delete Confirmation Modal -->
+                <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Remove for you</h5>
+                        <p>This data will be removed, Would you like to remove it ?</p>
+                        <button type="button" class="btn btn-primary" id="confirmDeleteBtn">Remove</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     <script src="../../assets/js/calendar.js"></script>

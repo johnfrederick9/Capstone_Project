@@ -64,7 +64,7 @@ while($row = mysqli_fetch_assoc($query))
 $output = array(
 	'draw'=> intval($_POST['draw']),
 	'recordsTotal' => $total_all_rows,
-	'recordsFiltered'=>   $total_all_rows,
+	'recordsFiltered'=> $total_all_rows,
 	'data'=>$data,
 );
 echo  json_encode($output);

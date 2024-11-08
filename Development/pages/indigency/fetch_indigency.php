@@ -4,39 +4,33 @@ include('../../connection.php');
 if (isset($_POST['id'])) {
     $id = intval($_POST['id']);
     
-    // Query to get the specific indigency record
     $sql = "SELECT * FROM tb_indigency WHERE indigency_id = $id";
     $query = mysqli_query($con, $sql);
     
     if ($row = mysqli_fetch_assoc($query)) {
-        // Convert indigency_date into the desired format
         $originalDate = $row['indigency_date'];
-        $formattedDate = date('jS F Y', strtotime($originalDate)); // 13th September 2024 format
+        $formattedDate = date('jS F Y', strtotime($originalDate));
 
-        // Output the certificate in HTML format with the provided design
         echo '
         <html>
         <head>
             <style>
                 @page {
-                    size: A4;
                     margin: 0;
                 }
                 body {
-                    margin: 1cm;
-                    font-size: 12pt;
-                    background-color: #f5f5f5;
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    background-color: #f5f5f5;
                     min-height: 100vh;
+                    font-size: 12pt;
                 }
                 .certificate-container {
                     background-color: white;
-                    width: 8.5in;
-                    height: 11in;
-                    margin: auto;
-                    padding: 30px;
+                    width: calc(8.5in - 1in); /* width of short bond paper minus 1/2-inch margins on each side */
+                    height: calc(11in - 1in); /* height of short bond paper minus 1/2-inch margins on each side */
+                    padding: 0.5in;
                     box-sizing: border-box;
                     border: 10px solid black;
                     position: relative;
@@ -49,7 +43,6 @@ if (isset($_POST['id'])) {
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
-                    position: relative;
                 }
                 .header, .footer {
                     text-align: center;
@@ -59,27 +52,18 @@ if (isset($_POST['id'])) {
                     width: 60px;
                     height: auto;
                 }
-                .header h1 {
-                    font-size: 14px;
+                .header h1, .header h2, .header h3 {
                     margin: 5px 0;
                 }
                 .header h2 {
                     font-size: 16px;
-                    margin: 5px 0;
                     text-transform: uppercase;
                     font-weight: bold;
-                }
-                .header h3 {
-                    font-size: 14px;
-                    margin: 5px 0;
                 }
                 .content p {
                     margin: 15px 0;
                     text-align: justify;
                     line-height: 1.5;
-                }
-                .content strong {
-                    text-transform: uppercase;
                 }
                 .signature {
                     text-align: left;
@@ -87,7 +71,6 @@ if (isset($_POST['id'])) {
                 }
                 .signature strong {
                     display: block;
-                    margin-top: 5px;
                     font-size: 14px;
                 }
                 .footer {
@@ -96,7 +79,6 @@ if (isset($_POST['id'])) {
                     margin-top: 10px;
                     border-top: 1px solid #000;
                     padding-top: 5px;
-                    width: 99%;
                 }
                 .footer div {
                     display: inline-block;
@@ -109,7 +91,7 @@ if (isset($_POST['id'])) {
                     text-align: right;
                 }
                 .action-buttons {
-                    margin-top: 5px;
+                    margin-top: 10px;
                     text-align: center;
                 }
                 .action-buttons button {
@@ -117,28 +99,54 @@ if (isset($_POST['id'])) {
                     padding: 10px 20px;
                     font-size: 16px;
                     cursor: pointer;
-                    border-radius: 10px;
+                }
+                .paper-select {
+                    text-align: center;
+                    margin-bottom: 10px;
                 }
                 @media print {
-                    body {
+                    .action-buttons, .paper-select {
+                        display: none;
+                    }
+                    body, .certificate-container {
                         margin: 0;
                         padding: 0;
                     }
                     .certificate-container {
                         border: 10px solid black;
-                        margin: 0;
-                        padding: 0;
-                        width: 8.5in;
-                        height: 11in;
-                        page-break-after: always;
-                    }
-                    .action-buttons, .action-buttons button {
-                        display: none;
+                        width: calc(8.5in - 1in);
+                        height: calc(11in - 1in);
                     }
                 }
             </style>
+            <script>
+                function adjustPaperSize() {
+                    const paperSize = document.getElementById("paperSize").value;
+                    const certificateContainer = document.querySelector(".certificate-container");
+                    
+                    if (paperSize === "short") {
+                        certificateContainer.style.width = "calc(8.5in - 1in)";
+                        certificateContainer.style.height = "calc(11in - 1in)";
+                    } else if (paperSize === "long") {
+                        certificateContainer.style.width = "calc(8.5in - 1in)";
+                        certificateContainer.style.height = "calc(13in - 1in)";
+                    } else if (paperSize === "a4") {
+                        certificateContainer.style.width = "calc(8.27in - 1in)";
+                        certificateContainer.style.height = "calc(11.69in - 1in)";
+                    }
+                }
+                window.onload = adjustPaperSize;
+            </script>
         </head>
         <body>
+            <div class="paper-select">
+                <label for="paperSize">Select Paper Size:</label>
+                <select id="paperSize" onchange="adjustPaperSize()">
+                    <option value="short" selected>Short Bond Paper (8.5 x 11 in)</option>
+                    <option value="long">Long Bond Paper (8.5 x 13 in)</option>
+                    <option value="a4">A4 (8.27 x 11.69 in)</option>
+                </select>
+            </div>
             <div class="certificate-container">
                 <div class="border-inner">
                     <div class="header">

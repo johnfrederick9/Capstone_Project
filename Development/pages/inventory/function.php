@@ -327,6 +327,53 @@
         $("body").append(alertDiv);
         setTimeout(function() { alertDiv.alert('close'); }, 900);
     }
+    $(document).ready(function() {
+    $('#example').on('click', '.viewbtn', function(event) {
+        var table = $('#example').DataTable();
+        var item_id = $(this).data('id');
+        
+        // Debugging: Check if item_id is found
+        console.log("item ID:", item_id);
+        
+        if (!item_id) {
+            console.error("item ID is not defined.");
+            alert("item ID is missing. Please try again.");
+            return;
+        }
+
+        $('#viewModal').modal('show');
+        $.ajax({
+            url: "fetch_details.php",
+            data: {
+                item_id: item_id
+            },
+            type: 'post',
+            success: function(data) {
+                console.log("AJAX data response:", data);
+                try {
+                    var json = JSON.parse(data);
+                    $('#view_name').text(json.item_name || "N/A");
+                    $('#view_description').text(json.item_description || "N/A");
+                    $('#view_brand').text(json.item_brand || "N/A");
+                    $('#view_SerialNo').text(json.item_serialNo || "N/A");
+                    $('#view_custodian').text(json.item_custodian || "N/A");
+                    $('#view_count').text(json.item_count || "N/A");
+                    $('#view_price').text(json.item_price || "N/A");
+                    $('#view_year').text(json.item_year || "N/A");
+                    $('#view_status').text(json.item_status || "N/A");
+                    $('#view_lendable').text(json.lendable_count || "N/A");
+                } catch (e) {
+                    console.error("JSON parsing error:", e);
+                    alert("An error occurred while processing the data.");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error:", error);
+                alert("Failed to fetch details: " + error);
+            }
+        });
+    });
+});
 </script>
 <script>
  function toggleDropdown(button) {

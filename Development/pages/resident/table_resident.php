@@ -141,7 +141,7 @@ include '../../sidebar.php';
                             <label for="resident_contact" class="input-label">Contact Number:</label>
                                 <input type="tel" placeholder="Enter 10-digit number" id="contactField" name="resident_contact" class="input-field" maxlength="16" require 
                                     style="flex: 1; border: 1px solid #ccc; border-left: none;">
-                            </div>
+                                </div>
                     
                             <div class="input-wrapper">
                                 <label for="age" class="input-label">Occupation:</label>

@@ -1365,11 +1365,11 @@ body.dark .home .calendar-event .event-scheduler label {
 }
 .table-container {
   position: relative;
-  width: 1100px;
-  height: 100% !important;
+  width: 1100px !important;
+  height: 605px !important;
   margin: 0 auto;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.3); /* Semi-transparent background */
+  background-color: #e5fced;
   border-radius: 8px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(100px); /* Adds the blur effect */
@@ -2871,7 +2871,7 @@ font-size: 18px;
   display: flex;
   margin-top: 5px;
   border-radius: 10px;
-  background-color: #414557;
+  background-color: #e5fced;
 }
 
 .left {

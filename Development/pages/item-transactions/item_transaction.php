@@ -146,7 +146,7 @@ $borrowedItems_json = json_encode($borrowedItems);
                             <h1>Item Transaction Table</h1>
                         </div>
                         <div class="table-actions">    
-                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-table-btn">+ Add Item</button>
+                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-table-btn">+ Add</button>
                             <button class="print-btn " title="Print Selected">
                             <i class="bx bx-printer"></i>
                         </div>
@@ -170,7 +170,7 @@ $borrowedItems_json = json_encode($borrowedItems);
                         <th>Date Returned</th>
                         <th>Return Quantity</th>
                         <th>Transaction Status</th>
-                        <th>Action</th>
+                        <th>Buttons</th>
                     </thead>
                     <tbody>
                     </tbody>
@@ -380,6 +380,40 @@ $borrowedItems_json = json_encode($borrowedItems);
         </div>
     </div>
 </div>
+<!-- View Modal -->
+<section class="view-modal">
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewModalLabel">Item Transaction Details</h5>
+                <button type="button" class="bx bxs-x-circle icon" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Borrower Name:</strong> <span id="view_name"></span></p>
+                        <p><strong>Borrower Address:</strong> <span id="view_address"></span></p>
+                        <p><strong>Borrowed Items:</strong> <span id="view_bitems"></span></p>
+                        <p><strong>Borrowed Quantities:</strong> <span id="view_bquantity"></span></p>
+                        <p><strong>Reserve On:</strong> <span id="view_reserved"></span></p>
+                        <p><strong>Date Borrowed:</strong> <span id="view_bdate"></span></p>
+                        <p><strong>Transaction Status:</strong> <span id="view_status"></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Return Date:</strong> <span id="view_rdate"></span></p>
+                        <p><strong>Approved By:</strong> <span id="view_approved"></span></p>
+                        <p><strong>Released By:</strong> <span id="view_released"></span></p>
+                        <p><strong>Returned By:</strong> <span id="view_returned"></span></p>
+                        <p><strong>Date Returned:</strong> <span id="view_retdate"></span></p>
+                        <p><strong>Return Quantities:</strong> <span id="view_rquantity"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
 <section class="delete-modal">
             <!-- Delete Confirmation Modal -->
             <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">

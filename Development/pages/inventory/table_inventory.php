@@ -190,6 +190,37 @@ require '../../database.php';
                     </div>
                 </div>
             </div>
+             <!-- View Modal -->
+            <section class="view-modal">
+                <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="viewModalLabel">Inventory Details</h5>
+                                <button type="button" class="bx bxs-x-circle icon" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Item Name:</strong> <span id="view_name"></span></p>
+                                        <p><strong>Item Description:</strong> <span id="view_description"></span></p>
+                                        <p><strong>Item Brand:</strong> <span id="view_brand"></span></p>
+                                        <p><strong>Serial No.:</strong> <span id="view_SerialNo"></span></p>
+                                        <p><strong>Item Custodian:</strong> <span id="view_custodian"></span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Item Count:</strong> <span id="view_count"></span></p>
+                                        <p><strong>Item Price:</strong> <span id="view_price"></span></p>
+                                        <p><strong>Year Acquired:</strong> <span id="view_year"></span></p>
+                                        <p><strong>Item Status:</strong> <span id="view_status"></span></p>
+                                        <p><strong>Lendable Quantity:</strong> <span id="view_lendable"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <section class="delete-modal">
             <!-- Delete Confirmation Modal -->
             <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">

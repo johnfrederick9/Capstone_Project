@@ -413,7 +413,57 @@ $(document).ready(function() {
                 $("body").append(alertDiv);
                 setTimeout(function() { alertDiv.alert('close'); }, 900);
             }
-        </script>
+            $(document).ready(function() {
+    $('#example').on('click', '.viewbtn', function(event) {
+        var table = $('#example').DataTable();
+        var transaction_id = $(this).data('id');
+        
+        // Debugging: Check if transaction_id is found
+        console.log("transaction ID:", transaction_id);
+        
+        if (!transaction_id) {
+            console.error("transaction ID is not defined.");
+            alert("transaction ID is missing. Please try again.");
+            return;
+        }
+
+        $('#viewModal').modal('show');
+        $.ajax({
+            url: "fetch_details.php",
+            data: {
+                transaction_id: transaction_id
+            },
+            type: 'post',
+            success: function(data) {
+                console.log("AJAX data response:", data);
+                try {
+                    var json = JSON.parse(data);
+                    $('#view_name').text(json.borrower_name || "N/A");
+                    $('#view_address').text(json.borrower_address || "N/A");
+                    $('#view_bitems').text(json.borrowed_items || "N/A");
+                    $('#view_bquantity').text(json.borrowed_quantities || "N/A");
+                    $('#view_reserved').text(json.reserved_on || "N/A");
+                    $('#view_bdate').text(json.date_borrowed || "N/A");
+                    $('#view_rdate').text(json.return_date || "N/A");
+                    $('#view_approved').text(json.approved_by || "N/A");
+                    $('#view_released').text(json.released_by || "N/A");
+                    $('#view_returned').text(json.returned_by || "N/A");
+                    $('#view_retdate').text(json.date_returned || "N/A");
+                    $('#view_rquantity').text(json.return_quantities || "N/A");
+                    $('#view_status').text(json.transaction_status || "N/A");
+                } catch (e) {
+                    console.error("JSON parsing error:", e);
+                    alert("An error occurred while processing the data.");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error:", error);
+                alert("Failed to fetch details: " + error);
+            }
+        });
+    });
+});
+</script>
 <script>
  function toggleDropdown(button) {
     // Get the dropdown menu associated with the button

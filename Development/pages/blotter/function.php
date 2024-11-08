@@ -17,7 +17,7 @@ $(document).ready(function() {
             },
             "aoColumnDefs": [
                 {
-                "targets": [0,9,10,11,12],  // Target the first column (aData[0])
+                "targets": [0,8,10,11,12,13,14],  // Target the first column (aData[0])
                 "visible": false, // Hide the column
                 "searchable": false // Disable search for this column if needed
                 },
@@ -430,6 +430,56 @@ $(document).ready(function() {
             $('#trid').val(trid);
         }
     })
+});
+$(document).ready(function() {
+    $('#example').on('click', '.viewbtn', function(event) {
+        var table = $('#example').DataTable();
+        var blotter_id = $(this).data('id');
+        
+        // Debugging: Check if blotter_id is found
+        console.log("blotter ID:", blotter_id);
+        
+        if (!blotter_id) {
+            console.error("blotter ID is not defined.");
+            alert("blotter ID is missing. Please try again.");
+            return;
+        }
+
+        $('#viewModal').modal('show');
+        $.ajax({
+            url: "fetch_details.php",
+            data: {
+                blotter_id: blotter_id
+            },
+            type: 'post',
+            success: function(data) {
+                console.log("AJAX data response:", data);
+                try {
+                    var json = JSON.parse(data);
+                    $('#view_1').text(json.blotter_complainant || "N/A");
+                    $('#view_2').text(json.blotter_complainant_no || "N/A");
+                    $('#view_3').text(json.blotter_complainant_add || "N/A");
+                    $('#view_4').text(json.blotter_complainee || "N/A");
+                    $('#view_5').text(json.blotter_complainee_no || "N/A");
+                    $('#view_6').text(json.blotter_complainee_add || "N/A");
+                    $('#view_7').text(json.blotter_complaint || "N/A");
+                    $('#view_8').text(json.blotter_status || "N/A");
+                    $('#view_9').text(json.blotter_action || "N/A");
+                    $('#view_10').text(json.blotter_incidence || "N/A");
+                    $('#view_11').text(json.blotter_date_recorded || "N/A");
+                    $('#view_12').text(json.blotter_date_settled || "N/A");
+                    $('#view_13').text(json.blotter_recorded_by || "N/A");
+                } catch (e) {
+                    console.error("JSON parsing error:", e);
+                    alert("An error occurred while processing the data.");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error:", error);
+                alert("Failed to fetch details: " + error);
+            }
+        });
+    });
 });
 </script>
 <script>

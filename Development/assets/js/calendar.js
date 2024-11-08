@@ -173,6 +173,22 @@ todayBtn.addEventListener("click", () => {
   // Reinitialize the calendar for the current month and year
   initCalendar();
 });
+function showAlert(message, alertClass) {
+    var alertDiv = $('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' + message +
+        '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+    alertDiv.css({
+        "position": "fixed",
+        "top": "10px",
+        "right": "10px",
+        "z-index": "9999",
+        "background-color": alertClass === "alert-danger" ? "#f8d7da" : "#d4edda",
+        "border-color": alertClass === "alert-danger" ? "#f5c6cb" : "#c3e6cb"
+    });
+    $("body").append(alertDiv);
+    setTimeout(function() {
+        alertDiv.alert('close');
+    }, 900);
+}
 
 // Initialize the calendar on page load
 initCalendar();
