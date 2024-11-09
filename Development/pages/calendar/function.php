@@ -48,7 +48,7 @@
                             showAlert("Event with the same name already exists.", "alert-danger");
                             } else if (status == 'true') {
                                 $('#example').DataTable().draw();
-                                $('#addUserModal').modal('hide');
+                                $('#eventModal').modal('hide');
                                 showAlert("Event added successfully.", "alert-success");
                                 $('#addUser')[0].reset();  // Clear the form fields
                         } else {
