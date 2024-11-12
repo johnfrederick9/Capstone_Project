@@ -192,3 +192,79 @@ function showAlert(message, alertClass) {
 
 // Initialize the calendar on page load
 initCalendar();
+
+        // Example of marking dates in JavaScript
+        document.querySelectorAll('.day').forEach(dayElement => {
+            const dayDate = dayElement.getAttribute('data-date'); // assuming each .day has a data-date attribute
+
+            fetch('check_event.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'event_date=' + dayDate
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.hasEvent) {
+                    dayElement.classList.add('event-day');
+                }
+            });
+        });
+        // Add click listeners to the days
+function addDayListener() {
+  const days = document.querySelectorAll(".day:not(.disabled)");
+
+  days.forEach((day) => {
+    day.addEventListener("click", (e) => {
+      const dayValue = parseInt(e.target.dataset.day);
+      const dateValue = new Date(year, month, dayValue);
+
+      // Prevent selection of past dates, but allow today
+      if (dateValue < new Date(today.getFullYear(), today.getMonth(), today.getDate())) {
+        alert("You cannot select a date before today.");
+        return;
+      }
+
+      // Prevent selection if there's already an event on that date
+      if (checkIfHasEvent(dateValue)) {
+        alert("There is already an event on this date.");
+        return;
+      }
+
+      // Toggle the date selection
+      if (selectedDates.some(date => date.getTime() === dateValue.getTime())) {
+        // If the date is already selected, remove it
+        selectedDates = selectedDates.filter(date => date.getTime() !== dateValue.getTime());
+        e.target.classList.remove("active");
+      } else {
+        // Otherwise, add the date to selectedDates
+        selectedDates.push(dateValue);
+        e.target.classList.add("active");
+      }
+
+      // Sort selectedDates to ensure correct order (start to end)
+      selectedDates.sort((a, b) => a - b);
+
+      // Automatically show the modal if exactly two dates are selected
+      if (selectedDates.length === 2) {
+        // Get the first and last selected dates as start and end
+        const startDate = selectedDates[0];
+        const endDate = selectedDates[1];
+
+        // Set the modal input fields
+        eventStartInput.value = formatDate(startDate);
+        eventEndInput.value = formatDate(endDate);
+
+        // Show the modal
+        eventModal.show();
+      } else if (selectedDates.length > 2) {
+        // Limit the selection to only two dates
+        showAlert("Please select only two dates for start and end.", "alert-danger");
+        selectedDates = selectedDates.slice(0, 2);
+        initCalendar(); // Reinitialize to clear extra selections
+      }
+    });
+  });
+}
+

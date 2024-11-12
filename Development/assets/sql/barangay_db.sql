@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2024 at 04:45 AM
+-- Generation Time: Nov 12, 2024 at 11:12 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -312,24 +312,10 @@ CREATE TABLE `tb_event` (
 --
 
 INSERT INTO `tb_event` (`event_id`, `event_name`, `event_location`, `event_type`, `event_start`, `event_end`, `isDisplayed`) VALUES
-(22, 'asdfasdf', 'asdfasdf', 'asdfasdf', '2024-10-16', '2024-10-16', 0),
-(23, 'Secretddd', 'Mantalongon Complex', 'Zumbaddd', '2024-10-31', '2024-10-29', 0),
-(24, 'ZXCZX', 'ASDasd', 'ASDasd', '2024-09-18', '2024-09-10', 1),
-(25, 'asdf', 'asdfasdf', 'asdfasf', '2024-10-19', '2024-10-19', 1),
-(26, 'Simbaddd', 'Mantalongon Complex', 'Sports', '2024-10-18', '2024-10-18', 1),
-(27, 'Simbad', 'Mantalongon Parish Church', 'Mass', '2024-11-01', '2024-11-01', 0),
-(28, 'Secret', 'secret', 'secret', '2024-10-27', '2024-10-27', 1),
-(29, 'asdf', 'asdf', 'asdfsdf', '2024-11-02', '2024-11-04', 1),
-(30, 'asdfdsa', 'fsafsfsa', 'fsafsfdsaf', '2024-11-08', '2024-11-09', 1),
-(31, 'asdfasdf', 'asdfsadf', 'sadfsadf', '2024-11-08', '2024-11-09', 1),
-(32, 'Loveee', 'fsadfsfs', 'asdfasdf', '2024-11-23', '2024-11-16', 1),
-(33, 'asdfasd', 'fasdfasdfas', 'dfasf', '2024-11-08', '2024-11-09', 1),
-(34, 'a', 'fasdfasdfasd', 'fasdfasdf', '2024-11-17', '2024-11-15', 1),
-(35, 'Birthday', 'Mantalongon Complex', 'Kalingawan', '2024-11-08', '2024-11-10', 1),
-(36, 'Birthdayzz', 'mantalongon', 'lingaw', '2024-11-08', '2024-11-10', 1),
-(37, 'asdfasf', 'asdfasf', 'asdfa', '2024-11-08', '2024-11-10', 1),
-(38, '123', '123', '123', '2024-11-08', '2024-11-09', 1),
-(39, 'Birthdayss', '123', '123', '2024-11-08', '2024-11-10', 1);
+(43, 'Liga', 'Mantalongon Complex', 'Sports', '2024-11-12', '2024-11-13', 0),
+(44, 'ligo', 'Mantalongon Complex', 'sports', '2024-11-14', '2024-11-15', 0),
+(45, 'Simba', 'Mantalongon Parish Church', 'Mass', '2024-11-16', '2024-11-17', 0),
+(46, 'sadf', 'asdfasf', 'asdf', '2024-11-20', '2024-11-21', 1);
 
 -- --------------------------------------------------------
 
@@ -984,7 +970,7 @@ ALTER TABLE `tb_employee`
 -- AUTO_INCREMENT for table `tb_event`
 --
 ALTER TABLE `tb_event`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `tb_financial`
@@ -1085,6 +1071,15 @@ ALTER TABLE `tb_rao_ob_data`
 --
 ALTER TABLE `tb_transaction_items`
   ADD CONSTRAINT `tb_transaction_items_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `tb_item_transaction` (`transaction_id`);
+
+DELIMITER $$
+--
+-- Events
+--
+CREATE DEFINER=`root`@`localhost` EVENT `delete_past_events` ON SCHEDULE EVERY 1 DAY STARTS '2024-11-12 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM tb_event
+  WHERE event_end < CURRENT_DATE()$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -10,6 +10,17 @@ require '../../database.php';
   grid-template-columns: repeat(7, 1fr);
 }
 
+/* Highlight for dates that already have events */
+.calendar-event .day.event-day {
+    background-color: #ffeb3b; /* Yellow highlight for dates with events */
+    color: #333;
+    font-weight: bold;
+}
+
+.calendar-event .day.event-day:hover {
+    background-color: #ffc107; /* Darker shade on hover */
+}
+
 /* Day styling */
 .calendar-event .day {
   padding: 10px;
@@ -207,6 +218,30 @@ require '../../database.php';
         </div>
         </div>
     </section>
+            <!-- View Modal -->
+            <section class="view-modal">
+            <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="viewModalLabel">Blotter Details</h5>
+                            <button type="button" class="bx bxs-x-circle icon" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="align-items:center;justify-content:center">
+                                <div class="col-md-6 text-center">
+                                    <p><strong>Event Name:</strong> <span id="view_1"></span></p>
+                                    <p><strong>Event Location:</strong> <span id="view_2"></span></p>
+                                    <p><strong>Event Type:</strong> <span id="view_3"></span></p>
+                                    <p><strong>Event Start:</strong> <span id="view_4"></span></p>
+                                    <p><strong>Event End:</strong> <span id="view_5"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     <section class="delete-modal">
                 <!-- Delete Confirmation Modal -->
                 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
@@ -223,5 +258,6 @@ require '../../database.php';
         </div>
     </section>
     <script src="../../assets/js/calendar.js"></script>
+
 </body>
 </html>
