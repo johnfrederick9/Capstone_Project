@@ -41,7 +41,7 @@ if (mysqli_num_rows($check_query) > 0) {
 
     // Insert resident without resident_age (age will be calculated by the trigger)
     $sql = "INSERT INTO `tb_resident` (`resident_firstname`, `resident_middlename`, `resident_maidenname`, `resident_lastname`, `resident_sex`, `resident_suffixes`, `resident_address`, `resident_educationalattainment`, `resident_birthdate`, `resident_contact`, `resident_occupation`, `resident_religion`, `resident_indigenous`, `resident_status`, `resident_householdrole`, `household_id`, `isDisplayed`, `resident_pension`, `resident_beneficiaries`) 
-    VALUES ('$resident_firstname', '$resident_middlename', '$resident_maidenname', '$resident_lastname', '$resident_sex', '$resident_suffixes', '$resident_address', '$resident_educationalattainment', '$resident_birthdate', '$resident_contact', '$resident_occupation', '$resident_religion', '$resident_indigenous', '$resident_status', '$resident_householdrole', '$household_id', 1, 'resident_pension', 'resident_beneficiaries')";
+    VALUES ('$resident_firstname', '$resident_middlename', '$resident_maidenname', '$resident_lastname', '$resident_sex', '$resident_suffixes', '$resident_address', '$resident_educationalattainment', '$resident_birthdate', '$resident_contact', '$resident_occupation', '$resident_religion', '$resident_indigenous', '$resident_status', '$resident_householdrole', '$household_id', 1, '$resident_pension', '$resident_beneficiaries')";
 
     $query = mysqli_query($con, $sql);
     

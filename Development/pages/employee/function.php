@@ -236,97 +236,69 @@ $(document).on('submit', '#updateUser', function(e) {
     var trid = $('#trid').val();
     var employee_id = $('#employee_id').val();
 
-    if (employee_firstname && employee_lastname && employee_sex && employee_suffixes && employee_address && employee_educationalattainment && employee_birthdate && employee_status && employee_position) {
-        $.ajax({
-            url: "update.php",
-            type: "post",
-            data: {
-                employee_firstname: employee_firstname,
-                employee_middlename: employee_middlename,
-                employee_lastname: employee_lastname,
-                employee_maidenname: employee_maidenname,
-                employee_sex: employee_sex,
-                employee_suffixes: employee_suffixes,
-                employee_address: employee_address,
-                employee_educationalattainment: employee_educationalattainment,
-                employee_birthdate: employee_birthdate,
-                employee_status: employee_status,
-                employee_contact: employee_contact,
-                employee_position: employee_position,
-                employee_id: employee_id
-            },
-            success: function(data) {
-                var json = JSON.parse(data);
-                var status = json.status;
+    // Check required fields
+    if (!employee_firstname || !employee_lastname || !employee_sex || !employee_suffixes || 
+        !employee_address || !employee_educationalattainment || !employee_birthdate || 
+        !employee_status || !employee_position) {
+        showAlert("Please fill all the required fields.", "alert-danger");
+        return;
+    }
+   // Proceed with AJAX request if all validations pass
+    $.ajax({
+        url: "update.php",
+        type: "post",
+        data: {
+            employee_firstname: employee_firstname,
+            employee_middlename: employee_middlename,
+            employee_lastname: employee_lastname,
+            employee_maidenname: employee_maidenname,
+            employee_sex: employee_sex,
+            employee_suffixes: employee_suffixes,
+            employee_address: employee_address,
+            employee_educationalattainment: employee_educationalattainment,
+            employee_birthdate: employee_birthdate,
+            employee_status: employee_status,
+            employee_contact: employee_contact,
+            employee_position: employee_position,
+            employee_id: employee_id
+        },
+        success: function(data) {
+            var json = JSON.parse(data);
+            var status = json.status;
+                // Validate employee contact if provided
+            if (employee_contact) {
+                if (!employee_contact.startsWith('0') && !employee_contact.startsWith('+63')) {
+                    showAlert("Employee contact should start with '0' or '+63'.", "alert-danger");
+                    return;
+                }
 
-                if (status === 'duplicate') {
-                    showAlert("Employee with the same name already exists. Update failed.", "alert-danger");
-                } else if (status === 'true') {
-                    // Fetch updated employee data to get recalculated age
-                    $.ajax({
-                        url: "get_age.php",
-                        type: "post",
-                        data: { employee_id: employee_id },
-                        success: function(data) {
-                            var employee = JSON.parse(data);
-                            var table = $('#example').DataTable();
+                // Standardize the contact number format
+                if (employee_contact.startsWith('+63')) {
+                    employee_contact = employee_contact.replace('+63', '0');
+                }
 
-                           // Validate employee_contact if it has a value
-                           var employee_contact = $('#employee_contact').val() || $('#contactField').val(); // Check both fields for add and update
+                var employee_contact_digits = employee_contact.replace(/\D/g, ''); // Remove non-numeric characters
 
-                            if (employee_contact) { // Only run validation if a contact number is provided
-                                // Ensure the contact starts with either '0' or '+63'
-                                if (!employee_contact.startsWith('0') && !employee_contact.startsWith('+63')) {
-                                    showAlert("Employee contact should start with '0' or '+63'.", "alert-danger");
-                                    return;
-                                }
-
-                                // Check if it starts with "+63" and remove the prefix for validation
-                                if (employee_contact.startsWith('+63')) {
-                                    employee_contact = employee_contact.replace('+63', '0'); // Replace "+63" with "0" for consistent length validation
-                                }
-
-                                // Remove all non-numeric characters (like spaces, dashes, etc.)
-                                var employee_contact_digits = employee_contact.replace(/\D/g, ''); 
-
-                                // Check if employee_contact has exactly 11 digits
-                                if (employee_contact_digits.length !== 11) {
-                                    showAlert("Employee contact should have exactly 11 digits after formatting.", "alert-danger");
-                                    return;
-                                }
-                            }
-
-                            // Update row with new data, including age
-                            var row = table.row("[id='" + trid + "']");
-                            row.data([
-                                employee_id,
-                                `<input type="checkbox" class="row-checkbox" value="${employee_id}">`,
-                                employee.employee_firstname,
-                                employee.employee_middlename,
-                                employee.employee_lastname,
-                                employee.employee_address,
-                                employee.employee_educationalattainment,
-                                employee.employee_position,
-                                employee.employee_birthdate,
-                                employee.employee_age,
-                                employee.employee_contact,
-                                employee.employee_status,
-                                `<div class="dropdown"><button class="action-btn" onclick="toggleDropdown(this)">ACTIONS <i class="bx bx-chevron-down"></i></button><div class="dropdown-menu"><a href="javascript:void(0);" data-id="${employee_id}" class="dropdown-item update-btn editbtn"><i class="bx bx-edit"></i></a><a href="javascript:void(0);" data-id="${employee_id}" class="dropdown-item delete-btn deleteBtn"><i class="bx bx-trash"></i></a></div></div>`
-                            ]);
-
-                            $('#exampleModal').modal('hide');
-                            showAlert("Employee information updated successfully.", "alert-success");
-                        }
-                    });
-                } else {
-                    showAlert("Failed to update employee information.", "alert-danger");
+                // Validate contact length
+                if (employee_contact_digits.length !== 11) {
+                    showAlert("Employee contact should have exactly 11 digits after formatting.", "alert-danger");
+                    return;
                 }
             }
-        });
-    } else {
-        showAlert("Please fill all the required fields.", "alert-danger");
-    }
+
+            if (status === 'duplicate') {
+                showAlert("Employee with the same name already exists. Update failed.", "alert-danger");
+            } else if (status === 'true') {
+                $('#example').DataTable().draw();
+                $('#exampleModal').modal('hide');
+                showAlert("Employee information updated successfully.", "alert-success");
+            } else {
+                showAlert("Failed to update employee information.", "alert-danger");
+            }
+        }
+    });
 });
+
 
 
 $(document).on('click', '.deleteBtn', function(event) {
@@ -406,8 +378,7 @@ function showAlert(message, alertClass) {
                 $('#religionField').val(json.employee_religion);
                 $('#indigenousField').val(json.employee_indigenous);
                 $('#statusField').val(json.employee_status);
-                $('#roleField').val(json.employee_householdrole);
-                $('#idField').val(json.household_id);
+                $('#positionField').val(json.employee_position);
                 $('#employee_id').val(employee_id);
                 $('#trid').val(trid);
             }

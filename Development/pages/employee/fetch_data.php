@@ -28,6 +28,7 @@ if (isset($_POST['search']['value'])) {
 	$sql .= " OR employee_lastname LIKE '%" . $search_value . "%'";
 	$sql .= " OR employee_address LIKE '%" . $search_value . "%'";
 	$sql .= " OR employee_educationalattainment LIKE '%" . $search_value . "%'";
+	$sql .= " OR employee_age LIKE '%" . $search_value . "%'";
 	$sql .= " OR employee_position LIKE '%" . $search_value . "%'";
 	$sql .= " OR employee_birthdate LIKE '%" . $search_value . "%'";
 	$sql .= " OR employee_status LIKE '%" . $search_value . "%')";

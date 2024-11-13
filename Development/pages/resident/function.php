@@ -283,7 +283,30 @@ $(document).on('submit', '#updateUser', function(e) {
             success: function(data) {
                 var json = JSON.parse(data);
                 var status = json.status;
+                 // Validate resident_contact if it has a value
+                 var resident_contact = $('#resident_contact').val() || $('#contactField').val(); // Check both fields for add and update
 
+                    if (resident_contact) { // Only run validation if a contact number is provided
+                    // Ensure the contact starts with either '0' or '+63'
+                    if (!resident_contact.startsWith('0') && !resident_contact.startsWith('+63')) {
+                        showAlert("Resident contact should start with '0' or '+63'.", "alert-danger");
+                        return;
+                    }
+
+                    // Check if it starts with "+63" and remove the prefix for validation
+                    if (resident_contact.startsWith('+63')) {
+                        resident_contact = resident_contact.replace('+63', '0'); // Replace "+63" with "0" for consistent length validation
+                    }
+
+                    // Remove all non-numeric characters (like spaces, dashes, etc.)
+                    var resident_contact_digits = resident_contact.replace(/\D/g, ''); 
+
+                    // Check if resident_contact has exactly 11 digits
+                    if (resident_contact_digits.length !== 11) {
+                        showAlert("Resident contact should have exactly 11 digits after formatting.", "alert-danger");
+                        return;
+                    }
+                }
                 if (status === 'duplicate') {
                     showAlert("Resident with the same name already exists.", "alert-danger");
                 } else if (status === 'true') {
