@@ -31,7 +31,7 @@ if (isset($_POST['order'])) {
     $order = $_POST['order'][0]['dir'];
     $sql .= " ORDER BY " . $column_name . " " . $order;
 } else {
-    $sql .= " ORDER BY cashbook_id DESC";
+    $sql .= " ORDER BY period_covered DESC";
 }
 
 // Pagination

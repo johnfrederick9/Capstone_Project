@@ -143,11 +143,11 @@ try {
 
             $record_data = [
                 'cashbook_data_id' => isset($cashbook_data_ids[$i]) ? $cashbook_data_ids[$i] : null,
-                'date_data' => $date_data_var[$i],
-                'particulars_1' => $particulars_1_var[$i],
-                'particulars_2' => $particulars_2_var[$i],
-                'reference_1' => $reference_1_var[$i],
-                'reference_2' => $reference_2_var[$i],
+                'date_data' => $date_data_var,
+                'particulars_1' => $particulars_1_var,
+                'particulars_2' => $particulars_2_var,
+                'reference_1' => $reference_1_var,
+                'reference_2' => $reference_2_var,
                 'clt_in' => $clt_in[$i],
                 'clt_out' => $clt_out[$i],
                 'clt_balance' => $current_clt_balance,
@@ -256,6 +256,66 @@ try {
         throw new Exception("Failed to update tb_cashbook: " . mysqli_stmt_error($stmt_cash_up));
     }
     mysqli_stmt_close($stmt_cash_up);
+    
+    //update tb_cashbook_monthly
+    $sql_monthly_up = "UPDATE tb_cashbook_monthly SET 
+            clt_end_balance = ?,
+            cb_end_balance = ?
+        WHERE date_data = ?";
+    $stmt_monthly_up = mysqli_prepare($con, $sql_monthly_up);
+    mysqli_stmt_bind_param($stmt_monthly_up, "dds", 
+     $clt_end_balance,$cb_end_balance, $period_covered 
+    );
+    mysqli_stmt_execute($stmt_monthly_up);
+    mysqli_stmt_close($stmt_monthly_up);
+
+
+  // Query to get the earliest and latest dates
+  $sql_dates = "SELECT 
+  MIN(date_data) AS earliest_date,
+  MAX(date_data) AS latest_date 
+  FROM tb_cashbook_monthly
+  WHERE isDisplayed = 1";
+
+    $result_dates = mysqli_query($con, $sql_dates);
+
+    // Check if the query was successful and returns data
+    if ($result_dates && mysqli_num_rows($result_dates) > 0) {
+    $dates = mysqli_fetch_assoc($result_dates);
+
+    // Standardize date formats for comparison
+    $earliest_date = !empty($dates['earliest_date']) ? date('Y-m-d', strtotime($dates['earliest_date'])) : null;
+    $latest_date = !empty($dates['latest_date']) ? date('Y-m-d', strtotime($dates['latest_date'])) : null;
+    $target_date = date('Y-m-d', strtotime($period_covered));
+
+    // Enhanced date position handling using switch statement
+    switch(true) {
+        case ($target_date == $earliest_date):
+            // First date logic
+            $_GET['target_date'] = $target_date;
+            $_GET['date_status'] = 'First'; // Pass date_status via GET
+            //include('recalculate_data.php');
+            $message = "Recalculate from the first date";
+            break;
+                
+        case ($target_date == $latest_date):
+            // Latest date logic (do nothing)
+            $message = "Do nothing";
+            break;
+                
+        default:
+            // Middle date logic
+            $_GET['target_date'] = $target_date;
+            $_GET['date_status'] = 'In Between'; // Pass date_status via GET
+            //include('recalculate_data.php');
+            $message = "Recalculate from the starting date";
+            break;
+    }
+
+    // Close the result set
+    mysqli_free_result($result_dates);
+    }
+
 
     // Send success response
     $response = array(
@@ -263,10 +323,15 @@ try {
         'cashbook_id' => $cashbook_id,
         'cashbook_data_ids' => $cashbook_data_ids,
         'updated_inserted_records' => $updated_inserted_records,
-        'message' => 'Cashbook Recored successfully!'
-        
+        'message' => 'Cashbook Recorded successfully!',
+        'emessage'=> $message
     );
+
     mysqli_commit($con);
+
+    if (isset($_GET['target_date'])) {
+        include('recalculate_data.php');
+    }
 
 } catch (Exception $e) {
     // Rollback transaction in case of failure
