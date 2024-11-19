@@ -64,15 +64,30 @@ span {
     align-items: center;
     cursor: pointer;
 }
-.cashbook-container {
+.transaction .modal-dialog{
+    max-width: 95% !important;
+    max-height: 95% !important;
+    overflow-y: auto;
+}
+
+
+.tb-cashbook-container{
+    max-height: 440px;
+    overflow-y: auto; /* Enables vertical scrolling if content overflows */
+    border: 3px solid #000; /* Optional: adds border around the table container */
+    border-radius: 8px; /* Optional: adds rounded corners */
+    margin: 20px;
+}
+
+/* .cashbook-container {
     width: 100%;
     margin: 0 auto;
     padding: 5px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow-x: auto; /* Ensures table doesn't overflow horizontally */
-}
+    overflow-x: auto; /* Ensures table doesn't overflow horizontally
+} */
 
 .cashbook-header {
     text-align: center;
@@ -97,10 +112,26 @@ span {
     width: 100%; /* Ensures the table fills the width of the container */
     max-width: 100%; /* Prevents it from overflowing */
     border-collapse: collapse;
-    margin-bottom: 20px;
     table-layout: fixed;
-    border: 3px solid #000; /* Ensures the table columns fit within the container */
+    border: 3px solid #000;
+    max-height: 100%;
 }
+
+.cashbook-table thead{
+    position: sticky;
+    top: 0; /* Keeps the header at the top */
+    z-index: 1; /* Ensures header is above table rows */
+    border-bottom: 2px solid #ddd;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* #exampleModal .cashbook-table tbody{
+    max-height: 375px;
+    overflow-y: auto; 
+    width: 100%;
+    overflow-x: hidden;
+}  */
+
 
 .cashbook-table th, .cashbook-table td {
     border: 1px solid #000;
@@ -110,9 +141,11 @@ span {
 }
 
 .cashbook-table th {
-    background-color: #f0f0f0; /* Background color for headers */
+    background-color: #9ddfad; /* Background color for headers */
     text-align: center; /* Center text in headers */
     padding: 10px; /* Padding for header cells */
+    position: sticky;
+    z-index: 1;
 }
 
 .details input[type="text"], 
@@ -142,7 +175,12 @@ span {
 .cashbook-table thead tr:nth-of-type(2) th:nth-child(14),
 .cashbook-table thead tr:nth-of-type(2) th:nth-child(15),
 .cashbook-table thead tr:nth-of-type(2) th:nth-child(16) {
-    font-size: 10px; /* Same for all cash category columns */
+    font-size: clamp(10px, 1vw, 12px); 
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    resize: vertical;
+    min-height: 20px;
+    height: auto;/* Same for all cash category columns */
 }
 
 
@@ -216,6 +254,22 @@ span {
     color: transparent; /* Hides text */
 }
 
+/*
+#exampleModal .cashbook-table thead {
+    display: table;
+    width: 100%;
+}
+
+#exampleModal .cashbook-table tbody{
+    display: block;
+    max-height: 300px;
+    overflow-y: auto; 
+    width: 100%;
+    overflow-x: hidden;
+} 
+
+*/
+
 /* Action button styles */
 .cashbook-actions {
     text-align: right;
@@ -235,38 +289,35 @@ span {
     background-color: #45a049;
 }
 
-.cashbook-table input[type="text"]:disabled ,.cashbook-table input[type="date"]:disabled{
+/* Disabled state styles */
+.cashbook-table input {
     width: 100%;
     box-sizing: border-box;
     border: none;
-    font-size: 10px;
     color: #000;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-size: 0.9em; /* Adjusts font size relative to parent */
+    line-height: 1.2;
+    padding: 2px 4px;
 }
-.cashbook-table input[type="number"]:disabled{
-    width: 100%;
-    padding: 2px;
-    box-sizing: border-box;
-    border: none;
-    font-size: 10px;
-    color: #000;
+
+/* For text inputs that might contain longer content */
+.cashbook-table input[type="text"] {
+    text-overflow: ellipsis;
+    min-height: 20px;
+    height: auto;
 }
-.cashbook-table input[type="text"] , .cashbook-table input[type="date"]{
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    border: none;
-    font-size: 10px;
-    color: #000;
+
+/* Optional: Add tooltip on hover for truncated text */
+.cashbook-table input[type="text"]:hover {
+    overflow: visible;
+    white-space: normal;
+    height: auto;
+    z-index: 1;
 }
-.cashbook-table input[type="number"]{
-    width: 100%;
-    height: 100%;
-    padding: 2px;
-    box-sizing: border-box;
-    border: none;
-    font-size: 10px;
-    color: #000;
-}
+
 .hidden{
     display: none;
 }
@@ -332,6 +383,80 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+/* Initially hide all group columns */
+.hide-cash-treasury .cash-treasury,
+.hide-cash-treasury input[name^="clt_"],
+
+.hide-cash-bank .cash-bank,
+.hide-cash-bank input[name^="cb_"],
+
+.hide-cash-advance .cash-advance,
+.hide-cash-advance input[name^="ca_"],
+
+.hide-petty-cash .petty-cash,
+.hide-petty-cash input[name^="pcf_"] {
+    display: none;
+}
+
+/*Initially hide all group columns
+.cash-treasury{
+    background-color: #44dc83 !important;
+}
+
+.cash-bank {
+    background-color: #1ca46b !important; 
+}
+
+.cash-advance {
+    background-color: #808080; 
+}
+
+.petty-cash {
+    background-color: #808080; 
+}*/
+
+/* Default button styles */
+button[data-group] {
+    transition: background-color 0.2s ease;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Active state (displayed) */
+button[data-group].active {
+    background-color: #4CAF50;  /* Green */
+    color: white;
+}
+
+/* Inactive state (hidden) */
+button[data-group]:not(.active) {
+    background-color: #808080;  /* Gray */
+    color: white;
+}
+
+.toggle-section select {
+    min-width: 200px;
+    padding: 8px;
+}
+
+.toggle-section option {
+    padding: 8px;
+}
+.form-select{
+    background-color: #9ddfad;
+}
+/* 
+#viewDataTable tbody.inp-group-view tr:nth-child(odd) td {
+    background-color: #05bc34;
+}
+
+#viewDataTable tbody.inp-group-view tr:nth-child(even) td {
+    background-color: #C6E7CE; 
+}*/
+
 </style>
 <body>
     <section class="home">  
@@ -342,6 +467,7 @@ input[type=number] {
                             <h1>Cashbook</h1>
                         </div>
                         <div class="table-actions">    
+                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#initModal" class="add-popup">Beginning Balance</button>
                             <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-popup">+ Add Item</button>
                             <!--<button class="print-btn" title="Print">
                                 <i class="bx bx-printer"></i>
@@ -351,7 +477,7 @@ input[type=number] {
                     <table id="example" class="table-table">
                     <thead>
                         <th>#</th>
-                        <th>Period Covered</th>
+                        <th>Period Covered(YYYY-MM-DD)</th>
                         <th>Treasurer Name</th>
                         <th>Action</th>
                     </thead>
@@ -508,6 +634,9 @@ input[type=number] {
                                             mytable = $('#example').DataTable();
                                             mytable.draw();
                                             $('#addUserModal').modal('hide');
+                                            $('#addUserModal input').val('');
+                                            $('.inp-group-view').empty();
+
                                         } else {
                                             alert(message||'Failed to submit data');
                                         }
@@ -711,24 +840,41 @@ input[type=number] {
                                                     <td><input type="text" name="reference_2[]" value="${cData.reference_2}"></td>
                                                     <td><input type="number" name="clt_in_data[]" value="${cData.clt_in}" step="0.01"></td>
                                                     <td><input type="number" name="clt_out_data[]" value="${cData.clt_out}" step="0.01"></td>
-                                                    <td><input type="number" name="clt_balance[]" value="${cData.clt_balance}" step="0.01"></td>
+                                                    <td><input type="number" name="clt_balance[]" value="${cData.clt_balance}" step="0.01" disabled ></td>
                                                     <td><input type="number" name="cb_in_data[]" value="${cData.cb_in}" step="0.01"></td>
                                                     <td><input type="number" name="cb_out_data[]" value="${cData.cb_out}" step="0.01"></td>
-                                                    <td><input type="number" name="cb_balance[]" value="${cData.cb_balance}" step="0.01"></td>
+                                                    <td><input type="number" name="cb_balance[]" value="${cData.cb_balance}" step="0.01" disabled></td>
                                                     <td><input type="number" name="ca_receipt_data[]" value="${cData.ca_receipt}" step="0.01"></td>
                                                     <td><input type="number" name="ca_disbursement_data[]" value="${cData.ca_disbursement}" step="0.01"></td>
-                                                    <td><input type="number" name="ca_balance[]" value="${cData.ca_balance}" step="0.01"></td>
+                                                    <td><input type="number" name="ca_balance[]" value="${cData.ca_balance}" step="0.01" disabled></td>
                                                     <td><input type="number" name="pcf_receipt_data[]" value="${cData.pcf_receipt}" step="0.01"></td>
                                                     <td><input type="number" name="pcf_payments_data[]" value="${cData.pcf_payments}" step="0.01"></td>
-                                                    <td><input type="number" name="pcf_balance[]" value="${cData.pcf_balance}" step="0.01"></td>
+                                                    <td><input type="number" name="pcf_balance[]" value="${cData.pcf_balance}" step="0.01" disabled></td>
                                                 </tr>`;
                                             $('#exampleModal #viewDataTable tbody.inp-group-view').append(inputGroupRow);
                                             window.upCounter++; // Increment the counter for the next row
                                         });
-                                          // <td class="action-buttons">
-                                                    //     <a href="#" class="add">+</a>
-                                                    //     <a href="#" class="delete">X</a>
-                                                    // </td>
+                                          // Apply visibility based on current toggle state
+                                            const currentGroup = $('#sectionToggle2').val();
+                                            $('#exampleModal #viewDataTable tbody.inp-group-view tr').each(function() {
+                                                const row = $(this);
+                                                row.find('td:has(input[name^="clt_"]), td:has(input[name^="cb_"]), td:has(input[name^="ca_"]), td:has(input[name^="pcf_"])').addClass('hidden');
+                                                
+                                                switch(currentGroup) {
+                                                    case 'cashTreasury':
+                                                        row.find('td:has(input[name^="clt_"])').removeClass('hidden');
+                                                        break;
+                                                    case 'cashBank':
+                                                        row.find('td:has(input[name^="cb_"])').removeClass('hidden');
+                                                        break;
+                                                    case 'cashAdvance':
+                                                        row.find('td:has(input[name^="ca_"])').removeClass('hidden');
+                                                        break;
+                                                    case 'pettyCash':
+                                                        row.find('td:has(input[name^="pcf_"])').removeClass('hidden');
+                                                        break;
+                                                }
+                                            });
                                         } else {
                                             console.error('Error in JSON response:', json.message);
                                         }
@@ -748,12 +894,13 @@ input[type=number] {
                             let addInputHandler;
                             window.cashbookFunctions = {};
 
-                            $('#exampleModal').on('shown.bs.modal', function () {
+                            $('#exampleModal').on('shown.bs.modal', function () { 
                                 if (!modalInitialized) {
                                     initializeModal();
                                     modalInitialized = true;
-
+                                    
                                 }
+  
                             });
 
                             $('#exampleModal').on('hidden.bs.modal', function () {
@@ -767,15 +914,29 @@ input[type=number] {
                                     addButton.removeEventListener('click', addInputHandler);
                                 }
 
+                                //for individual bu
+                                // // Set active state immediately
+                                // const modalButtons = document.querySelectorAll('#exampleModal button[data-group][data-modal-id]');
+                                // modalButtons.forEach(button => {
+                                //     button.classList.add('active');
+                                // });
+                                
+                                // // Clear all hiding classes immediately
+                                // const table = document.querySelector('#exampleModal #viewDataTable');
+                                // table.classList.remove('hide-cash-treasury', 'hide-cash-bank', 'hide-cash-advance', 'hide-petty-cash');
+
+
                             });
 
                             let FunctionForModal2;
                             function initializeModal() {
                                 console.log('Modal 2 is triggered');
 
+                                
                                 if (!FunctionForModal2) {
                                 FunctionForModal2 = function() {
-                                    window.upCounter = document.querySelectorAll('#exampleModal .inp-group-view tr').length + 1;
+                                    window.upCounter = document.querySelectorAll('#exampleModal #viewDataTable tbody.inp-group-view tr').length + 1;
+                                    console.log("Window Upcounter value: ", window.upCounter);
                                     const periodCoveredInput = document.querySelector('#periodcoveredField');
                                     const inpGroup = document.querySelector('#exampleModal .inp-group-view');
 
@@ -918,6 +1079,8 @@ input[type=number] {
                                         });
                                     }
 
+                                    const rows1 = $('#exampleModal #viewDataTable tbody.inp-group-view tr');
+                                    console.log("Fixedrows to process:", rows1.length);
 
                                     // Function to update all balances
                                     function updateAllBalances(startRow = null) {
@@ -929,7 +1092,8 @@ input[type=number] {
                                         let previous_ca_balance = 0;
                                         let previous_pcf_balance = 0;
 
-                                        const rows = $('#exampleModal #viewDataTable tbody.inp-group-view tr');
+                                        // const rows = $('#exampleModal #viewDataTable tbody.inp-group-view tr');
+                                        const rows = rows1 
                                         const startIndex = startRow ? rows.index(startRow) : 0;
 
                                         console.log("Total rows to process:", rows.length);
@@ -1037,6 +1201,26 @@ input[type=number] {
 
                                     // Add a new input group
                                     function addInput(afterElement = null) {
+                                        //for individual buttons
+                                        // const table = document.querySelector(`#exampleModal #viewDataTable`);
+                                        // const hiddenGroups = {
+                                        //     cashTreasury: table.classList.contains('hide-cash-treasury'),
+                                        //     cashBank: table.classList.contains('hide-cash-bank'),
+                                        //     cashAdvance: table.classList.contains('hide-cash-advance'),
+                                        //     pettyCash: table.classList.contains('hide-petty-cash')
+                                        // };
+
+
+                                        //for dropdown
+                                         //for the dropdown
+                                         const table = document.querySelector('#exampleModal #viewDataTable');
+                                        const hiddenGroups = {
+                                            cashTreasury: table.classList.contains('hide-cash-treasury'),
+                                            cashBank: table.classList.contains('hide-cash-bank'),
+                                            cashAdvance: table.classList.contains('hide-cash-advance'),
+                                            pettyCash: table.classList.contains('hide-petty-cash')
+                                        };
+
                                         const newRow = document.createElement("tr");
 
                                         console.log("Add Input is triggered");
@@ -1049,21 +1233,60 @@ input[type=number] {
                                             createCell('input', '', {type: 'text', name: 'reference_2[]' ,required: false}),
                                             createCell('input', '', {type: 'number', name: 'clt_in_data[]', required: false,  step: "0.01", value: 0}),
                                             createCell('input', '', {type: 'number', name: 'clt_out_data[]', required: false,  step: "0.01", value: 0}),
-                                            createCell('input', '', {type: 'number', name: 'clt_balance_data[]', required: false, step: "0.01",  value: 0}),
+                                            createCell('input', '', {type: 'number', name: 'clt_balance_data[]', required: false, step: "0.01",  value: 0, disabled: true}),
                                             createCell('input', '', {type: 'number', name: 'cb_in_data[]', required: false,  step: "0.01", value: 0}),
                                             createCell('input', '', {type: 'number', name: 'cb_out_data[]', required: false,  step: "0.01", value: 0}),
-                                            createCell('input', '', {type: 'number', name: 'cb_balance_data[]', required: false,  step: "0.01",  value: 0}),
+                                            createCell('input', '', {type: 'number', name: 'cb_balance_data[]', required: false,  step: "0.01",  value: 0, disabled: true}),
                                             createCell('input', '', {type: 'number', name: 'ca_receipt_data[]', required: false,  step: "0.01", value: 0}),
                                             createCell('input', '', {type: 'number', name: 'ca_disbursement_data[]', required: false, step: "0.01", value: 0}),
-                                            createCell('input', '', {type: 'number', name: 'ca_balance_data[]', required: false,  step: "0.01",  value: 0}),
+                                            createCell('input', '', {type: 'number', name: 'ca_balance_data[]', required: false,  step: "0.01",  value: 0, disabled: true}),
                                             createCell('input', '', {type: 'number', name: 'pcf_receipt_data[]', required: false, step: "0.01", value: 0}),
                                             createCell('input', '', {type: 'number', name: 'pcf_payments_data[]', required: false,  step: "0.01", value: 0}),
-                                            createCell('input', '', {type: 'number', name: 'pcf_balance_data[]', required: false,  step: "0.01",  value: 0}),
+                                            createCell('input', '', {type: 'number', name: 'pcf_balance_data[]', required: false,  step: "0.01",  value: 0, disabled: true}),
                                             // ... create cells for all other inputs ...
                                         ];
 
                                         setupRowEventListeners(newRow);
-                                        cells.forEach(cell => newRow.appendChild(cell));
+                                        //fpr individual buttons
+                                    //     cells.forEach((cell, index) => {
+                                    //     // Add appropriate hidden classes based on the input name
+                                    //     const inputName = cell.querySelector('input')?.name;
+                                    //     if (inputName) {
+                                    //         if (hiddenGroups.cashTreasury && inputName.startsWith('clt_')) {
+                                    //             cell.classList.add('hidden');
+                                    //         }
+                                    //         if (hiddenGroups.cashBank && inputName.startsWith('cb_')) {
+                                    //             cell.classList.add('hidden');
+                                    //         }
+                                    //         if (hiddenGroups.cashAdvance && inputName.startsWith('ca_')) {
+                                    //             cell.classList.add('hidden');
+                                    //         }
+                                    //         if (hiddenGroups.pettyCash && inputName.startsWith('pcf_')) {
+                                    //             cell.classList.add('hidden');
+                                    //         }
+                                    //     }
+                                    //     newRow.appendChild(cell);
+                                    // });
+
+                                    //for dropdown
+                                    cells.forEach((cell, index) => {
+                                        const inputName = cell.querySelector('input')?.name;
+                                        if (inputName) {
+                                            if (hiddenGroups.cashTreasury && inputName.startsWith('clt_')) {
+                                                cell.classList.add('hidden');
+                                            }
+                                            if (hiddenGroups.cashBank && inputName.startsWith('cb_')) {
+                                                cell.classList.add('hidden');
+                                            }
+                                            if (hiddenGroups.cashAdvance && inputName.startsWith('ca_')) {
+                                                cell.classList.add('hidden');
+                                            }
+                                            if (hiddenGroups.pettyCash && inputName.startsWith('pcf_')) {
+                                                cell.classList.add('hidden');
+                                            }
+                                        }
+                                        newRow.appendChild(cell);
+                                    });
 
                                         // Create action buttons
                                         const hiddenInput = document.createElement('input');
@@ -1111,12 +1334,12 @@ input[type=number] {
 
                                                     // Calculate new balance
                                                     const newBalance = previousBalance + cltInValue - cltOutValue; 
-                                                    balanceInput.value = newBalance; // Update balance input
+                                                    balanceInput.value = newBalance.toFixed(2);// Update balance input
 
                                                     // Update previousBalance for the next iteration
-                                                    previousBalance = newBalance; 
+                                                    previousBalance = parseFloat(newBalance.toFixed(2));
                                                     // Log for debugging
-
+                                                    //#cbinitbalance$(this).find('input[name="clt_balance_data[]"]').val(newBalance.toFixed(2));
                                                     // Alert if the balance is negative
                                                     if (newBalance < 0) {
                                                         alert('Warning: A Cash in Local Treasury Balance is negative! Please check your inputs.');
@@ -1154,11 +1377,11 @@ input[type=number] {
 
                                                     // Calculate new balance
                                                     const newBalance = previousBalance + cbInValue - cbOutValue; 
-                                                    balanceInput.value = newBalance; // Update balance input
+                                                    balanceInput.value = newBalance.toFixed(2);// Update balance input
 
                                                     // Update previousBalance for the next iteration
-                                                    previousBalance = newBalance; 
-
+                                                    previousBalance = parseFloat(newBalance.toFixed(2));
+                                                    //$(this).find('input[name="cb_balance_data[]"]').val(newBalance.toFixed(2));
                                                     // Alert if the balance is negative
                                                     if (newBalance < 0) {
                                                         alert('Warning: A Cash in Bank Balance is negative! Please check your inputs.');
@@ -1196,11 +1419,11 @@ input[type=number] {
 
                                                     // Calculate new balance
                                                     const newBalance = previousBalance + caInValue - caOutValue; 
-                                                    balanceInput.value = newBalance; // Update balance input
+                                                    balanceInput.value = newBalance.toFixed(2);// Update balance input
 
                                                     // Update previousBalance for the next iteration
-                                                    previousBalance = newBalance; 
-
+                                                    previousBalance = parseFloat(newBalance.toFixed(2));
+                                                    //$(this).find('input[name="ca_balance_data[]"]').val(newBalance.toFixed(2));
                                                     // Alert if the balance is negative
                                                     if (newBalance < 0) {
                                                         alert('Warning: A Cash Advance Balance is negative! Please check your inputs.');
@@ -1238,10 +1461,11 @@ input[type=number] {
 
                                                     // Calculate new balance
                                                     const newBalance = previousBalance + pcfInValue - pcfOutValue; 
-                                                    balanceInput.value = newBalance; // Update balance input
+                                                    balanceInput.value = newBalance.toFixed(2);// Update balance input
 
                                                     // Update previousBalance for the next iteration
-                                                    previousBalance = newBalance; 
+                                                    previousBalance = parseFloat(newBalance.toFixed(2));
+                                                    //$(this).find('input[name="pcf_balance_data[]"]').val(newBalance.toFixed(2));
 
                                                     // Alert if the balance is negative
                                                     if (newBalance < 0) {
@@ -1271,6 +1495,20 @@ input[type=number] {
                                             addInput(newRow); // Call to add a new row
                                         });
 
+                                        function initializeBalances(newRow) {
+                                            // Initialize CLT Balance
+                                            updateCLTBalances();
+                                            
+                                            // Initialize CB Balance
+                                            updateCBBalances();
+                                            
+                                            // Initialize CA Balance
+                                            updateCABalances();
+                                            
+                                            // Initialize PCF Balance
+                                            updatePCFBalances();
+                                        }
+
                                     
                                         // Add the new group to the form
                                         if (afterElement) {
@@ -1281,6 +1519,7 @@ input[type=number] {
                                         window.upCounter++; 
                                         update_up_Counter(); 
                                         updateDateInputs();
+                                        initializeBalances(newRow);
 
                                     }
                                     updateAllBalances();
@@ -1301,41 +1540,58 @@ input[type=number] {
                                     }
 
                                     function updateAllRowBalances() {
-                                            const balanceTypes = [
-                                                { name: 'clt', in: 'clt_in_data[]', out: 'clt_out_data[]', balance: 'clt_balance_data[]', lastBalance: 'clt_last_balance' },
-                                                { name: 'cb', in: 'cb_in_data[]', out: 'cb_out_data[]', balance: 'cb_balance_data[]', lastBalance: 'cb_last_balance' },
-                                                { name: 'ca', in: 'ca_receipt_data[]', out: 'ca_disbursement_data[]', balance: 'ca_balance_data[]', lastBalance: 'ca_last_balance' },
-                                                { name: 'pcf', in: 'pcf_receipt_data[]', out: 'pcf_payments_data[]', balance: 'pcf_balance_data[]', lastBalance: 'pcf_last_balance' }
-                                            ];
+                                        console.log("Update All Row Balance is called:");
+                                        const balanceTypes = [
+                                            { name: 'clt', in: 'clt_in_data[]', out: 'clt_out_data[]', balance: 'clt_balance_data[]', lastBalance: 'clt_last_balance' },
+                                            { name: 'cb', in: 'cb_in_data[]', out: 'cb_out_data[]', balance: 'cb_balance_data[]', lastBalance: 'cb_last_balance' },
+                                            { name: 'ca', in: 'ca_receipt_data[]', out: 'ca_disbursement_data[]', balance: 'ca_balance_data[]', lastBalance: 'ca_last_balance' },
+                                            { name: 'pcf', in: 'pcf_receipt_data[]', out: 'pcf_payments_data[]', balance: 'pcf_balance_data[]', lastBalance: 'pcf_last_balance' }
+                                        ];
 
-                                            balanceTypes.forEach(type => {
-                                                const lastBalanceInput = document.getElementById(type.lastBalance);
-                                                let initialBalance = parseFloat(lastBalanceInput.value) || 0;
-                                                let previousBalance = initialBalance;
+                                        balanceTypes.forEach(type => {
+                                            const lastBalanceInput = document.getElementById(type.lastBalance);
+                                            let initialBalance = parseFloat(lastBalanceInput.value) || 0;
+                                            let previousBalance = initialBalance;
 
-                                                const rows = document.querySelectorAll("#exampleModal .inp-group-view tr");
+                                            // Get all rows
+                                            const allRows = Array.from(document.querySelectorAll("#exampleModal .inp-group-view tr"));
+                                            console.log("All Rows: ", allRows);
+                                            
+                                            // Get the received rows count
+                                            const receivedRows = parseInt(rowCount) || 0;
+                                            console.log("Received Rows: ", receivedRows);
+                                            
+                                            // Slice the array to get only rows after the received rows
+                                            const newRows = allRows.slice(receivedRows);
+                                            console.log("New Rows: ", newRows);
 
-                                                rows.forEach((row) => {
-                                                    const inInput = row.querySelector(`input[name="${type.in}"]`);
-                                                    const outInput = row.querySelector(`input[name="${type.out}"]`);
-                                                    const balanceInput = row.querySelector(`input[name="${type.balance}"]`);
+                                            console.log(`Starting calculations from row ${receivedRows + 1}`);
 
-                                                    if (inInput && outInput && balanceInput) {
-                                                        const inValue = parseFloat(inInput.value) || 0;
-                                                        const outValue = parseFloat(outInput.value) || 0;
+                                            newRows.forEach((row, index) => {
+                                                const inInput = row.querySelector(`input[name="${type.in}"]`);
+                                                const outInput = row.querySelector(`input[name="${type.out}"]`);
+                                                const balanceInput = row.querySelector(`input[name="${type.balance}"]`);
 
-                                                        const newBalance = previousBalance + inValue - outValue;
-                                                        balanceInput.value = newBalance.toFixed(2);
+                                                if (inInput && outInput && balanceInput) {
+                                                    const inValue = parseFloat(inInput.value) || 0;
+                                                    const outValue = parseFloat(outInput.value) || 0;
 
-                                                        previousBalance = newBalance.toFixed(2);
+                                                    const newBalance = previousBalance + inValue - outValue;
+                                                    balanceInput.value = newBalance.toFixed(2);
 
-                                                        if (newBalance < 0) {
-                                                            alert(`Warning: A ${type.name.toUpperCase()} Balance is negative! Please check your inputs.`);
-                                                        }
+                                                    previousBalance = newBalance;
+
+                                                    $(this).find(`input[name="${type.balance}"]`).val(newBalance.toFixed(2));
+                                                    
+
+                                                    if (newBalance < 0) {
+                                                        alert(`Warning: A ${type.name.toUpperCase()} Balance is negative! Please check your inputs.`);
                                                     }
-                                                });
+                                                }
                                             });
-                                        }
+                                        });
+                                    }
+
 
                                         // Add event listeners
                                         document.querySelectorAll('#exampleModal .inp-group-view input').forEach(input => {
@@ -1398,6 +1654,7 @@ input[type=number] {
                             const lastDay = new Date(year, date.getMonth() + 1, 0).getDate();
                             return `${month} 1-${lastDay}, ${year}`;
                         }
+
                         $('#example').on('click', '.infoBtn', function(event) {
                         let trid = $(this).closest('tr').attr('id');
                         let cashbook_id = $(this).data('item-id');
@@ -1517,9 +1774,100 @@ input[type=number] {
                         });
                     });
 
+                    document.addEventListener('DOMContentLoaded', function () {
+                        $('#initModal').on('show.bs.modal', function() {
+                            console.log("Init Modal is Opened");
+                            // AJAX request to fetch existing initial balance data
+                            $.ajax({
+                                url: "get_init.php", // Separate PHP file to get initial balance data
+                                type: "get",
+                                dataType: "json",
+                                success: function(data) {
+                                    if (data && data.status === 'true') {
+                                        // Populate input fields with fetched data
+                                        $('#cltinitField').val(data.clt_init_balance);
+                                        $('#cbinitField').val(data.cb_init_balance);
+                                    } else {
+                                        // Clear input fields if no data is found or an error occurs
+                                        $('#cltinitField').val('');
+                                        $('#cbinitField').val('');
+                                        console.log('No existing data found or error fetching data.');
+                                    }
+                                },
+                                error: function() {
+                                    console.log('Error fetching initial balance data.');
+                                }
+                            });
+                        });
+                    });
+
+                    $(document).on('submit', '#initForm', function(e) {
+                            e.preventDefault();
+                            var clt_init = $('#cltinitField').val();
+                            var cb_init = $('#cbinitField').val();
+                            if (clt_init !== '' && cb_init !== '' ) {
+                                $.ajax({
+                                    url: "init.php",
+                                    type: "post",
+                                    data: {
+                                        clt_init: clt_init,
+                                        cb_init: cb_init,
+                                    },
+                                    success: function(data) {
+                                        var json = JSON.parse(data);
+                                        var status = json.status;
+                                        if (status == 'true') {
+                                            mytable = $('#example').DataTable();
+                                            mytable.draw();
+                                            $('#initModal').modal('hide');
+                                        } else {
+                                            alert('failed');
+                                        }
+                                    }
+                                });
+                            } else {
+                                alert('Fill all the required fields');
+                            }
+                        });
+
                     </script>
                 </section><!-- .home-->
                 <!-- Modal -->
+                <!-- Initial Balance-->
+                <div class="modal fade" id="initModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Beginning Balance for Cash in Bank and Cash Advances</h5>
+                                <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="initForm">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="cltinitField">Cash in Local Treasurer Beginning Balance:</label>
+                                                <input type="number" id="cltinitField" name="clt_init" step="0.01"  required>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="cbinitField">Cash in Bank Beginning Balance:</label>
+                                                <input type="number" id="cbinitField" name="cb_init" step="0.01" required >
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                  <!-- View Transaction -->
                   <section class="transaction">
                  <div class="modal fade" id="viewDataModal" tabindex="-1" aria-labelledby="viewDataModalLabel" aria-hidden="true">
@@ -1646,7 +1994,7 @@ input[type=number] {
                                     <div class="col-md-6">
                                         <div class="form-group">
                                         <label for="periodcoveredField">Period Covered:</label>
-                                        <input type="date" id="periodcoveredField" name="period_covered" required>
+                                        <input type="date" id="periodcoveredField" name="period_covered" required disabled>
                                     </div>
                                     </div>
                                     <div class="col-md-6">
@@ -1660,19 +2008,19 @@ input[type=number] {
                                     <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="cltinitbalanceField">Cash in Local Treasurer Beginning Balance:</label>
-                                        <input type="number" id="cltinitbalanceField" name="clt_init_balance" step="0.01"  required>
+                                        <input type="number" id="cltinitbalanceField" name="clt_init_balance" step="0.01"  required disabled>
                                     </div>
                                     </div>
                                     <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="cbinitbalanceField">Cash in Bank Beginning Balance:</label>
-                                        <input type="number" id="cbinitbalanceField" name="cb_init_balance" step="0.01" required>
+                                        <input type="number" id="cbinitbalanceField" name="cb_init_balance" step="0.01" required disabled>
                                     </div>
                                     </div>
                                     </div>
-
+                                    <div class = "tb-cashbook-container">
                                   <!-- Cashbook Table -->
-                            <table id = "viewDataTable" class="cashbook-table">
+                                  <table id = "viewDataTable" class="cashbook-table">
                                 <thead>
                                     <tr>
                                         <th rowspan="2" class="hidden">Counter</th>
@@ -1680,11 +2028,17 @@ input[type=number] {
                                         <th rowspan="2">Date</th>
                                         <th colspan="2">Particulars</th> <!-- Combined Particulars -->
                                         <th colspan="2">References</th>  <!-- Combined References -->
-                                        <th colspan="3">Cash in Local Treasury</th>
-                                        <th colspan="3">Cash in Bank</th>
-                                        <th colspan="3">Cash Advances</th>
-                                        <th colspan="3">Petty Cash Fund</th>
+
+                                        <!-- For 1st Group -->
+                                        <th colspan="3"  class="cash-treasury">Cash in Local Treasury</th>
+                                        <!-- For 2nd Group -->
+                                        <th colspan="3" class="cash-bank">Cash in Bank</th>
+                                        <!-- For 3rd Group -->
+                                        <th colspan="3" class="cash-advance">Cash Advances</th>
+                                        <!-- For 4th Group -->
+                                        <th colspan="3" class="petty-cash">Petty Cash Fund</th>
                                         <th rowspan="3">Action</th>
+
                                     </tr>
                                     <tr>
                                         <!-- Sub-columns for Particulars and References -->
@@ -1692,29 +2046,50 @@ input[type=number] {
                                         <th >Particular 2</th>
                                         <th>Reference 1</th>
                                         <th>Reference 2</th>
-                                        <th>Collection</th>
-                                        <th>Deposit</th>
-                                        <th>Balance</th>
 
-                                        <th>Deposit</th>
-                                        <th>Check Issued</th>
-                                        <th>Balance</th>
+                                         <!--1st Group-->
+                                        <th class="cash-treasury">Collection</th>
+                                        <th class="cash-treasury">Deposit</th>
+                                        <th class="cash-treasury">Balance</th>
 
-                                        <th>Receipt</th>
-                                        <th>Disbursement</th>
-                                        <th>Balance</th>
+                                        <!--2nd Group-->
+                                        <th class="cash-bank">Deposit</th>
+                                        <th class="cash-bank">Check Issued</th>
+                                        <th class="cash-bank">Balance</th>
 
-                                        <th>Receipt Replenishment</th>
-                                        <th>Payments</th>
-                                        <th>Balance</th>
+                                        <!--3rd Group-->
+                                        <th class="cash-advance">Receipt</th>
+                                        <th class="cash-advance">Disbursement</th>
+                                        <th class="cash-advance">Balance</th>
+
+                                        <!--4th Group-->
+                                        <th class="petty-cash">Receipt Replenishment</th>
+                                        <th class="petty-cash">Payments</th>
+                                        <th class="petty-cash">Balance</th>
                                     </tr>
                                 </thead>
+
                                 <tbody class = "inp-group-view">
                                      <!-- Dynamic rows go here -->
                                 </tbody>
                                 
                             </table>
+                            </div>
+
                                 <div class="modal-footer">
+
+                                <select class="form-select" id="sectionToggle2" onchange="toggleGroup(this.value, 'exampleModal')">
+                                    <option value="cashTreasury" selected>Cash in Treasury</option>
+                                    <option value="cashBank">Cash in Bank</option>
+                                    <option value="cashAdvance">Cash Advances</option>
+                                    <option value="pettyCash">Petty Cash Fund</option>
+                                </select>
+
+                                    <!-- <button type="button" data-group="cashTreasury" data-modal-id="exampleModal">Toggle Cash in Treasury</button>
+                                    <button type="button" data-group="cashBank" data-modal-id="exampleModal">Toggle Cash in Bank</button>
+                                    <button type="button" data-group="cashAdvance" data-modal-id="exampleModal">Toggle Cash Advances</button>
+                                    <button type="button" data-group="pettyCash" data-modal-id="exampleModal">Toggle Petty Cash Fund</button> -->
+
                                     <button class="add">+</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
@@ -1751,17 +2126,17 @@ input[type=number] {
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="cltinitbalance">Cash in Local Treasurer Beginning Balance:</label>
-                                            <input type="number" id="cltinitbalance" name="clt_init_balance" step="0.01"  required>
+                                            <input type="number" id="cltinitbalance" name="clt_init_balance" step="0.01"  required disabled>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="cbinitbalance">Cash in Bank Beginning Balance:</label>
-                                        <input type="number" id="cbinitbalance" name="cb_init_balance" step="0.01" required>
+                                        <input type="number" id="cbinitbalance" name="cb_init_balance" step="0.01" required disabled>
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <table id = "viewDataTable" class="cashbook-table">
                                 <thead>
                                     <tr>
@@ -1770,10 +2145,15 @@ input[type=number] {
                                         <th rowspan="2">Date</th>
                                         <th colspan="2">Particulars</th> <!-- Combined Particulars -->
                                         <th colspan="2">References</th>  <!-- Combined References -->
-                                        <th colspan="3">Cash in Local Treasury</th>
-                                        <th colspan="3">Cash in Bank</th>
-                                        <th colspan="3">Cash Advances</th>
-                                        <th colspan="3">Petty Cash Fund</th>
+
+                                        <!-- For 1st Group -->
+                                        <th colspan="3"  class="cash-treasury">Cash in Local Treasury</th>
+                                        <!-- For 2nd Group -->
+                                        <th colspan="3" class="cash-bank">Cash in Bank</th>
+                                        <!-- For 3rd Group -->
+                                        <th colspan="3" class="cash-advance">Cash Advances</th>
+                                        <!-- For 4th Group -->
+                                        <th colspan="3" class="petty-cash">Petty Cash Fund</th>
                                         <th rowspan="3">Action</th>
 
                                     </tr>
@@ -1783,21 +2163,26 @@ input[type=number] {
                                         <th >Particular 2</th>
                                         <th>Reference 1</th>
                                         <th>Reference 2</th>
-                                        <th>Collection</th>
-                                        <th>Deposit</th>
-                                        <th>Balance</th>
 
-                                        <th>Deposit</th>
-                                        <th>Check Issued</th>
-                                        <th>Balance</th>
+                                         <!--1st Group-->
+                                        <th class="cash-treasury">Collection</th>
+                                        <th class="cash-treasury">Deposit</th>
+                                        <th class="cash-treasury">Balance</th>
 
-                                        <th>Receipt</th>
-                                        <th>Disbursement</th>
-                                        <th>Balance</th>
+                                        <!--2nd Group-->
+                                        <th class="cash-bank">Deposit</th>
+                                        <th class="cash-bank">Check Issued</th>
+                                        <th class="cash-bank">Balance</th>
 
-                                        <th>Receipt Replenishment</th>
-                                        <th>Payments</th>
-                                        <th>Balance</th>
+                                        <!--3rd Group-->
+                                        <th class="cash-advance">Receipt</th>
+                                        <th class="cash-advance">Disbursement</th>
+                                        <th class="cash-advance">Balance</th>
+
+                                        <!--4th Group-->
+                                        <th class="petty-cash">Receipt Replenishment</th>
+                                        <th class="petty-cash">Payments</th>
+                                        <th class="petty-cash">Balance</th>
                                     </tr>
                                 </thead>
 
@@ -1808,6 +2193,19 @@ input[type=number] {
                             </table>
 
                             <div class="modal-footer">
+                                
+                            <select class="form-select" id="sectionToggle" onchange="toggleGroup(this.value, 'addUserModal')">
+                                <option value="cashTreasury" selected>Cash in Treasury</option>
+                                <option value="cashBank">Cash in Bank</option>
+                                <option value="cashAdvance">Cash Advances</option>
+                                <option value="pettyCash">Petty Cash Fund</option>
+                            </select>
+
+                                <!-- <button type="button" data-group="cashTreasury" data-modal-id="addUserModal">Toggle Cash in Treasury</button>
+                                <button type="button" data-group="cashBank" data-modal-id="addUserModal">Toggle Cash in Bank</button>
+                                <button type="button" data-group="cashAdvance" data-modal-id="addUserModal">Toggle Cash Advances</button>
+                                <button type="button" data-group="pettyCash" data-modal-id="addUserModal">Toggle Petty Cash Fund</button> -->
+
                                 <button class="add">+</button>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
@@ -1819,7 +2217,215 @@ input[type=number] {
             </div>
             </section>
     </body> 
+
+    <!-- <script>
+     // For the Individual Buttons
+   
+    function toggleGroup(group, modalId) {
+    const table = document.querySelector(`#${modalId} #viewDataTable`);
+    const button = document.querySelector(`button[data-group="${group}"][data-modal-id="${modalId}"]`);
     
+    if (!table) {
+        console.log(`Table not found in modal: ${modalId}`);
+        return;
+    }
+
+    // Toggle button active state
+    button.classList.toggle('active');
+
+    switch (group) {
+        case 'cashTreasury':
+            table.classList.toggle('hide-cash-treasury');
+            const cltCells = table.querySelectorAll('td:has(input[name^="clt_"])');
+            cltCells.forEach(cell => cell.classList.toggle('hidden'));
+            break;
+            
+        case 'cashBank':
+            table.classList.toggle('hide-cash-bank');
+            const cbCells = table.querySelectorAll('td:has(input[name^="cb_"])');
+            cbCells.forEach(cell => cell.classList.toggle('hidden'));
+            break;
+            
+        case 'cashAdvance':
+            table.classList.toggle('hide-cash-advance');
+            const caCells = table.querySelectorAll('td:has(input[name^="ca_"])');
+            caCells.forEach(cell => cell.classList.toggle('hidden'));
+            break;
+            
+        case 'pettyCash':
+            table.classList.toggle('hide-petty-cash');
+            const pcfCells = table.querySelectorAll('td:has(input[name^="pcf_"])');
+            pcfCells.forEach(cell => cell.classList.toggle('hidden'));
+            break;
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Add event listeners to buttons with data-group attributes
+    document.querySelectorAll('.modal-footer button[data-group][data-modal-id]').forEach(button => {
+        button.classList.add('active');
+
+        button.addEventListener('click', function () {
+            const group = button.getAttribute('data-group');
+            const modalId = button.getAttribute('data-modal-id');
+            console.log(`Button clicked: ${group} in modal: ${modalId}`); // Log which button and modal was clicked
+            toggleGroup(group, modalId);
+        });
+    });
+
+    // Log for other buttons if needed
+    const addButton = document.querySelector('.modal-footer .add');
+    if (addButton) {
+        addButton.addEventListener('click', function () {
+            console.log('Add button clicked');
+            // Add your functionality for adding a row here
+        });
+    }
+
+    const submitButton = document.querySelector('.modal-footer .btn-primary');
+    if (submitButton) {
+        submitButton.addEventListener('click', function () {
+            console.log('Submit button clicked');
+            // Add any validation or functionality for submitting the form here
+        });
+    }
+});
+    </script> -->
+
+   <script>
+function toggleGroup(group, modalId) {
+    const table = document.querySelector(`#${modalId} #viewDataTable`);
+    console.log(`Table modal: ${modalId}`);
+
+    if (!table) {
+        console.log(`Table not found in modal: ${modalId}`);
+        return;
+    }
+
+    // Hide all sections first
+    table.classList.add('hide-cash-treasury', 'hide-cash-bank', 'hide-cash-advance', 'hide-petty-cash');
+    const allCells = table.querySelectorAll('td:has(input[name^="clt_"]), td:has(input[name^="cb_"]), td:has(input[name^="ca_"]), td:has(input[name^="pcf_"])');
+    allCells.forEach(cell => cell.classList.add('hidden'));
+
+    // Show only the selected section
+    switch (group) {
+        case 'cashTreasury':
+            table.classList.remove('hide-cash-treasury');
+            const cltCells = table.querySelectorAll('td:has(input[name^="clt_"])');
+            cltCells.forEach(cell => {
+                const input = cell.querySelector('input');
+                if (input && input.value === "") {
+                    // Check if the input is numeric or not
+                    if (input.type === 'number') {
+                        input.value = 0;  // Set default to 0 for numeric fields
+                    } else {
+                        input.value = " ";  // Set default to " " for text fields
+                    }
+                }
+                cell.classList.remove('hidden');
+            });
+            break;
+            
+        case 'cashBank':
+            table.classList.remove('hide-cash-bank');
+            const cbCells = table.querySelectorAll('td:has(input[name^="cb_"])');
+            cbCells.forEach(cell => cell.classList.remove('hidden'));
+            break;
+            
+        case 'cashAdvance':
+            table.classList.remove('hide-cash-advance');
+            const caCells = table.querySelectorAll('td:has(input[name^="ca_"])');
+            caCells.forEach(cell => cell.classList.remove('hidden'));
+            break;
+            
+        case 'pettyCash':
+            table.classList.remove('hide-petty-cash');
+            const pcfCells = table.querySelectorAll('td:has(input[name^="pcf_"])');
+            pcfCells.forEach(cell => cell.classList.remove('hidden'));
+            break;
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const sectionToggle1 = document.getElementById('sectionToggle');
+    if (sectionToggle1) {
+        toggleGroup(sectionToggle1.value, 'addUserModal');
+    }
+
+    // Initialize exampleModal toggle
+    const sectionToggle2 = document.getElementById('sectionToggle2');
+    if (sectionToggle2) {
+        toggleGroup(sectionToggle2.value, 'exampleModal');
+    }
+    console.log('Selected value:', sectionToggle.value);
+
+    if (sectionToggle) {
+        // Initial toggle based on default selected option
+        const initialGroup = sectionToggle.value;
+        const initialModalId = sectionToggle.options[sectionToggle.selectedIndex].getAttribute('data-modal-id');
+        toggleGroup(initialGroup, initialModalId);
+
+        // Add change event listener
+        sectionToggle.addEventListener('change', function () {
+
+            const selectedGroup = this.value;
+            console.log('Change detected!: ',selectedGroup );
+            const modalId = this.options[this.selectedIndex].getAttribute('data-modal-id');
+            console.log(`Section changed to: ${selectedGroup} in modal: ${modalId}`);
+             // Debug logging
+            console.log('Change detected!');
+            console.log({
+                selectedValue: selectedGroup,
+                modalId: modalId,
+                selectedIndex: this.selectedIndex,
+                selectedText: this.options[this.selectedIndex].text
+            });
+            toggleGroup(selectedGroup, modalId);
+        });
+
+        // Method 3: Log all properties of the selected option
+        console.log('Full option details:', {
+            value: sectionToggle.value,
+            text: sectionToggle.options[sectionToggle.selectedIndex].text,
+            modalId: sectionToggle.options[sectionToggle.selectedIndex].getAttribute('data-modal-id'),
+            index: sectionToggle.selectedIndex
+        });
+    }
+
+    // Keep the existing add and submit button handlers
+    const addButton = document.querySelector('.modal-footer .add');
+    if (addButton) {
+        addButton.addEventListener('click', function () {
+            console.log('Add button clicked');
+            // Add your functionality for adding a row here
+        });
+    }
+
+    const submitButton = document.querySelector('.modal-footer .btn-primary');
+    if (submitButton) {
+        submitButton.addEventListener('click', function () {
+            console.log('Submit button clicked');
+            // Add any validation or functionality for submitting the form here
+        });
+    }
+});
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#viewDataModal').on('hidden.bs.modal', function() {
+                $('.inp-group-view').empty();
+                $('.initial-value').empty();
+                $('.ending-value').empty();
+                console.log("Info Modal closed");
+            });
+        });
+
+    </script>
+
     <script>
 document.addEventListener('DOMContentLoaded', function () {
     const modal1 = document.getElementById('addUserModal');
@@ -1831,10 +2437,12 @@ document.addEventListener('DOMContentLoaded', function () {
             initializeModal1();
             modal1Initialized = true;
         }
+       
     });
 
     $('#addUserModal').on('hidden.bs.modal', function () {
         // Clean up event listeners when the modal is closed
+   
         if (addInputHandler) {
             const addButton = document.querySelector('#addUserModal .modal-footer .add');
             addButton.removeEventListener('click', addInputHandler);
@@ -1846,7 +2454,54 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const periodCoveredInput = document.querySelector('#periodcovered');
         const inpGroup = document.querySelector('#addUserModal .inp-group-view');
+        const cltBalanceInput = document.querySelector('#cltinitbalance');
+        const cbBalanceInput = document.querySelector('#cbinitbalance');
         let addCounter = 1;
+
+        periodCoveredInput.addEventListener('change', function() {
+    fetch(`get_monthly.php?date=${this.value}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'true') {
+                // Set the balances from the response for the requested month
+                cltBalanceInput.value = parseFloat(data.clt_start_balance).toFixed(2);
+                cbBalanceInput.value = parseFloat(data.cb_start_balance).toFixed(2);
+            } else {
+                console.error('Error:', data.error);
+
+                // Check if the error is about missing sequential months
+                if (data.missingMonths && data.firstMissingMonth) {
+                    alert(
+                        `Records are missing for certain months. Please start by adding the record for ${data.firstMissingMonth}.`
+                    );
+
+                    // Set the input to the first missing month
+                    const firstMissingMonthWithDay = data.firstMissingMonth + '-01';
+                    periodCoveredInput.value = firstMissingMonthWithDay;
+
+                    // Set the balances for the first missing month from the response
+                    cltBalanceInput.value = parseFloat(data.clt_start_balance).toFixed(2);
+                    cbBalanceInput.value = parseFloat(data.cb_start_balance).toFixed(2);
+
+                } else if (data.error.includes("record already exists")) {
+                    // Error for duplicate record
+                    alert("A record for this month already exists. Please choose a different month.");
+                } else {
+                    // General error handling
+                    alert("An error occurred: " + data.error);
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            alert("An unexpected error occurred. Please try again.");
+
+            // Reset balances to 0.00 if there is a fetch error
+            cltBalanceInput.value = '0.00';
+            cbBalanceInput.value = '0.00';
+        });
+});
+
 
         // Function to format date as YYYY-MM-DD
         function formatDate(date) {
@@ -1900,7 +2555,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Add event listener for adding new input groups
         const addButton = document.querySelector('#addUserModal .modal-footer .add');
         addButton.addEventListener('click', addInputHandler);
-
+        
         // Remove an input group
         function removeInput(event) {
             event.preventDefault(); // Prevent default link behavior
@@ -1936,6 +2591,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Add a new input group
         function addInput(afterElement = null) {
+
+            //for the individual buttons
+            const table = document.querySelector(`#addUserModal #viewDataTable`);
+            const hiddenGroups = {
+                cashTreasury: table.classList.contains('hide-cash-treasury'),
+                cashBank: table.classList.contains('hide-cash-bank'),
+                cashAdvance: table.classList.contains('hide-cash-advance'),
+                pettyCash: table.classList.contains('hide-petty-cash')
+            };
+
+            //for the dropdown
+            // const table = document.querySelector('#addUserModal #viewDataTable');
+            // const selectedGroup = document.getElementById('sectionToggle').value;
+
             const newRow = document.createElement("tr");
 
             const cells = [
@@ -1958,7 +2627,52 @@ document.addEventListener('DOMContentLoaded', function () {
                 createCell('input', '', {type: 'number', name: 'pcf_balance_data[]', required: false, min: 0, step: "0.01", disabled: true, value: 0}),
             ];
 
-            cells.forEach(cell => newRow.appendChild(cell));
+            //for individual buttons
+            cells.forEach((cell, index) => {
+            // Add appropriate hidden classes based on the input name
+            const inputName = cell.querySelector('input')?.name;
+            if (inputName) {
+                if (hiddenGroups.cashTreasury && inputName.startsWith('clt_')) {
+                    cell.classList.add('hidden');
+                }
+                if (hiddenGroups.cashBank && inputName.startsWith('cb_')) {
+                    cell.classList.add('hidden');
+                }
+                if (hiddenGroups.cashAdvance && inputName.startsWith('ca_')) {
+                    cell.classList.add('hidden');
+                }
+                if (hiddenGroups.pettyCash && inputName.startsWith('pcf_')) {
+                    cell.classList.add('hidden');
+                }
+            }
+            newRow.appendChild(cell);
+        });
+
+        //fpr dropdown
+//        cells.forEach((cell) => {
+//     const inputName = cell.querySelector('input')?.name;
+//     if (inputName) {
+//         // Keep common fields visible
+//         if (!inputName.startsWith('date_') && 
+//             !inputName.startsWith('particulars_') && 
+//             !inputName.startsWith('reference_')) {
+            
+//             // Hide only the section-specific cells
+//             if (
+//                 (selectedGroup !== 'cashTreasury' && inputName.startsWith('clt_')) ||
+//                 (selectedGroup !== 'cashBank' && inputName.startsWith('cb_')) ||
+//                 (selectedGroup !== 'cashAdvance' && inputName.startsWith('ca_')) ||
+//                 (selectedGroup !== 'pettyCash' && inputName.startsWith('pcf_'))
+//             ) {
+//                 cell.classList.add('hidden');
+//             }
+//         }
+//     }
+//     newRow.appendChild(cell);
+// });
+
+
+
 
             // Create action buttons
             const hiddenInput = document.createElement('input');
@@ -2112,6 +2826,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 addInput(newRow);
             });
 
+            function initializeBalances(newRow) {
+                // Initialize CLT Balance
+                updateCLTBalances();
+                
+                // Initialize CB Balance
+                updateCBBalances();
+                
+                // Initialize CA Balance
+                updateCABalances();
+                
+                // Initialize PCF Balance
+                updatePCFBalances();
+            }
+
             // Add the new group to the form
             if (afterElement) {
                 afterElement.insertAdjacentElement('afterend', newRow);
@@ -2120,6 +2848,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             update_add_Counter(); 
             updateDateInputs();
+            initializeBalances(newRow);
 
             console.log("New Row Added");
         }
