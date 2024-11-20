@@ -123,7 +123,12 @@ if (mysqli_num_rows($result) > 0) {
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_status" class="input-label">Status:</label>
-                                            <input type="text" id="blotter_statusField" name="blotter_status" class="input-field"  >
+                                            <select id="blotter_statusField" name="blotter_status" class="input-field">
+                                                <option value="" disabled selected>Status</option>
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Settled">Settled</option>
+                                                    <option value="Unsettled">Unsettled</option>
+                                                </select>
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_action" class="input-label">Action Taken:</label>
@@ -215,7 +220,12 @@ if (mysqli_num_rows($result) > 0) {
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_status" class="input-label">Status:</label>
-                                            <input type="text" id="blotter_status" name="blotter_status" class="input-field"  >
+                                            <select id="blotter_status" name="blotter_status" class="input-field">
+                                                <option value="" disabled selected>Status</option>
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Settled">Settled</option>
+                                                    <option value="Unsettled">Unsettled</option>
+                                                </select>
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_action" class="input-label">Action Taken:</label>

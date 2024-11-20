@@ -4,7 +4,7 @@ include('../../connection.php');
 $project_name = mysqli_real_escape_string($con, $_POST["project_name"]);
 
 // Check for duplicate project
-$check_sql = "SELECT * FROM `tb_project` WHERE `project_name` = '$project_name'";
+$check_sql = "SELECT * FROM `tb_project` WHERE `project_name` = '$project_name' AND `isDisplayed` = 1";
 $check_query = mysqli_query($con, $check_sql);
 
 if (mysqli_num_rows($check_query) > 0) {

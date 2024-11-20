@@ -4,8 +4,8 @@ include('../../connection.php');
 
 $event_name = mysqli_real_escape_string($con, $_POST["event_name"]);
 
-// Check for duplicate project
-$check_sql = "SELECT * FROM `tb_event` WHERE `event_name` = '$event_name'";
+// Check for duplicate event
+$check_sql = "SELECT * FROM `tb_event` WHERE `event_name` = '$event_name'  AND `isDisplayed` = 1";
 $check_query = mysqli_query($con, $check_sql);
 
 if (mysqli_num_rows($check_query) > 0) {

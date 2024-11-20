@@ -90,7 +90,12 @@ if (mysqli_num_rows($result) > 0) {
                                 </div>
                                 <div class="form-group">
                                     <label for="requeststatus">Request Status</label>
-                                    <input type="text" id="request_statusField" name="request_statusField" required>
+                                    <select id="request_statusField" name="request_statusField">
+                                        <option value="" disabled selected>Status</option>
+                                            <option value="New">New</option>
+                                            <option value="Ongoing">Ongoing</option>
+                                            <option value="Completed">Completed</option>
+                                        </select>
                                 </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -128,7 +133,12 @@ if (mysqli_num_rows($result) > 0) {
                             </div>
                             <div class="form-group">
                                 <label for="requeststatus">Request Status</label>
-                                <input type="text" id="request_status" name="request_status" required>
+                                <select id="request_status" name="request_status">
+                                        <option value="" disabled selected>Status</option>
+                                            <option value="New">New</option>
+                                            <option value="Ongoing">Ongoing</option>
+                                            <option value="Completed">Completed</option>
+                                        </select>
                             </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Submit</button>
