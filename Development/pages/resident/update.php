@@ -6,7 +6,7 @@ $resident_lastname = $_POST["resident_lastname"];
 $response = [];
 
 // Check for duplicate resident
-$check_sql = "SELECT * FROM `tb_resident` WHERE `resident_firstname` = '$resident_firstname' AND `resident_lastname` = '$resident_lastname'";
+$check_sql = "SELECT * FROM `tb_resident` WHERE `resident_firstname` = '$resident_firstname' AND `resident_lastname` = '$resident_lastname' AND `isDisplayed` = 1";
 $check_query = mysqli_query($con, $check_sql);
 
 if (mysqli_num_rows($check_query) > 0) {

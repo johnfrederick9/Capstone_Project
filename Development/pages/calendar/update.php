@@ -6,7 +6,7 @@ $event_name = $_POST['event_name'];
 $response = [];
 
 // Check for duplicate event
-$check_sql = "SELECT * FROM `tb_event` WHERE `event_name` = '$event_name'";
+$check_sql = "SELECT * FROM `tb_event` WHERE `event_name` = '$event_name'  AND `isDisplayed` = 1";
 $check_query = mysqli_query($con, $check_sql);
 
 if (mysqli_num_rows($check_query) > 0) {

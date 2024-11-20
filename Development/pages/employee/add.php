@@ -5,7 +5,7 @@ $employee_firstname = $_POST["employee_firstname"];
 $employee_lastname = $_POST["employee_lastname"];
 
 // Check for duplicate employee
-$check_sql = "SELECT * FROM `tb_employee` WHERE `employee_firstname` = '$employee_firstname' AND `employee_lastname` = '$employee_lastname'";
+$check_sql = "SELECT * FROM `tb_employee` WHERE `employee_firstname` = '$employee_firstname' AND `employee_lastname` = '$employee_lastname' AND `isDisplayed` = 1";
 $check_query = mysqli_query($con, $check_sql);
 
 if (mysqli_num_rows($check_query) > 0) {

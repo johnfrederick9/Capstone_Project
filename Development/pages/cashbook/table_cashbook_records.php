@@ -467,8 +467,8 @@ button[data-group]:not(.active) {
                             <h1>Cashbook</h1>
                         </div>
                         <div class="table-actions">    
-                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#initModal" class="add-popup">Beginning Balance</button>
-                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-popup">+ Add Item</button>
+                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#initModal" class="add-table-btn">Beginning Balance</button>
+                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-table-btn">+ Add Item</button>
                             <!--<button class="print-btn" title="Print">
                                 <i class="bx bx-printer"></i>
                             </button>-->

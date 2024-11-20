@@ -4,7 +4,7 @@ include('../../connection.php');
 $indigency_cname = mysqli_real_escape_string($con, $_POST["indigency_cname"]);
 
 // Check for duplicate indigency
-$check_sql = "SELECT * FROM `tb_indigency` WHERE `indigency_cname` = '$indigency_cname'";
+$check_sql = "SELECT * FROM `tb_indigency` WHERE `indigency_cname` = '$indigency_cname' AND `isDisplayed` = 1";
 $check_query = mysqli_query($con, $check_sql);
 
 if (mysqli_num_rows($check_query) > 0) {

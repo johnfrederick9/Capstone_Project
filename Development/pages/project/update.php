@@ -5,7 +5,7 @@ $project_name = $_POST['project_name'];
 $response = [];
 
 // Check for duplicate project
-$check_sql = "SELECT * FROM `tb_project` WHERE `project_name` = '$project_name'";
+$check_sql = "SELECT * FROM `tb_project` WHERE `project_name` = '$project_name' AND `isDisplayed` = 1";
 $check_query = mysqli_query($con, $check_sql);
 
 if (mysqli_num_rows($check_query) > 0) {
