@@ -2,7 +2,8 @@
 include('../../connection.php');
 
 $output = array();
-$sql = "SELECT * FROM tb_blotter";
+$sql = "SELECT * FROM tb_blotter WHERE isDisplayed = 1"; // Only fetch records with isDisplayed = 1
+
 
 $totalQuery = mysqli_query($con, $sql);
 $total_all_rows = mysqli_num_rows($totalQuery);
@@ -26,7 +27,7 @@ $columns = array(
 
 if (isset($_POST['search']['value'])) {
     $search_value = $_POST['search']['value'];
-    $sql .= " WHERE blotter_complainant like '%".$search_value."%'";
+	$sql .= " AND (blotter_complainant LIKE '%" . $search_value . "%'";
     $sql .= " OR blotter_complainant_no like '%".$search_value."%'";
     $sql .= " OR blotter_complainant_add like '%".$search_value."%'";
     $sql .= " OR blotter_complainee like '%".$search_value."%'";
@@ -38,16 +39,8 @@ if (isset($_POST['search']['value'])) {
     $sql .= " OR blotter_incidence like '%".$search_value."%'";
     $sql .= " OR blotter_date_recorded like '%".$search_value."%'";
     $sql .= " OR blotter_date_settled like '%".$search_value."%'";
-    $sql .= " OR blotter_recorded_by like '%".$search_value."%'";
+    $sql .= " OR blotter_recorded_by like '%".$search_value."%')";
     
-}
-
-if (isset($_POST['order'])) {
-    $column_name = $_POST['order'][0]['column'];
-    $order = $_POST['order'][0]['dir'];
-    $sql .= " ORDER BY ".$columns[$column_name]." ".$order."";
-} else {
-    $sql .= " ORDER BY blotter_id desc";
 }
 
 if ($_POST['length'] != -1) {
@@ -61,6 +54,8 @@ $count_rows = mysqli_num_rows($query);
 $data = array();
 while ($row = mysqli_fetch_assoc($query)) {
     $sub_array = array();
+    $sub_array[] = $row['blotter_id'];
+    $sub_array[] = '<input type="checkbox" class="row-checkbox" value="'.$row['blotter_id'].'">';
     $sub_array[] = $row['blotter_complainant'];
     $sub_array[] = $row['blotter_complainant_no'];
     $sub_array[] = $row['blotter_complainant_add'];
@@ -74,12 +69,28 @@ while ($row = mysqli_fetch_assoc($query)) {
     $sub_array[] = $row['blotter_date_recorded'];
     $sub_array[] = $row['blotter_date_settled'];
     $sub_array[] = $row['blotter_recorded_by'];
+    $sub_array[] = '<div class="dropdown">
+                    <button class="action-btn" onclick="toggleDropdown(this)">
+                        ACTIONS <i class="bx bx-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="javascript:void(0);" data-id="' . $row['blotter_id'] . '" class="dropdown-item view-btn viewbtn">
+                            <i class="bx bx-show"></i>
+                        </a>
+                        <a href="javascript:void(0);" data-id="' . $row['blotter_id'] . '" class="dropdown-item update-btn editbtn">
+                            <i class="bx bx-edit"></i>
+                        </a>
+                        <a href="javascript:void(0);" data-id="' . $row['blotter_id'] . '" class="dropdown-item delete-btn deleteBtn">
+                            <i class="bx bx-trash"></i>
+                        </a>
+                    </div>
+                </div>';
     $data[] = $sub_array;
 }
 
 $output = array(
     'draw' => intval($_POST['draw']),
-    'recordsTotal' => $count_rows,
+    'recordsTotal' => $total_all_rows,
     'recordsFiltered' => $total_all_rows,
     'data' => $data,
 );

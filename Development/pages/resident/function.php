@@ -17,13 +17,13 @@ $(document).ready(function() {
             },
             "aoColumnDefs": [
                 {
-                "targets": [0],  // Target the first column (aData[0])
+                "targets": [0,4],  // Target the first column (aData[0])
                 "visible": false, // Hide the column
                 "searchable": false // Disable search for this column if needed
                 },
                 {
                 "bSortable": false,
-                "aTargets": [0,1,2,3,4,5,6,7,8,9,10]
+                "aTargets": [0,1,2,3,5,6,7,8,9,10]
             }],
             // Event that triggers when the table is redrawn (pagination or search)
             "drawCallback": function() {

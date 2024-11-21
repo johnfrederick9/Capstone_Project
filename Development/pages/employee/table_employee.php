@@ -24,9 +24,7 @@ include '../../sidebar.php';
                                 <i class="bx bx-printer"></i>
                             </button>
                         </th>
-                        <th>First Name</th>
-                        <th>Middle Name</th>
-                        <th>Last Name</th>
+                        <th>Full Name</th>
                         <th>Address</th>
                         <th>Educational Attainment</th>
                         <th>Position</th>
@@ -79,6 +77,7 @@ include '../../sidebar.php';
                                 <option value="" disabled selected>Sex</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
+                                    <option value="LGBTQ">LGBTQ</option>
                                 </select>
                             </div>
                             <div class="input-wrapper">
@@ -196,13 +195,14 @@ include '../../sidebar.php';
                                 <option value="" disabled selected>Sex</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
+                                    <option value="LGBTQ">LGBTQ</option>
                                 </select>
                             </div>
 
                             <div class="input-wrapper">
                                 <label for="Suffixes" class="input-label">Suffixes:</label>
                                 <select id="employee_suffixes" class="input-field" name="employee_suffixes" require>
-                                    <option value="None">None</option>
+                                    <option value=" ">None</option>
                                     <option value="Jr">Jr</option>
                                     <option value="Sr">Sr</option>
                                 </select>

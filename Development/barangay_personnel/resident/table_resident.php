@@ -1,6 +1,7 @@
 <?php
 include '../../head.php';
 include "../../sidebar_officials.php";
+
 ?>
 <body>
 <style>
@@ -30,14 +31,18 @@ include "../../sidebar_officials.php";
                     </div>
                     <table id="example" class="table-table">
                         <thead>
-                            <th>First Name</th>
-                            <th>Middle Name</th>
-                            <th>Last Name</th>
-                            <th>Maiden Name</th>
+                            <th>#</th>
+                            <th><button class="print-all-btn" title="Print All">
+                                    <i class="bx bx-printer"></i>
+                                </button>
+                            </th>
+                            <th>Full Name</th>
                             <th>Address</th>
+                            <th>Maiden Name</th>
                             <th>Educational Attainment</th>
                             <th>Birth Date</th>
                             <th>Age</th>
+                            <th>Contact Number</th>
                             <th>Status</th>
                         </thead>
                         <tbody>
@@ -46,6 +51,9 @@ include "../../sidebar_officials.php";
 
                     <script type="text/javascript">
                       $(document).ready(function() {
+                        // Array to store selected checkbox IDs
+                        var selectedIds = [];
+
                         var table = $('#example').DataTable({
                             "fnCreatedRow": function(nRow, aData, iDataIndex) {
                                 $(nRow).attr('id', aData[0]);
@@ -58,10 +66,16 @@ include "../../sidebar_officials.php";
                                 'url': 'fetch_data.php',
                                 'type': 'post',
                             },
-                            "aoColumnDefs": [{
+                            "aoColumnDefs": [
+                                {
+                                "targets": [0,1,4],  // Target the first column (aData[0])
+                                "visible": false, // Hide the column
+                                "searchable": false // Disable search for this column if needed
+                                },
+                                {
                                 "bSortable": false,
-                                "aTargets": [7]
-                            }]
+                                "aTargets": [0]
+                            }],
                         });
                     });
                     </script>

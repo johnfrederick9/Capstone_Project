@@ -51,14 +51,25 @@ while ($row = mysqli_fetch_assoc($query)) {
     $currentDate = new DateTime();
     $age = $currentDate->diff($birthdate)->y;
 
+       // Format first name, middle initial, last name, and suffix with proper capitalization
+       $firstname = ucwords(strtolower($row['resident_firstname']));
+       $lastname = ucwords(strtolower($row['resident_lastname']));
+       $middle_initial = $row['resident_middlename'] 
+           ? strtoupper(substr($row['resident_middlename'], 0, 1)) . '.' 
+           : '';
+       $suffix = $row['resident_suffixes'] 
+           ? ' ' . ucwords(strtolower($row['resident_suffixes'])) 
+           : '';
+   
+       // Combine the formatted names into a full name
+       $full_name = $firstname . ' ' . $middle_initial . ' ' . $lastname . $suffix;
+
     $sub_array = array();
     $sub_array[] = $row['resident_id'];
     $sub_array[] = '<input type="checkbox" class="row-checkbox" value="' . $row['resident_id'] . '">';
-    $sub_array[] = $row['resident_firstname'];
-    $sub_array[] = $row['resident_middlename'];
-    $sub_array[] = $row['resident_lastname'];
-    $sub_array[] = $row['resident_maidenname'];
+    $sub_array[] = $full_name; // Combined full name
     $sub_array[] = $row['resident_address'];
+    $sub_array[] = $row['resident_maidenname'];
     $sub_array[] = $row['resident_educationalattainment'];
     $sub_array[] = $row['resident_birthdate'];
     $sub_array[] = $age; // Use the computed age
@@ -83,6 +94,7 @@ while ($row = mysqli_fetch_assoc($query)) {
     </div>';
     $data[] = $sub_array;
 }
+
 
 $output = array(
     'draw' => intval($_POST['draw']),

@@ -3,6 +3,21 @@ include '../../head.php';
 include "../../sidebar_officials.php";
 ?>
 <style>
+    .form-group{
+        margin-top: -5px;
+    }
+    .head{
+        margin-top: 10px;
+    }
+    .financial-rao{
+        margin-top: 20px;
+    }
+    .financial-rao .print-btn, .add-popup{
+        display: none;
+    }
+    .dataTables_filter{
+      margin-left: 800px;
+    }
 
 .column-titles {
   display: grid;

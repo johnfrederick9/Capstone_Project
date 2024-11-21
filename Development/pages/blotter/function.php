@@ -137,120 +137,124 @@ $(document).ready(function() {
         }
     });
     $(document).on('submit', '#addBlotter', function(e) {
-        e.preventDefault();
-        var blotter_complainant = $('#blotter_complainant').val();
-        var blotter_complainant_no = $('#blotter_complainant_no').val();
-        var blotter_complainant_add = $('#blotter_complainant_add').val();
-        var blotter_complainee = $('#blotter_complainee').val();
-        var blotter_complainee_no = $('#blotter_complainee_no').val();
-        var blotter_complainee_add = $('#blotter_complainee_add').val();
-        var blotter_complaint = $('#blotter_complaint').val();
-        var blotter_status = $('#blotter_status').val();
-        var blotter_action = $('#blotter_action').val();
-        var blotter_incidence = $('#blotter_incidence').val();
-        var blotter_date_recorded = $('#blotter_date_recorded').val();
-        var blotter_date_settled = $('#blotter_date_settled').val();
-        var blotter_recorded_by = $('#blotter_recorded_by').val();
+    e.preventDefault();
+
+    // Residents data fetched from the backend
+    const residents = <?php echo json_encode($residents); ?>;
+
+    // Validation function for checking if the resident exists
+    function validateResident(name, type) {
+        const isValid = residents.some(resident => resident.resident_fullname === name);
+        if (!isValid) {
+            showAlert(`No match found for the ${type}: ${name}`, "alert-danger");
+        }
+        return isValid;
+    }
+
+    // Gather form values
+    var blotter_complainant = $('#blotter_complainant').val().trim();
+    var blotter_complainant_no = $('#blotter_complainant_no').val();
+    var blotter_complainant_add = $('#blotter_complainant_add').val().trim();
+    var blotter_complainee = $('#blotter_complainee').val().trim();
+    var blotter_complainee_no = $('#blotter_complainee_no').val();
+    var blotter_complainee_add = $('#blotter_complainee_add').val().trim();
+    var blotter_complaint = $('#blotter_complaint').val();
+    var blotter_status = $('#blotter_status').val();
+    var blotter_action = $('#blotter_action').val();
+    var blotter_incidence = $('#blotter_incidence').val();
+    var blotter_date_recorded = $('#blotter_date_recorded').val();
+    var blotter_date_settled = $('#blotter_date_settled').val();
+    var blotter_recorded_by = $('#blotter_recorded_by').val();
+
+    // Check if all required fields are filled
+    if (
+        blotter_complainant &&
+        blotter_complainant_add &&
+        blotter_complainee &&
+        blotter_complainee_add &&
+        blotter_complaint &&
+        blotter_status &&
+        blotter_action &&
+        blotter_incidence &&
+        blotter_date_recorded
+    ) {
+        // Validate complainant and complainee
         if (
-            blotter_complainant &&
-            blotter_complainant_add &&
-            blotter_complainee &&
-            blotter_complainee_add &&
-            blotter_complaint &&
-            blotter_status &&
-            blotter_action &&
-            blotter_incidence &&
-            blotter_date_recorded &&
-            blotter_date_settled &&
-            blotter_recorded_by
+            !validateResident(blotter_complainant, "complainant") || 
+            !validateResident(blotter_complainee, "complainee")
         ) {
-            $.ajax({
-                url: "add.php",
-                type: "post",
-                data: {
-                    blotter_complainant: blotter_complainant,
-                    blotter_complainant_no: blotter_complainant_no,
-                    blotter_complainant_add: blotter_complainant_add,
-                    blotter_complainee: blotter_complainee,
-                    blotter_complainee_no: blotter_complainee_no,
-                    blotter_complainee_add: blotter_complainee_add,
-                    blotter_complaint: blotter_complaint,
-                    blotter_status: blotter_status,
-                    blotter_action: blotter_action,
-                    blotter_incidence: blotter_incidence,
-                    blotter_date_recorded: blotter_date_recorded,
-                    blotter_date_settled: blotter_date_settled,
-                    blotter_recorded_by: blotter_recorded_by
-                },
-                success: function(data) {
-                    var json = JSON.parse(data);
-                    var status = json.status;
-                    // Validate blotter_complainant_no if it has a value
-                    var blotter_complainant_no = $('#blotter_complainant_no').val() || $('#complainantContactField').val(); // Check both fields for add and update
+            return; // Stop submission if validation fails
+        }
 
-                    if (blotter_complainant_no) { // Only run validation if a contact number is provided
-                        // Ensure the contact starts with either '0' or '+63'
-                        if (!blotter_complainant_no.startsWith('0') && !blotter_complainant_no.startsWith('+63')) {
-                            showAlert("Complainant contact should start with '0' or '+63'.", "alert-danger");
-                            return;
-                        }
+        // Validate contact numbers
+        function validateContact(contact, type) {
+            if (contact) { // Only run validation if a contact number is provided
+                if (!contact.startsWith('0') && !contact.startsWith('+63')) {
+                    showAlert(`${type} contact should start with '0' or '+63'.`, "alert-danger");
+                    return false;
+                }
+                if (contact.startsWith('+63')) {
+                    contact = contact.replace('+63', '0'); // Replace "+63" with "0"
+                }
+                const contactDigits = contact.replace(/\D/g, ''); // Remove non-numeric characters
+                if (contactDigits.length !== 11) {
+                    showAlert(`${type} contact should have exactly 11 digits after formatting.`, "alert-danger");
+                    return false;
+                }
+            }
+            return true;
+        }
 
-                        // Check if it starts with "+63" and remove the prefix for validation
-                        if (blotter_complainant_no.startsWith('+63')) {
-                            blotter_complainant_no = blotter_complainant_no.replace('+63', '0'); // Replace "+63" with "0" for consistent length validation
-                        }
+        if (
+            !validateContact(blotter_complainant_no, "Complainant") ||
+            !validateContact(blotter_complainee_no, "Complainee")
+        ) {
+            return; // Stop submission if contact validation fails
+        }
 
-                        // Remove all non-numeric characters (like spaces, dashes, etc.)
-                        var blotter_complainant_no_digits = blotter_complainant_no.replace(/\D/g, '');
+        // Proceed with AJAX request
+        $.ajax({
+            url: "add.php",
+            type: "post",
+            data: {
+                blotter_complainant: blotter_complainant,
+                blotter_complainant_no: blotter_complainant_no,
+                blotter_complainant_add: blotter_complainant_add,
+                blotter_complainee: blotter_complainee,
+                blotter_complainee_no: blotter_complainee_no,
+                blotter_complainee_add: blotter_complainee_add,
+                blotter_complaint: blotter_complaint,
+                blotter_status: blotter_status,
+                blotter_action: blotter_action,
+                blotter_incidence: blotter_incidence,
+                blotter_date_recorded: blotter_date_recorded,
+                blotter_date_settled: blotter_date_settled,
+                blotter_recorded_by: blotter_recorded_by
+            },
+            success: function(data) {
+                var json = JSON.parse(data);
+                var status = json.status;
 
-                        // Check if blotter_complainant_no has exactly 11 digits
-                        if (blotter_complainant_no_digits.length !== 11) {
-                            showAlert("Complainant contact should have exactly 11 digits after formatting.", "alert-danger");
-                            return;
-                        }
-                    }
-
-                    // Validate blotter_complainee_no if it has a value
-                    var blotter_complainee_no = $('#blotter_complainee_no').val() || $('#complaineeContactField').val(); // Check both fields for add and update
-
-                    if (blotter_complainee_no) { // Only run validation if a contact number is provided
-                        // Ensure the contact starts with either '0' or '+63'
-                        if (!blotter_complainee_no.startsWith('0') && !blotter_complainee_no.startsWith('+63')) {
-                            showAlert("Complainee contact should start with '0' or '+63'.", "alert-danger");
-                            return;
-                        }
-
-                        // Check if it starts with "+63" and remove the prefix for validation
-                        if (blotter_complainee_no.startsWith('+63')) {
-                            blotter_complainee_no = blotter_complainee_no.replace('+63', '0'); // Replace "+63" with "0" for consistent length validation
-                        }
-
-                        // Remove all non-numeric characters (like spaces, dashes, etc.)
-                        var blotter_complainee_no_digits = blotter_complainee_no.replace(/\D/g, '');
-
-                        // Check if blotter_complainee_no has exactly 11 digits
-                        if (blotter_complainee_no_digits.length !== 11) {
-                            showAlert("Complainee contact should have exactly 11 digits after formatting.", "alert-danger");
-                            return;
-                        }
-                    }
-
-                    if (status === 'duplicate') {
+                if (status === 'duplicate') {
                     showAlert("Blotter with the same name already exists.", "alert-danger");
-                    } else if (status == 'true') {
-                        $('#example').DataTable().draw();
-                        $('#addUserModal').modal('hide');
-                        showAlert("Blotter added successfully.", "alert-success");
-                        $('#addBlotter')[0].reset();  // Clear the form fields
+                } else if (status === 'true') {
+                    $('#example').DataTable().draw();
+                    $('#addUserModal').modal('hide');
+                    showAlert("Blotter added successfully.", "alert-success");
+                    $('#addBlotter')[0].reset(); // Clear the form fields
                 } else {
                     showAlert("Failed to add blotter.", "alert-danger");
                 }
-                }
-            });
-        } else {
-            showAlert("Fill all the required fields", "alert-danger");
-        }
-    });
+            }
+        });
+    } else {
+        showAlert("Fill all the required fields", "alert-danger");
+    }
+});
+
+
+
+
     $(document).on('submit', '#updateBlotter', function(e) {
     e.preventDefault();
 
@@ -309,9 +313,7 @@ $(document).ready(function() {
         blotter_status &&
         blotter_action &&
         blotter_incidence &&
-        blotter_date_recorded &&
-        blotter_date_settled &&
-        blotter_recorded_by
+        blotter_date_recorded 
     ) {
         // Proceed with the AJAX request
         $.ajax({
@@ -544,4 +546,70 @@ document.addEventListener('keydown', function(event) {
         document.getElementById('confirmDeleteBtn').click();
     }
 });
+</script>
+    <script>
+    // Residents data fetched from the backend
+    const residents = <?php echo json_encode($residents); ?>;
+
+    // Variables to track selected complainant and complainee
+    let selectedComplainant = null;
+    let selectedComplainee = null;
+
+    // Function to dynamically filter residents based on input
+    function filterResidents(type, formPrefix = '') {
+        const inputField = document.getElementById(`${formPrefix}blotter_${type}`);
+        const suggestionsList = document.getElementById(`${formPrefix}${type}Suggestions`);
+        const query = inputField.value.toLowerCase().trim();
+
+        // Clear the suggestions list
+        suggestionsList.innerHTML = '';
+
+        if (query === '') return; // Exit if query is empty
+
+        // Filter residents
+        const filteredResidents = residents.filter(resident => {
+            const name = resident.resident_fullname.toLowerCase();
+
+            // Avoid duplication: Exclude complainee when searching for complainant and vice versa
+            if (type === 'complainant' && resident.resident_fullname === selectedComplainee) {
+                return false;
+            }
+            if (type === 'complainee' && resident.resident_fullname === selectedComplainant) {
+                return false;
+            }
+
+            return name.includes(query); // Return true if the name matches the query
+        });
+
+        // Populate suggestions
+        if (filteredResidents.length === 0) {
+            const li = document.createElement('li');
+            li.textContent = 'No matching residents found';
+            li.className = 'no-results'; // Optional styling
+            suggestionsList.appendChild(li);
+        } else {
+            filteredResidents.forEach(resident => {
+                const li = document.createElement('li');
+                li.textContent = resident.resident_fullname;
+                li.onclick = () => selectResident(type, resident.resident_fullname, formPrefix);
+                suggestionsList.appendChild(li);
+            });
+        }
+    }
+
+    // Function to select a resident
+    function selectResident(type, name, formPrefix = '') {
+        const inputField = document.getElementById(`${formPrefix}blotter_${type}`);
+        const suggestionsList = document.getElementById(`${formPrefix}${type}Suggestions`);
+
+        inputField.value = name; // Set the selected name in the input field
+        suggestionsList.innerHTML = ''; // Clear suggestions
+
+        // Track the selection
+        if (type === 'complainant') {
+            selectedComplainant = name;
+        } else if (type === 'complainee') {
+            selectedComplainee = name;
+        }
+    }
 </script>

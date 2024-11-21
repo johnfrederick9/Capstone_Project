@@ -2873,5 +2873,43 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
     </script>
+    <script>
+ function toggleDropdown(button) {
+    // Get the dropdown menu associated with the button
+    var dropdownMenu = button.nextElementSibling;
+    
+    // Get the icon element in the button
+    var icon = button.querySelector('i');
+
+    // Toggle the display of the dropdown menu
+    if (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") {
+        dropdownMenu.style.display = "flex"; // Show the menu as flex (horizontal layout)
+        icon.classList.remove('bx-chevron-down');
+        icon.classList.add('bx-chevron-up');
+    } else {
+        dropdownMenu.style.display = "none"; // Hide the menu
+        icon.classList.remove('bx-chevron-up');
+        icon.classList.add('bx-chevron-down');
+    }
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+    if (!event.target.matches('.action-btn') && !event.target.closest('.dropdown')) {
+        var dropdowns = document.getElementsByClassName("dropdown-menu");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.style.display === "flex") {
+                openDropdown.style.display = "none";
+
+                // Reset the icon to down-arrow for each open button
+                var icon = openDropdown.previousElementSibling.querySelector('i');
+                icon.classList.remove('bx-chevron-up');
+                icon.classList.add('bx-chevron-down');
+            }
+        }
+    }
+}
+</script>
 
 </html>

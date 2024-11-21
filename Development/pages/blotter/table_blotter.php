@@ -2,11 +2,11 @@
 include '../../head.php';
 include '../../sidebar.php';
 include '../../connection.php';
-// Assuming you have a database connection in $conn
+
+// Fetch residents from the database
 $query = "SELECT resident_id, CONCAT(resident_firstname, ' ', 
                                      IF(resident_middlename != '' AND resident_middlename IS NOT NULL, CONCAT(LEFT(resident_middlename, 1), '.'), ''), ' ', 
-                                     resident_lastname) 
-          AS resident_fullname 
+                                     resident_lastname) AS resident_fullname 
           FROM tb_resident";
 $result = mysqli_query($conn, $query);
 
@@ -62,8 +62,9 @@ if (mysqli_num_rows($result) > 0) {
                 <?php include 'function.php'?>
                 </section><!-- .home-->
                 <!-- Modal -->
-                <!-- Update Blotter -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                 <section class="blotter-modal">
+                 <!-- Update Blotter -->
+                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -79,14 +80,7 @@ if (mysqli_num_rows($result) > 0) {
                                     <div class="form-grid">
                                     <div class="input-wrapper">
                                             <label for="blotter_complainant" class="input-label">Complainant's Name:</label>
-                                            <select id="blotter_complainantField" name="blotter_complainant" class="input-field"  >
-                                                <option value="" disabled selected>Select a complainant</option>
-                                                <?php foreach ($residents as $resident): ?>
-                                                    <option value="<?php echo $resident['resident_fullname']; ?>">
-                                                        <?php echo htmlspecialchars($resident['resident_fullname']); ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                            </select>
+                                            <input id="blotter_complainantField" name="blotter_complainant" class="input-field"  readonly>
                                         </div>
                                         <div class="input-wrapper">
                                         <label for="resident_contact" class="input-label">Complainant's Contact No.:</label>
@@ -99,14 +93,7 @@ if (mysqli_num_rows($result) > 0) {
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainee" class="input-label">Complainee's Name:</label>
-                                            <select id="blotter_complaineeField" name="blotter_complainee" class="input-field"  >
-                                                <option value="" disabled selected>Select a complainee</option>
-                                                <?php foreach ($residents as $resident): ?>
-                                                    <option value="<?php echo $resident['resident_fullname']; ?>">
-                                                        <?php echo htmlspecialchars($resident['resident_fullname']); ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                            </select>
+                                            <input id="blotter_complaineeField" name="blotter_complainee" class="input-field" readonly>
                                         </div> 
                                         <div class="input-wrapper">
                                         <label for="resident_contact" class="input-label">Complainee's Contact No.:</label>
@@ -122,15 +109,6 @@ if (mysqli_num_rows($result) > 0) {
                                             <input type="text" id="blotter_complaintField" name="blotter_complaint" class="input-field"  >
                                         </div>
                                         <div class="input-wrapper">
-                                            <label for="blotter_status" class="input-label">Status:</label>
-                                            <select id="blotter_statusField" name="blotter_status" class="input-field">
-                                                <option value="" disabled selected>Status</option>
-                                                    <option value="Pending">Pending</option>
-                                                    <option value="Settled">Settled</option>
-                                                    <option value="Unsettled">Unsettled</option>
-                                                </select>
-                                        </div>
-                                        <div class="input-wrapper">
                                             <label for="blotter_action" class="input-label">Action Taken:</label>
                                             <input type="text" id="blotter_actionField" name="blotter_action" class="input-field"  >
                                         </div>
@@ -142,25 +120,36 @@ if (mysqli_num_rows($result) > 0) {
                                             <label for="blotter_date_recorded" class="input-label">Date Recorded:</label>
                                             <input type="date" id="blotter_date_recordedField" name="blotter_date_recorded" class="input-field"  >
                                         </div>
-                                        <div class="input-wrapper">
-                                            <label for="blotter_date_settled" class="input-label">Date Settled:</label>
-                                            <input type="date" id="blotter_date_settledField" name="blotter_date_settled"  class="input-field">
-                                        </div>
-                                        <div class="input-wrapper">
-                                            <label for="blotter_recorded_by" class="input-label">Recorded By:</label>
-                                            <input type="text" id="blotter_recorded_byField" name="blotter_recorded_by" class="input-field"  >
-                                        </div>
-                                    </div>
+                                    <div class="input-wrapper">
+                                    <label for="blotter_status" class="input-label">Status:</label>
+                                    <select id="blotter_statusField" name="blotter_status" class="input-field">
+                                        <option value="" disabled selected>Status</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Settled">Settled</option>
+                                        <option value="Unsettled">Unsettled</option>
+                                    </select>
                                 </div>
+                                <!-- Hidden Input Fields -->
+                                <div class="input-wrapper" id="dateSettledWrapper">
+                                    <label for="blotter_date_settled" class="input-label">Date Settled:</label>
+                                    <input type="date" id="blotter_date_settledField" name="blotter_date_settled" class="input-field">
+                                </div>
+                                <div class="input-wrapper" id="recordedByWrapper">
+                                    <label for="blotter_recorded_by" class="input-label">Recorded By:</label>
+                                    <input type="text" id="blotter_recorded_byField" name="blotter_recorded_by" class="input-field">
+                                </div>
+                                <!-- Other Input Fields -->
                             </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
-                </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
             </div>
+        </div>
+    </div>
+</div>
            <!-- Add Blotter -->
         <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -174,17 +163,14 @@ if (mysqli_num_rows($result) > 0) {
                             <div class="certificate">                              
                                 <div class="add">
                                     <div class="form-grid">                                      
-                                        <div class="input-wrapper">
-                                            <label for="blotter_complainant" class="input-label">Complainant's Name:</label>
-                                            <select id="blotter_complainant" name="blotter_complainant" class="input-field"  >
-                                                <option value="" disabled selected>Select a complainant</option>
-                                                <?php foreach ($residents as $resident): ?>
-                                                    <option value="<?php echo $resident['resident_fullname']; ?>">
-                                                        <?php echo htmlspecialchars($resident['resident_fullname']); ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
+                                    <div class="input-wrapper">
+                                    <label for="add_complainantField" class="input-label">Complainant:</label>
+                                    <input type="text" class="input-field" id="blotter_complainant" name="blotter_complainant" 
+                                        oninput="filterResidents('complainant')" 
+                                        onfocus="filterResidents('complainant')"
+                                        onblur="setTimeout(() => document.getElementById('complainantSuggestions').innerHTML = '', 200)">
+                                    <ul id="complainantSuggestions" class="suggestions-list"></ul>
+                                    </div>
                                         <div class="input-wrapper">
                                         <label for="blotter_complainant_no" class="input-label">Complainant's Contact No.:</label>
                                             <input type="tel" placeholder="Enter 11-digit number" id="blotter_complainant_no" name="blotter_complainant_no" class="input-field" maxlength="16" require 
@@ -195,15 +181,12 @@ if (mysqli_num_rows($result) > 0) {
                                             <input type="text" id="blotter_complainant_add" name="blotter_complainant_add" class="input-field"  >
                                         </div>
                                         <div class="input-wrapper">
-                                            <label for="blotter_complainee" class="input-label">Complainee's Name:</label>
-                                            <select id="blotter_complainee" name="blotter_complainee" class="input-field"  >
-                                                <option value="" disabled selected>Select a complainee</option>
-                                                <?php foreach ($residents as $resident): ?>
-                                                    <option value="<?php echo $resident['resident_fullname']; ?>">
-                                                        <?php echo htmlspecialchars($resident['resident_fullname']); ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                            </select>
+                                        <label for="blotter_complainee" class="input-label">Complainee:</label>
+                                        <input type="text" class="input-field" id="blotter_complainee" name="blotter_complainee" 
+                                            oninput="filterResidents('complainee')" 
+                                            onfocus="filterResidents('complainee')"
+                                            onblur="setTimeout(() => document.getElementById('complaineeSuggestions').innerHTML = '', 200)">
+                                        <ul id="complaineeSuggestions" class="suggestions-list"></ul>
                                         </div>
                                         <div class="input-wrapper">
                                         <label for="blotter_complainee_no" class="input-label">Complainee's Contact No.:</label>
@@ -219,15 +202,6 @@ if (mysqli_num_rows($result) > 0) {
                                             <input type="text" id="blotter_complaint" name="blotter_complaint" class="input-field"  >
                                         </div>
                                         <div class="input-wrapper">
-                                            <label for="blotter_status" class="input-label">Status:</label>
-                                            <select id="blotter_status" name="blotter_status" class="input-field">
-                                                <option value="" disabled selected>Status</option>
-                                                    <option value="Pending">Pending</option>
-                                                    <option value="Settled">Settled</option>
-                                                    <option value="Unsettled">Unsettled</option>
-                                                </select>
-                                        </div>
-                                        <div class="input-wrapper">
                                             <label for="blotter_action" class="input-label">Action Taken:</label>
                                             <input type="text" id="blotter_action" name="blotter_action" class="input-field"  >
                                         </div>
@@ -238,6 +212,14 @@ if (mysqli_num_rows($result) > 0) {
                                         <div class="input-wrapper">
                                             <label for="blotter_date_recorded" class="input-label">Date Recorded:</label>
                                             <input type="date" id="blotter_date_recorded" name="blotter_date_recorded" class="input-field"  >
+                                        </div>
+                                        <div class="input-wrapper">
+                                            <label for="blotter_status" class="input-label">Status:</label>
+                                            <select id="blotter_status" name="blotter_status" class="input-field">
+                                                <option value="" disabled selected>Status</option>
+                                                    <option value="New">New</option>
+                                                    <option value="Pending">Pending</option>
+                                                </select>
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_date_settled" class="input-label">Date Settled:</label>
@@ -258,6 +240,7 @@ if (mysqli_num_rows($result) > 0) {
                 </div>
             </div>
         </div>
+         </section>
         <!-- View Modal -->
         <section class="view-modal">
             <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
@@ -307,6 +290,24 @@ if (mysqli_num_rows($result) > 0) {
             </div>
         </div>
     </section>
+    <script>
+        // JavaScript to toggle the visibility of input fields based on status
+        document.getElementById('blotter_statusField').addEventListener('change', function () {
+            const status = this.value;
+            const dateSettledWrapper = document.getElementById('dateSettledWrapper');
+            const recordedByWrapper = document.getElementById('recordedByWrapper');
+
+            if (status === 'Settled') {
+                // Show fields for "Settled"
+                dateSettledWrapper.style.display = 'block';
+                recordedByWrapper.style.display = 'block';
+            } else if (status === 'Pending' || status === 'Unsettled') {
+                // Hide fields for "Pending" or "Unsettled"
+                dateSettledWrapper.style.display = 'none';
+                recordedByWrapper.style.display = 'none';
+            }
+        });
+    </script>
     </body> 
 </html>
 

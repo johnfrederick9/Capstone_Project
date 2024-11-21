@@ -24,11 +24,9 @@ include '../../sidebar.php';
                                     <i class="bx bx-printer"></i>
                                 </button>
                             </th>
-                            <th>First Name</th>
-                            <th>Middle Name</th>
-                            <th>Last Name</th>
-                            <th>Maiden Name</th>
+                            <th>Full Name</th>
                             <th>Address</th>
+                            <th>Maiden Name</th>
                             <th>Educational Attainment</th>
                             <th>Birth Date</th>
                             <th>Age</th>
@@ -79,12 +77,13 @@ include '../../sidebar.php';
                                 <option value="" disabled selected>Sex</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
+                                    <option value="LGBTQ">LGBTQ</option>
                                 </select>
                             </div>
                             <div class="input-wrapper">
                                 <label for="Suffixes" class="input-label">Suffixes:</label>
                                 <select id="suffixesField" class="input-field" name="resident_suffixes" require>
-                                    <option value="None">None</option>
+                                    <option value=" ">None</option>
                                     <option value="Jr">Jr</option>
                                     <option value="Sr">Sr</option>
                                 </select>
@@ -221,12 +220,13 @@ include '../../sidebar.php';
                                 <option value="" disabled selected>Sex</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
+                                    <option value="LGBTQ">LGBTQ</option>
                                 </select>
                             </div>
                             <div class="input-wrapper">
                                 <label for="Suffixes" class="input-label">Suffixes:</label>
                                 <select id="resident_suffixes" class="input-field" name="resident_suffixes" require>
-                                    <option value="None">None</option>
+                                    <option value=" ">None</option>
                                     <option value="Jr">Jr</option>
                                     <option value="Sr">Sr</option>
                                 </select>

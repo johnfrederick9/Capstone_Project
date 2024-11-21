@@ -3,7 +3,7 @@ include 'head.php';
 include 'database.php'; // Include your database connection
 
 // Fetch officials from the database
-$query = "SELECT user_id, lastname, firstname, middlename, sex, birthdate, barangayposition, profile_picture FROM tb_user";
+$query = "SELECT user_id, lastname, firstname, middlename, sex, birthdate, barangayposition, profile_picture, suffix FROM tb_user";
 $result = mysqli_query($conn, $query);
 ?>
 <html>
@@ -137,7 +137,8 @@ $result = mysqli_query($conn, $query);
                     $firstname = ucfirst(($row['firstname']));
                     $middlename_initial = $row['middlename'] ? ucfirst(strtolower(substr($row['middlename'], 0, 1))) . '.' : '';
                     $lastname = ucfirst(strtolower($row['lastname']));
-                    echo $firstname . ' ' . $middlename_initial . ' ' . $lastname;
+                    $suffix = ucfirst(strtolower($row['suffix']));
+                    echo $firstname . ' ' . $middlename_initial . ' ' . $lastname . ' ' . $suffix;
                     ?> 
                     <br> Birthdate: <?php echo $row['birthdate']; ?> 
                     <br> Sex: <?php echo $row['sex']; ?>

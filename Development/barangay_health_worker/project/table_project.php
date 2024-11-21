@@ -7,9 +7,6 @@ include "../../sidebar_officials.php";
     .head{
         margin-top: 10px;
     }
-    .inventory{
-        margin-top: 20px;
-    }
     .inventory .print-btn, .add-popup{
         display: none;
     }
@@ -33,6 +30,8 @@ include "../../sidebar_officials.php";
                     </div>
                     <table id="example" class="table-table">
                     <thead>
+                        <th>#</th>
+                        <th>checkbox</th>
                         <th>Project Name</th>
                         <th>Project Start</th>
                         <th>Project End</th>
@@ -61,7 +60,11 @@ include "../../sidebar_officials.php";
                                     'url': 'fetch_data.php',
                                     'type': 'post',
                                 },
-                                "aoColumnDefs": [{
+                                "aoColumnDefs": [  {
+                                "targets": [0,1],  // Target the first column (aData[0])
+                                "visible": false, // Hide the column
+                                "searchable": false // Disable search for this column if needed
+                                },{
                                     "bSortable": false,
                                     "aTargets": [8]
                                 },

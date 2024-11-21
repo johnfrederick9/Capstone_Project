@@ -50,12 +50,20 @@ while ($row = mysqli_fetch_assoc($query)) {
 	$currentDate = new DateTime();
 	$age = $currentDate->diff($birthdate)->y;
 
+	 // Format first name, middle initial, and last name with capitalized first letters
+	 $firstname = ucwords(strtolower($row['employee_firstname']));
+	 $lastname = ucwords(strtolower($row['employee_lastname']));
+	 $middle_initial = $row['employee_middlename'] 
+		 ? strtoupper(substr($row['employee_middlename'], 0, 1)) . '.' 
+		 : '';
+	 
+	 // Combine the formatted names into a full name
+	 $full_name = $firstname . ' ' . $middle_initial . ' ' . $lastname;
+
 	$sub_array = array();
 	$sub_array[] = $row['employee_id'];
 	$sub_array[] = '<input type="checkbox" class="row-checkbox" value="' . $row['employee_id'] . '">';
-	$sub_array[] = $row['employee_firstname'];
-	$sub_array[] = $row['employee_middlename'];
-	$sub_array[] = $row['employee_lastname'];
+    $sub_array[] = $full_name; // Combined full name
 	$sub_array[] = $row['employee_address'];
 	$sub_array[] = $row['employee_educationalattainment'];
 	$sub_array[] = $row['employee_position'];
