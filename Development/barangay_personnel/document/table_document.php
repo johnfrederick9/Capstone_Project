@@ -21,9 +21,6 @@ include "../../sidebar_officials.php";
     .head{
         margin-top: 10px;
     }
-    .inventory{
-        margin-top: 20px;
-    }
     .inventory .print-btn, .add-popup{
         display: none;
     }
@@ -51,15 +48,19 @@ include "../../sidebar_officials.php";
                     </div>
                     <table id="example" class="table-table">
                     <thead>
-                        <th>Document Name</th>
-                        <th>Document Date</th>
-                        <th>Document Info</th>
-                        <th>Document Type</th>
-                        <th>Action</th>
+                        <tr>
+                            <th>Document ID</th>
+                            <th>Document Name</th>
+                            <th>Document Date</th>
+                            <th>Document Info</th>
+                            <th>Document Type</th>
+                            <th>Images</th>
+                        </tr>
                     </thead>
                     <tbody>
                     </tbody>
-                    </table>
+                </table>
+
                 </div><!-- .table-container-->
                     <script type="text/javascript">
                     $(document).ready(function() {
@@ -77,39 +78,13 @@ include "../../sidebar_officials.php";
                             'type': 'post',
                         },
                         "aoColumnDefs": [{
+                            "targets": [0],
+                            "visible": false,
+                            "searchable": false
+                            },{
                             "bSortable": false,
                             "aTargets": [4]
                         }]
-                    });
-                    
-                    // Handle "View" button click
-                    $('#example').on('click', '.viewbtn', function(event) {
-                        var document_id = $(this).data('id');
-                        $('#viewModal').modal('show'); // Show the modal
-
-                        // Fetch images for the selected document
-                        $.ajax({
-                            url: "fetch_images.php", // PHP script to fetch images
-                            type: "post",
-                            data: { document_id: document_id },
-                            success: function(data) {
-                                var images = JSON.parse(data);
-                                var imageContainer = $('#imageContainer');
-                                imageContainer.empty(); // Clear previous images
-
-                                // Loop through images and display them
-                                if (images.length > 0) {
-                                    images.forEach(function(image) {
-                                        imageContainer.append('<div class="image-wrapper"><img src="' + image.filepath + '" class="img-fluid img-thumbnail m-2" alt="Document Image"></div>');
-                                    });
-                                } else {
-                                    imageContainer.append('<p>No images available for this document.</p>');
-                                }
-                            },
-                            error: function(xhr, status, error) {
-                                alert('Error fetching images: ' + error);
-                            }
-                        });
                     });
                 });
                     </script>
@@ -133,36 +108,8 @@ include "../../sidebar_officials.php";
             </div>
     </body> 
 <script>
-function handleFileChange() {
-    const fileInput = document.getElementById('fileInput');
-    const fileNameSpan = document.getElementById('fileName');
-    const fileLabel = document.getElementById('fileLabel');
-  
-    if (fileInput.files.length > 0) {
-        const fileNames = Array.from(fileInput.files).map(file => file.name).join(', ');
-        fileNameSpan.textContent = fileNames;
-
-        // Change background color to green if files are selected
-        fileLabel.style.backgroundColor = '#27c707';
-    } else {
-        // Reset to default text and background color if no files are selected
-        fileNameSpan.textContent = 'No files selected';
-        fileLabel.style.backgroundColor = '#c70707';
-    }
-}
-
-window.onload = function() {
-    handleFileChange();
-};
-</script>
-<script>
-// Function to fetch and display images in the modal
-function loadImages(document_id) {
-    // Clear previous images
-    const imageContainer = document.getElementById('imageContainer');
-    imageContainer.innerHTML = '';
-
-    // Fetch images from the server
+    // Function to fetch images for a specific document and display them in the table
+function fetchImagesForDocument(document_id, imageCell) {
     fetch('fetch_images.php', {
         method: 'POST',
         headers: {
@@ -172,39 +119,61 @@ function loadImages(document_id) {
     })
     .then(response => response.json())
     .then(images => {
+        // Clear any existing content in the image cell
+        imageCell.innerHTML = '';
+
         if (images.length > 0) {
+            // Create a container for the images
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'd-flex flex-wrap align-items-center';
+
             images.forEach(imagePath => {
-                // Create image element
+                // Create an img element for each image
                 const img = document.createElement('img');
                 img.src = imagePath;
-                img.alt = 'Uploaded Image';
-                img.className = 'img-thumbnail m-2';
-                img.style.width = '150px'; // You can adjust the size as needed
-                
-                // Append image to the container
+                img.alt = 'Document Image';
+                img.className = 'img-thumbnail m-1';
+                img.style.width = '50px'; // Adjust the width
+                img.style.height = '50px'; // Adjust the height
+
+                // Add the image to the container
                 imageContainer.appendChild(img);
             });
+
+            // Append the container to the image cell
+            imageCell.appendChild(imageContainer);
         } else {
-            // Show message if no images are found
-            const noImagesMessage = document.createElement('p');
-            noImagesMessage.textContent = 'No images uploaded for this document.';
-            imageContainer.appendChild(noImagesMessage);
+            // If no images are available, display a message
+            imageCell.textContent = 'No images available';
         }
     })
     .catch(error => {
         console.error('Error fetching images:', error);
+        imageCell.textContent = 'Error loading images';
     });
 }
 
-// Example function to open the modal and load images for a specific document
-function openViewModal(document_id) {
-    // Load the images for the selected document
-    loadImages(document_id);
+// Function to load images for all rows in the table
+function loadImagesForTable() {
+    const table = document.getElementById('example'); // Update to your table ID
+    const rows = table.querySelectorAll('tbody tr');
 
-    // Open the modal
-    const viewModal = new bootstrap.Modal(document.getElementById('viewModal'));
-    viewModal.show();
+    rows.forEach(row => {
+        // Get the document ID from the relevant cell
+        const documentIdCell = row.querySelector('.document-id'); // Update class name if needed
+        const imageCell = row.querySelector('.image-cell'); // Update class name if needed
+
+        if (documentIdCell && imageCell) {
+            const document_id = documentIdCell.textContent.trim();
+            // Fetch images for this document ID and populate the image cell
+            fetchImagesForDocument(document_id, imageCell);
+        }
+    });
 }
+
+// Automatically load images when the DOM content is fully loaded
+document.addEventListener('DOMContentLoaded', loadImagesForTable);
+
 </script>
 
 </html>

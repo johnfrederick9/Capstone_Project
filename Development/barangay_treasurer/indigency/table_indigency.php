@@ -7,9 +7,6 @@ include "../../sidebar_officials.php";
     .head{
         margin-top: 10px;
     }
-    .certificate{
-        margin-top: 20px;
-    }
     .certificate .print-btn, .add-popup{
         display: none;
     }
@@ -30,6 +27,7 @@ include "../../sidebar_officials.php";
                     </div>
                     <table id="example" class="table-table">
                     <thead>
+                        <th>#</th>
                         <th>Child's Name</th>
                         <th>Mother's Name</th>
                         <th>Father's Name</th>
@@ -53,7 +51,12 @@ include "../../sidebar_officials.php";
                                     'url': 'fetch_data.php',
                                     'type': 'post',
                                 },
-                                "aoColumnDefs": [{
+                                "aoColumnDefs": [ 
+                                    {
+                                    "targets": [0],  // Target the first column (aData[0])
+                                    "visible": false, // Hide the column
+                                    "searchable": false // Disable search for this column if needed
+                                    },{
                                     "bSortable": false,
                                     "aTargets": [3]
                                 },

@@ -25,8 +25,8 @@ $event_id = $_POST['event_id'];
 $event_name = $_POST["event_name"];
 $event_location = $_POST["event_location"];
 $event_type = $_POST["event_type"];
-$event_start = $_POST["event_end"];
-$event_end = $_POST["event_start"];
+$event_start = $_POST["event_start"];
+$event_end = $_POST["event_end"];
 }
 
 $sql = "UPDATE `tb_event` SET  `event_name`='$event_name' , `event_location`= '$event_location', `event_type`='$event_type',  `event_start`='$event_start', `event_end`='$event_end' WHERE event_id='$event_id' ";

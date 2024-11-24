@@ -12,13 +12,17 @@ $columns = array(
     1 => 'resident_firstname',
     2 => 'resident_middlename',
     3 => 'resident_lastname',
-    4 => 'resident_maidenname',    
-    5 => 'resident_address',    
-    6 => 'resident_educationalattainment',    
-    7 => 'resident_birthdate',
-    8 => 'resident_age', // Age will be computed dynamically
-    8 => 'resident_contact',
-    9 => 'resident_status',    
+    4 => 'resident_age',
+    5 => 'resident_height',
+    6 => 'resident_weight',
+    7 => 'resident_heightstat',    
+    8 => 'resident_weightstat',    
+    9 => 'resident_BMIstat', 
+    10 => 'resident_medical',    
+    11 => 'resident_lactating',
+    12 => 'resident_pregnant', 
+    13 => 'resident_PWD',
+    14 => 'resident_SY',    
 );
 
 if (isset($_POST['search']['value'])) {
@@ -26,13 +30,17 @@ if (isset($_POST['search']['value'])) {
     $sql .= " AND (resident_firstname LIKE '%" . $search_value . "%'";
     $sql .= " OR resident_middlename LIKE '%" . $search_value . "%'";
     $sql .= " OR resident_lastname LIKE '%" . $search_value . "%'";
-    $sql .= " OR resident_maidenname LIKE '%" . $search_value . "%'";
-    $sql .= " OR resident_address LIKE '%" . $search_value . "%'";
-    $sql .= " OR resident_educationalattainment LIKE '%" . $search_value . "%'";
-    $sql .= " OR resident_birthdate LIKE '%" . $search_value . "%'";
     $sql .= " OR resident_age LIKE '%" . $search_value . "%'";
-    $sql .= " OR resident_contact LIKE '%" . $search_value . "%'";
-    $sql .= " OR resident_status LIKE '%" . $search_value . "%')";
+    $sql .= " OR resident_height LIKE '%" . $search_value . "%'";
+    $sql .= " OR resident_weight LIKE '%" . $search_value . "%'";
+    $sql .= " OR resident_heightstat LIKE '%" . $search_value . "%'";
+    $sql .= " OR resident_weightstat LIKE '%" . $search_value . "%'";
+    $sql .= " OR resident_BMIstat LIKE '%" . $search_value . "%'";
+    $sql .= " OR resident_medical LIKE '%" . $search_value . "%'";
+    $sql .= " OR resident_lactating LIKE '%" . $search_value . "%'";
+    $sql .= " OR resident_pregnant LIKE '%" . $search_value . "%'";
+    $sql .= " OR resident_PWD LIKE '%" . $search_value . "%'";
+    $sql .= " OR resident_SY LIKE '%" . $search_value . "%')";
 }
 
 if ($_POST['length'] != -1) {
@@ -51,25 +59,39 @@ while ($row = mysqli_fetch_assoc($query)) {
     $currentDate = new DateTime();
     $age = $currentDate->diff($birthdate)->y;
 
+       // Format first name, middle initial, last name, and suffix with proper capitalization
+       $firstname = ucwords(strtolower($row['resident_firstname']));
+       $lastname = ucwords(strtolower($row['resident_lastname']));
+       $middle_initial = $row['resident_middlename'] 
+           ? strtoupper(substr($row['resident_middlename'], 0, 1)) . '.' 
+           : '';
+       $suffix = $row['resident_suffixes'] 
+           ? ' ' . ucwords(strtolower($row['resident_suffixes'])) 
+           : '';
+   
+       // Combine the formatted names into a full name
+       $full_name = $firstname . ' ' . $middle_initial . ' ' . $lastname . $suffix;
+
     $sub_array = array();
     $sub_array[] = $row['resident_id'];
     $sub_array[] = '<input type="checkbox" class="row-checkbox" value="' . $row['resident_id'] . '">';
-    $sub_array[] = $row['resident_firstname'];
-    $sub_array[] = $row['resident_middlename'];
-    $sub_array[] = $row['resident_lastname'];
-    $sub_array[] = $row['resident_maidenname'];
-    $sub_array[] = $row['resident_address'];
-    $sub_array[] = $row['resident_educationalattainment'];
-    $sub_array[] = $row['resident_birthdate'];
+    $sub_array[] = $full_name; // Combined full name
     $sub_array[] = $age; // Use the computed age
-    $sub_array[] = $row['resident_contact'];
-    $sub_array[] = $row['resident_status'];
+    $sub_array[] = $row['resident_height'];
+    $sub_array[] = $row['resident_weight'];
+    $sub_array[] = $row['resident_BMIstat'];
+    $sub_array[] = $row['resident_heightstat'];
+    $sub_array[] = $row['resident_weightstat'];
+    $sub_array[] = $row['resident_medical'];
     $sub_array[] = '
     <div class="dropdown">
         <button class="action-btn" onclick="toggleDropdown(this)">
             ACTIONS <i class="bx bx-chevron-down"></i>
         </button>
         <div class="dropdown-menu">
+            <a href="javascript:void(0);" data-id="' . $row['resident_id'] . '" class="dropdown-item view-btn viewbtn">
+                <i class="bx bx-show"></i>
+            </a>
             <a href="javascript:void(0);" data-id="' . $row['resident_id'] . '" class="dropdown-item update-btn editbtn">
                 <i class="bx bx-edit"></i>
             </a>
@@ -80,6 +102,7 @@ while ($row = mysqli_fetch_assoc($query)) {
     </div>';
     $data[] = $sub_array;
 }
+
 
 $output = array(
     'draw' => intval($_POST['draw']),

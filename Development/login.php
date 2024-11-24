@@ -19,7 +19,7 @@ $username = $_SESSION['valid_username'] ?? '';
       <link rel="stylesheet" href="assets/css/boxicons.min.css" />
 
       <title>Barangay Mantalogon Information System</title>
-      <link rel="icon" href="assets/image/Logo.png">
+      <link rel="icon" href="../../assets/image/logo_head.png">
   </head>
   <body>
     <!-- Login start -->

@@ -1,68 +1,81 @@
-<?php include('../../connection.php');
+<?php
+include('../../connection.php');
 
-$output= array();
-$sql = "SELECT * FROM tb_document ";
+$output = array();
 
-	$totalQuery = mysqli_query($con,$sql);
-	$total_all_rows = mysqli_num_rows($totalQuery);
+// Query to fetch all visible records from tb_document
+$sql = "SELECT * FROM tb_document WHERE isDisplayed = 1";
 
-	$columns = array(
-		0 => 'document_name',
-		1 => 'document_date',
-		2 => 'document_info',
-		3 => 'document_type',	
-);
-
-if(isset($_POST['search']['value']))
-{
-	$search_value = $_POST['search']['value'];
-	$sql .= " WHERE document_name like '%".$search_value."%'";
-	$sql .= " OR document_date like '%".$search_value."%'";
-	$sql .= " OR document_info like '%".$search_value."%'";
-	$sql .= " OR document_type like '%".$search_value."%'";
+// Apply search filter
+$search_value = '';
+if (isset($_POST['search']['value']) && $_POST['search']['value'] != '') {
+    $search_value = $_POST['search']['value'];
+    $sql .= " AND (document_name LIKE '%" . $search_value . "%' 
+              OR document_date LIKE '%" . $search_value . "%' 
+              OR document_info LIKE '%" . $search_value . "%' 
+              OR document_type LIKE '%" . $search_value . "%')";
 }
 
-if(isset($_POST['order']))
-{
-	$column_name = $_POST['order'][0]['column'];
-	$order = $_POST['order'][0]['dir'];
-	$sql .= " ORDER BY ".$columns[$column_name]." ".$order."";
-}
-else
-{
-	$sql .= " ORDER BY document_id desc";
+// Get total unfiltered records
+$totalQuery = mysqli_query($con, "SELECT * FROM tb_document WHERE isDisplayed = 1");
+$total_all_rows = mysqli_num_rows($totalQuery);
+
+// Get total filtered records
+$filteredQuery = mysqli_query($con, $sql);
+$total_filtered_rows = mysqli_num_rows($filteredQuery);
+
+// Apply pagination
+if ($_POST['length'] != -1) {
+    $start = $_POST['start'];
+    $length = $_POST['length'];
+    $sql .= " LIMIT " . $start . ", " . $length;
 }
 
-if($_POST['length'] != -1)
-{
-	$start = $_POST['start'];
-	$length = $_POST['length'];
-	$sql .= " LIMIT  ".$start.", ".$length;
-}	
-
-$query = mysqli_query($con,$sql);
-$count_rows = mysqli_num_rows($query);
+// Execute the main query
+$query = mysqli_query($con, $sql);
 $data = array();
-while($row = mysqli_fetch_assoc($query))
-{
-	$sub_array = array();
-	$sub_array[] = $row['document_name'];
-	$sub_array[] = $row['document_date'];
-	$sub_array[] = $row['document_info'];
-	$sub_array[] = $row['document_type'];
-	$sub_array[] = '<div class="buttons">
-						<a href="javascript:void(0);" onclick="openViewModal(' . $row['document_id'] . ');" class="view-btn btn-sm viewbtn">
-                        <i class="bx bx-show"></i>
-                    </a>
-					</div>';
 
-	$data[] = $sub_array;
+while ($row = mysqli_fetch_assoc($query)) {
+    $sub_array = array();
+    $sub_array[] = $row['document_id']; // Document ID
+    $sub_array[] = $row['document_name']; // Document Name
+    $sub_array[] = $row['document_date']; // Document Date
+    $sub_array[] = $row['document_info']; // Document Info
+    $sub_array[] = $row['document_type']; // Document Type
+
+    // Fetch images for the document
+    $document_id = $row['document_id'];
+    $imageQuery = "SELECT filepath FROM tb_document_files WHERE document_id = '$document_id'";
+    $imageResult = mysqli_query($con, $imageQuery);
+
+    $images = array();
+    while ($imageRow = mysqli_fetch_assoc($imageResult)) {
+        $filepath = $imageRow['filepath'];
+        if (file_exists($filepath)) {
+            $images[] = '<img src="' . $filepath . '" class="img-thumbnail m-1" alt="Document Image" style="max-width: 70px; max-height: 70px;">';
+        } else {
+            $images[] = '<p class="text-danger">Image not found</p>';
+        }
+    }
+
+    // Combine images into a single cell
+    if (!empty($images)) {
+        $sub_array[] = implode('', $images);
+    } else {
+        $sub_array[] = '<p>No images available</p>';
+    }
+
+    $data[] = $sub_array;
 }
 
+// Prepare the output
 $output = array(
-	'draw'=> intval($_POST['draw']),
-	'recordsTotal' =>$count_rows ,
-	'recordsFiltered'=>   $total_all_rows,
-	'data'=>$data,
+    'draw' => intval($_POST['draw']),
+    'recordsTotal' => $total_all_rows,
+    'recordsFiltered' => $total_filtered_rows,
+    'data' => $data,
 );
-echo  json_encode($output);
+
+// Return the JSON response
+echo json_encode($output);
+?>

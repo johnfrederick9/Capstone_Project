@@ -36,7 +36,8 @@
     <script src="../../assets/js/search.js"></script>
     
  <title>Barangay Mantalogon Information System</title>
-  <link rel="icon" href="../../assets/image/Logo.png">
+ <link rel="icon" href="../../assets/image/logo_head.png">
+  
 
   <!-- Calendar JS -->
   <script src="../../assets/js/calendar(dashboard).js"></script>

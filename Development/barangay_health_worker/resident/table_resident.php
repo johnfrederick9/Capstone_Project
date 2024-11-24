@@ -1,6 +1,6 @@
 <?php
 include '../../head.php';
-include '../../sidebar_officials.php';
+include "../../sidebar_officials.php";
 ?>
 <body>
     <section class="home">  
@@ -24,17 +24,15 @@ include '../../sidebar_officials.php';
                                     <i class="bx bx-printer"></i>
                                 </button>
                             </th>
-                            <th>First Name</th>
-                            <th>Middle Name</th>
-                            <th>Last Name</th>
-                            <th>Maiden Name</th>
-                            <th>Address</th>
-                            <th>Educational Attainment</th>
-                            <th>Birth Date</th>
+                            <th>Full Name</th>
                             <th>Age</th>
-                            <th>Contact Number</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>Height</th>
+                            <th>Weight</th>
+                            <th>BMI Status</th>
+                            <th>Height Status</th>
+                            <th>Weight Status</th>
+                            <th>Medical History</th>
+                            <th>Buttons</th>
                         </thead>
                         <tbody>
                         </tbody>
@@ -59,113 +57,69 @@ include '../../sidebar_officials.php';
                             <div class="form-grid">
                             <div class="input-wrapper">
                                 <label for="Last Name" class="input-label">Last Name:</label>
-                                <input type="text" placeholder="Last Name" id="lnameField" name="resident_lastname" class="input-field" require>
+                                <input type="text" placeholder="Last Name" id="lnameField" name="resident_lastname" class="input-field" readonly>
                             </div>
                             <div class="input-wrapper">
                                 <label for="First Name" class="input-label">First Name:</label>
-                                <input type="text" placeholder="First Name" id="fnameField" name="resident_firstname" class="input-field">
+                                <input type="text" placeholder="First Name" id="fnameField" name="resident_firstname" class="input-field" readonly>
                             </div>
                             <div class="input-wrapper">
                                 <label for="Middle Name" class="input-label">Middle Name:</label>
-                                <input type="text" placeholder="Middle Name" id="minameField" name="resident_middlename" class="input-field">
+                                <input type="text" placeholder="Middle Name" id="minameField" name="resident_middlename" class="input-field" readonly>
                             </div>
-                            <div class="input-wrapper">
-                                <label for="Maiden Name" class="input-label">Maiden Name:</label>
-                                <input type="text" placeholder="Maiden Name" id="manameField" name="resident_maidenname" class="input-field">
-                            </div>
-                            <div class="input-wrapper">
-                                <label for="Sex" class="input-label">Sex:</label>
-                                <select id="sexField" class="input-field" name="resident_sex" require>
-                                <option value="" disabled selected>Sex</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
-                            <div class="input-wrapper">
-                                <label for="Suffixes" class="input-label">Suffixes:</label>
-                                <select id="suffixesField" class="input-field" name="resident_suffixes" require>
-                                    <option value="None">None</option>
-                                    <option value="Jr">Jr</option>
-                                    <option value="Sr">Sr</option>
-                                </select>
-                            </div>
-
-                            <div class="input-wrapper">
-                                <label for="" class="input-label">Address:</label>
-                                <select id="addressField" name="resident_address" class="input-field" require>
-                                    <option value="" disabled selected>Education Attainment</option>
-                                    <option value="Sitio Sto. Nino">Sitio Sto. Nino</option>
-                                    <option value="Sitio Suwa">Sitio Suwa</option>
-                                    <option value="Sitio Private">Sitio Private</option>
-                                    <option value="Sitio Lahug">Sitio Lahug</option>
-                                    <option value="Sitio Lapa">Sitio Lapa</option>
-                                    <option value="Sitio Sampig">Sitio Sampig</option>
-                                    <option value="Sitio Alang-Alang">Sitio Alang-Alang</option>
-                                    <option value="Sitio Granchina">Sitio Granchina</option>
-                                    <option value="Sitio Catambisan">Sitio Catambisan</option>
-                                    <option value="Sitio Mag-Alambac">Sitio Mag-Alambac</option>
-                                </select> 
-                            </div>
-
-                            <div class="input-wrapper">
-                                <label for="" class="input-label">Educational Attainment:</label>
-                                    <select id="educField" name="resident_educationalattainment" class="input-field" require>
-                                        <option value="" disabled selected>Address</option>
-                                        <option value="Elementary">Elementary</option>
-                                        <option value="High School, Undergrad">High School, Undergrad</option>
-                                        <option value="High School, Graduate">High School, Graduate</option>
-                                        <option value="College, Undergrad">College, Undergrad</option>
-                                        <option value="Vocational">Vocational</option>
-                                        <option value="Bacherlor's Degree">Bacherlor's Degree</option>
-                                        <option value="Master's Degree">Master's Degree</option>
-                                        <option value="Doctorate Degree">Doctorate Degree</option>
-                                    </select> 
-                            </div>
-                            
                             <div class="input-wrapper ">
                             <label for="birthdate" class="input-label">Birth Date:</label>
-                                <input type="date" id="birthField" name="resident_birthdate" class="input-field" require>
+                                <input type="date" id="birthField" name="resident_birthdate" class="input-field" readonly>
                             </div>
-
                             <div class="input-wrapper">
-                                <label for="status" class="input-label">Status:</label>
-                                <select id="statusField" class="input-field" name="resident_status" require>
-                                    <option value="" disabled selected>Status</option>
-                                    <option value="Single">Single</option>
-                                    <option value="Married">Married</option>
-                                    <option value="Widowed">Widowed</option>
+                                <label for="Height" class="input-label">Height:</label>
+                                <input type="text" placeholder="Height" id="heightField" name="resident_height" class="input-field" require>
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="Weight" class="input-label">Weight:</label>
+                                <input type="text" placeholder="Weight" id="weightField" name="resident_weight" class="input-field">
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="" class="input-label">Height Status:</label>
+                                <input type="text" placeholder="Height Status" id="heightstatField" name="resident_heightstat" class="input-field">
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="" class="input-label">Weight Status:</label>
+                                <input type="text" placeholder="Weight Status" id="weightstatField" name="resident_weightstat" class="input-field">
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="" class="input-label">BMI Status:</label>
+                                <select id="bmiField" class="input-field" name="resident_BMIstat" require>
+                                <option value="" disabled selected>Status</option>
+                                    <option value="Under Weight">Under Weight</option>
+                                    <option value="Normal">Normal</option>
+                                    <option value="Over Weight">Over Weight</option>
+                                    <option value="Obese">Obese</option>
                                 </select>
                             </div>
-
-                            <div class="input-wrapper">
-                            <label for="resident_contact" class="input-label">Contact Number:</label>
-                                <input type="tel" placeholder="Enter 10-digit number" id="contactField" name="resident_contact" class="input-field" maxlength="16" require 
-                                    style="flex: 1; border: 1px solid #ccc; border-left: none;">
+                            <div class="input-wrapper ">
+                            <label for="" class="input-label">Medical History:</label>
+                                <input type="text" id="medField" name="resident_medical" class="input-field" require>
                             </div>
                     
                             <div class="input-wrapper">
-                                <label for="age" class="input-label">Occupation:</label>
-                                <input type="text" placeholder="Occupation" id="occupationField" name="resident_occupation" class="input-field" require>
+                                <label for="" class="input-label">Lactating:</label>
+                                <input type="text" placeholder="Lactating" id="lactatingField" name="resident_lactating" class="input-field" require>
                             </div>
 
                             <div class="input-wrapper">
-                                <label for="age" class="input-label">Religion:</label>
-                                <input type="text" placeholder="Religion" id="religionField" name="resident_religion" class="input-field" require>
+                                <label for="" class="input-label">Pregnant:</label>
+                                <input type="text" placeholder="Pregnant" id="pregnantField" name="resident_pregnant" class="input-field" require>
                             </div>
 
                             <div class="input-wrapper">
-                                <label for="age" class="input-label">Indigenous:</label>
-                                <input type="text" placeholder="Indigenous" id="indigenousField" name="resident_indigenous" class="input-field" require>
+                                <label for="" class="input-label">PWD:</label>
+                                <input type="text" placeholder="PWD" id="pwdField" name="resident_PWD" class="input-field" require>
                             </div>
-                            
-                            
+
                             <div class="input-wrapper">
-                                <label for="householdrole" class="input-label">Household Role:</label>
-                                <input type="text" placeholder="Household Role" id="roleField" name="resident_householdrole" class="input-field" require>
-                            </div>
-                            <div class="input-wrapper">
-                                <label for="householdid" class="input-label">Household ID:</label>
-                                <input type="Number" placeholder="Household ID" id="idField" name="household_id" class="input-field" disabled>
+                                <label for="" class="input-label">Out of SY:</label>
+                                <input type="text" placeholder="SY" id="syField" name="resident_SY" class="input-field" require>
                             </div>
                         </div>
                         </div>
@@ -191,7 +145,7 @@ include '../../sidebar_officials.php';
                             <div class="form-grid">
                             <div class="input-wrapper">
                                 <label for="Last Name" class="input-label">Last Name:</label>
-                                <input type="text" placeholder="Last Name" id="resident_lastname" name="resident_lastname" class="input-field">
+                                <input type="text" placeholder="Last Name" id="resident_lastname" name="resident_lastname" class="input-field" require>
                             </div>
                             <div class="input-wrapper">
                                 <label for="First Name" class="input-label">First Name:</label>
@@ -201,100 +155,59 @@ include '../../sidebar_officials.php';
                                 <label for="Middle Name" class="input-label">Middle Name:</label>
                                 <input type="text" placeholder="Middle Name" id="resident_middlename" name="resident_middlename" class="input-field">
                             </div>
-                            <div class="input-wrapper">
-                                <label for="Maiden Name" class="input-label">Maiden Name:</label>
-                                <input type="text" placeholder="Maiden Name" id="resident_maidenname" name="resident_maidenname" class="input-field">
-                            </div>
-                            <div class="input-wrapper">
-                                <label for="Sex" class="input-label">Sex:</label>
-                                <select id="resident_sex" class="input-field" name="resident_sex" require>
-                                <option value="" disabled selected>Sex</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
-                            <div class="input-wrapper">
-                                <label for="Suffixes" class="input-label">Suffixes:</label>
-                                <select id="resident_suffixes" class="input-field" name="resident_suffixes" require>
-                                    <option value="None">None</option>
-                                    <option value="Jr">Jr</option>
-                                    <option value="Sr">Sr</option>
-                                </select>
-                            </div>
-
-                            <div class="input-wrapper">
-                                <label for="" class="input-label">Address:</label>
-                                <select id="resident_address" name="resident_address" class="input-field" require>
-                                    <option value="" disabled selected>Address</option>
-                                    <option value="Sitio Sto. Nino">Sitio Sto. Nino</option>
-                                    <option value="Sitio Suwa">Sitio Suwa</option>
-                                    <option value="Sitio Private">Sitio Private</option>
-                                    <option value="Sitio Lahug">Sitio Lahug</option>
-                                    <option value="Sitio Lapa">Sitio Lapa</option>
-                                    <option value="Sitio Sampig">Sitio Sampig</option>
-                                    <option value="Sitio Alang-Alang">Sitio Alang-Alang</option>
-                                    <option value="Sitio Granchina">Sitio Granchina</option>
-                                    <option value="Sitio Catambisan">Sitio Catambisan</option>
-                                    <option value="Sitio Mag-Alambac">Sitio Mag-Alambac</option>
-                                </select> 
-                            </div>
-
-                            <div class="input-wrapper">
-                            <label for="" class="input-label">Educational Attainment:</label>
-                                <select id="resident_educationalattainment" name="resident_educationalattainment" class="input-field" require>
-                                    <option value="" disabled selected>Education Attainment</option>
-                                    <option value="Elementary">Elementary</option>
-                                    <option value="High School, Undergrad">High School, Undergrad</option>
-                                    <option value="High School, Graduate">High School, Graduate</option>
-                                    <option value="College, Undergrad">College, Undergrad</option>
-                                    <option value="Vocational">Vocational</option>
-                                    <option value="Bacherlor's Degree">Bacherlor's Degree</option>
-                                    <option value="Master's Degree">Master's Degree</option>
-                                    <option value="Doctorate Degree">Doctorate Degree</option>
-                                </select> 
-                            </div>
-                            
                             <div class="input-wrapper ">
                             <label for="birthdate" class="input-label">Birth Date:</label>
                                 <input type="date" id="resident_birthdate" name="resident_birthdate" class="input-field" require>
                             </div>
-
                             <div class="input-wrapper">
-                                <label for="status" class="input-label">Status:</label>
-                                <select id="resident_status" class="input-field" name="resident_status" require>
-                                    <option value="" disabled selected>Status</option>
-                                    <option value="Single">Single</option>
-                                    <option value="Married">Married</option>
-                                    <option value="Widowed">Widowed</option>
+                                <label for="Height" class="input-label">Height:</label>
+                                <input type="text" placeholder="Height" id="resident_height" name="resident_height" class="input-field" require>
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="Weight" class="input-label">Weight:</label>
+                                <input type="text" placeholder="Weight" id="resident_weight" name="resident_weight" class="input-field">
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="" class="input-label">Height Status:</label>
+                                <input type="text" placeholder="Height Status" id="resident_heightstat" name="resident_heightstat" class="input-field">
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="" class="input-label">Weight Status:</label>
+                                <input type="text" placeholder="Weight Status" id="resident_weightstat" name="resident_weightstat" class="input-field">
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="" class="input-label">BMI Status:</label>
+                                <select id="resident_BMIstat" class="input-field" name="resident_BMIstat" require>
+                                <option value="" disabled selected>Status</option>
+                                    <option value="Under Weight">Under Weight</option>
+                                    <option value="Normal">Normal</option>
+                                    <option value="Over Weight">Over Weight</option>
+                                    <option value="Obese">Obese</option>
                                 </select>
                             </div>
-                            <div class="input-wrapper">
-                            <label for="resident_contact" class="input-label">Contact Number:</label>
-                                <input type="tel" placeholder="Enter 11-digit number" id="resident_contact" name="resident_contact" class="input-field" maxlength="11" require
-                                    style="flex: 1; border: 1px solid #ccc; border-left: none;">
+                            <div class="input-wrapper ">
+                            <label for="" class="input-label">Medical History:</label>
+                                <input type="text" id="resident_medical" name="resident_medical" class="input-field" require>
                             </div>
+                    
                             <div class="input-wrapper">
-                                <label for="age" class="input-label">Occupation:</label>
-                                <input type="text" placeholder="Occupation" id="resident_occupation" name="resident_occupation" class="input-field" require>
-                            </div>
-
-                            <div class="input-wrapper">
-                                <label for="age" class="input-label">Religion:</label>
-                                <input type="text" placeholder="Religion" id="resident_religion" name="resident_religion" class="input-field" require>
+                                <label for="" class="input-label">Lactating:</label>
+                                <input type="text" placeholder="Lactating" id="resident_lactating" name="resident_lactating" class="input-field" require>
                             </div>
 
                             <div class="input-wrapper">
-                                <label for="age" class="input-label">Indigenous:</label>
-                                <input type="text" placeholder="Indigenous" id="resident_indigenous" name="resident_indigenous" class="input-field" require>
+                                <label for="" class="input-label">Pregnant:</label>
+                                <input type="text" placeholder="Pregnant" id="resident_pregnant" name="resident_pregnant" class="input-field" require>
                             </div>
-                            
+
                             <div class="input-wrapper">
-                                <label for="householdrole" class="input-label">Household Role:</label>
-                                <input type="text" placeholder="Household Role" id="resident_householdrole" name="resident_householdrole" class="input-field" require>
+                                <label for="" class="input-label">PWD:</label>
+                                <input type="text" placeholder="PWD" id="resident_PWD" name="resident_PWD" class="input-field" require>
                             </div>
+
                             <div class="input-wrapper">
-                                <label for="householdid" class="input-label">Household ID:</label>
-                                <input type="Number" placeholder="Household ID" id="household_id" name="household_id" class="input-field" require>
+                                <label for="" class="input-label">Out of SY:</label>
+                                <input type="text" placeholder="SY" id="resident_SY" name="resident_SY" class="input-field" require>
                             </div>
                         </div>
                         </div>
@@ -302,6 +215,42 @@ include '../../sidebar_officials.php';
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- View Modal -->
+        <section class="view-modal">
+            <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="viewModalLabel">Resident Details</h5>
+                            <button type="button" class="bx bxs-x-circle icon" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>First Name:</strong> <span id="view_firstname"></span></p>
+                                    <p><strong>Middle Name:</strong> <span id="view_middlename"></span></p>
+                                    <p><strong>Last Name:</strong> <span id="view_lastname"></span></p>
+                                    <p><strong>Birth Date:</strong> <span id="view_birthdate"></span></p>
+                                    <p><strong>Age:</strong> <span id="view_age"></span></p>
+                                    <p><strong>Height:</strong> <span id="view_1"></span></p>
+                                    <p><strong>Weight:</strong> <span id="view_2"></span></p>
+                                    <p><strong>BMI Status:</strong> <span id="view_3"></span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Height Status:</strong> <span id="view_4"></span></p>
+                                    <p><strong>Weight Status:</strong> <span id="view_5"></span></p>
+                                    <p><strong>Medical History:</strong> <span id="view_6"></span></p>
+                                    <p><strong>Lactating:</strong> <span id="view_7"></span></p>
+                                    <p><strong>Pregnant:</strong> <span id="view_8"></span></p>
+                                    <p><strong>PWD:</strong> <span id="view_9"></span></p>
+                                    <p><strong>SY:</strong> <span id="view_10"></span></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

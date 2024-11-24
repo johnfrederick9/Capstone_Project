@@ -4,41 +4,31 @@ include('../../connection.php');
 $resident_firstname = $_POST["resident_firstname"];
 $resident_lastname = $_POST["resident_lastname"];
 
-// Check for duplicate resident
-$check_sql = "SELECT * FROM `tb_resident` WHERE `resident_firstname` = '$resident_firstname' AND `resident_lastname` = '$resident_lastname'";
+// Check for duplicate resident with isDisplayed = 1
+$check_sql = "SELECT * FROM `tb_resident` WHERE `resident_firstname` = '$resident_firstname' AND `resident_lastname` = '$resident_lastname' AND `isDisplayed` = 1";
 $check_query = mysqli_query($con, $check_sql);
 
 if (mysqli_num_rows($check_query) > 0) {
-    // Resident exists
+    // Resident exists with isDisplayed = 1
     echo json_encode(array('status' => 'duplicate'));
 } else {
-    // Insert the new resident if no duplicate
+    // Insert the new resident if no duplicate with isDisplayed = 1
     $resident_middlename = $_POST["resident_middlename"];
-    $resident_maidenname = $_POST["resident_maidenname"];
-    $resident_sex = $_POST["resident_sex"];
-    $resident_suffixes = $_POST["resident_suffixes"];
-    $resident_address = $_POST["resident_address"];
-    $resident_educationalattainment = $_POST["resident_educationalattainment"];
     $resident_birthdate = $_POST["resident_birthdate"];
-    $resident_contact = $_POST["resident_contact"];
-    $resident_occupation = $_POST["resident_occupation"];
-    $resident_religion = $_POST["resident_religion"];
-    $resident_indigenous = $_POST["resident_indigenous"];
-    $resident_status = $_POST["resident_status"];
-    $resident_householdrole = $_POST["resident_householdrole"];
-    $household_id = $_POST["household_id"];
-
-        // Check if the number starts with '0' and replace it with '+63'
-        if (preg_match('/^0/', $resident_contact)) {
-            $resident_contact = '+63' . substr($resident_contact, 1); // Replace leading 0 with +63
-        }
-
-        // If the number starts with '+63', or if we've just added it, ensure proper formatting
-        $resident_contact = preg_replace('/\+63(\d{3})(\d{3})(\d{4})/', '+63 $1 $2 $3', $resident_contact);
+    $resident_height = $_POST["resident_height"];
+    $resident_weight = $_POST["resident_weight"];
+    $resident_heightstat = $_POST["resident_heightstat"];
+    $resident_weightstat = $_POST["resident_weightstat"];
+    $resident_BMIstat = $_POST["resident_BMIstat"];
+    $resident_medical = $_POST["resident_medical"];
+    $resident_lactating = $_POST["resident_lactating"];
+    $resident_pregnant = $_POST["resident_pregnant"];
+    $resident_PWD = $_POST["resident_PWD"];
+    $resident_SY = $_POST["resident_SY"];
 
     // Insert resident without resident_age (age will be calculated by the trigger)
-    $sql = "INSERT INTO `tb_resident` (`resident_firstname`, `resident_middlename`, `resident_maidenname`, `resident_lastname`, `resident_sex`, `resident_suffixes`, `resident_address`, `resident_educationalattainment`, `resident_birthdate`, `resident_contact`, `resident_occupation`, `resident_religion`, `resident_indigenous`, `resident_status`, `resident_householdrole`, `household_id`, `isDisplayed`) 
-    VALUES ('$resident_firstname', '$resident_middlename', '$resident_maidenname', '$resident_lastname', '$resident_sex', '$resident_suffixes', '$resident_address', '$resident_educationalattainment', '$resident_birthdate', '$resident_contact', '$resident_occupation', '$resident_religion', '$resident_indigenous', '$resident_status', '$resident_householdrole', '$household_id', 1)";
+    $sql = "INSERT INTO `tb_resident` (`resident_firstname`, `resident_lastname`, `resident_middlename`, `resident_birthdate`, `resident_height`, `resident_weight`, `resident_heightstat`, `resident_weightstat`, `resident_BMIstat`, `resident_medical`, `resident_lactating`, `resident_pregnant`, `resident_PWD`, `resident_SY`, `isDisplayed`) 
+    VALUES ('$resident_firstname', '$resident_lastname', '$resident_middlename', '$resident_birthdate', '$resident_height', '$resident_weight', '$resident_heightstat', '$resident_weightstat', '$resident_BMIstat', '$resident_medical', '$resident_lactating', '$resident_pregnant', '$resident_PWD', '$resident_SY', 1)";
 
     $query = mysqli_query($con, $sql);
     

@@ -2,58 +2,13 @@
 require 'database.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if the profile update button was clicked
     if (isset($_POST['profile_update'])) {
-
         // Get the user_id from the session
-        $user_id = $_SESSION["user_id"];
-
-        // Check if the user is trying to delete the profile picture
-        if (isset($_POST['delete_profile_picture'])) {
-            // Fetch the current profile picture from the database
-            $query = "SELECT profile_picture FROM tb_user WHERE user_id = $user_id";
-            $result = mysqli_query($conn, $query);
-            $row = mysqli_fetch_assoc($result);
-            $profile_picture = $row['profile_picture'];
-
-            // If the profile picture is not the default, delete it from the folder
-            if ($profile_picture !== 'profile_default.png') {
-                $file_path = __DIR__ . '/uploads/profile_pictures/' . $profile_picture;
-                if (file_exists($file_path)) {
-                    unlink($file_path); // Delete the profile picture from the folder
-                }
-            }
-
-            // Set profile picture to default
-            $profile_picture_name = 'profile_default.png';
-            
-            $sql = "UPDATE tb_user SET profile_picture = '$profile_picture_name' WHERE user_id = $user_id";
-            if (mysqli_query($conn, $sql)) {
-                echo " 
-                <div id='toast' class='toast'>   
-                    <div class='toast-content'>
-                        <i class='bx bxs-check-circle icon'></i>
-                        <div class='message'>
-                            <span class='text'>Profile Picture Deleted Successfully</span>
-                        </div>
-                    </div>
-                </div>
-
-                <script>
-                    const toast = document.getElementById('toast');
-                    toast.classList.add('show');
-
-                    setTimeout(() => {
-                        toast.classList.remove('show');
-                        window.location.href = '';
-                    }, 1000);
-                </script>
-                ";  
-            } else {
-                echo "<div class='alert alert-danger'>Error deleting profile picture: </div>" . mysqli_error($conn);
-            }
-            exit;
+        if (!isset($_SESSION['user_id'])) {
+            die("User is not logged in."); // Ensure user_id is set
         }
+
+        $user_id = intval($_SESSION["user_id"]); // Sanitize user_id
 
         // Retrieve form data
         $lastname = mysqli_real_escape_string($conn, $_POST['lastname']);
@@ -64,51 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $birthdate = mysqli_real_escape_string($conn, $_POST['birthdate']);
         $username = mysqli_real_escape_string($conn, $_POST['username']);
 
-        // Handle profile picture upload (optional)
-        $profile_picture = $_FILES['profile_picture'];
-        $profile_picture_name = '';
-
-        // Check if a new profile picture is being uploaded
-        if ($profile_picture['error'] === 0) {
-            // Ensure the directory exists
-            $target_directory = __DIR__ . '/uploads/profile_pictures/';  // Absolute path
-
-            // Create directory if it doesn't exist
-            if (!is_dir($target_directory)) {
-                mkdir($target_directory, 0777, true); // Create directory with recursive directories and full permissions
-            }
-
-            // Check if the user already has an existing profile picture
-            $query = "SELECT profile_picture FROM tb_user WHERE user_id = $user_id";
-            $result = mysqli_query($conn, $query);
-            $row = mysqli_fetch_assoc($result);
-            if (!empty($row['profile_picture']) && $row['profile_picture'] !== 'profile_default.png') {
-                $existing_profile_picture = $target_directory . $row['profile_picture'];
-                if (file_exists($existing_profile_picture)) {
-                    unlink($existing_profile_picture); // Delete the old image
-                }
-            }
-
-            // Define the full target file path for the new image
-            $profile_picture_name = 'profile_' . $user_id . '_' . time() . '.' . pathinfo($profile_picture['name'], PATHINFO_EXTENSION);
-            $target_file = $target_directory . $profile_picture_name;
-
-            // Validate image file type
-            $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
-            $file_extension = pathinfo($profile_picture['name'], PATHINFO_EXTENSION);
-            if (in_array($file_extension, $allowed_types)) {
-                if (move_uploaded_file($profile_picture['tmp_name'], $target_file)) {
-                    // File uploaded successfully
-                } else {
-                    echo "<div class='alert alert-danger'>Error uploading the profile picture. </div>";
-                    exit;
-                }
-            } else {
-                echo "<div class='alert alert-danger'>Invalid file type for profile picture.</div>";
-                exit;
-            }
-        }
-
         // Construct the SQL query
         $sql = "UPDATE tb_user SET 
                     lastname = '$lastname',
@@ -117,19 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     suffix = '$suffix',
                     sex = '$sex',
                     birthdate = '$birthdate',
-                    username = '$username'";
-
-        // Add profile picture to the update query if it was uploaded
-        if ($profile_picture_name !== '') {
-            $sql .= ", profile_picture = '$profile_picture_name'";
-        }
-
-        // Append where condition to target the specific user
-        $sql .= " WHERE user_id = $user_id";
+                    username = '$username'
+                WHERE user_id = $user_id";
 
         // Execute the query
         if (mysqli_query($conn, $sql)) {
-            echo " 
+            echo "
             <div id='toast' class='toast'>   
                 <div class='toast-content'>
                     <i class='bx bxs-check-circle icon'></i>
@@ -138,24 +41,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
             </div>
-
             <script>
                 const toast = document.getElementById('toast');
                 toast.classList.add('show');
 
                 setTimeout(() => {
                     toast.classList.remove('show');
-                    window.location.href = '';
-                }, 1000);
+                    window.location.href = ''; // Reload the page
+                }, 800);
             </script>
-            ";  
+            ";
         } else {
-            echo "<div class='Error updating profile: </div>" . mysqli_error($conn);
+            echo "<div class='alert alert-danger'>Error updating profile: " . mysqli_error($conn) . "</div>";
         }
     }
 }
-
 ?>
+
 <!-- Update Profile Section -->
 <section class="profile">
     <div class="modal fade" id="UpdateProfileModal" tabindex="-1" aria-labelledby="exampleModalLabelProfile" aria-hidden="true" class="editbtn">

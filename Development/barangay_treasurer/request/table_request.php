@@ -26,9 +26,6 @@ if (mysqli_num_rows($result) > 0) {
     .head{
         margin-top: 10px;
     }
-    .certificate{
-        margin-top: 20px;
-    }
     .certificate .print-btn, .add-popup{
         display: none;
     }
@@ -53,6 +50,8 @@ if (mysqli_num_rows($result) > 0) {
                     </div>
                     <table id="example" class="table-table">
                     <thead>
+                        <th>#</th>
+                        <th>checkbox</th>
                         <th>Requester Name</th>
                         <th>Type</th>
                         <th>Description</th>
@@ -79,7 +78,7 @@ if (mysqli_num_rows($result) > 0) {
                                 },
                                 "aoColumnDefs": [
                                     {
-                                        "targets": [],  
+                                        "targets": [0,1],  
                                         "visible": false, 
                                         "searchable": false, 
                                     },

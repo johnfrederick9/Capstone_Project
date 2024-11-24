@@ -2,7 +2,7 @@
 include('../../connection.php');
 
 $output = array();
-$sql = "SELECT * FROM tb_request";
+$sql = "SELECT * FROM tb_request WHERE isDisplayed = 1"; // Only fetch records with isDisplayed = 1
 
 $totalQuery = mysqli_query($con, $sql);
 $total_all_rows = mysqli_num_rows($totalQuery);
@@ -18,19 +18,11 @@ $columns = array(
 
 if (isset($_POST['search']['value'])) {
     $search_value = $_POST['search']['value'];
-    $sql .= " WHERE requester_name like '%".$search_value."%'";
+    $sql .= " AND (requester_name LIKE '%" . $search_value . "%'";
     $sql .= " OR request_type like '%".$search_value."%'";
     $sql .= " OR request_description like '%".$search_value."%'";
     $sql .= " OR request_date like '%".$search_value."%'";
-    $sql .= " OR request_status like '%".$search_value."%'";    
-}
-
-if (isset($_POST['order'])) {
-    $column_name = $_POST['order'][0]['column'];
-    $order = $_POST['order'][0]['dir'];
-    $sql .= " ORDER BY ".$columns[$column_name]." ".$order."";
-} else {
-    $sql .= " ORDER BY request_id desc";
+    $sql .= " OR request_status like '%".$search_value."%')";    
 }
 
 if ($_POST['length'] != -1) {
@@ -44,6 +36,8 @@ $count_rows = mysqli_num_rows($query);
 $data = array();
 while ($row = mysqli_fetch_assoc($query)) {
     $sub_array = array();
+    $sub_array[] = $row['request_id'];
+    $sub_array[] = '<input type="checkbox" class="row-checkbox" value="'.$row['request_id'].'">';
     $sub_array[] = $row['requester_name'];
     $sub_array[] = $row['request_type'];
     $sub_array[] = $row['request_description'];
@@ -54,7 +48,7 @@ while ($row = mysqli_fetch_assoc($query)) {
 
 $output = array(
     'draw' => intval($_POST['draw']),
-    'recordsTotal' => $count_rows,
+    'recordsTotal' => $total_all_rows,
     'recordsFiltered' => $total_all_rows,
     'data' => $data,
 );

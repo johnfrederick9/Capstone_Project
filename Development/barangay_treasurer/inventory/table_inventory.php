@@ -7,9 +7,6 @@ require '../../database.php';
     .head{
         margin-top: 10px;
     }
-    .inventory{
-        margin-top: 20px;
-    }
     .inventory .print-btn, .add-popup{
         display: none;
     }

@@ -49,15 +49,25 @@ include '../../sidebar.php';
                                 </div>
                                 <div class="form-group">
                                     <label for="certificate">Mother's Name:</label>
-                                    <input type="text" id="mnameField" name="indigency_mname" required>
+                                    <input type="text" id="mnameField" name="indigency_mname" require>
                                 </div>
                                 <div class="form-group">
                                     <label for="certificatedate"> Father's Name:</label>
-                                    <input type="text" id="fnameField" name="indigency_fname" required>
+                                    <input type="text" id="fnameField" name="indigency_fname" require>
                                 </div>
                                 <div class="form-group">
                                     <label for="certificatedate"> Issued Date:</label>
-                                    <input type="date" id="dateField" name="indigency_date" required>
+                                    <input type="date" id="dateField" name="indigency_date" require>
+                                </div>
+                                <div class="form-row" style="display: flex; gap: 10px; align-items: center;">
+                                    <div class="form-group" style="flex: 1;">
+                                        <label for="paidField">Paid:</label>
+                                        <input type="number" id="paidField" name="indigency_paid" require>
+                                    </div>
+                                    <div class="form-group" style="flex: 1;">
+                                        <label for="dstField">DST:</label>
+                                        <input type="number" id="dstField" name="indigency_dst" require>
+                                    </div>
                                 </div>
                             </div>
                                 <div class="modal-footer">
@@ -95,6 +105,16 @@ include '../../sidebar.php';
                                     <label for="certificatedate"> Issued Date:</label>
                                     <input type="date" id="indigency_date" name="indigency_date">
                                 </div>
+                                <div class="form-row" style="display: flex; gap: 10px; align-items: center;">
+                                    <div class="form-group" style="flex: 1;">
+                                        <label for="paidField">Paid:</label>
+                                        <input type="number" id="indigency_paid" name="indigency_paid" require>
+                                    </div>
+                                    <div class="form-group" style="flex: 1;">
+                                        <label for="dstField">DST:</label>
+                                        <input type="number" id="indigency_dst" name="indigency_dst" require>
+                                    </div>
+                                </div>
                             </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -104,6 +124,20 @@ include '../../sidebar.php';
                     </div>
                 </div>
             </div>
+            <!-- Print Modal -->
+            <section class="print-modal">
+            <div class="modal fade" id="printModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Choose a print option:</h5>
+                            <button id="printOption1" class="btn btn-primary" data-id=""><i class="bx bx-printer"></i> Certificate of Indigency</button>
+                            <button id="printOption2" class="btn btn-secondary" data-id=""><i class="bx bx-printer"></i> Certificate of Indigency-BIR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </section>
             <section class="delete-modal">
                 <!-- Delete Confirmation Modal -->
                 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">

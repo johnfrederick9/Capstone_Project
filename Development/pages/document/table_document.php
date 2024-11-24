@@ -139,7 +139,7 @@ object-fit: cover;
                 </div>
             </div>
             <!-- View Modal -->
-            <section class="delete-modal">
+            <section class="views-modal">
             <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">

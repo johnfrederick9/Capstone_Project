@@ -93,9 +93,27 @@ if (isset($conn) && $conn) {
             </a>
             <ul class="nav-link dropdown-content">
               <li>
-                <a href="../indigency/table_indigency.php" title="Indigency Certificate">
+                <a href="../indigency/table_indigency.php" title="Certificate of Indigency">
                 &nbsp; &nbsp; <i class='bx bx-certification'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Indigency Certificate</span>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Indigency</span>
+                </a>
+              </li>
+              <li>
+                <a href="../residency/table_residency.php" title="Certificate of Residency">
+                &nbsp; &nbsp; <i class='bx bx-certification'></i>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Residency</span>
+                </a>
+              </li>
+              <li>
+                <a href="../business_permit/table_permit.php" title="Business Permit">
+                &nbsp; &nbsp; <i class='bx bx-certification'></i>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Business Permit</span>
+                </a>
+              </li>
+              <li>
+                <a href="../business_employee/table_employee.php" title="Business Employee">
+                &nbsp; &nbsp; <i class='bx bx-certification'></i>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Business Employee</span>
                 </a>
               </li>
             </ul>

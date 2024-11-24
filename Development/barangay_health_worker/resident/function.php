@@ -23,7 +23,7 @@ $(document).ready(function() {
                 },
                 {
                 "bSortable": false,
-                "aTargets": [0,1,2,3,4,5,6,7,8,9,10]
+                "aTargets": [0,1,2,3,5,6,7,8,9,10]
             }],
             // Event that triggers when the table is redrawn (pagination or search)
             "drawCallback": function() {
@@ -121,8 +121,7 @@ $(document).ready(function() {
 
         // Function to show alert
         function showAlert(message, alertClass) {
-            var alertDiv = $('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' + message +
-                '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+            var alertDiv = $('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' + message +'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
             alertDiv.css({
                 "position": "fixed",
                 "top": "10px",
@@ -140,26 +139,22 @@ $(document).ready(function() {
 
     $(document).on('submit', '#addUser', function(e) {
     e.preventDefault();
-
     var resident_firstname = $('#resident_firstname').val();
     var resident_lastname = $('#resident_lastname').val();
     var resident_middlename = $('#resident_middlename').val();
-    var resident_maidenname = $('#resident_maidenname').val();
-    var resident_sex = $('#resident_sex').val();
-    var resident_suffixes = $('#resident_suffixes').val();
-    var resident_address = $('#resident_address').val();
-    var resident_educationalattainment = $('#resident_educationalattainment').val();
     var resident_birthdate = $('#resident_birthdate').val();
-    var resident_age = $('#resident_age').val();
-    var resident_contact = $('#resident_contact').val();
-    var resident_occupation = $('#resident_occupation').val();
-    var resident_religion = $('#resident_religion').val();
-    var resident_indigenous = $('#resident_indigenous').val();
-    var resident_status = $('#resident_status').val();
-    var resident_householdrole = $('#resident_householdrole').val();
-    var household_id = $('#household_id').val();
+    var resident_height = $('#resident_height').val();
+    var resident_weight = $('#resident_weight').val();
+    var resident_heightstat = $('#resident_heightstat').val();
+    var resident_weightstat = $('#resident_weightstat').val();
+    var resident_BMIstat = $('#resident_BMIstat').val();
+    var resident_medical = $('#resident_medical').val();
+    var resident_lactating = $('#resident_lactating').val();
+    var resident_pregnant = $('#resident_pregnant').val();
+    var resident_PWD = $('#resident_PWD').val();
+    var resident_SY = $('#resident_SY').val();
 
-    if (resident_firstname && resident_lastname && resident_sex && resident_suffixes && resident_address && resident_educationalattainment && resident_birthdate && resident_occupation && resident_religion && resident_indigenous && resident_status && resident_householdrole && household_id) {
+    if (resident_firstname && resident_lastname && resident_middlename && resident_birthdate && resident_height && resident_weight && resident_heightstat && resident_weightstat && resident_BMIstat && resident_medical && resident_lactating && resident_pregnant && resident_PWD && resident_SY) {
         $.ajax({
             url: "add.php",  
             type: "post",
@@ -167,48 +162,21 @@ $(document).ready(function() {
                 resident_firstname: resident_firstname,
                 resident_lastname: resident_lastname,
                 resident_middlename: resident_middlename,
-                resident_maidenname: resident_maidenname,
-                resident_sex: resident_sex,
-                resident_suffixes: resident_suffixes,
-                resident_address: resident_address,
-                resident_educationalattainment: resident_educationalattainment,
                 resident_birthdate: resident_birthdate,
-                resident_age: resident_age,
-                resident_contact: resident_contact,
-                resident_occupation: resident_occupation,
-                resident_religion: resident_religion,
-                resident_indigenous: resident_indigenous,
-                resident_status: resident_status,
-                resident_householdrole: resident_householdrole,
-                household_id: household_id,
+                resident_height: resident_height,
+                resident_weight: resident_weight,
+                resident_heightstat: resident_heightstat,
+                resident_weightstat: resident_weightstat,
+                resident_BMIstat: resident_BMIstat,
+                resident_medical: resident_medical,
+                resident_lactating: resident_lactating,
+                resident_pregnant: resident_pregnant,
+                resident_PWD: resident_PWD,
+                resident_SY: resident_SY,
             },
             success: function(data) {
                 var json = JSON.parse(data);
                 var status = json.status;
-                // Validate resident_contact if it has a value
-                var resident_contact = $('#resident_contact').val() || $('#contactField').val(); // Check both fields for add and update
-
-                if (resident_contact) { // Only run validation if a contact number is provided
-                // Ensure the contact starts with either '0' or '+63'
-                if (!resident_contact.startsWith('0') && !resident_contact.startsWith('+63')) {
-                    showAlert("Resident contact should start with '0' or '+63'.", "alert-danger");
-                    return;
-                }
-
-                // Check if it starts with "+63" and remove the prefix for validation
-                if (resident_contact.startsWith('+63')) {
-                    resident_contact = resident_contact.replace('+63', '0'); // Replace "+63" with "0" for consistent length validation
-                }
-
-                // Remove all non-numeric characters (like spaces, dashes, etc.)
-                var resident_contact_digits = resident_contact.replace(/\D/g, ''); 
-
-                // Check if resident_contact has exactly 11 digits
-                if (resident_contact_digits.length !== 11) {
-                    showAlert("Resident contact should have exactly 11 digits after formatting.", "alert-danger");
-                    return;
-                }
-            }
 
                 if (status === 'duplicate') {
                     showAlert("Resident with the same name already exists.", "alert-danger");
@@ -229,119 +197,59 @@ $(document).ready(function() {
 
 $(document).on('submit', '#updateUser', function(e) {
     e.preventDefault();
-
     // Get input values
     var resident_firstname = $('#fnameField').val();
     var resident_middlename = $('#minameField').val();
     var resident_lastname = $('#lnameField').val();
-    var resident_maidenname = $('#manameField').val();
-    var resident_sex = $('#sexField').val();
-    var resident_suffixes = $('#suffixesField').val();
-    var resident_address = $('#addressField').val();
-    var resident_educationalattainment = $('#educField').val();
     var resident_birthdate = $('#birthField').val();
-    var resident_contact = $('#contactField').val();
-    var resident_occupation = $('#occupationField').val();
-    var resident_religion = $('#religionField').val();
-    var resident_indigenous = $('#indigenousField').val();
-    var resident_status = $('#statusField').val();
-    var resident_householdrole = $('#roleField').val();
-    var household_id = $('#idField').val();
+    var resident_height = $('#heightField').val();
+    var resident_weight = $('#weightField').val();
+    var resident_heightstat = $('#heightstatField').val();
+    var resident_weightstat = $('#weightstatField').val();
+    var resident_BMIstat = $('#bmiField').val();
+    var resident_medical = $('#medField').val();
+    var resident_lactating = $('#lactatingField').val();
+    var resident_pregnant = $('#pregnantField').val();
+    var resident_PWD = $('#pwdField').val();
+    var resident_SY = $('#syField').val();
     var trid = $('#trid').val();
     var resident_id = $('#resident_id').val();
-
-    if (resident_firstname && resident_lastname && resident_sex && resident_suffixes && resident_address && resident_educationalattainment && resident_birthdate && resident_occupation && resident_religion && resident_indigenous && resident_status && resident_householdrole && household_id) {
+    if(resident_height && resident_weight && resident_heightstat && resident_weightstat && resident_BMIstat && resident_medical && resident_lactating && resident_pregnant && resident_PWD && resident_SY) {
         $.ajax({
             url: "update.php",
             type: "post",
             data: {
                 resident_firstname: resident_firstname,
-                resident_middlename: resident_middlename,
                 resident_lastname: resident_lastname,
-                resident_maidenname: resident_maidenname,
-                resident_sex: resident_sex,
-                resident_suffixes: resident_suffixes,
-                resident_address: resident_address,
-                resident_educationalattainment: resident_educationalattainment,
+                resident_middlename: resident_middlename,
                 resident_birthdate: resident_birthdate,
-                resident_contact: resident_contact,
-                resident_occupation: resident_occupation,
-                resident_religion: resident_religion,
-                resident_indigenous: resident_indigenous,
-                resident_status: resident_status,
-                resident_householdrole: resident_householdrole,
-                household_id: household_id,
+                resident_height: resident_height,
+                resident_weight: resident_weight,
+                resident_heightstat: resident_heightstat,
+                resident_weightstat: resident_weightstat,
+                resident_BMIstat: resident_BMIstat,
+                resident_medical: resident_medical,
+                resident_lactating: resident_lactating,
+                resident_pregnant: resident_pregnant,
+                resident_PWD: resident_PWD,
+                resident_SY: resident_SY,
                 resident_id: resident_id
             },
             success: function(data) {
                 var json = JSON.parse(data);
                 var status = json.status;
-
-                if (status === 'true') {
-                    // Fetch updated resident data to get the recalculated age
-                    $.ajax({
-                        url: "get_age.php", // This file should retrieve the resident data by ID
-                        type: "post",
-                        data: { resident_id: resident_id },
-                        success: function(data) {
-                            var resident = JSON.parse(data);
-                            // Validate resident_contact if it has a value
-                            var resident_contact = $('#resident_contact').val() || $('#contactField').val(); // Check both fields for add and update
-
-                            if (resident_contact) { // Only run validation if a contact number is provided
-                                // Ensure the contact starts with either '0' or '+63'
-                                if (!resident_contact.startsWith('0') && !resident_contact.startsWith('+63')) {
-                                    showAlert("Resident contact should start with '0' or '+63'.", "alert-danger");
-                                    return;
-                                }
-
-                                // Check if it starts with "+63" and remove the prefix for validation
-                                if (resident_contact.startsWith('+63')) {
-                                    resident_contact = resident_contact.replace('+63', '0'); // Replace "+63" with "0" for consistent length validation
-                                }
-
-                                // Remove all non-numeric characters (like spaces, dashes, etc.)
-                                var resident_contact_digits = resident_contact.replace(/\D/g, ''); 
-
-                                // Check if resident_contact has exactly 11 digits
-                                if (resident_contact_digits.length !== 11) {
-                                    showAlert("Resident contact should have exactly 11 digits after formatting.", "alert-danger");
-                                    return;
-                                }
-                            }
-
-                            // Update the DataTable row with the new data
-                            var table = $('#example').DataTable();
-                            var checkbox = '<input type="checkbox" class="row-checkbox" value="' + resident_id + '">';
-                            var button = '<div class="dropdown"><button class="action-btn" onclick="toggleDropdown(this)">ACTIONS <i class="bx bx-chevron-down"></i></button><div class="dropdown-menu"><a href="javascript:void(0);" data-id="' + resident_id + '" class="dropdown-item update-btn editbtn"><i class="bx bx-edit"></i></a><a href="javascript:void(0);" data-id="' + resident_id + '" class="dropdown-item delete-btn deleteBtn"><i class="bx bx-trash"></i></a></div></div>';
-
-                            // Update row with new data including calculated age from get_resident.php response
-                            var row = table.row("[id='" + trid + "']");
-                            row.data([
-                                resident_id,
-                                checkbox,
-                                resident.resident_firstname,
-                                resident.resident_middlename,
-                                resident.resident_lastname,
-                                resident.resident_maidenname,
-                                resident.resident_address,
-                                resident.resident_educationalattainment,
-                                resident.resident_birthdate,
-                                resident.resident_age, // Updated age from get_resident.php
-                                resident.resident_contact, 
-                                resident.resident_status,
-                                button
-                            ]);
-
-                            $('#exampleModal').modal('hide');
-                            showAlert("Resident information updated successfully.", "alert-success");
-                        }
-                    });
-                } else if (status === 'duplicate') {
-                    showAlert("Resident with the same name already exists. Update failed.", "alert-danger");
+                if (status === 'duplicate') {
+                    showAlert("Resident with the same name already exists.", "alert-danger");
+                } else if (status === 'true') {
+                    $('#example').DataTable().draw();
+                    $('#exampleModal').modal('hide');
+                    showAlert("Resident update successfully.", "alert-success");
                 } else {
-                    showAlert("Failed to update resident information.", "alert-danger");
+                    showAlert("Failed to Update resident.", "alert-danger");
                 }
+            },
+            error: function() {
+                showAlert("An error occurred while processing the request.", "alert-danger");
             }
         });
     } else {
@@ -369,6 +277,7 @@ $(document).on('click', '.deleteBtn', function(event) {
           if (json.status === 'success') {
             // Remove the row from DataTable
             table.row($(event.target).closest('tr')).remove().draw();
+            showAlert("Resident information remove successfully.", "alert-success");
           } else {
             alert('Deletion failed');
           }
@@ -414,26 +323,75 @@ function showAlert(message, alertClass) {
                 var json = JSON.parse(data);
                 $('#fnameField').val(json.resident_firstname);
                 $('#lnameField').val(json.resident_lastname);
-                $('#manameField').val(json.resident_maidenname);
                 $('#minameField').val(json.resident_middlename);
-                $('#sexField').val(json.resident_sex);
-                $('#suffixesField').val(json.resident_suffixes);
-                $('#addressField').val(json.resident_address);
-                $('#educField').val(json.resident_educationalattainment);
+                $('#heightField').val(json.resident_height);
+                $('#weightField').val(json.resident_weight);
+                $('#heightstatField').val(json.resident_heightstat);
+                $('#weightstatField').val(json.resident_weightstat);
                 $('#birthField').val(json.resident_birthdate);
-                $('#ageField').val(json.resident_age);
-                $('#contactField').val(json.resident_contact);
-                $('#occupationField').val(json.resident_occupation);
-                $('#religionField').val(json.resident_religion);
-                $('#indigenousField').val(json.resident_indigenous);
-                $('#statusField').val(json.resident_status);
-                $('#roleField').val(json.resident_householdrole);
-                $('#idField').val(json.household_id);
+                $('#bmiField').val(json.resident_BMIstat);
+                $('#medField').val(json.resident_medical);
+                $('#lactatingField').val(json.resident_lactating);
+                $('#pregnantField').val(json.resident_pregnant);
+                $('#pwdField').val(json.resident_PWD);
+                $('#syField').val(json.resident_SY);
                 $('#resident_id').val(resident_id);
                 $('#trid').val(trid);
             }
         })
     });
+    $(document).ready(function() {
+    $('#example').on('click', '.viewbtn', function(event) {
+        var table = $('#example').DataTable();
+        var resident_id = $(this).data('id');
+        
+        // Debugging: Check if resident_id is found
+        console.log("Resident ID:", resident_id);
+        
+        if (!resident_id) {
+            console.error("Resident ID is not defined.");
+            alert("Resident ID is missing. Please try again.");
+            return;
+        }
+
+        $('#viewModal').modal('show');
+        $.ajax({
+            url: "fetch_details.php",
+            data: {
+                resident_id: resident_id
+            },
+            type: 'post',
+            success: function(data) {
+                console.log("AJAX data response:", data);
+                try {
+                    var json = JSON.parse(data);
+                    $('#view_firstname').text(json.resident_firstname || "Not Updated");
+                    $('#view_middlename').text(json.resident_middlename || "Not Updated");
+                    $('#view_lastname').text(json.resident_lastname || "Not Updated");
+                    $('#view_1').text(json.resident_height || "Not Updated");
+                    $('#view_2').text(json.resident_weight || "Not Updated");
+                    $('#view_birthdate').text(json.resident_birthdate || "Not Updated");
+                    $('#view_age').text(json.resident_age || "Not Updated");
+                    $('#view_3').text(json.resident_BMIstat || "Not Updated");
+                    $('#view_4').text(json.resident_heightstat || "Not Updated");
+                    $('#view_5').text(json.resident_weightstat || "Not Updated");
+                    $('#view_6').text(json.resident_medical || "Not Updated");
+                    $('#view_7').text(json.resident_lactating || "Not Updated");
+                    $('#view_8').text(json.resident_pregnant || "Not Updated");
+                    $('#view_9').text(json.resident_PWD || "Not Updated");
+                    $('#view_10').text(json.resident_SY || "Not Updated");
+                } catch (e) {
+                    console.error("JSON parsing error:", e);
+                    alert("An error occurred while processing the data.");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error:", error);
+                alert("Failed to fetch details: " + error);
+            }
+        });
+    });
+});
 
 </script>
 <script>
@@ -473,4 +431,14 @@ window.onclick = function(event) {
         }
     }
 }
+</script>
+<script>
+    // Add event listener for the Enter key when the modal is open
+document.addEventListener('keydown', function(event) {
+    const modalOpen = document.getElementById('deleteConfirmationModal').classList.contains('show');
+    if (modalOpen && event.key === 'Enter') {
+        event.preventDefault();
+        document.getElementById('confirmDeleteBtn').click();
+    }
+});
 </script>

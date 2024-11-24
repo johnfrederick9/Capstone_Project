@@ -1,6 +1,6 @@
 <?php
 include '../../head.php';
-include "../../sidebar_officials.php";
+include '../../sidebar.php';
 ?>
 <style>
 

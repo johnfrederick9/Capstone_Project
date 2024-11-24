@@ -72,39 +72,45 @@ echo '<html>
     <table>
         <thead>
             <tr>
-                <th>First Name</th>
-                <th>Middle Name</th>
-                <th>Last Name</th>
-                <th>Maiden Name</th>
+                <th>Full Name</th>
                 <th>Address</th>
-                <th>Educational Attainment</th>
                 <th>Birth Date</th>
                 <th>Age</th>
-                <th>Contact Number</th>
-                <th>Occupation</th>
-                <th>Religion</th>
-                <th>Indigenous</th>
-                <th>Status</th>
+                <th>Height</th>
+                <th>Weight</th>
+                <th>Height Status</th>
+                <th>Weight Status</th>
+                <th>BMI Status</th>
+                <th>Medical History</th>
+                <th>Lactating</th>
+                <th>Pregnant</th>
+                <th>PWD</th>
+                <th>Out Of SY</th>
             </tr>
         </thead>
         <tbody>';
 
 // Output the selected resident data
 while ($row = mysqli_fetch_assoc($query)) {
+    // Combine name fields and create middle initial
+    $middle_initial = !empty($row['resident_middlename']) ? strtoupper(substr($row['resident_middlename'], 0, 1)) . '.' : '';
+    $full_name = $row['resident_firstname'] . ' ' . $middle_initial . ' ' . $row['resident_lastname'];
+
     echo '<tr>
-            <td>'.$row['resident_firstname'].'</td>
-            <td>'.$row['resident_middlename'].'</td>
-            <td>'.$row['resident_lastname'].'</td>
-            <td>'.$row['resident_maidenname'].'</td>
+            <td>'.$full_name.'</td>
             <td>'.$row['resident_address'].'</td>
-            <td>'.$row['resident_educationalattainment'].'</td>
             <td>'.$row['resident_birthdate'].'</td>
             <td>'.$row['resident_age'].'</td>
-            <td>'.$row['resident_contact'].'</td>
-            <td>'.$row['resident_occupation'].'</td>
-            <td>'.$row['resident_religion'].'</td>
-            <td>'.$row['resident_indigenous'].'</td>
-            <td>'.$row['resident_status'].'</td>
+            <td>'.$row['resident_height'].'</td>
+            <td>'.$row['resident_weight'].'</td>
+            <td>'.$row['resident_heightstat'].'</td>
+            <td>'.$row['resident_weightstat'].'</td>
+            <td>'.$row['resident_BMIstat'].'</td>
+            <td>'.$row['resident_medical'].'</td>
+            <td>'.$row['resident_lactating'].'</td>
+            <td>'.$row['resident_pregnant'].'</td>
+            <td>'.$row['resident_PWD'].'</td>
+            <td>'.$row['resident_SY'].'</td>
           </tr>';
 }
 
@@ -120,6 +126,5 @@ echo '</tbody></table>';
         };
     };
 </script>
-
 </body>
 </html>

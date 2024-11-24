@@ -1,5 +1,6 @@
 <?php
+include "../../sidebar_mainofficials.php";
 include "../../head.php";
-include "../../pages/dashboard/dashboard.php";
+include "../../dashboard/dashboard.php";
 ?>
 

@@ -6,9 +6,6 @@ include "../../sidebar_officials.php";
     .head{
         margin-top: 10px;
     }
-    .inventory{
-        margin-top: 20px;
-    }
     .inventory .print-btn, .add-popup{
         display: none;
     }
@@ -33,14 +30,14 @@ include "../../sidebar_officials.php";
                     </div>
                     <table id="example" class="table-table">
                     <thead>
-                        <th>First Name</th>
-                        <th>Middle Name</th>
-                        <th>Last Name</th>
-                        <th>Maiden Name</th>
+                        <th>#</th>
+                        <th>Full Name</th>
                         <th>Address</th>
                         <th>Educational Attainment</th>
+                        <th>Position</th>
                         <th>Birth Date</th>
                         <th>Age</th>
+                        <th>Contact</th>
                         <th>Status</th>
                     </thead>
                     <tbody>
@@ -48,25 +45,34 @@ include "../../sidebar_officials.php";
                     </table>
                 </div><!-- .table-container-->
                     <script type="text/javascript">
-                        $(document).ready(function() {
-                        var table = $('#example').DataTable({
-                            "fnCreatedRow": function(nRow, aData, iDataIndex) {
-                                $(nRow).attr('id', aData[0]);
+                       $(document).ready(function() {
+                    // Array to store selected checkbox IDs
+                    var selectedIds = [];
+
+                    var table = $('#example').DataTable({
+                        "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                            $(nRow).attr('id', aData[0]);
+                        },
+                        'serverSide': 'true',
+                        'processing': 'true',
+                        'paging': 'true',
+                        'order': [],
+                        'ajax': {
+                            'url': 'fetch_data.php',
+                            'type': 'post',
+                        },
+                        "aoColumnDefs": [
+                            {
+                            "targets": [0],  // Target the first column (aData[0])
+                            "visible": false, // Hide the column
+                            "searchable": false // Disable search for this column if needed
                             },
-                            'serverSide': 'true',
-                            'processing': 'true',
-                            'paging': 'true',
-                            'order': [],
-                            'ajax': {
-                                'url': 'fetch_data.php',
-                                'type': 'post',
-                            },
-                            "aoColumnDefs": [{
-                                "bSortable": false,
-                                "aTargets": [8]
-                            }]
-                        });
+                            {
+                            "bSortable": false,
+                            "aTargets": [0]
+                        }],
                     });
+                });
                     </script>
                 </section><!-- .home-->
     </body> 

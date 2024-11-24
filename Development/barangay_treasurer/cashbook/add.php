@@ -23,7 +23,6 @@ $cb_init_balance = mysqli_real_escape_string($con, $_POST["cb_init_balance"] ?? 
 // $pcf_receipt = is_array($_POST["pcf_receipt_data"] ?? null) ? $_POST["pcf_receipt_data"] : [];
 // $pcf_payments = is_array($_POST["pcf_payments_data"] ?? null) ? $_POST["pcf_payments_data"] : [];
 
-
 $add_counter = json_decode($_POST['add_counter'] ?? '[]', true);
 $date_data = json_decode($_POST['date_data'] ?? '[]', true);
 $particulars_1 = json_decode($_POST['particulars_1'] ?? '[]', true);
@@ -39,7 +38,6 @@ $ca_disbursement = json_decode($_POST['ca_disbursement_data'] ?? '[]', true);
 $ca_balance = json_decode($_POST['ca_balance_data'] ?? '[]', true);
 $pcf_receipt = json_decode($_POST['pcf_receipt_data'] ?? '[]', true);
 $pcf_payments = json_decode($_POST['pcf_payments_data'] ?? '[]', true);
-
 
 mysqli_begin_transaction($con);
 try {
@@ -190,7 +188,66 @@ try {
     mysqli_stmt_execute($stmt_cashbook_up);
     mysqli_stmt_close($stmt_cashbook_up);
     
+    $sql_monthly = "INSERT INTO tb_cashbook_monthly (
+        date_data, 
+        clt_init_balance, clt_end_balance, 
+        cb_init_balance, cb_end_balance,
+        isDisplayed
+    ) VALUES (?, ?, ?, ?, ?, 1)";
+    $stmt_sql_monthly = mysqli_prepare($con, $sql_monthly);
+    mysqli_stmt_bind_param($stmt_sql_monthly, "sdddd", $period_covered, $clt_init_balance, $clt_end_balance ,$cb_init_balance, $cb_end_balance);
+    if (!mysqli_stmt_execute($stmt_sql_monthly)) {
+        throw new Exception("Failed to insert into tb_cashbook_monthly: " . mysqli_stmt_error($stmt_sql_monthly));
+    }
+    mysqli_stmt_close($stmt_sql_monthly);
 
+
+
+   // Query to get the earliest and latest dates
+   $sql_dates = "SELECT 
+    MIN(date_data) AS earliest_date,
+    MAX(date_data) AS latest_date 
+    FROM tb_cashbook_monthly
+    WHERE isDisplayed = 1";
+
+   $result_dates = mysqli_query($con, $sql_dates);
+
+   // Check if the query was successful and returns data
+   if ($result_dates && mysqli_num_rows($result_dates) > 0) {
+   $dates = mysqli_fetch_assoc($result_dates);
+
+   // Standardize date formats for comparison
+   $earliest_date = !empty($dates['earliest_date']) ? date('Y-m-d', strtotime($dates['earliest_date'])) : null;
+   $latest_date = !empty($dates['latest_date']) ? date('Y-m-d', strtotime($dates['latest_date'])) : null;
+   $target_date = date('Y-m-d', strtotime($period_covered));
+
+   // Enhanced date position handling using switch statement
+   switch(true) {
+       case ($target_date == $earliest_date):
+           // First date logic
+           $_GET['target_date'] = $target_date;
+           $_GET['date_status'] = 'First'; // Pass date_status via GET
+           //include('recalculate_data.php');
+           $message = "Recalculate from the first date";
+           break;
+               
+       case ($target_date == $latest_date):
+           // Latest date logic (do nothing)
+           $message = "Do nothing";
+           break;
+               
+       default:
+           // Middle date logic
+           $_GET['target_date'] = $target_date;
+           $_GET['date_status'] = 'In Between'; // Pass date_status via GET
+           //include('recalculate_data.php');
+           $message = "Recalculate from the starting date";
+           break;
+   }
+
+   // Close the result set
+   mysqli_free_result($result_dates);
+   }
 
     // Send success response
     $response = array(
@@ -200,6 +257,11 @@ try {
         
     );
     mysqli_commit($con);
+
+    if (isset($_GET['target_date'])) {
+        include('recalculate_data.php');
+    }
+
 
 } catch (Exception $e) {
     // Rollback transaction in case of failure
