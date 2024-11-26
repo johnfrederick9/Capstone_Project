@@ -158,16 +158,13 @@ $borrowedItems_json = json_encode($borrowedItems);
                                     <i class="bx bx-printer"></i>
                                 </button>
                             </th>
-                        <th>Name</th>
                         <th>Address</th>
-                        <th>Items</th>
                         <th>Quantity</th>
                         <th>Reserved Date</th>
                         <th>Borrowed Date</th>
                         <th>Return Date</th>
                         <th>Approved By</th>
                         <th>Released By</th>
-                        <th>Date Returned</th>
                         <th>Return Quantity</th>
                         <th>Transaction Status</th>
                         <th>Buttons</th>
@@ -191,6 +188,8 @@ $borrowedItems_json = json_encode($borrowedItems);
                         <div class="modal-body">
                             <form id="updateUser">
                                 <!-- First Row -->
+                                <input type="hidden" name="transaction_id" id="transaction_id" value="">
+                                <input type="hidden" name="trid" id="trid" value="">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">

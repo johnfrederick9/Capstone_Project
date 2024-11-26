@@ -2,7 +2,7 @@
 include('../../connection.php');
 
 $transaction_id = $_POST["transaction_id"];
-echo ($transaction_id);
+
 // Capture POST data
 $borrower_name = $_POST["borrower_name"] ?? '';
 $borrower_address = $_POST["borrower_address"] ?? '';

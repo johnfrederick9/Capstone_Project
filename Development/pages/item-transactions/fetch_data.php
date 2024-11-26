@@ -88,16 +88,13 @@ while ($row = mysqli_fetch_assoc($query)) {
     $sub_array = array();
     $sub_array[] = $row['transaction_id'];
     $sub_array[] = '<input type="checkbox" class="row-checkbox" value="'.$row['transaction_id'].'">';
-    $sub_array[] = $row['borrower_name'];
     $sub_array[] = $row['borrower_address'];
-    $sub_array[] = $row['borrowed_items'];  // Use alias
     $sub_array[] = $row['borrowed_quantities'];  // Use alias
     $sub_array[] = $row['reserved_on'];
     $sub_array[] = $row['date_borrowed'];
     $sub_array[] = $row['return_date'];
     $sub_array[] = $row['approved_by'];
     $sub_array[] = $row['released_by'];
-    $sub_array[] = $row['date_returned'];
     $sub_array[] = $row['returned_quantities'];
     $sub_array[] = $row['transaction_status'];
     $sub_array[] = '<div class="dropdown">

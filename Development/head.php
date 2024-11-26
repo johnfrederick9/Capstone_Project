@@ -8,18 +8,6 @@
   <!----===== Boxicons CSS ===== -->
   <link rel="stylesheet" href="../../assets/css/boxicons.min.css" />
 
-  <!----===== Fontawesome CSS ===== -->
-  <link rel="stylesheet" href="assets/css/font-awesome.css">
-
-  <!----===== Bootstrap CSS ===== -->
-  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-
-  <!----===== Owl-Carousel for Index CSS ===== -->
-  <link rel="stylesheet" href="assets/css/owl-carousel.css">
-
-  <!----===== Index CSS ===== -->
-  <link rel="stylesheet" href="assets/css/index.css">
-
   <!----===== Chart.js JS ===== -->
   <script src="../../assets/js/Chart.min.js"></script>
 

@@ -1411,7 +1411,8 @@ body.dark .home .calendar-event .event-scheduler label {
   position: relative;
   width: 1100px !important;
   height: 605px !important;
-  margin: 0 auto;
+  margin: auto;
+  margin-top: 15px;
   padding: 20px;
   background-color: #e5fced;
   border-radius: 8px;
@@ -1420,18 +1421,21 @@ body.dark .home .calendar-event .event-scheduler label {
   -webkit-backdrop-filter: blur(50px); /* For Safari */
 }
 
-
-
 .table-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 5px;
-  color: #333;
-  background-color: #fff;
+  margin-bottom: 10px;
+  background-color: rgba(255, 255, 255, 0.4); /* Semi-transparent white */
   font-size: small;
   font-weight: 500;
-
+  color: black;
+  backdrop-filter: blur(10px); /* Adjust the blur intensity */
+  -webkit-backdrop-filter: blur(10px); /* For better compatibility */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Optional: subtle border */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+  border-radius: 8px; /* Optional: rounded corners */
 }
+
 
 .table-table thead {
   background-color: #f1f1f1;
@@ -1455,6 +1459,7 @@ body.dark .home .calendar-event .event-scheduler label {
   overflow-x: hidden;
   max-height: 400px; /* Adjust this value as needed */
   width: 100%;
+  height: 400px;
   font-size: 12px;
 }
 

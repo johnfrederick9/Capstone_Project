@@ -7,6 +7,16 @@ $query = "SELECT user_id, lastname, firstname, middlename, sex, birthdate, baran
 $result = mysqli_query($conn, $query);
 ?>
 <html>
+    <head>
+          <!----===== Fontawesome CSS ===== -->
+        <link rel="stylesheet" href="assets/css/font-awesome.css">
+        <!----===== Bootstrap CSS ===== -->
+        <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+        <!----===== Owl-Carousel for Index CSS ===== -->
+        <link rel="stylesheet" href="assets/css/owl-carousel.css">
+        <!----===== Index CSS ===== -->
+        <link rel="stylesheet" href="assets/css/index.css">
+    </head>
     <title>Barangay Mantalongon Information System</title>
     <link rel="icon" href="assets/image/Logo.png">
     <body>

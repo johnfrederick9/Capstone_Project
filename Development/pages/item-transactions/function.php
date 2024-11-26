@@ -17,13 +17,13 @@ $(document).ready(function() {
         },
         "aoColumnDefs": [
             {
-            "targets": [0,2,4,11],  // Target the first column (aData[0])
+            "targets": [0],  // Target the first column (aData[0])
             "visible": false, // Hide the column
             "searchable": false // Disable search for this column if needed
             },
             {
             "bSortable": false,
-            "aTargets": [12]
+            "aTargets": []
         }],
         // Event that triggers when the table is redrawn (pagination or search)
         "drawCallback": function() {
@@ -196,114 +196,130 @@ $(document).ready(function() {
                     }
                 });
 
-                $(document).on('submit', '#updateUser', function(e) {
-                    e.preventDefault();
+                $(document).on('submit', '#updateUser', function (e) {
+    e.preventDefault();
 
-                    // Collect values from the form
-                    var borrower_name = $('#borrowernameField').val();
-                    var borrower_address = $('#borroweraddressField').val();
-                    var reserved_on = $('#reservedonField').val();
-                    var date_borrowed = $('#dateborrowedField').val();
-                    var return_date = $('#returndateField').val();
-                    var approved_by = $('#approvedbyField').val();
-                    var released_by = $('#releasedbyField').val();
-                    var returned_by = $('#returnedbyField').val();
-                    var date_returned = $('#datereturnedField').val();
-                    var transaction_id = $('#transaction_id').val(); // Ensure you're getting the correct transaction ID
-                    var trid = $('#trid').val();
-                    // Log values for debugging
-                    console.log("Borrower Name:", borrower_name);
-                    console.log("Borrower Address:", borrower_address);
-                    console.log("Reserved On:", reserved_on);
-                    console.log("Date Borrowed:", date_borrowed);
-                    console.log("Return Date:", return_date);
-                    console.log("Approved By:", approved_by);
-                    console.log("Released By:", released_by);
-                    console.log("Returned By:", returned_by);
-                    console.log("Date Returned:", date_returned);
-                    console.log("Transaction ID:", transaction_id);
+    // Collect values from the form
+    var borrower_name = $('#borrowernameField').val();
+    var borrower_address = $('#borroweraddressField').val();
+    var reserved_on = $('#reservedonField').val();
+    var date_borrowed = $('#dateborrowedField').val();
+    var return_date = $('#returndateField').val();
+    var approved_by = $('#approvedbyField').val();
+    var released_by = $('#releasedbyField').val();
+    var returned_by = $('#returnedbyField').val();
+    var date_returned = $('#datereturnedField').val();
+    var transaction_id = $('#transaction_id').val(); // Ensure you're getting the correct transaction ID
+    var trid = $('#trid').val();
 
+    // Log values for debugging
+    console.log("Borrower Name:", borrower_name);
+    console.log("Borrower Address:", borrower_address);
+    console.log("Reserved On:", reserved_on);
+    console.log("Date Borrowed:", date_borrowed);
+    console.log("Return Date:", return_date);
+    console.log("Approved By:", approved_by);
+    console.log("Released By:", released_by);
+    console.log("Returned By:", returned_by);
+    console.log("Date Returned:", date_returned);
+    console.log("Transaction ID:", transaction_id);
 
-                    // Collect dynamic item data
-                    var items = [];
-                    $('.inp-group-update > .flex').each(function() {
-                        var item_id = $(this).find('select[name="items[]"]').val();
-                        var borrow_quantity = $(this).find('input[name="borrow_quantity[]"]').val();
-                        var return_quantity = $(this).find('input[name="return_quantity[]"]').val();
-                        
-                        items.push({
-                            item_id: item_id,
-                            borrow_quantity: borrow_quantity,
-                            return_quantity: return_quantity
-                        });
-                    });
+    // Collect dynamic item data
+    var items = [];
+    $('.inp-group-update > .flex').each(function () {
+        var item_id = $(this).find('select[name="items[]"]').val();
+        var borrow_quantity = parseInt($(this).find('input[name="borrow_quantity[]"]').val()) || 0;
+        var return_quantity = parseInt($(this).find('input[name="return_quantity[]"]').val()) || 0;
 
-                    console.log("Items: ", items);
+        items.push({
+            item_id: item_id,
+            borrow_quantity: borrow_quantity,
+            return_quantity: return_quantity,
+        });
+    });
 
-                    if (borrower_name && borrower_address && reserved_on && date_borrowed && return_date && approved_by && released_by) {
-                        $.ajax({
-                            url: "update.php",
-                            type: "post",
-                            data: {
-                                transaction_id: transaction_id,
-                                borrower_name: borrower_name,
-                                borrower_address: borrower_address,
-                                reserved_on: reserved_on,
-                                date_borrowed: date_borrowed,
-                                return_date: return_date,
-                                approved_by: approved_by,
-                                released_by: released_by,
-                                returned_by: returned_by,
-                                date_returned: date_returned,
-                                items: JSON.stringify(items)
-                            },
-                            success: function(data) {
-                                var json = JSON.parse(data);
-                                var status = json.status;
-                                var available_count = json.available_count; // This might need to be adapted based on your response structure
+    console.log("Items: ", items);
 
-                                if (status == 'true') {
-                                    console.log("Borrower Name:", data.borrower_name);
-                                    console.log("Borrower Address:", data.borrower_address);
-                                    console.log("Reserved On:", data.reserved_on);
-                                    console.log("Date Borrowed:", data.date_borrowed);
-                                    console.log("Return Date:", data.return_date);
-                                    console.log("Approved By:", data.approved_by);
-                                    console.log("Released By:", data.released_by);
-                                    console.log("Returned By:", data.returned_by);
-                                    console.log("Date Returned:", data.date_returned);
-                                    console.log("Transaction ID:", data.transaction_id);
-                                    
-                                    var table = $('#example').DataTable();
-                                    // Update the DataTable row with the new values
-                                    var button = `
-                                        <td>
-                                            <div class="buttons">
-                                                <a href="javascript:void();" data-id="${transaction_id}" class="update-btn btn-sm editbtn"><i class="bx bx-sync"></i></a>
-                                                <a href="!#" data-item_id="${transaction_id}" class="delete-btn btn-sm deleteBtn"><i class="bx bxs-trash"></i></a>
-                                            </div>
-                                        </td>
-                                    `;
-                                    var checkbox = '<td><input type="checkbox" class="row-checkbox" value="'+transaction_id+'"></td>';
-                                    var row = table.row("[id='" + trid + "']");
-                                    row.data([transaction_id, checkbox, borrower_name, borrower_address, reserved_on, date_borrowed, return_date, approved_by, released_by, returned_by, date_returned, available_count, button]);
+    if (borrower_name && borrower_address && reserved_on && date_borrowed && return_date && approved_by && released_by) {
+        $.ajax({
+            url: "update.php",
+            type: "post",
+            data: {
+                transaction_id: transaction_id,
+                borrower_name: borrower_name,
+                borrower_address: borrower_address,
+                reserved_on: reserved_on,
+                date_borrowed: date_borrowed,
+                return_date: return_date,
+                approved_by: approved_by,
+                released_by: released_by,
+                returned_by: returned_by,
+                date_returned: date_returned,
+                items: JSON.stringify(items),
+            },
+            success: function (data) {
+                var json = JSON.parse(data);
+                var status = json.status;
 
-                                    // Close the modal
-                                    $('#exampleModal').modal('hide');
-                                    showAlert("Transaction update successfully.", "alert-success");
-                                } else {
-                                    showAlert('Update failed: ' + (json.error || 'Unknown error', "alert-danger"));
-                                }
-                            },
-                            error: function(xhr, status, error) {
-                                console.error("AJAX Error: " + status + ": " + error);
-                                alert("An error occurred while updating data.");
-                            }
-                        });
-                    } else {
-                        showAlert("Fill all the required fields", "alert-danger");
-                    }
-                });
+                if (status == 'true') {
+                    var borrow_quantity = json.borrow_quantity || 0;
+                    var return_quantity = json.return_quantity || 0;
+
+                    var table = $('#example').DataTable();
+                    var button = `
+                        <div class="dropdown">
+                            <button class="action-btn" onclick="toggleDropdown(this)">
+                                ACTIONS <i class="bx bx-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="javascript:void(0);" data-id="${transaction_id}" class="dropdown-item view-btn viewbtn">
+                                    <i class="bx bx-show"></i>
+                                </a>
+                                <a href="javascript:void(0);" data-id="${transaction_id}" class="dropdown-item update-btn editbtn">
+                                    <i class="bx bx-edit"></i>
+                                </a>
+                                <a href="javascript:void(0);" data-id="${transaction_id}" class="dropdown-item delete-btn deleteBtn">
+                                    <i class="bx bx-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    var checkbox = `<td><input type="checkbox" class="row-checkbox" value="${transaction_id}"></td>`;
+
+                    // Update the DataTable row with the new values
+                    var row = table.row("[id='" + trid + "']");
+                    row.data([
+                        transaction_id,
+                        checkbox,
+                        borrower_address,
+                        borrow_quantity,
+                        reserved_on,
+                        date_borrowed,
+                        return_date,
+                        approved_by,
+                        released_by,
+                        return_quantity, // Added return quantity
+                        json.transaction_status,
+                        button,
+                    ]);
+
+                    // Close the modal
+                    $('#exampleModal').modal('hide');
+                    showAlert("Transaction updated successfully.", "alert-success");
+                } else {
+                    showAlert('Update failed: ' + (json.error || 'Unknown error'), "alert-danger");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error: " + status + ": " + error);
+                alert("An error occurred while updating data.");
+            },
+        });
+    } else {
+        showAlert("Fill all the required fields", "alert-danger");
+    }
+});
+
                 $('#example').on('click', '.editbtn', function(event) {
                     var table = $('#example').DataTable();
                     var trid = $(this).closest('tr').attr('id');
