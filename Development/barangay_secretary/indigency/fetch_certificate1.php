@@ -50,7 +50,7 @@ if (isset($_POST['id'])) {
                 .certificate-container {
                     background-color: white;
                     width: calc(8.5in - 1in); /* Short bond paper size minus margins */
-                    height: calc(11in - 1in);
+                    height: calc(10.5in - 1in);
                     padding: 1in; /* Ensures text and elements fit within the border */
                     box-sizing: border-box;
                     border: 10px solid black; /* Single outer border */

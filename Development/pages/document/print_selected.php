@@ -13,7 +13,7 @@ echo '<html>
    <style>
         @page {
             size: 8.5in 11in; /* Short bond paper size */
-            margin: 15mm 10mm; /* Standard margins: 15mm top/bottom, 10mm sides */
+            margin: 10mm 15mm 20mm 15mm; /* Top: 15mm Right: 15mm Bottom: 20mm Left: 15mm */
         }
         body {
             font-family: Arial, sans-serif;
