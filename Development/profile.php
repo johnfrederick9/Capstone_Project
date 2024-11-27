@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="form-group">
                                         <label for="suffix">Suffix</label>
                                         <select id="suffix" class="input-field" name="suffix" required>
-                                            <option value="None" <?php echo $row['suffix'] === 'None' ? 'selected' : ''; ?>>None</option>
+                                            <option value=" " <?php echo $row['suffix'] === 'None' ? 'selected' : ''; ?>>None</option>
                                             <option value="Sr." <?php echo $row['suffix'] === 'Sr.' ? 'selected' : ''; ?>>Sr.</option>
                                             <option value="Jr." <?php echo $row['suffix'] === 'Jr.' ? 'selected' : ''; ?>>Jr.</option>
                                         </select>

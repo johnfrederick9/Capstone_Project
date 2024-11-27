@@ -17,8 +17,8 @@ $columns = array(
     6 => 'resident_educationalattainment',    
     7 => 'resident_birthdate',
     8 => 'resident_age', // Age will be computed dynamically
-    8 => 'resident_contact',
-    9 => 'resident_status',    
+    9 => 'resident_contact',
+    10 => 'resident_status',    
 );
 
 if (isset($_POST['search']['value'])) {

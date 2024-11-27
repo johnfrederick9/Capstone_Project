@@ -50,11 +50,26 @@ if (isset($conn) && $conn) {
             </a>
           </li>
 
-          <li class="nav-link">
-            <a href="../../pages/resident/table_resident.php" title="Resident">
-            <i class='bx bxs-user-plus icon'></i>
-              <span class="text nav-text">Resident Management</span>
+          <li class="nav-link dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Resident">
+            <i class='bx bxs-user icon'></i>
+                <span class="text nav-text">Resident Management</span>
+              <i class='bx bx-chevron-down arrow'></i>
             </a>
+            <ul class="nav-link dropdown-content">
+              <li>
+              <a href="../../pages/resident/table_resident.php" title="Resident">
+                  <i class='bx bxs-user-plus icon'></i>
+                  <span class="text nav-text">Resident</span>
+                </a>
+              </li>
+              <li>
+                <a href="../../pages/household/table_household.php" title="Household">
+                  <i class='bx bxs-home icon'></i>
+                  <span class="text nav-text">Household</span>
+                </a>
+              </li>
+            </ul>
           </li>
 
           <li class="nav-link">
@@ -63,13 +78,6 @@ if (isset($conn) && $conn) {
               <span class="text nav-text">Employee Management</span>
             </a>
           </li>
-
-          <!--<li class="nav-link">
-            <a href="../../pages/household/table_household.php">
-              <i class='bx bxs-home icon'></i>
-              <span class="text nav-text">Household Management</span>
-            </a>
-          </li>-->
 
           <li class="nav-link">
             <a href="../../pages/document/table_document.php" title="Document">
@@ -94,26 +102,26 @@ if (isset($conn) && $conn) {
             <ul class="nav-link dropdown-content">
               <li>
                 <a href="../../pages/indigency/table_indigency.php" title="Certificate of Indigency">
-                &nbsp; &nbsp; <i class='bx bx-certification'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Indigency</span>
+                  <i class='bx bx-certification icon'></i>
+                  <span class="text nav-text">Indigency</span>
                 </a>
               </li>
               <li>
                 <a href="../../pages/residency/table_residency.php" title="Certificate of Residency">
-                &nbsp; &nbsp; <i class='bx bx-certification'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Residency</span>
+                  <i class='bx bx-certification icon'></i>
+                  <span class="text nav-text">Residency</span>
                 </a>
               </li>
               <li>
                 <a href="../../pages/business_permit/table_permit.php" title="Business Permit">
-                &nbsp; &nbsp; <i class='bx bx-certification'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Business Permit</span>
+                  <i class='bx bx-certification icon'></i>
+                  <span class="text nav-text">Business Permit</span>
                 </a>
               </li>
               <li>
                 <a href="../../pages/business_employee/table_employee.php" title="Business Employee">
-                &nbsp; &nbsp; <i class='bx bx-certification'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Business Employee</span>
+                  <i class='bx bx-certification icon'></i>
+                  <span class="text nav-text">Business Employee</span>
                 </a>
               </li>
             </ul>
@@ -128,14 +136,14 @@ if (isset($conn) && $conn) {
             <ul class="nav-link dropdown-content">
               <li>
                 <a href="../../pages/inventory/table_inventory.php" title="Inventory Table">
-                &nbsp; &nbsp; <i class='bx bx-briefcase'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Inventory Table</span>
+                  <i class='bx bx-briefcase icon'></i>
+                  <span class="text nav-text">Inventory Table</span>
                 </a>
               </li>
               <li>
                 <a href="../../pages/item-transactions/item_transaction.php" title="Item Transaction">
-                &nbsp; &nbsp; <i class='bx bx-briefcase'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Item Transactions</span>
+                  <i class='bx bx-briefcase icon'></i>
+                  <span class="text nav-text">Item Transactions</span>
                 </a>
               </li>
             </ul>
@@ -150,14 +158,14 @@ if (isset($conn) && $conn) {
             <ul class="nav-link dropdown-content">
               <li>
                 <a href="../../pages/rao/table_rao_records.php" title="RAO Table">
-                &nbsp; &nbsp; <i class='bx bx-wallet'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;RAO Table</span>
+                  <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">RAO Table</span>
                 </a>
               </li>
               <li>
                 <a href="../../pages/cashbook/table_cashbook_records.php" title="Cashbook Table">
-                &nbsp; &nbsp; <i class='bx bx-wallet'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Cashbook Table</span>
+                  <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">Cashbook Table</span>
                 </a>
               </li>
             </ul>
@@ -172,14 +180,14 @@ if (isset($conn) && $conn) {
             <ul class="nav-link dropdown-content">
               <li>
                 <a href="../../pages/blotter/table_blotter.php" title="Blotter Table">
-                &nbsp; &nbsp; <i class='bx bxs-report'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Blotter</span>
+                  <i class='bx bxs-report icon'></i>
+                  <span class="text nav-text">Blotter</span>
                 </a>
               </li>
               <li>
                 <a href="../../pages/request/table_request.php" title="Request Table">
-                &nbsp; &nbsp; <i class='bx bxs-report'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Request</span>
+                  <i class='bx bxs-report icon'></i>
+                  <span class="text nav-text">Request</span>
                 </a>
               </li>
             </ul>
@@ -194,7 +202,34 @@ if (isset($conn) && $conn) {
         </ul>
       </div>
       <div class="bottom-content">
+      <!--<li class="nav-link dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Financial">
+            <i class='bx bx-add-to-queue icon'></i>
+              <span class="text nav-text">Additional</span>
+              <i class='bx bx-chevron-down arrow'></i>
+            </a>
+            <ul class="nav-link dropdown-content">
+              <li>
+                <a href="../../pages/user_approval/table_approval.php" title="RAO Table">
+                &nbsp; &nbsp; <i class='bx bxs-check-circle'></i>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Accounts Appoval</span>
+                </a>
+              </li>
+              <li>
+                <a href="../../pages/recycle/table_recycle.php" title="Cashbook Table">
+                &nbsp; &nbsp; <i class='bx bxs-trash'></i>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Recycle Bin</span>
+                </a>
+              </li>
+            </ul>
+          </li>-->
         <li>
+          <a href="../../pages/user_approval/table_approval.php" title="Accounts Appoval">
+          <i class='bx bxs-check-circle icon'></i>
+            <span class="text nav-text">Accounts Appoval</span>
+          </a>
+        </li>
+        <li>          
         <a href="#!" data-id="<?php echo $row['user_id']; ?>" data-bs-toggle="modal" data-bs-target="#UpdateProfileModal" title="Profile" class="editbtn">
                 <i class='bx bxs-user icon'></i>
                 <span class="text nav-text">
@@ -208,7 +243,6 @@ if (isset($conn) && $conn) {
                     <p><?php echo $row["barangayposition"]; ?></p>
                 </span>
             </a>
-
         </li>
         <li>
           <a href="../../logout.php" title="Log-out">

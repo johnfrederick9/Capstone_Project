@@ -70,3 +70,4 @@ $output = array(
     'data' => $data,
 );
 echo json_encode($output);
+?>
