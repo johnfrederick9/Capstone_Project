@@ -149,9 +149,15 @@ if (isset($conn) && $conn) {
             </a>
             <ul class="nav-link dropdown-content">
               <li>
-                <a href="../rao/table_rao_records.php" title="RAO Table">
+                <a href="../rao/table_rao_records.php" title="RAO-PS Table">
                 &nbsp; &nbsp; <i class='bx bx-wallet'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;RAO Table</span>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;RAO-PS Table</span>
+                </a>
+              </li>
+              <li>
+                <a href="../rao-cont/table_rao_cont_records.php" title="RAO-CONT Table">
+                &nbsp; &nbsp; <i class='bx bx-wallet'></i>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;RAO-CONT Table</span>
                 </a>
               </li>
               <li>

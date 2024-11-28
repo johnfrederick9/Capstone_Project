@@ -174,7 +174,7 @@ include '../../sidebar.php';
                             </div>
                             <div class="input-wrapper">
                                 <label for="householdid" class="input-label">Household ID:</label>
-                                <input type="Number" placeholder="Household ID" id="idField" name="household_id" class="input-field" >
+                                <input type="Number" placeholder="Household ID" id="idField" name="household_id" class="input-field" disabled>
                             </div>
                         </div>
                         </div>

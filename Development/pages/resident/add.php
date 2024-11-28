@@ -30,14 +30,28 @@ if (mysqli_num_rows($check_query) > 0) {
     $resident_pension = $_POST["resident_pension"];
     $resident_beneficiaries = $_POST["resident_beneficiaries"];
     
-
     // Check if the number starts with '0' and replace it with '+63'
     if (preg_match('/^0/', $resident_contact)) {
         $resident_contact = '+63' . substr($resident_contact, 1); // Replace leading 0 with +63
     }
 
-    // If the number starts with '+63', or if we've just added it, ensure proper formatting
+    // Ensure proper formatting for contact numbers
     $resident_contact = preg_replace('/\+63(\d{3})(\d{3})(\d{4})/', '+63 $1 $2 $3', $resident_contact);
+
+    // Validate household_id
+    $check_household_sql = "SELECT * FROM `tb_household` WHERE `household_id` = '$household_id'";
+    $check_household_query = mysqli_query($con, $check_household_sql);
+
+    if (mysqli_num_rows($check_household_query) == 0) {
+        // If household_id does not exist, insert it into tb_household
+        $insert_household_sql = "INSERT INTO `tb_household` (`household_id`) VALUES ('$household_id')";
+        $insert_household_query = mysqli_query($con, $insert_household_sql);
+
+        if (!$insert_household_query) {
+            echo json_encode(array('status' => 'household_insert_failed'));
+            exit;
+        }
+    }
 
     // Insert resident without resident_age (age will be calculated by the trigger)
     $sql = "INSERT INTO `tb_resident` (`resident_firstname`, `resident_middlename`, `resident_maidenname`, `resident_lastname`, `resident_sex`, `resident_suffixes`, `resident_address`, `resident_educationalattainment`, `resident_birthdate`, `resident_contact`, `resident_occupation`, `resident_religion`, `resident_indigenous`, `resident_status`, `resident_householdrole`, `household_id`, `isDisplayed`, `resident_pension`, `resident_beneficiaries`) 
