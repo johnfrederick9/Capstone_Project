@@ -355,7 +355,7 @@ body.dark {
 }
 
 /* Style for the dropdown menu */
-.dropdown {
+.dropdown-sidebar {
   position: relative;
   display: inline-block;
 }
@@ -988,7 +988,7 @@ body.dark .home .pagination .page-link:focus{
 }
 
 /* Hidden by default */
-.dropdown-content {
+.dropdown-sidebar-content {
   display: none;
   position: absolute;
   top: 100%; 
@@ -1002,20 +1002,20 @@ body.dark .home .pagination .page-link:focus{
   pointer-events: none;
 }
 
-.dropdown-content a {
+.dropdown-sidebar-content a {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
 }
 
-.dropdown-content a:hover {
+.dropdown-sidebar-content a:hover {
   background-color: #3b3b3b;
   color: rgb(214, 214, 214);
 }
 
 /* When dropdown is open (applied via JavaScript) */
-.dropdown.open .dropdown-content {
+.dropdown.open .dropdown-sidebar-content {
   display: block;
   opacity: 1;
   transform: translateY(0);
@@ -1025,6 +1025,12 @@ body.dark .home .pagination .page-link:focus{
 /* Arrow alignment */
 .arrow {
   margin-left: 5px;
+  color: black;
+}
+
+body.dark .arrow {
+  margin-left: 5px;
+  color: white;
 }
 
 .home .dropdown .bx {
@@ -1059,16 +1065,16 @@ body.dark .home .pagination .page-link:focus{
   display: none;
 }
 
-.sidebar.close .dropdown-content {
+.sidebar.close .dropdown-sidebar-content {
   min-width: 65px;
 }
 
-.sidebar.close .dropdown-content a {
+.sidebar.close .dropdown-sidebar-content a {
   text-align: center;
   padding: 12px;
 }
 
-.sidebar:not(.close) .dropdown-content a {
+.sidebar:not(.close) .dropdown-sidebar-content a {
   text-align: left;
   padding: 12px 16px;
 }
@@ -1256,7 +1262,7 @@ body.dark .sidebar .dropdown .arrow {
   color: white;
 }
 
-body.dark .sidebar .dropdown-content a:hover {
+body.dark .sidebar .dropdown-sidebar-content a:hover {
   color: black;
   background-color: #878895
 }
@@ -1337,16 +1343,16 @@ body.dark label {
   color: #18191a;
 }
 
-body.dark .dropdown-content {
+body.dark .dropdown-sidebar-content {
   background-color: #18191a;
   color: #ccc;
 }
 
-body.dark .dropdown-content a {
+body.dark .dropdown-sidebar-content a {
   color: rgb(255, 254, 254);
 }
 
-body.dark .dropdown-content a:hover {
+body.dark .dropdown-sidebar-content a:hover {
   color: var(--body-color);
   background-color: var(--text-color);
 }

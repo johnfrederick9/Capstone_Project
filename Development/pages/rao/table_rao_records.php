@@ -92,7 +92,7 @@ include '../../sidebar.php';
                             <h1>Records of Appropriations and Obligations</h1>
                         </div>
                         <div class="table-actions">    
-                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-popup">+ Add Table</button>
+                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-table-btn">+ Add Table</button>
                             <!--<button class="print-btn" title="Print">
                                 <i class="bx bx-printer"></i>
                             </button>-->
@@ -525,33 +525,33 @@ include '../../sidebar.php';
                         });
 
                         $(document).on('click', '.deleteBtn', function(event) {
-                            var table = $('#example').DataTable();
                             event.preventDefault();
-                            var rao_id = $(this).data('rao_id');
-                            console.log('RAO ID:', rao_id); 
-                            if (confirm("Are you sure want to delete this rao Record ? ")) {
-                                $.ajax({
-                                    url: "delete.php",
-                                    data: {
-                                        rao_id: rao_id,
-                                    },
-                                    type: "post",
-                                    success: function(data) {
-                                        var json = JSON.parse(data);
-                                        status = json.status;
-                                        if (status == 'success') {
-                                            $("#" + rao_id).closest('tr').remove();
-                                        } else {
-                                            alert('Failed');
-                                            return;
-                                        }
-                                    }
-                                });
-                            } else {
-                                return null;
-                            }
-                        })
+                            var rao_id = $(this).data('id'); // Get project ID from data attribute
+                            var table = $('#example').DataTable();
 
+                            // Open the modal
+                            $('#deleteConfirmationModal').modal('show');
+
+                            // Handle the confirmation
+                            $('#confirmDeleteBtn').off('click').on('click', function() {
+                            $.ajax({
+                                url: "delete.php",
+                                type: "POST",
+                                data: { rao_id: rao_id },
+                                success: function(response) {
+                                var json = JSON.parse(response);
+                                if (json.status === 'success') {
+                                    // Remove the row from DataTable
+                                    table.row($(event.target).closest('tr')).remove().draw();
+                                } else {
+                                    alert('Deletion failed');
+                                }
+                                // Close the modal
+                                $('#deleteConfirmationModal').modal('hide');
+                                }
+                            });
+                            });
+                        });
                     </script>
                 </section><!-- .home-->
                 <!-- Modal -->
@@ -712,6 +712,21 @@ include '../../sidebar.php';
                 </div>
             </div>
             </section>
+            <section class="delete-modal">
+                <!-- Delete Confirmation Modal -->
+                <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Remove for you</h5>
+                        <p>This data will be removed, Would you like to remove it ?</p>
+                        <button type="button" class="btn btn-primary" id="confirmDeleteBtn">Remove</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </section>
     </body> 
     <script>
         //Today's Date Script
@@ -1414,5 +1429,68 @@ include '../../sidebar.php';
             document.querySelector(".inp-group-ob-update").appendChild(newGroup);
             obCounterUpdate++;
         }
+           // Function to show alert
+    function showAlert(message, alertClass) {
+        var alertDiv = $('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' + message +
+                        '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+        alertDiv.css({
+            "position": "fixed",
+            "top": "10px",
+            "right": "10px",
+            "z-index": "9999",
+            "background-color": alertClass === "alert-danger" ? "#f8d7da" : "#d4edda",
+            "border-color": alertClass === "alert-danger" ? "#f5c6cb" : "#c3e6cb"
+        });
+        $("body").append(alertDiv);
+        setTimeout(function() { alertDiv.alert('close'); }, 900);
+    }
     </script>
+<script>
+ function toggleDropdown(button) {
+    // Get the dropdown menu associated with the button
+    var dropdownMenu = button.nextElementSibling;
+    
+    // Get the icon element in the button
+    var icon = button.querySelector('i');
+
+    // Toggle the display of the dropdown menu
+    if (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") {
+        dropdownMenu.style.display = "flex"; // Show the menu as flex (horizontal layout)
+        icon.classList.remove('bx-chevron-down');
+        icon.classList.add('bx-chevron-up');
+    } else {
+        dropdownMenu.style.display = "none"; // Hide the menu
+        icon.classList.remove('bx-chevron-up');
+        icon.classList.add('bx-chevron-down');
+    }
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+    if (!event.target.matches('.action-btn') && !event.target.closest('.dropdown')) {
+        var dropdowns = document.getElementsByClassName("dropdown-menu");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.style.display === "flex") {
+                openDropdown.style.display = "none";
+
+                // Reset the icon to down-arrow for each open button
+                var icon = openDropdown.previousElementSibling.querySelector('i');
+                icon.classList.remove('bx-chevron-up');
+                icon.classList.add('bx-chevron-down');
+            }
+        }
+    }
+}
+</script>
+<script>
+    // Add event listener for the Enter key when the modal is open
+document.addEventListener('keydown', function(event) {
+    const modalOpen = document.getElementById('deleteConfirmationModal').classList.contains('show');
+    if (modalOpen && event.key === 'Enter') {
+        event.preventDefault();
+        document.getElementById('confirmDeleteBtn').click();
+    }
+});
+</script>
 </html>

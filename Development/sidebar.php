@@ -50,13 +50,13 @@ if (isset($conn) && $conn) {
             </a>
           </li>
 
-          <li class="nav-link dropdown">
+          <li class="nav-link dropdown-sidebar">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Resident">
             <i class='bx bxs-user icon'></i>
                 <span class="text nav-text">Resident Management</span>
-              <i class='bx bx-chevron-down arrow'></i>
+                <i class='bx bx-chevron-down arrow'></i>
             </a>
-            <ul class="nav-link dropdown-content">
+            <ul class="nav-link dropdown-sidebar-content">
               <li>
               <a href="../../pages/resident/table_resident.php" title="Resident">
                   <i class='bx bxs-user-plus icon'></i>
@@ -93,13 +93,13 @@ if (isset($conn) && $conn) {
             </a>
           </li>
 
-          <li class="nav-link dropdown">
+          <li class="nav-link dropdown-sidebar">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Certificates">
               <i class='bx bxs-certification icon'></i>
               <span class="text nav-text">Certificate Library</span>
               <i class='bx bx-chevron-down arrow'></i>
             </a>
-            <ul class="nav-link dropdown-content">
+            <ul class="nav-link dropdown-sidebar-content">
               <li>
                 <a href="../../pages/indigency/table_indigency.php" title="Certificate of Indigency">
                   <i class='bx bx-certification icon'></i>
@@ -127,13 +127,13 @@ if (isset($conn) && $conn) {
             </ul>
           </li>
 
-          <li class="nav-link dropdown">
+          <li class="nav-link dropdown-sidebar">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Inventory">
               <i class='bx bxs-briefcase icon'></i>
                 <span class="text nav-text">Inventory Management</span>
               <i class='bx bx-chevron-down arrow'></i>
             </a>
-            <ul class="nav-link dropdown-content">
+            <ul class="nav-link dropdown-sidebar-content">
               <li>
                 <a href="../../pages/inventory/table_inventory.php" title="Inventory Table">
                   <i class='bx bx-briefcase icon'></i>
@@ -149,13 +149,13 @@ if (isset($conn) && $conn) {
             </ul>
           </li>
       
-          <li class="nav-link dropdown">
+          <li class="nav-link dropdown-sidebar">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Financial">
             <i class='bx bxs-wallet icon'></i>
               <span class="text nav-text">Financial Library</span>
               <i class='bx bx-chevron-down arrow'></i>
             </a>
-            <ul class="nav-link dropdown-content">
+            <ul class="nav-link dropdown-sidebar-content">
               <li>
                 <a href="../../pages/rao/table_rao_records.php" title="RAO-PS Table">
                   <i class='bx bx-wallet icon'></i>
@@ -164,8 +164,8 @@ if (isset($conn) && $conn) {
               </li>
               <li>
                 <a href="../../pages/rao-cont/table_rao_cont_records.php" title="RAO-CONT Table">
-                &nbsp; &nbsp; <i class='bx bx-wallet'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;RAO-CONT Table</span>
+                 <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">RAO-CONT Table</span>
                 </a>
               </li>
               <li>
@@ -177,13 +177,13 @@ if (isset($conn) && $conn) {
             </ul>
           </li>
 
-          <li class="nav-link dropdown">
+          <li class="nav-link dropdown-sidebar">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Reports">
             <i class='bx bxs-report icon'></i>
               <span class="text nav-text">Reports</span>
               <i class='bx bx-chevron-down arrow'></i>
             </a>
-            <ul class="nav-link dropdown-content">
+            <ul class="nav-link dropdown-sidebar-content">
               <li>
                 <a href="../../pages/blotter/table_blotter.php" title="Blotter Table">
                   <i class='bx bxs-report icon'></i>
@@ -275,93 +275,92 @@ if (isset($conn) && $conn) {
 include "profile.php"
 ?>
 <script>
-    // JavaScript for sidebar, mode switch, and dropdown with rotating chevron
-    document.addEventListener("DOMContentLoaded", function () {
-      const body = document.querySelector('body'),
-            sidebar = body.querySelector('nav'),
-            toggle = body.querySelector(".Logo"),
-            modeSwitch = body.querySelector(".toggle-switch"),
-            modeText = body.querySelector(".mode-text"),
-            dropdowns = document.querySelectorAll('.dropdown');
+  document.addEventListener("DOMContentLoaded", function () {
+    const body = document.querySelector('body'),
+          sidebar = body.querySelector('nav'),
+          toggle = body.querySelector(".Logo"),
+          modeSwitch = body.querySelector(".toggle-switch"),
+          modeText = body.querySelector(".mode-text"),
+          dropdowns = document.querySelectorAll('.dropdown-sidebar');
 
-      closeAllDropdowns();
+    closeAllDropdowns();
 
-      if (localStorage.getItem('sidebarState') === 'open') {
-        sidebar.classList.remove("close");
+    if (localStorage.getItem('sidebarState') === 'open') {
+      sidebar.classList.remove("close");
+    } else {
+      sidebar.classList.add("close");
+    }
+
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("close");
+      saveSidebarState();
+    });
+
+    function saveSidebarState() {
+      if (sidebar.classList.contains("close")) {
+        localStorage.setItem('sidebarState', 'closed');
       } else {
-        sidebar.classList.add("close");
+        localStorage.setItem('sidebarState', 'open');
       }
+    }
 
-      toggle.addEventListener("click", () => {
-        sidebar.classList.toggle("close");
-        saveSidebarState();
-      });
+    modeSwitch.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      const theme = body.classList.contains("dark") ? "dark" : "light";
+      modeText.innerText = theme === "dark" ? "Light mode" : "Dark mode";
+      saveUserThemePreference(theme);
+    });
 
-      function saveSidebarState() {
-        if (sidebar.classList.contains("close")) {
-          localStorage.setItem('sidebarState', 'closed');
+    function saveUserThemePreference(theme) {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "../../save_theme.php", true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.send("theme=" + theme);
+    }
+
+    // Dropdown toggle logic with chevron rotation
+    dropdowns.forEach(dropdown => {
+      const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
+      const dropdownContent = dropdown.querySelector('.dropdown-sidebar-content');
+      const chevron = dropdown.querySelector('.arrow');
+
+      dropdownToggle.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const isVisible = dropdownContent.style.display === "block";
+        closeAllDropdowns();
+
+        if (!isVisible) {
+          dropdownContent.style.display = "block";
+          dropdownContent.style.opacity = "1";
+          dropdownContent.style.transform = "translateY(0)";
+          dropdownContent.style.pointerEvents = "auto";
+          chevron.classList.add("rotate");
         } else {
-          localStorage.setItem('sidebarState', 'open');
-        }
-      }
-
-      modeSwitch.addEventListener("click", () => {
-        body.classList.toggle("dark");
-        const theme = body.classList.contains("dark") ? "dark" : "light";
-        modeText.innerText = theme === "dark" ? "Light mode" : "Dark mode";
-        saveUserThemePreference(theme);
-      });
-
-      function saveUserThemePreference(theme) {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "../../save_theme.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.send("theme=" + theme);
-      }
-
-      // Dropdown toggle logic with chevron rotation
-      dropdowns.forEach(dropdown => {
-        const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
-        const dropdownContent = dropdown.querySelector('.dropdown-content');
-        const chevron = dropdown.querySelector('.arrow'); // Select the chevron icon
-
-        dropdownToggle.addEventListener('click', function (e) {
-          e.preventDefault();
-
-          const isVisible = dropdownContent.style.display === "block";
-          closeAllDropdowns();
-
-          if (!isVisible) {
-            dropdownContent.style.display = "block";
-            dropdownContent.style.opacity = "1";
-            dropdownContent.style.transform = "translateY(0)";
-            dropdownContent.style.pointerEvents = "auto";
-            chevron.classList.add("rotate"); // Add rotate class to chevron
-          } else {
-            chevron.classList.remove("rotate"); // Remove rotate class from chevron if closing
-          }
-        });
-      });
-
-      function closeAllDropdowns() {
-        dropdowns.forEach(dropdown => {
-          const content = dropdown.querySelector('.dropdown-content');
-          const chevron = dropdown.querySelector('.arrow');
-          content.style.display = "none";
-          content.style.opacity = "0";
-          content.style.transform = "translateY(-10px)";
-          content.style.pointerEvents = "none";
-          chevron.classList.remove("rotate"); // Remove rotate class when closing
-        });
-      }
-
-      document.addEventListener('click', function (e) {
-        if (!e.target.closest('.dropdown')) {
-          closeAllDropdowns();
+          chevron.classList.remove("rotate");
         }
       });
     });
-  </script>
+
+    function closeAllDropdowns() {
+      dropdowns.forEach(dropdown => {
+        const content = dropdown.querySelector('.dropdown-sidebar-content');
+        const chevron = dropdown.querySelector('.arrow');
+        content.style.display = "none";
+        content.style.opacity = "0";
+        content.style.transform = "translateY(-10px)";
+        content.style.pointerEvents = "none";
+        chevron.classList.remove("rotate");
+      });
+    }
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.dropdown-sidebar')) {
+        closeAllDropdowns();
+      }
+    });
+  });
+</script>
 </body>
 </html>
 
