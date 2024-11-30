@@ -121,7 +121,6 @@
                 type: 'post',
                 success: function(data) {
                     var json = JSON.parse(data);
-                    $('#household_id').val(json.houselhold_id);
                     $('#nameField').val(json.household_name);
                     $('#headField').val(json.household_head);
                     $('#addressField').val(json.household_address);

@@ -24,7 +24,7 @@ if (isset($conn) && $conn) {
 <html lang="en">
 <head>
   <title>Barangay Mantalogon Information System</title>
-  <link rel="icon" href="../../assets/image/Logo.png">
+  <link rel="icon" href="../../assets/image/logo_head.png">
 </head>
 <body class="<?php echo $user_theme; ?>">
   <nav class="sidebar close">
@@ -50,11 +50,26 @@ if (isset($conn) && $conn) {
             </a>
           </li>
 
-          <li class="nav-link">
-            <a href="../resident/table_resident.php" title="Resident">
-            <i class='bx bxs-user-plus icon'></i>
-              <span class="text nav-text">Resident Management</span>
+          <li class="nav-link dropdown-sidebar">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Resident">
+            <i class='bx bxs-user icon'></i>
+                <span class="text nav-text">Resident Management</span>
+                <i class='bx bx-chevron-down arrow'></i>
             </a>
+            <ul class="nav-link dropdown-sidebar-content">
+              <li>
+              <a href="../resident/table_resident.php" title="Resident">
+                  <i class='bx bxs-user-plus icon'></i>
+                  <span class="text nav-text">Resident</span>
+                </a>
+              </li>
+              <li>
+                <a href="../household/table_household.php" title="Household">
+                  <i class='bx bxs-home icon'></i>
+                  <span class="text nav-text">Household</span>
+                </a>
+              </li>
+            </ul>
           </li>
 
           <li class="nav-link">
@@ -63,13 +78,6 @@ if (isset($conn) && $conn) {
               <span class="text nav-text">Employee Management</span>
             </a>
           </li>
-
-          <!--<li class="nav-link">
-            <a href="../../pages/household/table_household.php">
-              <i class='bx bxs-home icon'></i>
-              <span class="text nav-text">Household Management</span>
-            </a>
-          </li>-->
 
           <li class="nav-link">
             <a href="../document/table_document.php" title="Document">
@@ -85,107 +93,107 @@ if (isset($conn) && $conn) {
             </a>
           </li>
 
-          <li class="nav-link dropdown">
+          <li class="nav-link dropdown-sidebar">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Certificates">
               <i class='bx bxs-certification icon'></i>
               <span class="text nav-text">Certificate Library</span>
               <i class='bx bx-chevron-down arrow'></i>
             </a>
-            <ul class="nav-link dropdown-content">
+            <ul class="nav-link dropdown-sidebar-content">
               <li>
                 <a href="../indigency/table_indigency.php" title="Certificate of Indigency">
-                &nbsp; &nbsp; <i class='bx bx-certification'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Indigency</span>
+                  <i class='bx bx-certification icon'></i>
+                  <span class="text nav-text">Indigency</span>
                 </a>
               </li>
               <li>
                 <a href="../residency/table_residency.php" title="Certificate of Residency">
-                &nbsp; &nbsp; <i class='bx bx-certification'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Residency</span>
+                  <i class='bx bx-certification icon'></i>
+                  <span class="text nav-text">Residency</span>
                 </a>
               </li>
               <li>
                 <a href="../business_permit/table_permit.php" title="Business Permit">
-                &nbsp; &nbsp; <i class='bx bx-certification'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Business Permit</span>
+                  <i class='bx bx-certification icon'></i>
+                  <span class="text nav-text">Business Permit</span>
                 </a>
               </li>
               <li>
                 <a href="../business_employee/table_employee.php" title="Business Employee">
-                &nbsp; &nbsp; <i class='bx bx-certification'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Business Employee</span>
+                  <i class='bx bx-certification icon'></i>
+                  <span class="text nav-text">Business Employee</span>
                 </a>
               </li>
             </ul>
           </li>
 
-          <li class="nav-link dropdown">
+          <li class="nav-link dropdown-sidebar">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Inventory">
               <i class='bx bxs-briefcase icon'></i>
                 <span class="text nav-text">Inventory Management</span>
               <i class='bx bx-chevron-down arrow'></i>
             </a>
-            <ul class="nav-link dropdown-content">
+            <ul class="nav-link dropdown-sidebar-content">
               <li>
                 <a href="../inventory/table_inventory.php" title="Inventory Table">
-                &nbsp; &nbsp; <i class='bx bx-briefcase'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Inventory Table</span>
+                  <i class='bx bx-briefcase icon'></i>
+                  <span class="text nav-text">Inventory Table</span>
                 </a>
               </li>
               <li>
                 <a href="../item-transactions/item_transaction.php" title="Item Transaction">
-                &nbsp; &nbsp; <i class='bx bx-briefcase'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Item Transactions</span>
+                  <i class='bx bx-briefcase icon'></i>
+                  <span class="text nav-text">Item Transactions</span>
                 </a>
               </li>
             </ul>
           </li>
       
-          <li class="nav-link dropdown">
+          <li class="nav-link dropdown-sidebar">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Financial">
             <i class='bx bxs-wallet icon'></i>
               <span class="text nav-text">Financial Library</span>
               <i class='bx bx-chevron-down arrow'></i>
             </a>
-            <ul class="nav-link dropdown-content">
+            <ul class="nav-link dropdown-sidebar-content">
               <li>
                 <a href="../rao/table_rao_records.php" title="RAO-PS Table">
-                &nbsp; &nbsp; <i class='bx bx-wallet'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;RAO-PS Table</span>
+                  <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">RAO-PS Table</span>
                 </a>
               </li>
               <li>
                 <a href="../rao-cont/table_rao_cont_records.php" title="RAO-CONT Table">
-                &nbsp; &nbsp; <i class='bx bx-wallet'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;RAO-CONT Table</span>
+                 <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">RAO-CONT Table</span>
                 </a>
               </li>
               <li>
                 <a href="../cashbook/table_cashbook_records.php" title="Cashbook Table">
-                &nbsp; &nbsp; <i class='bx bx-wallet'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Cashbook Table</span>
+                  <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">Cashbook Table</span>
                 </a>
               </li>
             </ul>
           </li>
 
-          <li class="nav-link dropdown">
+          <li class="nav-link dropdown-sidebar">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Reports">
             <i class='bx bxs-report icon'></i>
               <span class="text nav-text">Reports</span>
               <i class='bx bx-chevron-down arrow'></i>
             </a>
-            <ul class="nav-link dropdown-content">
+            <ul class="nav-link dropdown-sidebar-content">
               <li>
                 <a href="../blotter/table_blotter.php" title="Blotter Table">
-                &nbsp; &nbsp; <i class='bx bxs-report'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Blotter</span>
+                  <i class='bx bxs-report icon'></i>
+                  <span class="text nav-text">Blotter</span>
                 </a>
               </li>
               <li>
                 <a href="../request/table_request.php" title="Request Table">
-                &nbsp; &nbsp; <i class='bx bxs-report'></i>
-                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Request</span>
+                  <i class='bx bxs-report icon'></i>
+                  <span class="text nav-text">Request</span>
                 </a>
               </li>
             </ul>
@@ -193,7 +201,28 @@ if (isset($conn) && $conn) {
         </ul>
       </div>
       <div class="bottom-content">
-        <li>
+      <!--<li class="nav-link dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Financial">
+            <i class='bx bx-add-to-queue icon'></i>
+              <span class="text nav-text">Additional</span>
+              <i class='bx bx-chevron-down arrow'></i>
+            </a>
+            <ul class="nav-link dropdown-content">
+              <li>
+                <a href="../user_approval/table_approval.php" title="RAO Table">
+                &nbsp; &nbsp; <i class='bx bxs-check-circle'></i>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Accounts Appoval</span>
+                </a>
+              </li>
+              <li>
+                <a href="../recycle/table_recycle.php" title="Cashbook Table">
+                &nbsp; &nbsp; <i class='bx bxs-trash'></i>
+                  <span class="text nav-text"> &nbsp; &nbsp; &nbsp;Recycle Bin</span>
+                </a>
+              </li>
+            </ul>
+          </li>-->
+        <li>          
         <a href="#!" data-id="<?php echo $row['user_id']; ?>" data-bs-toggle="modal" data-bs-target="#UpdateProfileModal" title="Profile" class="editbtn">
                 <i class='bx bxs-user icon'></i>
                 <span class="text nav-text">
@@ -207,7 +236,6 @@ if (isset($conn) && $conn) {
                     <p><?php echo $row["barangayposition"]; ?></p>
                 </span>
             </a>
-
         </li>
         <li>
           <a href="../../logout.php" title="Log-out">
@@ -234,99 +262,93 @@ if (isset($conn) && $conn) {
 include "profile.php"
 ?>
 <script>
-// JavaScript for sidebar, mode switch, and dropdown
-document.addEventListener("DOMContentLoaded", function () {
-  const body = document.querySelector('body'),
-        sidebar = body.querySelector('nav'),
-        toggle = body.querySelector(".Logo"),
-        modeSwitch = body.querySelector(".toggle-switch"),
-        modeText = body.querySelector(".mode-text"),
-        dropdowns = document.querySelectorAll('.dropdown');
+  document.addEventListener("DOMContentLoaded", function () {
+    const body = document.querySelector('body'),
+          sidebar = body.querySelector('nav'),
+          toggle = body.querySelector(".Logo"),
+          modeSwitch = body.querySelector(".toggle-switch"),
+          modeText = body.querySelector(".mode-text"),
+          dropdowns = document.querySelectorAll('.dropdown-sidebar');
 
-  // Ensure dropdowns are closed on page load
-  closeAllDropdowns();
+    closeAllDropdowns();
 
-   // Retrieve and apply saved sidebar state from local storage
-   if (localStorage.getItem('sidebarState') === 'open') {
-    sidebar.classList.remove("close");
-  } else {
-    sidebar.classList.add("close");
-  }
-
-  // Handle sidebar toggle
-  toggle.addEventListener("click", () => {
-    sidebar.classList.toggle("close");
-    saveSidebarState();
-  });
-
-  // Save sidebar state to local storage
-  function saveSidebarState() {
-    if (sidebar.classList.contains("close")) {
-      localStorage.setItem('sidebarState', 'closed');
+    if (localStorage.getItem('sidebarState') === 'open') {
+      sidebar.classList.remove("close");
     } else {
-      localStorage.setItem('sidebarState', 'open');
+      sidebar.classList.add("close");
     }
-  }
 
-  // Mode switch logic
-  modeSwitch.addEventListener("click", () => {
-    body.classList.toggle("dark");
-    const theme = body.classList.contains("dark") ? "dark" : "light";
-    modeText.innerText = theme === "dark" ? "Light mode" : "Dark mode";
-    saveUserThemePreference(theme);
-  });
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("close");
+      saveSidebarState();
+    });
 
-  function saveUserThemePreference(theme) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "../../save_theme.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send("theme=" + theme);
-  }
+    function saveSidebarState() {
+      if (sidebar.classList.contains("close")) {
+        localStorage.setItem('sidebarState', 'closed');
+      } else {
+        localStorage.setItem('sidebarState', 'open');
+      }
+    }
 
-  // Dropdown toggle logic
-  dropdowns.forEach(dropdown => {
-    const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
-    const dropdownContent = dropdown.querySelector('.dropdown-content');
+    modeSwitch.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      const theme = body.classList.contains("dark") ? "dark" : "light";
+      modeText.innerText = theme === "dark" ? "Light mode" : "Dark mode";
+      saveUserThemePreference(theme);
+    });
 
-    dropdownToggle.addEventListener('click', function (e) {
-      e.preventDefault(); // Prevent default anchor behavior
+    function saveUserThemePreference(theme) {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "../../save_theme.php", true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.send("theme=" + theme);
+    }
 
-      const isVisible = dropdownContent.style.display === "block";
-      closeAllDropdowns(); // Close other open dropdowns
+    // Dropdown toggle logic with chevron rotation
+    dropdowns.forEach(dropdown => {
+      const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
+      const dropdownContent = dropdown.querySelector('.dropdown-sidebar-content');
+      const chevron = dropdown.querySelector('.arrow');
 
-      if (!isVisible) {
-        dropdownContent.style.display = "block";
-        dropdownContent.style.opacity = "1";
-        dropdownContent.style.transform = "translateY(0)";
-        dropdownContent.style.pointerEvents = "auto";
+      dropdownToggle.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const isVisible = dropdownContent.style.display === "block";
+        closeAllDropdowns();
+
+        if (!isVisible) {
+          dropdownContent.style.display = "block";
+          dropdownContent.style.opacity = "1";
+          dropdownContent.style.transform = "translateY(0)";
+          dropdownContent.style.pointerEvents = "auto";
+          chevron.classList.add("rotate");
+        } else {
+          chevron.classList.remove("rotate");
+        }
+      });
+    });
+
+    function closeAllDropdowns() {
+      dropdowns.forEach(dropdown => {
+        const content = dropdown.querySelector('.dropdown-sidebar-content');
+        const chevron = dropdown.querySelector('.arrow');
+        content.style.display = "none";
+        content.style.opacity = "0";
+        content.style.transform = "translateY(-10px)";
+        content.style.pointerEvents = "none";
+        chevron.classList.remove("rotate");
+      });
+    }
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.dropdown-sidebar')) {
+        closeAllDropdowns();
       }
     });
   });
-
-  // Close all dropdowns function
-  function closeAllDropdowns() {
-    dropdowns.forEach(dropdown => {
-      const content = dropdown.querySelector('.dropdown-content');
-      content.style.display = "none";
-      content.style.opacity = "0";
-      content.style.transform = "translateY(-10px)";
-      content.style.pointerEvents = "none";
-    });
-  }
-
-  // Close dropdowns when clicking outside
-  document.addEventListener('click', function (e) {
-    if (!e.target.closest('.dropdown')) {
-      closeAllDropdowns();
-    }
-  });
-});
-
 </script>
-
-
 </body>
-
 </html>
 
 

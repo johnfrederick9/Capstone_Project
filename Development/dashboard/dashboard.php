@@ -91,23 +91,19 @@ include 'reports_code.php';
                                     </div>
                                 </div>
                             </div>
-                            <div class="graph-report-button">
-                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#ReportsModal" class="add-table-btn">Resident Graph Reports</button>
-                        </div>
-                            <!--<div class="stat-card">
+                            <div class="stat-card">
                                 <div class="stat-content">
                                     <div class="icon">
                                         <i class='bx bxs-home '></i>
                                     </div>
                                     <div class="stat-info">
-                                        <h3>0</h3>
+                                    <h3><?php echo $household_count; ?></h3>
                                         <p>Household</p>
                                     </div>
                                 </div>
-                            </div>-->
+                            </div>
                         </div>
                     </div>
-
                     <!-- Bottom Section: Calendar and Graph Report Button -->
                     <div class="section-bottom">
                     <div class="calendar-container">
@@ -133,14 +129,24 @@ include 'reports_code.php';
                             </div>
                         </div>
                     </div>
-                       
-                    </div>
-
-                </section>
+                    <section class="reports-content">
+                        <?php include 'chart_report.php'; ?>
+                    </section>
             </div>
         </div>
-    </section>
-    <?php include 'chart_report.php'; ?>
+    </section>   
+    <!-- Event Modal -->
+<section class="eventmodal">
+ <div id="customAlert" class="modal fade">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 id="eventName"></h2>
+            <p id="eventLocation"></p>
+            <p id="eventType"></p>
+            <p id="eventDate"></p>
+        </div>
+    </div>
+</section>
 
 </body>
 </html>

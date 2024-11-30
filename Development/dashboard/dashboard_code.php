@@ -7,4 +7,5 @@ $project_count = $conn->query("SELECT COUNT(*) AS count FROM tb_project WHERE is
 $certificate_count = $conn->query("SELECT COUNT(*) AS count FROM tb_indigency WHERE isDisplayed = 1")->fetch_assoc()['count'];
 $inventory_count = $conn->query("SELECT COUNT(*) AS count FROM tb_inventory WHERE isDisplayed = 1")->fetch_assoc()['count'];
 $financial_count = $conn->query("SELECT COUNT(*) AS count FROM tb_cashbook WHERE isDisplayed = 1")->fetch_assoc()['count'];
+$household_count = $conn->query("SELECT COUNT(*) AS count FROM tb_household WHERE isDisplayed = 1")->fetch_assoc()['count'];
 ?>

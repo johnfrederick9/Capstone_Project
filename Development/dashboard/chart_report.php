@@ -1,71 +1,49 @@
-   <!-- Event Modal -->
-<section class="eventmodal">
- <div id="customAlert" class="modal fade">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2 id="eventName"></h2>
-            <p id="eventLocation"></p>
-            <p id="eventType"></p>
-            <p id="eventDate"></p>
-        </div>
-    </div>
-</section>
-
-   <!-- Reports Modal -->
-   <section class="report-content">
-        <div class="modal fade" id="ReportsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Graph Report</h5>
-                        <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="section-top">
-                            <div class="projects">
-                                <div class="projects-header">
-                                    <h2>Residents Educational Attainment Distribution</h2>
-                                </div>
-                                <div class="chart-area-container">
-                                    <canvas id="educationBarChart"></canvas>
-                                </div>
-                            </div>
-                            <div class="reports">
-                                <h2>Residents Age Distribution</h2>
-                                <canvas id="doughnutChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="carousel-container">
+    <!-- Carousel Wrapper -->
+    <div class="carousel-slides">
+        <!-- Slide 1: Educational Attainment -->
+        <div class="carousel-item active">
+            <div class="chart-wrapper">
+                <h5>Residents Educational Attainment Distribution</h5>
+                <canvas id="educationBarChart"></canvas>
             </div>
         </div>
-    </section>
+
+        <!-- Slide 2: Age Distribution -->
+        <div class="carousel-item">
+            <div class="chart-wrapper">
+                <h5>Residents Age Distribution</h5>
+                <canvas id="ageHistogramChart"></canvas>
+            </div>
+        </div>
+
 <script>
-        // Data for Educational Attainment Bar Chart
-        var educationalData = <?php echo json_encode($educational_data); ?>;
+document.addEventListener('DOMContentLoaded', function () {
+    // Defensive checks for PHP data
+    var educationalData = <?php echo json_encode($educational_data ?? []); ?>;
+    var ageData = <?php echo json_encode($age_data ?? []); ?>;
+    var sexData = <?php echo json_encode($sex_data ?? []); ?>;
 
-        var labels = educationalData.map(function(e) {
-            return e.resident_educationalattainment;
-        });
+    // Chart 1: Educational Attainment Bar Chart
+    if (educationalData.length > 0) {
+        var eduLabels = educationalData.map(e => e.resident_educationalattainment);
+        var eduData = educationalData.map(e => e.count);
 
-        var data = educationalData.map(function(e) {
-            return e.count;
-        });
-
-        var ctxBar = document.getElementById('educationBarChart').getContext('2d');
-        var barChart = new Chart(ctxBar, {
+        var ctxEdu = document.getElementById('educationBarChart').getContext('2d');
+        new Chart(ctxEdu, {
             type: 'bar',
             data: {
-                labels: labels, // Educational Attainment as x-axis labels
+                labels: eduLabels,
                 datasets: [{
                     label: 'Number of Residents',
-                    data: data,
+                    data: eduData,
                     backgroundColor: 'rgba(73, 196, 91, 0.5)',
-                    borderColor: 'rgba(14, 230, 45,)',
+                    borderColor: 'rgba(14, 230, 45)',
                     borderWidth: 1
                 }]
             },
             options: {
+                responsive: true,
                 scales: {
                     y: {
                         beginAtZero: true,
@@ -80,47 +58,83 @@
                             text: 'Educational Attainment'
                         }
                     }
-                },
-                responsive: true
+                }
             }
         });
+    }
 
-        // Data for Age Distribution Doughnut Chart
-        var ageData = <?php echo json_encode($age_data); ?>;
+    // Chart 2: Age Distribution Histogram
+    if (ageData.length > 0) {
+        var ageLabels = ageData.map(e => e.age_range);
+        var ageCounts = ageData.map(e => e.count);
 
-        var ageLabels = ageData.map(function(e) {
-            return e.age_range;
-        });
-
-        var ageCounts = ageData.map(function(e) {
-            return e.count;
-        });
-
-        var ctxDoughnut = document.getElementById('doughnutChart').getContext('2d');
-        var doughnutChart = new Chart(ctxDoughnut, {
-            type: 'doughnut',
+        var ctxAge = document.getElementById('ageHistogramChart').getContext('2d');
+        new Chart(ctxAge, {
+            type: 'bar',
             data: {
-                labels: ageLabels, // Age range as labels
+                labels: ageLabels,
                 datasets: [{
                     label: 'Number of Residents',
                     data: ageCounts,
-                    backgroundColor: [
-                        'rgba(14, 230, 45, 0.4)',
-                        'rgba(6, 161, 29, 0.4)',
-                        'rgba(38, 209, 63, 0.4)',
-                        'rgba(67, 247, 93, 0.4)'
-                    ],
-                    borderColor: [
-                        'rgba(14, 230, 45)',
-                        'rgba(6, 161, 29)',
-                        'rgba(38, 209, 63)',
-                        'rgba(67, 247, 93)'
-                    ],
+                    backgroundColor: 'rgba(73, 196, 91, 0.5)',
+                    borderColor: 'rgba(14, 230, 45)',
                     borderWidth: 1
                 }]
             },
             options: {
-                responsive: true
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Residents'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Age Range'
+                        }
+                    }
+                }
             }
         });
+    }
+
+
+
+    // Carousel Functionality
+    let currentIndex = 0;
+    const slides = document.querySelector('.carousel-slides');
+    const items = document.querySelectorAll('.carousel-item');
+
+    function updateCarousel() {
+        const offset = -currentIndex * 100; // Calculate offset for transform
+        slides.style.transform = `translateX(${offset}%)`;
+    }
+
+    // Automatically change slides
+    const interval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % items.length;
+        updateCarousel();
+    }, 5000); // Change slide every 5 seconds
+
+    // Handle user clicks on charts
+    slides.addEventListener('click', (event) => {
+        const clickX = event.clientX;
+        const containerWidth = slides.offsetWidth;
+        clearInterval(interval); // Stop automatic cycling on user interaction
+
+        if (clickX < containerWidth / 2) {
+            // Left side clicked
+            currentIndex = (currentIndex - 1 + items.length) % items.length;
+        } else {
+            // Right side clicked
+            currentIndex = (currentIndex + 1) % items.length;
+        }
+
+        updateCarousel();
+    });
+});
 </script>

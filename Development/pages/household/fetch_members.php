@@ -14,14 +14,14 @@ if (isset($_GET['household_id'])) {
     // Sanitize and cast the household_id to an integer
     $household_id = intval($_GET['household_id']);
     
-    // Prepare the SQL query to fetch residents based on household_id
+    // Prepare the SQL query to fetch residents based on household_id and isDisplayed = 1
     $query = "SELECT 
                   CONCAT(resident_firstname, ' ', resident_middlename, ' ', resident_lastname) AS full_name,
                   resident_householdrole 
               FROM 
                   tb_resident 
               WHERE 
-                  household_id = ?";
+                  household_id = ? AND isDisplayed = 1";
 
     // Prepare and execute the query
     if ($stmt = $conn->prepare($query)) {

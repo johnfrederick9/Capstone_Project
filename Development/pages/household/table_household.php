@@ -72,6 +72,7 @@ include '../../sidebar.php';
                             <th>Household Head</th>
                             <th>Address</th>
                             <th>Contact Number</th>
+                            <th>Number of Members</th>
                             <th>Buttons</th>
                         </thead>
                         <tbody>
@@ -80,8 +81,8 @@ include '../../sidebar.php';
                     <?php include 'function.php';?>
                 </section><!-- .home-->
                 <!-- Modal -->
-                <!-- Update Resident -->
-                <section class="resident_modal">
+                <!-- Update Household -->
+                <section class="household_modal">
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -98,9 +99,14 @@ include '../../sidebar.php';
                                 <input type="text" id="nameField" name="household_name" require>
                                 </div>
                                 <div class="form-group">
-                                    <label for="documentDate">Household Head</label>
-                                    <input type="text" id="headField" name="household_head" require>
+                                <label for="householdHead">Household Head</label>
+                                <input type="text"  id="headField" name="household_head" 
+                                        oninput="filterResidents('head')" 
+                                        onfocus="filterResidents('head')"
+                                        onblur="setTimeout(() => document.getElementById('headSuggestions').innerHTML = '', 200)">
+                                    <ul id="headSuggestions" class="suggestions-list"></ul>
                                 </div>
+
                                 <div class="form-group">
                                     <label for="documentInfo">Address</label>
                                     <input type="text" id="addressField" name="household_address" require>

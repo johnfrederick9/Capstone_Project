@@ -1977,15 +1977,6 @@ body.dark .home .calendar-event .event-scheduler label {
   gap: 10px;
 }
 
-.dashboard-content .stat-card {
-  background: #44c95a;
-  color: #fff;
-  padding: 15px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
 .dashboard-content .stat-card h3 {
   font-size: 24px;
   margin: 0 0 10px;
@@ -2006,7 +1997,7 @@ body.dark .home .calendar-event .event-scheduler label {
   }
 }
 .dashboard-content .stat-card {
-  background: #44c95a;
+  background: #009b1a;
   color: #fff;
   padding: 15px;
   border-radius: 8px;
@@ -2190,12 +2181,13 @@ margin-bottom: 5px;
 
 .dashboard .calendar-container {
   background-color: #e5fced;
-  padding: 20px;
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: #222222;
   text-align: center;
   margin-bottom: 5px;
+  width: 600px;
 }
 
 .dashboard .calendar-header h2 {
@@ -2213,19 +2205,21 @@ margin-bottom: 5px;
 .dashboard .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+
   gap: 5px;
   margin-top: 10px;
 }
 
 .dashboard .calendar-day {
   font-weight: bold;
+
+
   color: #333;
 }
 
 .dashboard .calendar-date {
   padding: 10px;
-  border-radius: 50%;
-  color: #333;
+  border-radius: 10%;  color: #333;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3299,194 +3293,97 @@ font-size: 18px;
 16. report
 ---------------------------------------------
 */
-.report-content .chart-area-container {
-  width: 100%;
-  max-width: 800px; /* Medium size for charts */
+/* General Styling */
+.reports-content {
+  padding: 0px;
 }
 
-.report-content canvas {
-  width: 100%; /* Make the canvas responsive */
-  height: auto;
+.section-top {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.report-content .projects, .reports {
-  flex-grow: 1;
+/* Chart Wrappers */
+.chart-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.report-container {
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.report-header {
-  text-align: left;
-}
-
-.report-header h1 {
-  font-size: 24px;
-  margin: 0;
-  color: #333;
-}
-
-.report-header p {
-  font-size: 18px;
-  margin: 0;
-  color: #666;
-}
-
-.report-content {
-  display: grid;
-  grid-template-columns: 2fr;
-  gap: 20px;
-}
-
-.report-content .section-top {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
-}
-
-.report-content .section-bottom {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
-}
-
-.report-content .chart-bar-container, .chart-area-container {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.report-content .reports {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
-.report-content .reports h2 {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-.report-content .projects {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.report-content .projects-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.report-content .projects h2 {
-  font-size: 18px;
-  margin: 0;
-}
-
-.report-content .dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.report-content .dropdown-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #333;
-  font-size: 16px;
-}
-
-.report-content .dropdown-menu {
-  display: none;
-  position: absolute;
-  background: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  padding: 10px;
-  margin-top: 5px;
-  list-style: none;
-}
-
-.report-content .dropdown-menu li {
-  padding: 8px 12px;
-  cursor: pointer;
-}
-
-.report-content .dropdown-menu li:hover {
-  background-color: #f0f0f0;
-}
-
-.report-content .dropdown:hover .dropdown-menu {
-  display: block;
-}
-
-.report-content .stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.report-content .stat-card {
-  background: #44c95a;
-  color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.report-content .stat-card h3 {
-  font-size: 24px;
-  margin: 0 0 10px;
-}
-
-.report-content .stat-card p {
-  font-size: 16px;
-  margin: 0;
-}
-
-@media (max-width: 768px) {
-  .section-top, .section-bottom {
-      grid-template-columns: 1fr;
-  }
-
-  .stats {
-      grid-template-columns: 1fr;
-  }
-}
-/* Reduce padding and font sizes to make graphs and other elements smaller */
-.report-content .chart-bar-container,
-.report-content .chart-area-container,
-.report-content .reports,
-.report-content .projects {
-  background: #fff;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Ensure the graph doesn't overflow its container */
-.report-content .chart-bar-container canvas,
-.report-content .chart-area-container canvas {
+/* Histogram Chart Styling */
+.chart-wrapper canvas {
   max-width: 100%;
+  height: auto;
 }
 
-/* Reduce font size for section headers */
-.report-content .reports h2,
-.report-content .projects h2 {
-  font-size: 16px;
-  margin: 0;
+@media (min-width: 768px) {
+  .chart-wrapper {
+      flex: 1;
+      padding: 5px;
+  }
+}
+
+
+/* Responsive Layout */
+@media (min-width: 768px) {
+  .section-top {
+      flex-direction: row;
+      justify-content: space-between;
+  }
+
+  .chart-wrapper {
+      flex: 1;
+      padding: 10px;
+  }
+}
+
+.carousel-container {
+  position: relative;
+  max-width: 100%;
+  border-radius: 10px;
+  width: 500px;
+  overflow: hidden;
+  background-color: white; /* Adds a white background */
+  border: 1px solid #ccc; /* Adds a border to make it visible */
+}
+
+.carousel-slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+  min-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 10;
+}
+
+.carousel-control-prev {
+  left: 10px;
+}
+
+.carousel-control-next {
+  right: 10px;
+}
+
+.chart-wrapper {
+  padding: 20px;
 }
 
 /*
