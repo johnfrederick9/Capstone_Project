@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2024 at 09:36 AM
+-- Generation Time: Dec 01, 2024 at 02:32 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -406,7 +406,8 @@ CREATE TABLE `tb_event` (
 --
 
 INSERT INTO `tb_event` (`event_id`, `event_name`, `event_location`, `event_type`, `event_start`, `event_end`, `isDisplayed`) VALUES
-(63, 'liga', 'liga', 'liga', '2024-11-25', '2024-11-26', 0);
+(63, 'liga', 'liga', 'liga', '2024-11-25', '2024-11-26', 0),
+(64, 'Ligo', 'asdfa', 'asdf', '2024-11-30', '2024-12-01', 1);
 
 -- --------------------------------------------------------
 
@@ -453,9 +454,9 @@ CREATE TABLE `tb_household` (
 --
 
 INSERT INTO `tb_household` (`household_name`, `household_head`, `household_address`, `household_contact`, `id`, `household_id`, `isDisplayed`) VALUES
-('asdasd', 'asdasd', 'asdasd', '+63 938 651 3790', 1, 123, 1),
-('asdfasdf', 'asdfsadf', 'sadfasdf', '+63 968 651 3790', 2, 122, 1),
-('', '', '', NULL, 3, 110901, 1);
+('asdfasdf', 'asdfffdasfadf', 'sadfasdf', '+63 968 651 3790', 2, 122, 1),
+('', '', '', NULL, 6, 110920, 1),
+('', '', '', NULL, 7, 112354, 1);
 
 -- --------------------------------------------------------
 
@@ -715,8 +716,8 @@ CREATE TABLE `tb_rao` (
 
 INSERT INTO `tb_rao` (`rao_id`, `period_covered`, `ap_total`, `ap_salary`, `ap_cash_gift`, `ap_year_end`, `ap_mid_year`, `ap_sri`, `ap_others`, `ob_total`, `ob_salary`, `ob_cash_gift`, `ob_year_end`, `ob_mid_year`, `ob_sri`, `ob_others`, `apbd_total`, `apbd_salary`, `apbd_cash_gift`, `apbd_year_end`, `apbd_mid_year`, `apbd_sri`, `apbd_others`, `isDisplayed`) VALUES
 (76, '2024', 5134533.86, 4242000, 110000, 178000, 178000, 220000, 206533.86, 1927, 312, 123, 1123, 123, 123, 123, 5132606.86, 4241688, 109877, 176877, 177877, 219877, 206410.86, 1),
-(77, '0000', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
-(78, '2024', 72, 12, 12, 12, 12, 12, 12, 0, 0, 0, 0, 0, 0, 0, 72, 12, 12, 12, 12, 12, 12, 1);
+(77, '0000', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(78, '2024', 72, 12, 12, 12, 12, 12, 12, 0, 0, 0, 0, 0, 0, 0, 72, 12, 12, 12, 12, 12, 12, 0);
 
 -- --------------------------------------------------------
 
@@ -766,8 +767,10 @@ CREATE TABLE `tb_rao_cont` (
 
 INSERT INTO `tb_rao_cont` (`rao_cont_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
 (83, 'John Frederick Gelay', '2024-11-01', 'Joshua Belandres', 0),
-(84, 'John Frederick Gelay', '2024-10-01', 'Joshua Belandres', 1),
-(85, 'Zen', '2024-11-01', 'Joshua Belandres', 1);
+(84, 'John Frederick Gelay', '2024-10-01', 'Joshua Belandres', 0),
+(85, 'Zen', '2024-11-01', 'Joshua Belandres', 0),
+(86, '1asdad', '2332-12-31', 'asdf', 0),
+(87, 'asd', '2001-11-09', 'asdf', 1);
 
 -- --------------------------------------------------------
 
@@ -815,16 +818,16 @@ CREATE TABLE `tb_rao_cont_ap_data` (
 INSERT INTO `tb_rao_cont_ap_data` (`rao_cont_ap_data_id`, `rao_cont_ap_id`, `rao_cont_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
 (548, 63, 256, 'Data 1', 100, 0),
 (549, 64, 256, 'Data 1', 100, 0),
-(550, 65, 257, 'Electrification', 100, 1),
-(551, 65, 258, 'Road Rehabilitation', 200, 1),
-(552, 65, 259, 'Daycare Center', 300, 1),
-(553, 65, 260, 'Road Concreting', 400, 1),
-(554, 65, 261, 'MES', 500, 1),
-(555, 65, 262, 'Foodbridge Lower Lahug', 600, 1),
-(556, 65, 263, 'MNHS', 700, 1),
-(557, 65, 264, 'SAMPIG ELEM. SCHOOL', 800, 1),
-(558, 65, 265, 'SUMAFA WOMENS', 900, 1),
-(559, 65, 266, 'WATER RESERVOIR', 0, 1);
+(550, 65, 257, 'Electrification', 100, 0),
+(551, 65, 258, 'Road Rehabilitation', 200, 0),
+(552, 65, 259, 'Daycare Center', 300, 0),
+(553, 65, 260, 'Road Concreting', 400, 0),
+(554, 65, 261, 'MES', 500, 0),
+(555, 65, 262, 'Foodbridge Lower Lahug', 600, 0),
+(556, 65, 263, 'MNHS', 700, 0),
+(557, 65, 264, 'SAMPIG ELEM. SCHOOL', 800, 0),
+(558, 65, 265, 'SUMAFA WOMENS', 900, 0),
+(559, 65, 266, 'WATER RESERVOIR', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -851,52 +854,82 @@ INSERT INTO `tb_rao_cont_ap_totals` (`rao_cont_id`, `rao_cont_ap_total_id`, `tot
 (83, 470, 'TA', 256, 'Data 1', 200, 0),
 (83, 471, 'ap_total_BF', 0, '', 200, 0),
 (83, 472, 'BF', 256, 'Data 1', 200, 0),
-(84, 473, 'ap_total_TA', 0, '', 4500, 1),
-(84, 474, 'TA', 257, 'Electrification', 100, 1),
-(84, 475, 'TA', 258, 'Road Rehabilitation', 200, 1),
-(84, 476, 'TA', 259, 'Daycare Center', 300, 1),
-(84, 477, 'TA', 260, 'Road Concreting', 400, 1),
-(84, 478, 'TA', 261, 'MES', 500, 1),
-(84, 479, 'TA', 262, 'Foodbridge Lower Lahug', 600, 1),
-(84, 480, 'TA', 263, 'MNHS', 700, 1),
-(84, 481, 'TA', 264, 'SAMPIG ELEM. SCHOOL', 800, 1),
-(84, 482, 'TA', 265, 'SUMAFA WOMENS', 900, 1),
-(84, 483, 'ap_total_BF', 0, '', 4500, 1),
-(84, 484, 'BF', 257, 'Electrification', 100, 1),
-(84, 485, 'BF', 258, 'Road Rehabilitation', 200, 1),
-(84, 486, 'BF', 259, 'Daycare Center', 300, 1),
-(84, 487, 'BF', 260, 'Road Concreting', 400, 1),
-(84, 488, 'BF', 261, 'MES', 500, 1),
-(84, 489, 'BF', 262, 'Foodbridge Lower Lahug', 600, 1),
-(84, 490, 'BF', 263, 'MNHS', 700, 1),
-(84, 491, 'BF', 264, 'SAMPIG ELEM. SCHOOL', 800, 1),
-(84, 492, 'BF', 265, 'SUMAFA WOMENS', 900, 1),
-(84, 493, 'TA', 266, 'WATER RESERVOIR', 0, 1),
-(84, 494, 'BF', 266, 'WATER RESERVOIR', 0, 1),
-(85, 495, 'ap_total_TA', 0, '', 0, 1),
-(85, 496, 'TA', 267, 'Data 1', 0, 1),
-(85, 497, 'TA', 268, 'Electrification', 0, 1),
-(85, 498, 'TA', 269, 'Road Rehabilitation', 0, 1),
-(85, 499, 'TA', 270, 'Daycare Center', 0, 1),
-(85, 500, 'TA', 271, 'Road Concreting', 0, 1),
-(85, 501, 'TA', 272, 'MES', 0, 1),
-(85, 502, 'TA', 273, 'Foodbridge Lower Lahug', 0, 1),
-(85, 503, 'TA', 274, 'MNHS', 0, 1),
-(85, 504, 'TA', 275, 'SAMPIG ELEM. SCHOOL', 0, 1),
-(85, 505, 'TA', 276, 'SUMAFA WOMENS', 0, 1),
-(85, 506, 'TA', 277, 'WATER RESERVOIR', 0, 1),
-(85, 507, 'ap_total_BF', 0, '', 0, 1),
-(85, 508, 'BF', 267, 'Data 1', 0, 1),
-(85, 509, 'BF', 268, 'Electrification', 0, 1),
-(85, 510, 'BF', 269, 'Road Rehabilitation', 0, 1),
-(85, 511, 'BF', 270, 'Daycare Center', 0, 1),
-(85, 512, 'BF', 271, 'Road Concreting', 0, 1),
-(85, 513, 'BF', 272, 'MES', 0, 1),
-(85, 514, 'BF', 273, 'Foodbridge Lower Lahug', 0, 1),
-(85, 515, 'BF', 274, 'MNHS', 0, 1),
-(85, 516, 'BF', 275, 'SAMPIG ELEM. SCHOOL', 0, 1),
-(85, 517, 'BF', 276, 'SUMAFA WOMENS', 0, 1),
-(85, 518, 'BF', 277, 'WATER RESERVOIR', 0, 1);
+(84, 473, 'ap_total_TA', 0, '', 4500, 0),
+(84, 474, 'TA', 257, 'Electrification', 100, 0),
+(84, 475, 'TA', 258, 'Road Rehabilitation', 200, 0),
+(84, 476, 'TA', 259, 'Daycare Center', 300, 0),
+(84, 477, 'TA', 260, 'Road Concreting', 400, 0),
+(84, 478, 'TA', 261, 'MES', 500, 0),
+(84, 479, 'TA', 262, 'Foodbridge Lower Lahug', 600, 0),
+(84, 480, 'TA', 263, 'MNHS', 700, 0),
+(84, 481, 'TA', 264, 'SAMPIG ELEM. SCHOOL', 800, 0),
+(84, 482, 'TA', 265, 'SUMAFA WOMENS', 900, 0),
+(84, 483, 'ap_total_BF', 0, '', 4500, 0),
+(84, 484, 'BF', 257, 'Electrification', 100, 0),
+(84, 485, 'BF', 258, 'Road Rehabilitation', 200, 0),
+(84, 486, 'BF', 259, 'Daycare Center', 300, 0),
+(84, 487, 'BF', 260, 'Road Concreting', 400, 0),
+(84, 488, 'BF', 261, 'MES', 500, 0),
+(84, 489, 'BF', 262, 'Foodbridge Lower Lahug', 600, 0),
+(84, 490, 'BF', 263, 'MNHS', 700, 0),
+(84, 491, 'BF', 264, 'SAMPIG ELEM. SCHOOL', 800, 0),
+(84, 492, 'BF', 265, 'SUMAFA WOMENS', 900, 0),
+(84, 493, 'TA', 266, 'WATER RESERVOIR', 0, 0),
+(84, 494, 'BF', 266, 'WATER RESERVOIR', 0, 0),
+(85, 495, 'ap_total_TA', 0, '', 0, 0),
+(85, 496, 'TA', 267, 'Data 1', 0, 0),
+(85, 497, 'TA', 268, 'Electrification', 0, 0),
+(85, 498, 'TA', 269, 'Road Rehabilitation', 0, 0),
+(85, 499, 'TA', 270, 'Daycare Center', 0, 0),
+(85, 500, 'TA', 271, 'Road Concreting', 0, 0),
+(85, 501, 'TA', 272, 'MES', 0, 0),
+(85, 502, 'TA', 273, 'Foodbridge Lower Lahug', 0, 0),
+(85, 503, 'TA', 274, 'MNHS', 0, 0),
+(85, 504, 'TA', 275, 'SAMPIG ELEM. SCHOOL', 0, 0),
+(85, 505, 'TA', 276, 'SUMAFA WOMENS', 0, 0),
+(85, 506, 'TA', 277, 'WATER RESERVOIR', 0, 0),
+(85, 507, 'ap_total_BF', 0, '', 0, 0),
+(85, 508, 'BF', 267, 'Data 1', 0, 0),
+(85, 509, 'BF', 268, 'Electrification', 0, 0),
+(85, 510, 'BF', 269, 'Road Rehabilitation', 0, 0),
+(85, 511, 'BF', 270, 'Daycare Center', 0, 0),
+(85, 512, 'BF', 271, 'Road Concreting', 0, 0),
+(85, 513, 'BF', 272, 'MES', 0, 0),
+(85, 514, 'BF', 273, 'Foodbridge Lower Lahug', 0, 0),
+(85, 515, 'BF', 274, 'MNHS', 0, 0),
+(85, 516, 'BF', 275, 'SAMPIG ELEM. SCHOOL', 0, 0),
+(85, 517, 'BF', 276, 'SUMAFA WOMENS', 0, 0),
+(85, 518, 'BF', 277, 'WATER RESERVOIR', 0, 0),
+(86, 519, 'ap_total_TA', 0, '', 0, 0),
+(86, 520, 'TA', 278, 'Data 1', 0, 0),
+(86, 521, 'TA', 279, 'Electrification', 0, 0),
+(86, 522, 'TA', 280, 'Road Rehabilitation', 0, 0),
+(86, 523, 'TA', 281, 'Daycare Center', 0, 0),
+(86, 524, 'TA', 282, 'Foodbridge Lower Lahug', 0, 0),
+(86, 525, 'TA', 283, 'MES', 0, 0),
+(86, 526, 'TA', 284, 'Road Concreting', 0, 0),
+(86, 527, 'TA', 285, 'asdf', 0, 0),
+(86, 528, 'ap_total_BF', 0, '', 0, 0),
+(86, 529, 'BF', 278, 'Data 1', 0, 0),
+(86, 530, 'BF', 279, 'Electrification', 0, 0),
+(86, 531, 'BF', 280, 'Road Rehabilitation', 0, 0),
+(86, 532, 'BF', 281, 'Daycare Center', 0, 0),
+(86, 533, 'BF', 282, 'Foodbridge Lower Lahug', 0, 0),
+(86, 534, 'BF', 283, 'MES', 0, 0),
+(86, 535, 'BF', 284, 'Road Concreting', 0, 0),
+(86, 536, 'BF', 285, 'asdf', 0, 0),
+(87, 537, 'ap_total_TA', 0, '', 0, 1),
+(87, 538, 'TA', 286, 'Data 1', 0, 1),
+(87, 539, 'TA', 287, 'Electrification', 0, 1),
+(87, 540, 'ap_total_BF', 0, '', 0, 1),
+(87, 541, 'BF', 286, 'Data 1', 0, 1),
+(87, 542, 'BF', 287, 'Electrification', 0, 1),
+(87, 543, 'ap_total_TA', 0, '', 0, 1),
+(87, 544, 'TA', 286, 'Data 1', 0, 1),
+(87, 545, 'TA', 287, 'Electrification', 0, 1),
+(87, 546, 'ap_total_BF', 0, '', 0, 1),
+(87, 547, 'BF', 286, 'Data 1', 0, 1),
+(87, 548, 'BF', 287, 'Electrification', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -917,27 +950,37 @@ CREATE TABLE `tb_rao_cont_attributes` (
 
 INSERT INTO `tb_rao_cont_attributes` (`rao_cont_id`, `rao_cont_att_id`, `attribute_name`, `isDisplayed`) VALUES
 (83, 256, 'Data 1', 0),
-(84, 257, 'Electrification', 1),
-(84, 258, 'Road Rehabilitation', 1),
-(84, 259, 'Daycare Center', 1),
-(84, 260, 'Road Concreting', 1),
-(84, 261, 'MES', 1),
-(84, 262, 'Foodbridge Lower Lahug', 1),
-(84, 263, 'MNHS', 1),
-(84, 264, 'SAMPIG ELEM. SCHOOL', 1),
-(84, 265, 'SUMAFA WOMENS', 1),
-(84, 266, 'WATER RESERVOIR', 1),
-(85, 267, 'Data 1', 1),
-(85, 268, 'Electrification', 1),
-(85, 269, 'Road Rehabilitation', 1),
-(85, 270, 'Daycare Center', 1),
-(85, 271, 'Road Concreting', 1),
-(85, 272, 'MES', 1),
-(85, 273, 'Foodbridge Lower Lahug', 1),
-(85, 274, 'MNHS', 1),
-(85, 275, 'SAMPIG ELEM. SCHOOL', 1),
-(85, 276, 'SUMAFA WOMENS', 1),
-(85, 277, 'WATER RESERVOIR', 1);
+(84, 257, 'Electrification', 0),
+(84, 258, 'Road Rehabilitation', 0),
+(84, 259, 'Daycare Center', 0),
+(84, 260, 'Road Concreting', 0),
+(84, 261, 'MES', 0),
+(84, 262, 'Foodbridge Lower Lahug', 0),
+(84, 263, 'MNHS', 0),
+(84, 264, 'SAMPIG ELEM. SCHOOL', 0),
+(84, 265, 'SUMAFA WOMENS', 0),
+(84, 266, 'WATER RESERVOIR', 0),
+(85, 267, 'Data 1', 0),
+(85, 268, 'Electrification', 0),
+(85, 269, 'Road Rehabilitation', 0),
+(85, 270, 'Daycare Center', 0),
+(85, 271, 'Road Concreting', 0),
+(85, 272, 'MES', 0),
+(85, 273, 'Foodbridge Lower Lahug', 0),
+(85, 274, 'MNHS', 0),
+(85, 275, 'SAMPIG ELEM. SCHOOL', 0),
+(85, 276, 'SUMAFA WOMENS', 0),
+(85, 277, 'WATER RESERVOIR', 0),
+(86, 278, 'Data 1', 0),
+(86, 279, 'Electrification', 0),
+(86, 280, 'Road Rehabilitation', 0),
+(86, 281, 'Daycare Center', 0),
+(86, 282, 'Foodbridge Lower Lahug', 0),
+(86, 283, 'MES', 0),
+(86, 284, 'Road Concreting', 0),
+(86, 285, 'asdf', 0),
+(87, 286, 'Data 1', 1),
+(87, 287, 'Electrification', 1);
 
 -- --------------------------------------------------------
 
@@ -959,7 +1002,9 @@ CREATE TABLE `tb_rao_cont_ob` (
 --
 
 INSERT INTO `tb_rao_cont_ob` (`rao_cont_id`, `rao_cont_ob_id`, `ob_ref_date`, `ob_ref_no`, `ob_particulars`, `ob_totals`) VALUES
-(83, 63, '2024-11-01', 'Obligations', 'Salary and Wages: Tanod', 10);
+(83, 63, '2024-11-01', 'Obligations', 'Salary and Wages: Tanod', 10),
+(87, 64, '2001-11-01', 'aasdf', 'adsf', 0),
+(87, 65, '2001-11-01', 'aasdf', 'adsf', 0);
 
 -- --------------------------------------------------------
 
@@ -981,7 +1026,11 @@ CREATE TABLE `tb_rao_cont_ob_data` (
 --
 
 INSERT INTO `tb_rao_cont_ob_data` (`rao_cont_ob_data_id`, `rao_cont_ob_id`, `rao_cont_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
-(522, 63, 256, 'Data 1', 10, 0);
+(522, 63, 256, 'Data 1', 10, 0),
+(523, 64, 286, 'Data 1', 0, 1),
+(524, 64, 287, 'Electrification', 0, 1),
+(525, 65, 286, 'Data 1', 0, 1),
+(526, 65, 287, 'Electrification', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1010,75 +1059,120 @@ INSERT INTO `tb_rao_cont_ob_totals` (`rao_cont_id`, `rao_cont_ob_total_id`, `tot
 (83, 706, 'OB', 256, 'Data 1', 10, 0),
 (83, 707, 'ob_total_AB', 0, '', 190, 0),
 (83, 708, 'AB', 256, 'Data 1', 190, 0),
-(84, 709, 'ob_total_TO', 0, '', 0, 1),
-(84, 710, 'TO', 257, 'Electrification', 0, 1),
-(84, 711, 'TO', 258, 'Road Rehabilitation', 0, 1),
-(84, 712, 'TO', 259, 'Daycare Center', 0, 1),
-(84, 713, 'TO', 260, 'Road Concreting', 0, 1),
-(84, 714, 'TO', 261, 'MES', 0, 1),
-(84, 715, 'TO', 262, 'Foodbridge Lower Lahug', 0, 1),
-(84, 716, 'TO', 263, 'MNHS', 0, 1),
-(84, 717, 'TO', 264, 'SAMPIG ELEM. SCHOOL', 0, 1),
-(84, 718, 'TO', 265, 'SUMAFA WOMENS', 0, 1),
-(84, 719, 'ob_total_OB', 0, '', 0, 1),
-(84, 720, 'OB', 257, 'Electrification', 0, 1),
-(84, 721, 'OB', 258, 'Road Rehabilitation', 0, 1),
-(84, 722, 'OB', 259, 'Daycare Center', 0, 1),
-(84, 723, 'OB', 260, 'Road Concreting', 0, 1),
-(84, 724, 'OB', 261, 'MES', 0, 1),
-(84, 725, 'OB', 262, 'Foodbridge Lower Lahug', 0, 1),
-(84, 726, 'OB', 263, 'MNHS', 0, 1),
-(84, 727, 'OB', 264, 'SAMPIG ELEM. SCHOOL', 0, 1),
-(84, 728, 'OB', 265, 'SUMAFA WOMENS', 0, 1),
-(84, 729, 'ob_total_AB', 0, '', 4500, 1),
-(84, 730, 'AB', 257, 'Electrification', 100, 1),
-(84, 731, 'AB', 258, 'Road Rehabilitation', 200, 1),
-(84, 732, 'AB', 259, 'Daycare Center', 300, 1),
-(84, 733, 'AB', 260, 'Road Concreting', 400, 1),
-(84, 734, 'AB', 261, 'MES', 500, 1),
-(84, 735, 'AB', 262, 'Foodbridge Lower Lahug', 600, 1),
-(84, 736, 'AB', 263, 'MNHS', 700, 1),
-(84, 737, 'AB', 264, 'SAMPIG ELEM. SCHOOL', 800, 1),
-(84, 738, 'AB', 265, 'SUMAFA WOMENS', 900, 1),
-(84, 739, 'TO', 266, 'WATER RESERVOIR', 0, 1),
-(84, 740, 'OB', 266, 'WATER RESERVOIR', 0, 1),
-(84, 741, 'AB', 266, 'WATER RESERVOIR', 0, 1),
-(85, 742, 'ob_total_TO', 0, '', 0, 1),
-(85, 743, 'TO', 267, 'Data 1', 0, 1),
-(85, 744, 'TO', 268, 'Electrification', 0, 1),
-(85, 745, 'TO', 269, 'Road Rehabilitation', 0, 1),
-(85, 746, 'TO', 270, 'Daycare Center', 0, 1),
-(85, 747, 'TO', 271, 'Road Concreting', 0, 1),
-(85, 748, 'TO', 272, 'MES', 0, 1),
-(85, 749, 'TO', 273, 'Foodbridge Lower Lahug', 0, 1),
-(85, 750, 'TO', 274, 'MNHS', 0, 1),
-(85, 751, 'TO', 275, 'SAMPIG ELEM. SCHOOL', 0, 1),
-(85, 752, 'TO', 276, 'SUMAFA WOMENS', 0, 1),
-(85, 753, 'TO', 277, 'WATER RESERVOIR', 0, 1),
-(85, 754, 'ob_total_OB', 0, '', 0, 1),
-(85, 755, 'OB', 267, 'Data 1', 0, 1),
-(85, 756, 'OB', 268, 'Electrification', 0, 1),
-(85, 757, 'OB', 269, 'Road Rehabilitation', 0, 1),
-(85, 758, 'OB', 270, 'Daycare Center', 0, 1),
-(85, 759, 'OB', 271, 'Road Concreting', 0, 1),
-(85, 760, 'OB', 272, 'MES', 0, 1),
-(85, 761, 'OB', 273, 'Foodbridge Lower Lahug', 0, 1),
-(85, 762, 'OB', 274, 'MNHS', 0, 1),
-(85, 763, 'OB', 275, 'SAMPIG ELEM. SCHOOL', 0, 1),
-(85, 764, 'OB', 276, 'SUMAFA WOMENS', 0, 1),
-(85, 765, 'OB', 277, 'WATER RESERVOIR', 0, 1),
-(85, 766, 'ob_total_AB', 0, '', 0, 1),
-(85, 767, 'AB', 267, 'Data 1', 0, 1),
-(85, 768, 'AB', 268, 'Electrification', 0, 1),
-(85, 769, 'AB', 269, 'Road Rehabilitation', 0, 1),
-(85, 770, 'AB', 270, 'Daycare Center', 0, 1),
-(85, 771, 'AB', 271, 'Road Concreting', 0, 1),
-(85, 772, 'AB', 272, 'MES', 0, 1),
-(85, 773, 'AB', 273, 'Foodbridge Lower Lahug', 0, 1),
-(85, 774, 'AB', 274, 'MNHS', 0, 1),
-(85, 775, 'AB', 275, 'SAMPIG ELEM. SCHOOL', 0, 1),
-(85, 776, 'AB', 276, 'SUMAFA WOMENS', 0, 1),
-(85, 777, 'AB', 277, 'WATER RESERVOIR', 0, 1);
+(84, 709, 'ob_total_TO', 0, '', 0, 0),
+(84, 710, 'TO', 257, 'Electrification', 0, 0),
+(84, 711, 'TO', 258, 'Road Rehabilitation', 0, 0),
+(84, 712, 'TO', 259, 'Daycare Center', 0, 0),
+(84, 713, 'TO', 260, 'Road Concreting', 0, 0),
+(84, 714, 'TO', 261, 'MES', 0, 0),
+(84, 715, 'TO', 262, 'Foodbridge Lower Lahug', 0, 0),
+(84, 716, 'TO', 263, 'MNHS', 0, 0),
+(84, 717, 'TO', 264, 'SAMPIG ELEM. SCHOOL', 0, 0),
+(84, 718, 'TO', 265, 'SUMAFA WOMENS', 0, 0),
+(84, 719, 'ob_total_OB', 0, '', 0, 0),
+(84, 720, 'OB', 257, 'Electrification', 0, 0),
+(84, 721, 'OB', 258, 'Road Rehabilitation', 0, 0),
+(84, 722, 'OB', 259, 'Daycare Center', 0, 0),
+(84, 723, 'OB', 260, 'Road Concreting', 0, 0),
+(84, 724, 'OB', 261, 'MES', 0, 0),
+(84, 725, 'OB', 262, 'Foodbridge Lower Lahug', 0, 0),
+(84, 726, 'OB', 263, 'MNHS', 0, 0),
+(84, 727, 'OB', 264, 'SAMPIG ELEM. SCHOOL', 0, 0),
+(84, 728, 'OB', 265, 'SUMAFA WOMENS', 0, 0),
+(84, 729, 'ob_total_AB', 0, '', 4500, 0),
+(84, 730, 'AB', 257, 'Electrification', 100, 0),
+(84, 731, 'AB', 258, 'Road Rehabilitation', 200, 0),
+(84, 732, 'AB', 259, 'Daycare Center', 300, 0),
+(84, 733, 'AB', 260, 'Road Concreting', 400, 0),
+(84, 734, 'AB', 261, 'MES', 500, 0),
+(84, 735, 'AB', 262, 'Foodbridge Lower Lahug', 600, 0),
+(84, 736, 'AB', 263, 'MNHS', 700, 0),
+(84, 737, 'AB', 264, 'SAMPIG ELEM. SCHOOL', 800, 0),
+(84, 738, 'AB', 265, 'SUMAFA WOMENS', 900, 0),
+(84, 739, 'TO', 266, 'WATER RESERVOIR', 0, 0),
+(84, 740, 'OB', 266, 'WATER RESERVOIR', 0, 0),
+(84, 741, 'AB', 266, 'WATER RESERVOIR', 0, 0),
+(85, 742, 'ob_total_TO', 0, '', 0, 0),
+(85, 743, 'TO', 267, 'Data 1', 0, 0),
+(85, 744, 'TO', 268, 'Electrification', 0, 0),
+(85, 745, 'TO', 269, 'Road Rehabilitation', 0, 0),
+(85, 746, 'TO', 270, 'Daycare Center', 0, 0),
+(85, 747, 'TO', 271, 'Road Concreting', 0, 0),
+(85, 748, 'TO', 272, 'MES', 0, 0),
+(85, 749, 'TO', 273, 'Foodbridge Lower Lahug', 0, 0),
+(85, 750, 'TO', 274, 'MNHS', 0, 0),
+(85, 751, 'TO', 275, 'SAMPIG ELEM. SCHOOL', 0, 0),
+(85, 752, 'TO', 276, 'SUMAFA WOMENS', 0, 0),
+(85, 753, 'TO', 277, 'WATER RESERVOIR', 0, 0),
+(85, 754, 'ob_total_OB', 0, '', 0, 0),
+(85, 755, 'OB', 267, 'Data 1', 0, 0),
+(85, 756, 'OB', 268, 'Electrification', 0, 0),
+(85, 757, 'OB', 269, 'Road Rehabilitation', 0, 0),
+(85, 758, 'OB', 270, 'Daycare Center', 0, 0),
+(85, 759, 'OB', 271, 'Road Concreting', 0, 0),
+(85, 760, 'OB', 272, 'MES', 0, 0),
+(85, 761, 'OB', 273, 'Foodbridge Lower Lahug', 0, 0),
+(85, 762, 'OB', 274, 'MNHS', 0, 0),
+(85, 763, 'OB', 275, 'SAMPIG ELEM. SCHOOL', 0, 0),
+(85, 764, 'OB', 276, 'SUMAFA WOMENS', 0, 0),
+(85, 765, 'OB', 277, 'WATER RESERVOIR', 0, 0),
+(85, 766, 'ob_total_AB', 0, '', 0, 0),
+(85, 767, 'AB', 267, 'Data 1', 0, 0),
+(85, 768, 'AB', 268, 'Electrification', 0, 0),
+(85, 769, 'AB', 269, 'Road Rehabilitation', 0, 0),
+(85, 770, 'AB', 270, 'Daycare Center', 0, 0),
+(85, 771, 'AB', 271, 'Road Concreting', 0, 0),
+(85, 772, 'AB', 272, 'MES', 0, 0),
+(85, 773, 'AB', 273, 'Foodbridge Lower Lahug', 0, 0),
+(85, 774, 'AB', 274, 'MNHS', 0, 0),
+(85, 775, 'AB', 275, 'SAMPIG ELEM. SCHOOL', 0, 0),
+(85, 776, 'AB', 276, 'SUMAFA WOMENS', 0, 0),
+(85, 777, 'AB', 277, 'WATER RESERVOIR', 0, 0),
+(86, 778, 'ob_total_TO', 0, '', 0, 0),
+(86, 779, 'TO', 278, 'Data 1', 0, 0),
+(86, 780, 'TO', 279, 'Electrification', 0, 0),
+(86, 781, 'TO', 280, 'Road Rehabilitation', 0, 0),
+(86, 782, 'TO', 281, 'Daycare Center', 0, 0),
+(86, 783, 'TO', 282, 'Foodbridge Lower Lahug', 0, 0),
+(86, 784, 'TO', 283, 'MES', 0, 0),
+(86, 785, 'TO', 284, 'Road Concreting', 0, 0),
+(86, 786, 'TO', 285, 'asdf', 0, 0),
+(86, 787, 'ob_total_OB', 0, '', 0, 0),
+(86, 788, 'OB', 278, 'Data 1', 0, 0),
+(86, 789, 'OB', 279, 'Electrification', 0, 0),
+(86, 790, 'OB', 280, 'Road Rehabilitation', 0, 0),
+(86, 791, 'OB', 281, 'Daycare Center', 0, 0),
+(86, 792, 'OB', 282, 'Foodbridge Lower Lahug', 0, 0),
+(86, 793, 'OB', 283, 'MES', 0, 0),
+(86, 794, 'OB', 284, 'Road Concreting', 0, 0),
+(86, 795, 'OB', 285, 'asdf', 0, 0),
+(86, 796, 'ob_total_AB', 0, '', 0, 0),
+(86, 797, 'AB', 278, 'Data 1', 0, 0),
+(86, 798, 'AB', 279, 'Electrification', 0, 0),
+(86, 799, 'AB', 280, 'Road Rehabilitation', 0, 0),
+(86, 800, 'AB', 281, 'Daycare Center', 0, 0),
+(86, 801, 'AB', 282, 'Foodbridge Lower Lahug', 0, 0),
+(86, 802, 'AB', 283, 'MES', 0, 0),
+(86, 803, 'AB', 284, 'Road Concreting', 0, 0),
+(86, 804, 'AB', 285, 'asdf', 0, 0),
+(87, 805, 'ob_total_TO', 0, '', 0, 1),
+(87, 806, 'TO', 286, 'Data 1', 0, 1),
+(87, 807, 'TO', 287, 'Electrification', 0, 1),
+(87, 808, 'ob_total_OB', 0, '', 0, 1),
+(87, 809, 'OB', 286, 'Data 1', 0, 1),
+(87, 810, 'OB', 287, 'Electrification', 0, 1),
+(87, 811, 'ob_total_AB', 0, '', 0, 1),
+(87, 812, 'AB', 286, 'Data 1', 0, 1),
+(87, 813, 'AB', 287, 'Electrification', 0, 1),
+(87, 814, 'ob_total_TO', 0, '', 0, 1),
+(87, 815, 'TO', 286, 'Data 1', 0, 1),
+(87, 816, 'TO', 287, 'Electrification', 0, 1),
+(87, 817, 'ob_total_OB', 0, '', 0, 1),
+(87, 818, 'OB', 286, 'Data 1', 0, 1),
+(87, 819, 'OB', 287, 'Electrification', 0, 1),
+(87, 820, 'ob_total_AB', 0, '', 0, 1),
+(87, 821, 'AB', 286, 'Data 1', 0, 1),
+(87, 822, 'AB', 287, 'Electrification', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1201,10 +1295,11 @@ CREATE TABLE `tb_resident` (
 --
 
 INSERT INTO `tb_resident` (`resident_id`, `resident_firstname`, `resident_middlename`, `resident_lastname`, `resident_sex`, `resident_suffixes`, `resident_address`, `resident_educationalattainment`, `resident_birthdate`, `resident_age`, `resident_status`, `resident_householdrole`, `resident_maidenname`, `resident_contact`, `resident_occupation`, `resident_religion`, `resident_indigenous`, `isDisplayed`, `resident_pension`, `resident_beneficiaries`, `resident_lactating`, `resident_pregnant`, `resident_PWD`, `resident_SY`, `resident_height`, `resident_weight`, `resident_heightstat`, `resident_weightstat`, `resident_BMIstat`, `resident_medical`, `household_id`) VALUES
-(216, 'adfasf', 'asdfasf', 'asdfasf', 'Male', 'Jr', 'Sitio Sto. Nino', 'Elementary', '2024-12-31', 0, 'Single', 'son', 'fasfasf', '+63 968 651 3790', 'asdfasf', 'fasdfasf', '1654', 1, 'asdfa', 'No', '', '', '', '', NULL, NULL, '', '', '', '', 123),
 (217, 'gsdfgdfg', 'fdsgsfdgd', 'sdfgsdf', 'Male', ' ', 'Sitio Sto. Nino', 'Elementary', '2001-11-09', 23, 'Single', 'daughter', 'gsdfgds', '', 'asdfasdf', 'asdfasdf', '0', 1, 'asdfasfd', 'asdfasdf', '', '', '', '', NULL, NULL, '', '', '', '', 122),
-(218, 'asfasdf', 'dasfdsafas', 'asdfasdf', 'Male', 'Jr', 'Sitio Sto. Nino', 'Elementary', '2001-11-09', 23, 'Single', '12', 'sadfasdf', '', 'asdfasd', 'asdfasdf', '0', 1, 'asdfasfd', 'asdfasdf', '', '', '', '', NULL, NULL, '', '', '', '', 122),
-(219, 'John Frederick', 'Domecillo', 'Gelay', 'Male', ' ', 'Sitio Mag-Alambac', 'Bacherlor Degree', '2001-11-09', 23, 'Single', 'Son', 'Domecillo', '', 'student', 'Roman Catholic', 'asdfasdfffasd', 1, 'asdfasfd', 'asdfasdf', '', '', '', '', NULL, NULL, '', '', '', '', 110901);
+(218, 'asfasdf', 'dasfdsafas', 'asdfasdf', 'Male', 'Jr', 'Sitio Sto. Nino', 'High School, Undergrad', '1984-11-09', 40, 'Single', '12', 'sadfasdf', '', 'asdfasd', 'asdfasdf', '0', 1, 'asdfasfd', 'asdfasdf', '', '', '', '', NULL, NULL, '', '', '', '', 122),
+(222, 'asdfasdf', 'dsafsaf', 'asdfasdf', 'Male', ' ', 'Sitio Suwa', 'Vocational', '2001-11-09', 23, 'Single', 'asdfasf', 'sdfasfadsf', '', 'asdfasdf', 'asdfasdf', 'asdfasf', 1, 'sdfasfa', 'sdfasf', '', '', '', '', NULL, NULL, '', '', '', '', 110920),
+(223, 'asdfadsf', 'asdfsafsaf', 'asdfasfasdfsaffd', 'Male', ' ', 'Sitio Sto. Nino', 'Bachelor Degree', '1960-11-09', 64, 'Single', 'son', 'asdfasf', '', 'asdfasd', 'asdfasdf', 'asdfasdfffasd', 1, 'asdfasfd', 'asdfas', '', '', '', '', NULL, NULL, '', '', '', '', 112354),
+(224, 'asdfadsf', 'asdfsafsaf', 'xxxxxc', 'Male', ' ', 'Sitio Sto. Nino', 'High School, Graduate', '2001-11-09', 23, 'Single', 'son', 'asdfasf', '', 'asdfasd', 'asdfasdf', 'asdfasdfffasd', 1, 'asdfasfd', 'asdfas', '', '', '', '', NULL, NULL, '', '', '', '', 112354);
 
 --
 -- Triggers `tb_resident`
@@ -1275,6 +1370,7 @@ CREATE TABLE `tb_user` (
   `barangayposition` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
+  `verification_code` varchar(6) DEFAULT NULL,
   `theme` varchar(10) NOT NULL DEFAULT '''light''',
   `suffix` varchar(10) NOT NULL,
   `profile_picture` varchar(255) DEFAULT 'profile_default.png',
@@ -1288,9 +1384,10 @@ CREATE TABLE `tb_user` (
 -- Dumping data for table `tb_user`
 --
 
-INSERT INTO `tb_user` (`user_id`, `lastname`, `firstname`, `middlename`, `sex`, `birthdate`, `barangayposition`, `username`, `password`, `theme`, `suffix`, `profile_picture`, `approval_status`, `user_age`, `isApproved`, `disapprovalReason`) VALUES
-(93, 'Nepomuceno', 'Josephine', 'Belarma', 'Female', '2001-11-09', 'Barangay Captain', 'john-bc', '$2y$10$kDRMuCt82KEV7CWEE47FQu.j5/K5P80nV/rvgpaevnzKnKlpTXskG', 'light', ' ', 'profile_default.png', 'pending', NULL, 1, NULL),
-(95, 'gelay', 'john', 'domecillo', 'Male', '2001-11-09', 'Barangay Health Worker', 'john-bhw', '$2y$10$rKeqzq3VMTfaJJWBoQLMg.dfdIYRsHqglNRbwlsSZ1qho7Y33Xm7m', '\'light\'', ' ', 'profile_default.png', 'pending', NULL, 1, NULL);
+INSERT INTO `tb_user` (`user_id`, `lastname`, `firstname`, `middlename`, `sex`, `birthdate`, `barangayposition`, `username`, `password`, `verification_code`, `theme`, `suffix`, `profile_picture`, `approval_status`, `user_age`, `isApproved`, `disapprovalReason`) VALUES
+(93, 'Nepomuceno', 'Josephine', 'Belarma', 'Female', '2001-11-09', 'Barangay Captain', 'john-bc', '$2y$10$kDRMuCt82KEV7CWEE47FQu.j5/K5P80nV/rvgpaevnzKnKlpTXskG', '110921', 'dark', ' ', 'profile_default.png', 'pending', NULL, 1, NULL),
+(99, 'gelay', 'john', 'domecillo', 'Male', '2001-11-09', 'Barangay Health Worker', 'john-bhw', '$2y$10$B6l2sSneziX4m87uPhn/.eb4XUEbv3l9Iy06JtsTuXUlP8yca3e3O', '110920', 'dark', ' ', 'profile_default.png', 'pending', NULL, 1, NULL),
+(100, 'gelay', 'john', 'domecillo', 'Male', '2001-11-09', 'Barangay Personnel', 'john-bp', '$2y$10$k0sgidv0z3MwFeNuVgLzpOZ3LSrKduJgBGVTkU7ElNAIsNb4UbAdi', '110901', 'dark', ' ', 'profile_default.png', 'pending', NULL, 1, NULL);
 
 --
 -- Indexes for dumped tables
@@ -1585,7 +1682,7 @@ ALTER TABLE `tb_employee`
 -- AUTO_INCREMENT for table `tb_event`
 --
 ALTER TABLE `tb_event`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `tb_financial`
@@ -1597,7 +1694,7 @@ ALTER TABLE `tb_financial`
 -- AUTO_INCREMENT for table `tb_household`
 --
 ALTER TABLE `tb_household`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tb_indigency`
@@ -1651,7 +1748,7 @@ ALTER TABLE `tb_rao_ap_data`
 -- AUTO_INCREMENT for table `tb_rao_cont`
 --
 ALTER TABLE `tb_rao_cont`
-  MODIFY `rao_cont_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `rao_cont_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_cont_ap`
@@ -1669,31 +1766,31 @@ ALTER TABLE `tb_rao_cont_ap_data`
 -- AUTO_INCREMENT for table `tb_rao_cont_ap_totals`
 --
 ALTER TABLE `tb_rao_cont_ap_totals`
-  MODIFY `rao_cont_ap_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=519;
+  MODIFY `rao_cont_ap_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=549;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_cont_attributes`
 --
 ALTER TABLE `tb_rao_cont_attributes`
-  MODIFY `rao_cont_att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=278;
+  MODIFY `rao_cont_att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=288;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_cont_ob`
 --
 ALTER TABLE `tb_rao_cont_ob`
-  MODIFY `rao_cont_ob_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `rao_cont_ob_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_cont_ob_data`
 --
 ALTER TABLE `tb_rao_cont_ob_data`
-  MODIFY `rao_cont_ob_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=523;
+  MODIFY `rao_cont_ob_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=527;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_cont_ob_totals`
 --
 ALTER TABLE `tb_rao_cont_ob_totals`
-  MODIFY `rao_cont_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=778;
+  MODIFY `rao_cont_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=823;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_ob_data`
@@ -1717,13 +1814,13 @@ ALTER TABLE `tb_residency`
 -- AUTO_INCREMENT for table `tb_resident`
 --
 ALTER TABLE `tb_resident`
-  MODIFY `resident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
+  MODIFY `resident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=225;
 
 --
 -- AUTO_INCREMENT for table `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- Constraints for dumped tables
@@ -1782,12 +1879,6 @@ ALTER TABLE `tb_rao_ob_data`
 --
 ALTER TABLE `tb_resident`
   ADD CONSTRAINT `fk_household_resident` FOREIGN KEY (`household_id`) REFERENCES `tb_household` (`household_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `tb_transaction_items`
---
-ALTER TABLE `tb_transaction_items`
-  ADD CONSTRAINT `tb_transaction_items_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `tb_item_transaction` (`transaction_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

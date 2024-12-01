@@ -27,6 +27,7 @@ Table of contents
 18. profile
 19. additional_css-bootstrap
 20. Model For Resident and Employee
+21. Verification 
 --------------------------------------------- */
 /* ===== Reusable Comments - Here ===== */
 
@@ -1600,7 +1601,7 @@ body.dark .home .calendar-event .event-scheduler label {
 */
 .login{
   height: 100vh; /* Full viewport height */
-  background-image: url(../image/white-bg-login.jpg);
+  background-image: url(../image/forgot_password.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -1616,7 +1617,7 @@ body.dark .home .calendar-event .event-scheduler label {
   width: 100%;
   max-width: 400px; /* Maximum width of the form */
   padding-top: 10px;
-  background: rgb(210, 210, 210);
+  background: rgb(180, 180, 180);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   
@@ -1727,7 +1728,7 @@ body.dark .home .calendar-event .event-scheduler label {
   max-width: 900px;
   height: 590px;
   padding: 10px; /* Increased padding for more space */
-  background: rgb(210, 210, 210);
+  background: rgb(180, 180, 180);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -3867,3 +3868,266 @@ font-size: 18px;
     display: flex;
     justify-content: flex-end;
 }
+
+/* 
+---------------------------------------------
+21. Verification
+--------------------------------------------- 
+*/
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Darker overlay for better contrast */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.verification {
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 0;
+}
+
+.verification .container{
+  background-color: rgba(221, 221, 221, 0.897);
+  border-radius: 10px;
+  padding: 30px;
+  max-width: 1000px;
+  text-align: center;
+}
+
+.verification .code-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.verification .code{
+  caret-color: transparent;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  border: 1px solid #eee;
+  font-size: 30px;
+  font-family: "Lato", sans-serif;
+  width: 75px;
+  height: 80px;
+  margin: 10px;
+  text-align: center;
+  font-weight: 300;
+}
+
+@media (max-width: 600px) {
+  .verification .code-container{
+    flex-wrap: wrap;
+  }
+  .verification .code{
+    font-size: 24px;
+    height: 50px;
+    max-width: 50px;
+    font-size: bold;
+  }
+}
+
+.verification .code::-webkit-outer-spin-button,
+.verification .code::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.verification .code:valid {
+  border-color: #61c26e;
+  box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.25);
+}
+
+.verification .btn{
+  font-family: "Lato", sans-serif;
+  min-width: 400px;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  margin: 0px 0px 20px 0px;
+  padding: 0.775rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.7;
+}
+
+.verification .btn-primary{
+  color: #fff;
+  background-color: #74c261;
+  border-color: #6cc261;
+}
+
+/* 
+---------------------------------------------
+22. Forgot Password
+--------------------------------------------- 
+*/
+
+.forgot-password{
+  height: 100vh; /* Full viewport height */
+  background-image: url(../image/forgot_password.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  }
+
+  .forgot-password .slider-container {
+      background: rgb(180, 180, 180);
+      width: auto;
+      border-radius: 12px;
+      box-shadow: 0 10px 50px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.5s ease-in-out;
+  }
+  .forgot-password img {
+    position: absolute; /* Allow placement within the container */
+    top: 10px; /* Adjust spacing from the top */
+    right: 10px; /* Adjust spacing from the right */
+    width: 50px; /* Maintain the existing width */
+    height: auto; /* Ensure aspect ratio is maintained */
+    z-index: 10; /* Ensure the image stays above other content */
+}
+
+
+  
+  .forgot-password .slide {
+      padding: 30px;
+      display: none;
+      text-align: center;
+  }
+
+  .forgot-password .slide.active {
+      display: block;
+      animation: fadeIn 0.5s;
+  }
+
+  .forgot-password h2 {
+      color: #333;
+      margin-bottom: 20px;
+  }
+
+  .forgot-password form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+  }
+
+  .forgot-password label {
+      font-size: 14px;
+      color: #666;
+  }
+
+  .forgot-password input[type="text"],
+   input[type="password"],
+   input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+  }
+
+  .forgot-password input:focus {
+      border-color: #006e21;
+      outline: none;
+  }
+
+  .forgot-password button {
+      background: #006e21;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  }
+
+  .forgot-password button:hover {
+      background: #00b818;
+  }
+
+  .forgot-password .code-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 0;
+  }
+
+  .forgot-password .code{
+  caret-color: transparent;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  border: 1px solid #eee;
+  font-size: 30px;
+  font-family: "Lato", sans-serif;
+  width: 75px;
+  height: 80px;
+  margin: 10px;
+  text-align: center;
+  font-weight: 300;
+  }
+
+  @media (max-width: 600px) {
+      .forgot-password .verification .code-container{
+      flex-wrap: wrap;
+  }
+  .forgot-password .code{
+      font-size: 24px;
+      height: 50px;
+      max-width: 50px;
+      font-size: bold;
+  }
+  }
+
+  .forgot-password .code::-webkit-outer-spin-button,
+  .forgot-password .code::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      }
+
+  .forgot-password .code:valid {
+      border-color: #61c26e;
+      box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.25);
+      }
+
+              @keyframes fadeIn {
+                  from {
+                      opacity: 0;
+                      transform: translateY(10px);
+                  }
+                  to {
+                      opacity: 1;
+                      transform: translateY(0);
+                  }
+              }

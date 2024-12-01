@@ -22,7 +22,7 @@ $confirmpassword = $_POST["confirmPassword"] ?? '';
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/boxicons.min.css" />
     <title>Barangay Mantalogon Information System</title>
-    <link rel="icon" href="../../assets/image/logo_head.png">
+    <link rel="icon" href="assets/image/logo_head.png">
 </head>
 <body>
     <!-- register start -->

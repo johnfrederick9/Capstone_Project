@@ -12,13 +12,13 @@
   <script src="../../assets/js/Chart.min.js"></script>
 
   <!----===== chart JS ===== -->
-  <script src="../../assets/js/chart.js"></script>
+   <!---<script src="../../assets/js/chart.js"></script>-->
 
   <!----===== Date Today JS ===== -->
-  <script src="../../assets/js/date.js"></script>
+   <!---<script src="../../assets/js/date.js"></script>-->
   
   <!----===== Form Click JS ===== -->
-  <script src="../../assets/js/form_click.js"></script>
+  <!--- <script src="../../assets/js/form_click.js"></script>-->
 
     <!----===== Search JS- For Seaching ===== -->
     <script src="../../assets/js/search.js"></script>

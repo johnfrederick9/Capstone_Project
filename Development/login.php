@@ -19,7 +19,7 @@ $username = $_SESSION['valid_username'] ?? '';
       <link rel="stylesheet" href="assets/css/boxicons.min.css" />
 
       <title>Barangay Mantalogon Information System</title>
-      <link rel="icon" href="../../assets/image/logo_head.png">
+      <link rel="icon" href="assets/image/logo_head.png">
   </head>
   <body>
     <!-- Login start -->
@@ -136,6 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 }
 ?>
         </form>
+        <p>Forgot Password? <a href="forgot_password.php">Change Here</a></p>
         <p>Don't have an account? <a href="register.php">Sign up</a></p>
       </div>
     </section>  

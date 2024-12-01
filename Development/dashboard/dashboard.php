@@ -5,6 +5,7 @@ include "dashboard_code.php";
 include 'reports_code.php';
 ?>
 <body>
+<?php include '../../verification.php';?>
     <section class="home">
         <div class="dashboard">
             <div class="dashboard-container">
