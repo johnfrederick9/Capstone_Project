@@ -155,7 +155,7 @@
     $(document).on('click', '.print-btn', function() {
         var indigencyId = $(this).data('id'); // Get the indigency_id
         // Store the ID in the modal buttons' data attribute
-        $('#printOption1, #printOption2').data('id', indigencyId);
+        $('#printOption1, #printOption2 , #printOption3').data('id', indigencyId);
         // Show the modal
         $('#printModal').modal('show');
     });
@@ -213,6 +213,14 @@
     $('#printOption2').on('click', function() {
         var indigencyId = $(this).data('id'); // Get the indigency_id
         var url = 'fetch_certificate1.php'; // URL for Print Option 2
+        $('#printModal').modal('hide'); // Close the modal
+        handlePrint(indigencyId, url);
+    });
+
+    // Event listener for Print Option 2
+    $('#printOption3').on('click', function() {
+        var indigencyId = $(this).data('id'); // Get the indigency_id
+        var url = 'fetch_certificate2.php'; // URL for Print Option 3
         $('#printModal').modal('hide'); // Close the modal
         handlePrint(indigencyId, url);
     });
