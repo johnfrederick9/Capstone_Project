@@ -458,7 +458,7 @@ $response_json = json_encode($response);
 <div class="rao-container">
             <!-- Header Section -->
             <div class="rao-header">
-                <h1>Report of Appropriations and Obligations, Continuing Appropriations(RAO-CONT)</h1>
+                <h1>Report of Appropriations and Obligations (RAO-CONT)</h1>
                 <p id="period_covered" style="text-align: center;"></p>
                 <div class="details">
                     <div class="info">
@@ -472,7 +472,7 @@ $response_json = json_encode($response);
                         <label>Province:</label> <input type="text" value="CEBU" disabled />
                     </div>
                     <div class="info">
-                        <label>Fund Source:</label> <input type="text" value="Continuing Appropriations"  disabled />
+                        <label>Fund Source:</label> <input type="text" value="General Funds (Capital Outlay)"  disabled />
                     </div>
                 </div>
             </div>

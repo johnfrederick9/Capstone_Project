@@ -2228,7 +2228,7 @@ td.action-buttons{
                             <div class="rao-container">
                                 <!-- Header Section -->
                                 <div class="rao-header">
-                                    <h1>Report of Appropriations and Obligations, Continuing Appropriations(RAO-CONT)</h1>
+                                    <h1>Report of Appropriations and Obligations(RAO-CONT)</h1>
                                     <p id="period_covered" style="text-align: center;"></p>
                                     <div class="details">
                                         <div class="info">
@@ -2242,7 +2242,7 @@ td.action-buttons{
                                             <label>Province:</label> <input type="text" value="CEBU" disabled />
                                         </div>
                                         <div class="info">
-                                            <label>Fund Source:</label> <input type="text" value="Continuing Appropriations"  disabled />
+                                            <label>Fund Source:</label> <input type="text" value="General Fund (Capital Outlay)"  disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -4836,7 +4836,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 createCell('input', '', {type: 'date', name: `${type}_date_data[]`, required: true}),
                 createCell('input', '', {type: 'text', name: `${type}_reference_no[]`, required: false}),
                 createCell('input', '', {type: 'text', name: `${type}_particulars[]`, required: false}),
-                createCell('input', '', {type: 'number', name: `${type}_total[]`, required: false}, 'total-data')
+                createCell('input', '', {type: 'number', name: `${type}_total[]`,  step: 0.01}, 'total-data')
             ];
 
             baseCells.forEach(cell => newRow.appendChild(cell));
@@ -5077,7 +5077,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         function updateCounters(type) {
-            const selector = type === 'ap' ? '#addUserModal .ap-data-row' : '#addUserModal .ob-data-row';
+            const selector = type === 'ap' ? '#exampleModal .ap-data-row' : '#exampleModal .ob-data-row';
             const rows = document.querySelectorAll(selector);
             rows.forEach((row, index) => {
                 const hiddenInput = row.querySelector('input[name="hidden"]');
@@ -5102,8 +5102,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 createCell('input', '', {type: 'date', name: `${type}_date_data[]`, required: true}),
                 createCell('input', '', {type: 'text', name: `${type}_reference_no[]`,  required: false}),
                 createCell('input', '', {type: 'text', name: `${type}_particulars[]`,  required: false}),
-                createCell('input', '', {type: 'number', name: `${type}_total[]`, required: false}, 'total-data'),
-                createCell('input', '', {type: 'hidden', name: `rao_cont_${type}_id`, required: false}, 'hidden'),
+                createCell('input', '', {type: 'number', name: `${type}_total[]`,  step: 0.01}, 'total-data'),
+                createCell('input', '', {type: 'hidden', name: `rao_cont_${type}_id`}, 'hidden'),
             ];
             
             baseCells.forEach(cell => newRow.appendChild(cell));

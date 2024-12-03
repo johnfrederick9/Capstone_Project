@@ -3919,7 +3919,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         function updateCounters(type) {
-            const selector = type === 'ap' ? '#addUserModal .ap-data-row' : '#addUserModal .ob-data-row';
+            const selector = type === 'ap' ? '#exampleModal .ap-data-row' : '#exampleModal .ob-data-row';
             const rows = document.querySelectorAll(selector);
             rows.forEach((row, index) => {
                 const hiddenInput = row.querySelector('input[name="hidden"]');
