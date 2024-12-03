@@ -228,7 +228,8 @@ if (isset($conn) && $conn) {
                 </a>
               </li>
             </ul>
-          </li>-->    
+          </li>--> 
+        <li>   
         <a href="#!" data-id="<?php echo $row['user_id']; ?>" data-bs-toggle="modal" data-bs-target="#UpdateProfileModal" title="Profile" class="editbtn">
                 <i class='bx bxs-user icon'></i>
                 <span class="text nav-text">

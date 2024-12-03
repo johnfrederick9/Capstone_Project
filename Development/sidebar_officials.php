@@ -162,12 +162,24 @@ if (isset($conn) && $conn) {
                   <span class="text nav-text">RAO-PS Table</span>
                 </a>
               </li>
-              <li>
+              <!--<li>
                 <a href="../rao-cont/table_rao_cont_records.php" title="RAO-CONT Table">
                  <i class='bx bx-wallet icon'></i>
                   <span class="text nav-text">RAO-CONT Table</span>
                 </a>
               </li>
+              <li>
+                <a href="../rao-fe/table_rao_fe_records.php" title="RAO-FE Table">
+                 <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">RAO-FE Table</span>
+                </a>
+              </li>
+              <li>
+                <a href="../rao-mooe/table_rao_mooe_records.php" title="RAO-MOOE Table">
+                 <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">RAO-MOOE Table</span>
+                </a>
+              </li>-->
               <li>
                 <a href="../cashbook/table_cashbook_records.php" title="Cashbook Table">
                   <i class='bx bx-wallet icon'></i>

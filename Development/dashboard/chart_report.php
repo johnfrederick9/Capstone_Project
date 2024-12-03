@@ -17,15 +17,34 @@
             </div>
         </div>
 
+        <!-- Slide 3: Blotter Status -->
+        <div class="carousel-item">
+            <div class="chart-wrapper">
+                <h5>Blotter Status Distribution</h5>
+                <canvas id="blotterStatusLineChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Slide 4: Project Status -->
+        <div class="carousel-item">
+            <div class="chart-wrapper">
+                <h5>Project Status Distribution</h5>
+                <canvas id="projectStatusLineChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Defensive checks for PHP data
+    // Fetch data from PHP
     var educationalData = <?php echo json_encode($educational_data ?? []); ?>;
     var ageData = <?php echo json_encode($age_data ?? []); ?>;
-    var sexData = <?php echo json_encode($sex_data ?? []); ?>;
+    var blotterStatusData = <?php echo json_encode($blotter_status ?? []); ?>;
+    var projectStatusData = <?php echo json_encode($project_status ?? []); ?>;
 
     // Chart 1: Educational Attainment Bar Chart
-    if (educationalData.length > 0) {
+    if (educationalData && educationalData.length > 0) {
         var eduLabels = educationalData.map(e => e.resident_educationalattainment);
         var eduData = educationalData.map(e => e.count);
 
@@ -64,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Chart 2: Age Distribution Histogram
-    if (ageData.length > 0) {
+    if (ageData && ageData.length > 0) {
         var ageLabels = ageData.map(e => e.age_range);
         var ageCounts = ageData.map(e => e.count);
 
@@ -102,7 +121,97 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Chart 3: Blotter Status Line Graph
+    if (blotterStatusData && blotterStatusData.length > 0) {
+        var blotterLabels = blotterStatusData.map(e => e.blotter_status);
+        var blotterCounts = blotterStatusData.map(e => e.count);
 
+        var ctxBlotter = document.getElementById('blotterStatusLineChart').getContext('2d');
+        new Chart(ctxBlotter, {
+            type: 'line',
+            data: {
+                labels: blotterLabels,
+                datasets: [{
+                    label: 'Blotter Cases',
+                    data: blotterCounts,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    tension: 0.4 // Makes the line smoother
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Cases'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Blotter Status'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Chart 4: Project Status Line Chart
+    if (projectStatusData && projectStatusData.length > 0) {
+        var projectLabels = projectStatusData.map(e => e.project_status);
+        var projectCounts = projectStatusData.map(e => e.count);
+
+        var ctxProject = document.getElementById('projectStatusLineChart').getContext('2d');
+        new Chart(ctxProject, {
+            type: 'line',
+            data: {
+                labels: projectLabels,
+                datasets: [{
+                    label: 'Project Status',
+                    data: projectCounts,
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 2,
+                    tension: 0.4 // Smoothens the line
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Projects'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Project Status'
+                        }
+                    }
+                }
+            }
+        });
+    }
 
     // Carousel Functionality
     let currentIndex = 0;
@@ -110,27 +219,23 @@ document.addEventListener('DOMContentLoaded', function () {
     const items = document.querySelectorAll('.carousel-item');
 
     function updateCarousel() {
-        const offset = -currentIndex * 100; // Calculate offset for transform
+        const offset = -currentIndex * 100;
         slides.style.transform = `translateX(${offset}%)`;
     }
 
-    // Automatically change slides
     const interval = setInterval(() => {
         currentIndex = (currentIndex + 1) % items.length;
         updateCarousel();
-    }, 5000); // Change slide every 5 seconds
+    }, 5000);
 
-    // Handle user clicks on charts
     slides.addEventListener('click', (event) => {
         const clickX = event.clientX;
         const containerWidth = slides.offsetWidth;
-        clearInterval(interval); // Stop automatic cycling on user interaction
+        clearInterval(interval);
 
         if (clickX < containerWidth / 2) {
-            // Left side clicked
             currentIndex = (currentIndex - 1 + items.length) % items.length;
         } else {
-            // Right side clicked
             currentIndex = (currentIndex + 1) % items.length;
         }
 

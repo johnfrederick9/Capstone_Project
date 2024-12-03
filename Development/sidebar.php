@@ -169,6 +169,18 @@ if (isset($conn) && $conn) {
                 </a>
               </li>
               <li>
+                <a href="../../pages/rao-fe/table_rao_fe_records.php" title="RAO-FE Table">
+                 <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">RAO-FE Table</span>
+                </a>
+              </li>
+              <li>
+                <a href="../../pages/rao-mooe/table_rao_mooe_records.php" title="RAO-MOOE Table">
+                 <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">RAO-MOOE Table</span>
+                </a>
+              </li>
+              <li>
                 <a href="../../pages/cashbook/table_cashbook_records.php" title="Cashbook Table">
                   <i class='bx bx-wallet icon'></i>
                   <span class="text nav-text">Cashbook Table</span>

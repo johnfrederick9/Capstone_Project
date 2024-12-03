@@ -10,11 +10,15 @@ $query = "
     GROUP BY resident_educationalattainment
     ORDER BY FIELD(resident_educationalattainment, 'Elementary', 'High School, Undergrad', 'High School, Graduate', 'College, Undergrad', 'Vocational', 'Bachelor Degree', 'Master Degree', 'Doctorate Degree')
 ";
-$result = mysqli_query($conn, $query);
 
+$result = mysqli_query($conn, $query);
 $educational_data = [];
-while($row = mysqli_fetch_assoc($result)) {
-    $educational_data[] = $row;
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $educational_data[] = $row;
+    }
+} else {
+    error_log("Error fetching educational attainment data: " . mysqli_error($conn));
 }
 
 // Query to get the count of residents by age range where isDisplayed = 1
@@ -32,12 +36,58 @@ $ageQuery = "
     GROUP BY age_range
     ORDER BY FIELD(age_range, '1-15', '16-30', '31-59', 'More than 60')
 ";
-$ageResult = mysqli_query($conn, $ageQuery);
 
+$ageResult = mysqli_query($conn, $ageQuery);
 $age_data = [];
-while($row = mysqli_fetch_assoc($ageResult)) {
-    $age_data[] = $row;
+if ($ageResult) {
+    while ($row = mysqli_fetch_assoc($ageResult)) {
+        $age_data[] = $row;
+    }
+} else {
+    error_log("Error fetching age data: " . mysqli_error($conn));
 }
+
+// Query to get the count of blotter statuses
+$blotterStatusQuery = "
+    SELECT 
+        blotter_status, 
+        COUNT(*) AS count 
+    FROM tb_blotter 
+    WHERE isDisplayed = 1 
+    GROUP BY blotter_status
+    ORDER BY FIELD(blotter_status, 'Pending', 'Resolved', 'Dismissed', 'In Progress')
+";
+
+$blotterResult = mysqli_query($conn, $blotterStatusQuery);
+$blotter_status = [];
+if ($blotterResult) {
+    while ($row = mysqli_fetch_assoc($blotterResult)) {
+        $blotter_status[] = $row;
+    }
+} else {
+    error_log("Error fetching blotter status data: " . mysqli_error($conn));
+}
+
+// Query to get the count of projects by status
+$projectStatusQuery = "
+    SELECT 
+        project_status, 
+        COUNT(*) AS count 
+    FROM tb_project 
+    WHERE isDisplayed = 1 
+    GROUP BY project_status
+";
+
+$projectResult = mysqli_query($conn, $projectStatusQuery);
+$project_status = [];
+if ($projectResult) {
+    while ($row = mysqli_fetch_assoc($projectResult)) {
+        $project_status[] = $row;
+    }
+} else {
+    error_log("Error fetching project status data: " . mysqli_error($conn));
+}
+
 
 // Close the database connection
 mysqli_close($conn);

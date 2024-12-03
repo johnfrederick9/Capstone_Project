@@ -1,126 +1,172 @@
 <?php
-include '../../sidebar.php';
 include '../../head.php';
-require '../../database.php';
-include 'household_code.php';
-include 'check_household.php';
+include '../../sidebar_officials.php';
 ?>
+<style>
+    .head{
+        margin-top: 10px;
+    }
+    .dataTables_filter{
+      margin-left: 800px;
+    }
+    /* Modal Header Styling */
 
+/* Member List Styling */
+#householdMembersList {
+    padding: 10px;
+    max-height: 400px; /* Limit the height of the list */
+    overflow-y: auto; /* Enable scrolling if content exceeds height */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#householdMembersList .list-group-item {
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    padding: 10px 15px;
+    background: #f8f9fa; /* Light background for list items */
+    margin-bottom: 5px;
+    border-left: 5px solid #007bff; /* Add a left border to make items visually distinct */
+}
+
+#householdMembersList .list-group-item:hover {
+    background: #e9ecef; /* Slightly darker background on hover */
+}
+
+/* Close Button Hover Effect */
+.modal-footer .btn-secondary:hover {
+    background-color: #6c757d; /* Darker shade of gray */
+    border-color: #6c757d;
+}
+
+/* General Modal Enhancements */
+.modal-content {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px;
+}
+
+
+</style>
 <body>
-    <section class="home">
-        <div id="overlay" class="overlay"></div>
-        <div class="text">Household</div>
-        <div class="financial">
-            <div class="table-container">
-                <div class="table-header">
-                    <div class="search-box">
-                        <i class='bx bx-search icon'></i>
-                        <input type="text" id="search" placeholder="Search..." onkeyup="filterTable()" autofocus>
+    <section class="home">  
+        <div class="resident">
+        <div class="table-container">
+    <div class="table-header">
+        <div class="head">
+            <h1>Household Table</h1>
+        </div>
                     </div>
-                    <div class="table-actions">
-                        <button class="add-popup" onclick="openModal()">+ Add Household</button>
+                    <table id="example" class="table-table">
+                        <thead>
+                            <th>#</th>
+                            <th>Household Number</th>
+                            <th>Household Name</th>
+                            <th>Household Head</th>
+                            <th>Address</th>
+                            <th>Contact Number</th>
+                            <th>Number of Members</th>
+                            <th>Buttons</th>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <?php include 'function.php';?>
+                </section><!-- .home-->
+                <!-- Modal -->
+                <!-- Update Household -->
+                <section class="household_modal">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Update Resident</h5>
+                            <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="updateUser">
+                                <input type="hidden" name="id" id="id" value="">
+                                <input type="hidden" name="trid" id="trid" value="">
+                                <div class="form-group">
+                                <label for="documentName">Household Name</label>
+                                <input type="text" id="nameField" name="household_name" require>
+                                </div>
+                                <div class="form-group">
+                                <label for="householdHead">Household Head</label>
+                                <input type="text"  id="headField" name="household_head" 
+                                        oninput="filterResidents('head')" 
+                                        onfocus="filterResidents('head')"
+                                        onblur="setTimeout(() => document.getElementById('headSuggestions').innerHTML = '', 200)">
+                                    <ul id="headSuggestions" class="suggestions-list"></ul>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="documentInfo">Address</label>
+                                    <input type="text" id="addressField" name="household_address" require>
+                                </div>
+                                <div class="form-group">
+                                <label for="household_contact">Contact Number:</label>
+                                <input type="tel" placeholder="Enter 10-digit number" id="contactField" name="household_contact" maxlength="16" require>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                <table class="table-table" id="Table">
-                    <thead>
-                        <tr>
-                            <th>Household Number</th>
-                            <th>Total Members</th>
-                            <th>Head Of Family</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        require '../../database.php';
-                        $sql = "SELECT h.household_id, h.total_members, r.resident_firstname, r.resident_lastname
-                                FROM household_tb h
-                                JOIN tb_resident r ON h.household_id = r.household_id
-                                WHERE r.resident_householdrole = 'Head of Family'";
-
-                        $result = $conn->query($sql);
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<tr>
-                                        <td>{$row['household_id']}</td>
-                                        <td>{$row['total_members']}</td>
-                                        <td>{$row['resident_firstname']} {$row['resident_lastname']}</td>
-                                        <td>
-                                            <div class='buttons'>
-                                                <form action='update_inventory.php' method='get' style='display:inline;'>
-                                                    <input type='hidden' name='item_id' value='{$row['household_id']}'>
-                                                    <button type='submit' class='update-btn' title='Edit'><i class='bx bx-sync'></i></button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='4'>No households found.</td></tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div><!-- .table-container-->
-            <div class="form-container">
-                <form action="household_code.php" method="POST" enctype="multipart/form-data">
-                    <h1 class="form-header">Household Form</h1>
-                    <div style="position: relative;">
-                        <span class="add_icon-close" onclick="closeModal()">
-                            <i class='bx bxs-x-circle icon' style="position: absolute; left: 250px; margin-top: -70px;"></i>
-                        </span>
+            </div>
+        <!-- View Modal -->
+        <section class="view-modal">
+            <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="viewModalLabel">Household Details</h5>
+                            <button type="button" class="bx bxs-x-circle icon" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table-table">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Full Name</th>
+                                        <th>Household Role</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="householdMembersTable">
+                                    <!-- Members will be dynamically added here -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="householdnumber">Household Number:</label>
-                        <input type="text" id="household_id" name="household_id" onblur="checkHousehold()" required>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="familyhead">Select Head of the Family:</label>
-                        <select id="familyhead" name="household_familyhead" required>
-                            <?php
-                            $residents = $conn->query("SELECT resident_id, resident_firstname, resident_lastname FROM tb_resident WHERE household_id IS NULL");
-                            while ($row = $residents->fetch_assoc()) {
-                                echo "<option value='" . $row['resident_id'] . "'>" . $row['resident_firstname'] . " " . $row['resident_lastname'] . "</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="TotalMembers">Total Members:</label>
-                        <input type="text" id="totalmembers" name="household_familymembers" required>
-                    </div>
-
-                    <div class="buttons">
-                        <button type="submit" class="add-btn" name="add_item">
-                            <i class='bx bx-plus'></i> Add Household
-                        </button>
-                    </div>
-                </form>
-            </div><!-- .inventory-->
-            <?php include '../../footer.php' ?>
+                </div>
+            </div>
+        </section>
+        <section class="delete-modal">
+        <!-- Delete Confirmation Modal -->
+        <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-body text-center">
+                <h5 class="modal-title" id="deleteConfirmationModalLabel">Remove for you</h5>
+                <p>This data will be removed, Would you like to remove it ?</p>
+                <button type="button" class="btn btn-primary" id="confirmDeleteBtn">Remove</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+            </div>
         </div>
-    </section><!-- .home-->
-    <script>
-        function checkHousehold() {
-            var householdId = document.getElementById("household_id").value;
-            
-            if (householdId !== "") {
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "check_household.php", true);
-                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        var response = xhr.responseText.trim();
-                        if (response === "No Household Found") {
-                            document.getElementById("totalmembers").value = response;
-                        } else {
-                            document.getElementById("totalmembers").value = response;
-                        }
-                    }
-                };
-                xhr.send("household_id=" + householdId);
-            }
-        }
-    </script>
-</body>
+        </div>
+        </section>
+    </body> 
 </html>

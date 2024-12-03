@@ -1,6 +1,6 @@
 <?php
 include '../../head.php';
-include '../../sidebar.php';
+include '../../sidebar_officials.php';
 ?>
 <style>
 
@@ -89,13 +89,6 @@ include '../../sidebar.php';
     max-height: 95% !important;
     overflow-y:  auto!important;
 }
-
-/* #AttributeModal .modal-dialog{
-    max-width: 0% !important;
-    max-height: 80% !important;
-    overflow-y:  auto!important;
-} */
-
 
 .rao-header {
     text-align: center;
@@ -407,9 +400,6 @@ td.action-buttons{
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 10;
   box-sizing: border-box; /* Ensure padding doesn’t affect width */
-  height: 500px;
-  width: 300px;
-  overflow-x: auto;
 }
 
 /* Show dropdown list when hovering over the parent */
@@ -444,7 +434,7 @@ td.action-buttons{
                 <div class="table-container">
                     <div class="table-header">
                     <div class="head">
-                            <h1>Records of Appropriations and Obligations (RAO-FE)</h1>
+                            <h1>Records of Appropriations and Obligations Continuing (RAO-CONT)</h1>
                         </div>
                         <div class="table-actions">    
                             <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#AttributeModal" class="add-table-btn">+ Add Record</button>
@@ -493,27 +483,26 @@ td.action-buttons{
                                     },
                                     {
                                         "bSortable": false,
-                                        "aTargets": [4]
+                                        "aTargets": []
                                     }
                                 ]
                             });
                         });
 
-                        //FOR EDIT
                         $('#example').on('click', '.editbtn', function (event) {
                             var table = $('#example').DataTable();
                             var trid = $(this).closest('tr').attr('id');
-                            var rao_fe_id = $(this).data('id');
+                            var rao_cont_id = $(this).data('id');
                             console.log(trid);
 
                             // Store data in modal for reference
-                            $('#updateUser').data('rao_fe_id', rao_fe_id);
+                            $('#updateUser').data('rao_cont_id', rao_cont_id);
                             $('#updateUser').data('trid', trid);
 
-                            // Show modal and set rao_fe_id value
+                            // Show modal and set rao_cont_id value
                             $('#exampleModal').modal('show');
-                            console.log("Rao fe ID:", rao_fe_id);
-                            $('#exampleModal #rao_fe_id').val(rao_fe_id);
+                            console.log("Rao Cont ID:", rao_cont_id);
+                            $('#exampleModal #rao_cont_id').val(rao_cont_id);
                             $('#exampleModal #trid').val(trid);
 
                             $('#exampleModal .inp-group-ap-data-row').empty(); 
@@ -522,7 +511,7 @@ td.action-buttons{
                             // AJAX request to fetch data
                             $.ajax({
                                 url: "get_single_data.php",
-                                data: { rao_fe_id: rao_fe_id },
+                                data: { rao_cont_id: rao_cont_id },
                                 type: 'post',
                                 success: function (data) {
                                     try {
@@ -582,6 +571,148 @@ td.action-buttons{
                                                 console.error("attribute_name is not an array:", attributeList);
                                             }
 
+                                        //    // Process dynamic data in rao_cont_ap
+                                        //     if (json.rao_cont_ap && Array.isArray(json.rao_cont_ap) && json.rao_cont_ap.length > 0) {
+                                        //         json.rao_cont_ap.forEach(function (apItem) {
+                                        //             let apRow = `
+                                        //             <tr class="ap-data-row">
+                                        //                 <td><input type="date" name="ap_date_data[]" value="${apItem.ap_ref_date || ''}" required></td>
+                                        //                 <td><input type="text" name="ap_reference_no[]" value="${apItem.ap_ref_no || ''}"></td>
+                                        //                 <td><input type="text" name="ap_particulars[]" value="${apItem.ap_particulars || ''}"></td>
+                                        //                 <td class="total-data"><input type="number" name="ap_total[]" value="${apItem.ap_totals || ''}"></td>
+                                        //                 <td class="hidden"><input type="hidden" name="rao_cont_ap_id" value="${apItem.rao_cont_ap_id || ''}"></td>
+                                        //             `;
+
+                                        //             // Filter the associated ap_cont_ap_data based on rao_cont_ap_id
+                                        //             if (json.rao_cont_ap_data && Array.isArray(json.rao_cont_ap_data)) {
+                                        //                 const relatedApData = json.rao_cont_ap_data.filter(function (apData) {
+                                        //                     return apData.rao_cont_ap_id === apItem.rao_cont_ap_id;
+                                        //                 });
+
+                                        //                 if (relatedApData.length > 0) {
+                                        //                     relatedApData.forEach(function (apData) {
+                                        //                         const attrId = apData.rao_cont_att_id;  // Get the attribute ID
+
+                                        //                         // Create a new <td> with an input for each attribute
+                                        //                         apRow += `
+                                        //                         <td>
+                                        //                             <input type="number" name="ap_attr_${attrId}[]" value="${apData.attribute_value || ''}" step="0.01">
+                                        //                         </td>
+                                        //                         `;
+                                        //                     });
+                                        //                 }
+                                        //             }
+
+                                        //             apRow += `
+                                        //             <td class="action-data">
+                                        //                 <!-- Optional: Add action buttons (like delete) in the last column -->
+                                        //             </td>
+                                        //             </tr>
+                                        //             `;
+                                        //             $('#exampleModal .inp-group-ap-data-row').append(apRow);
+                                        //         });
+                                        //     } 
+                                        //     else {
+                                        //         let emptyRow = `
+                                        //         <tr class="ap-data-row">
+                                        //             <td><input type="date" name="ap_date_data[]" value="" required></td>
+                                        //             <td><input type="text" name="ap_reference_no[]" value=""></td>
+                                        //             <td><input type="text" name="ap_particulars[]" value=""></td>
+                                        //             <td class="total-data"><input type="number" name="ap_total[]" value=""></td>
+                                        //             <td class="hidden"><input type="hidden" name="rao_cont_ap_id" value=""></td>
+                                        //         `;
+
+                                        //         attributeIds.forEach(function (attrId) {
+                                        //             emptyRow += `
+                                        //             <td>
+                                        //                 <input type="number" name="ap_attr_${attrId}[]" value="" step="0.01">
+                                        //             </td>
+                                        //             `;
+                                        //         });
+
+                                        //         emptyRow += `
+                                        //             <td class="action-data">
+                                        //                 <!-- Optional: Add action buttons (like delete) in the last column -->
+                                        //             </td>
+                                        //         </tr>
+                                        //         `;
+
+                                        //         // Append the empty row to the table
+                                        //         $('#exampleModal .inp-group-ap-data-row').append(emptyRow);
+                                        //     }
+                                            
+                                        //      // Create the total input first
+                                        //      if (json.rao_cont_ob && Array.isArray(json.rao_cont_ob) && json.rao_cont_ob.length > 0) {
+                                        //         json.rao_cont_ob.forEach(function (obItem) {
+                                        //             let obRow = `
+                                        //             <tr class="ob-data-row">
+                                        //                 <td><input type="date" name="ob_date_data[]" value="${obItem.ob_ref_date || ''}" required></td>
+                                        //                 <td><input type="text" name="ob_reference_no[]" value="${obItem.ob_ref_no || ''}"></td>
+                                        //                 <td><input type="text" name="ob_particulars[]" value="${obItem.ob_particulars || ''}"></td>
+                                        //                 <td class="total-data"><input type="number" name="ob_total[]" value="${obItem.ob_totals || ''}"></td>
+                                        //                 <td class="hidden"><input type="hidden" name="rao_cont_ob_id" value="${obItem.rao_cont_ob_id || ''}"></td>
+                                        //             `;
+
+                                        //             // Filter the associated ob_cont_ob_data based on rao_cont_ob_id
+                                        //             if (json.rao_cont_ob_data && Array.isArray(json.rao_cont_ob_data)) {
+                                        //                 const relatedObData = json.rao_cont_ob_data.filter(function (obData) {
+                                        //                     return obData.rao_cont_ob_id === obItem.rao_cont_ob_id;
+                                        //                 });
+
+                                        //                 if (relatedObData.length > 0) {
+                                        //                     relatedObData.forEach(function (obData) {
+                                        //                         const attrId = obData.rao_cont_att_id;  // Get the attribute ID
+
+                                        //                         // Create a new <td> with an input for each attribute
+                                        //                         obRow += `
+                                        //                         <td>
+                                        //                             <input type="number" name="ob_attr_${attrId}[]" value="${obData.attribute_value || ''}" step="0.01">
+                                        //                         </td>
+                                        //                         `;
+                                        //                     });
+                                        //                 }
+                                        //             }
+
+                                        //             obRow += `
+                                        //             <td class="action-data">
+                                        //                 <!-- Optional: Add action buttons (like delete) in the last column -->
+                                        //             </td>
+                                        //             </tr>
+                                        //             `;
+                                        //             $('.inp-group-ob-data-row').append(obRow);
+                                        //         });
+                                        //     } else {
+                                        //         // If no `rao_cont_ob` data exists, create an empty row
+                                        //         let emptyRow = `
+                                        //         <tr class="ob-data-row">
+                                        //             <td><input type="date" name="ob_date_data[]" value="" required></td>
+                                        //             <td><input type="text" name="ob_reference_no[]" value=""></td>
+                                        //             <td><input type="text" name="ob_particulars[]" value=""></td>
+                                        //             <td class="total-data"><input type="number" name="ob_total[]" value=""></td>
+                                        //             <td class="hidden"><input type="hidden" name="rao_cont_ob_id" value=""></td>
+                                        //         `;
+
+                                        //         // Add attribute input fields (if needed)
+                                        //         const attributeIds = json.attribute_ids || [];  // Assuming attribute_ids are provided in json
+                                        //         attributeIds.forEach(function (attrId) {
+                                        //             emptyRow += `
+                                        //             <td>
+                                        //                 <input type="number" name="ob_attr_${attrId}[]" value="" step="0.01">
+                                        //             </td>
+                                        //             `;
+                                        //         });
+
+                                        //         emptyRow += `
+                                        //         <td class="action-data">
+                                        //             <!-- Optional: Add action buttons (like delete) -->
+                                        //         </td>
+                                        //         </tr>
+                                        //         `;
+
+                                        //         // Append the empty row to the table
+                                        //         $('#exampleModal .inp-group-ob-data-row').append(emptyRow);
+                                        //     }
+
                                         function createDynamicRow(type, dataKey, dataContainerKey, dataPrefix) {
                                             if (json[dataKey] && Array.isArray(json[dataKey]) && json[dataKey].length > 0) {
                                                 json[dataKey].forEach(function (item) {
@@ -591,17 +722,17 @@ td.action-buttons{
                                                         <td><input type="text" name="${type}_reference_no[]" value="${item[`${type}_ref_no`] || ''}"></td>
                                                         <td><input type="text" name="${type}_particulars[]" value="${item[`${type}_particulars`] || ''}"></td>
                                                         <td class="total-data"><input type="number" name="${type}_total[]" value="${item[`${type}_totals`] || ''}"></td>
-                                                        <td class="hidden"><input type="hidden" name="rao_fe_${type}_id" value="${item[`rao_fe_${type}_id`] || ''}"></td>
+                                                        <td class="hidden"><input type="hidden" name="rao_cont_${type}_id" value="${item[`rao_cont_${type}_id`] || ''}"></td>
                                                     `;
 
                                                     // Handle related data (like attributes) if present
                                                     if (json[`${dataKey}_data`] && Array.isArray(json[`${dataKey}_data`])) {
                                                         const relatedData = json[`${dataKey}_data`].filter(function (data) {
-                                                            return data[`rao_fe_${type}_id`] === item[`rao_fe_${type}_id`];
+                                                            return data[`rao_cont_${type}_id`] === item[`rao_cont_${type}_id`];
                                                         });
 
                                                         relatedData.forEach(function (data) {
-                                                            const attrId = data[`rao_fe_att_id`];
+                                                            const attrId = data[`rao_cont_att_id`];
                                                             row += `<td><input type="number" name="${type}_attr_${attrId}[]" value="${data.attribute_value || ''}" step="0.01"></td>`;
                                                         });
                                                     }
@@ -615,13 +746,39 @@ td.action-buttons{
                                                     $(`#exampleModal .${dataContainerKey}`).append(row);
                                                 });
                                             }
+                                            // else {
+                                            //     // If no data, create an empty row
+                                            //     let emptyRow = `
+                                            //     <tr class="${type}-data-row">
+                                            //         <td><input type="date" name="${type}_date_data[]" value="" required></td>
+                                            //         <td><input type="text" name="${type}_reference_no[]" value=""></td>
+                                            //         <td><input type="text" name="${type}_particulars[]" value=""></td>
+                                            //         <td class="total-data"><input type="number" name="${type}_total[]" value=""></td>
+                                            //         <td class="hidden"><input type="hidden" name="rao_cont_${type}_id" value=""></td>
+                                            //     `;
+
+                                            //     // Add empty attributes
+                                            //     const attributeIds = json.attribute_ids || [];
+                                            //     attributeIds.forEach(function (attrId) {
+                                            //         emptyRow += `<td><input type="number" name="${type}_attr_${attrId}[]" value="" step="0.01"></td>`;
+                                            //     });
+
+                                            //     emptyRow += `
+                                            //     <td class="action-data">
+                                            //         <a href="#" class="add-row-${type}">+</a>
+                                            //         <a href="#" class="delete">X</a>
+                                            //     </td>
+                                            //     </tr>
+                                            //     `;
+                                            //     $(`#exampleModal .${dataContainerKey}`).append(emptyRow);
+                                            // }
                                         }
 
                                         // Call the function for AP data
-                                        createDynamicRow('ap', 'rao_fe_ap', 'inp-group-ap-data-row', 'ap');
+                                        createDynamicRow('ap', 'rao_cont_ap', 'inp-group-ap-data-row', 'ap');
 
                                         // Call the function for OB data
-                                        createDynamicRow('ob', 'rao_fe_ob', 'inp-group-ob-data-row', 'ob');
+                                        createDynamicRow('ob', 'rao_cont_ob', 'inp-group-ob-data-row', 'ob');
 
                                             const rowConfigs = {
                                                 ap: [
@@ -685,7 +842,7 @@ td.action-buttons{
 
 
                                                 attributeList.forEach((attr, index) => {
-                                                    let attrId = json.rao_fe_ap_data.find(apData => apData.attribute_name === attr)?.rao_fe_att_id;
+                                                    let attrId = json.rao_cont_ap_data.find(apData => apData.attribute_name === attr)?.rao_cont_att_id;
 
                                                     // If attrId is empty or undefined, use the corresponding entry in attributeIds
                                                     if (!attrId && attributeIds && attributeIds.length > index) {
@@ -739,7 +896,7 @@ td.action-buttons{
                                                 }
 
                                                 attributeList.forEach((attr, index) => {
-                                                    let attrId = json.rao_fe_ob_data.find(obData => obData.attribute_name === attr)?.rao_fe_att_id;
+                                                    let attrId = json.rao_cont_ob_data.find(obData => obData.attribute_name === attr)?.rao_cont_att_id;
 
                                                     // Fallback to `attributeIds` if `attrId` is not found
                                                     if (!attrId && attributeIds && attributeIds.length > index) {
@@ -784,6 +941,7 @@ td.action-buttons{
                             });
                         });
 
+
                        // Function to format the period covered
                         function formatPeriodCovered(dateString) {
                             if (!dateString || dateString === "0000-00-00") {
@@ -796,20 +954,19 @@ td.action-buttons{
                             return `${month} 1-${lastDay}, ${year}`;
                         }
 
-                        //FOR VIEW
                         $('#example').on('click', '.infoBtn', function (event) {
                             var table = $('#example').DataTable();
                             var trid = $(this).closest('tr').attr('data-item_id');
-                            var rao_fe_id = $(this).data('item_id');
+                            var rao_cont_id = $(this).data('item_id');
 
                             // Store data in modal for reference
-                            $('#updateUser').data('rao_fe_id', rao_fe_id);
+                            $('#updateUser').data('rao_cont_id', rao_cont_id);
                             $('#updateUser').data('trid', trid);
 
-                            // Show modal and set rao_fe_id value
+                            // Show modal and set rao_cont_id value
                             $('#viewDataModal').modal('show');
-                            console.log("Rao fe ID:", rao_fe_id);
-                            $('#viewDataModal #rao_fe_id').val(rao_fe_id);
+                            console.log("Rao Cont ID:", rao_cont_id);
+                            $('#viewDataModal #rao_cont_id').val(rao_cont_id);
 
                             $('#viewDataModal .inp-group-ap-data-row').empty(); 
                             $('#viewDataModal .inp-group-ob-data-row').empty(); // Empty previous rows
@@ -817,7 +974,7 @@ td.action-buttons{
                             // AJAX request to fetch data
                             $.ajax({
                                 url: "get_single_data.php",
-                                data: { rao_fe_id: rao_fe_id },
+                                data: { rao_cont_id: rao_cont_id },
                                 type: 'post',
                                 success: function (data) {
                                     try {
@@ -874,27 +1031,27 @@ td.action-buttons{
                                                 console.error("attribute_name is not an array:", attributeList);
                                             }
 
-                                           // Process dynamic data in rao_fe_ap
-                                            if (json.rao_fe_ap && Array.isArray(json.rao_fe_ap) && json.rao_fe_ap.length > 0) {
-                                                json.rao_fe_ap.forEach(function (apItem) {
+                                           // Process dynamic data in rao_cont_ap
+                                            if (json.rao_cont_ap && Array.isArray(json.rao_cont_ap) && json.rao_cont_ap.length > 0) {
+                                                json.rao_cont_ap.forEach(function (apItem) {
                                                     let apRow = `
                                                     <tr class="ap-data-row">
                                                         <td><input type="date" name="ap_date_data[]" value="${apItem.ap_ref_date || ''}" disabled></td>
                                                         <td><input type="text" name="ap_reference_no[]" value="${apItem.ap_ref_no || ''}" disabled></td>
                                                         <td><input type="text" name="ap_particulars[]" value="${apItem.ap_particulars || ''}" disabled></td>
                                                         <td class="total-data"><input type="number" name="ap_total[]" value="${apItem.ap_totals || ''}" disabled></td>
-                                                        <td class="hidden"><input type="hidden" name="rao_fe_ap_id" value="${apItem.rao_fe_ap_id || ''}" disabled></td>
+                                                        <td class="hidden"><input type="hidden" name="rao_cont_ap_id" value="${apItem.rao_cont_ap_id || ''}" disabled></td>
                                                     `;
 
-                                                    // Filter the associated ap_fe_ap_data based on rao_fe_ap_id
-                                                    if (json.rao_fe_ap_data && Array.isArray(json.rao_fe_ap_data)) {
-                                                        const relatedApData = json.rao_fe_ap_data.filter(function (apData) {
-                                                            return apData.rao_fe_ap_id === apItem.rao_fe_ap_id;
+                                                    // Filter the associated ap_cont_ap_data based on rao_cont_ap_id
+                                                    if (json.rao_cont_ap_data && Array.isArray(json.rao_cont_ap_data)) {
+                                                        const relatedApData = json.rao_cont_ap_data.filter(function (apData) {
+                                                            return apData.rao_cont_ap_id === apItem.rao_cont_ap_id;
                                                         });
 
                                                         if (relatedApData.length > 0) {
                                                             relatedApData.forEach(function (apData) {
-                                                                const attrId = apData.rao_fe_att_id;  // Get the attribute ID
+                                                                const attrId = apData.rao_cont_att_id;  // Get the attribute ID
 
                                                                 // Create a new <td> with an input for each attribute
                                                                 apRow += `
@@ -919,7 +1076,7 @@ td.action-buttons{
                                                     <td><input type="text" name="ap_reference_no[]" value="" disabled></td>
                                                     <td><input type="text" name="ap_particulars[]" value="" disabled></td>
                                                     <td class="total-data"><input type="number" name="ap_total[]" value="" disabled></td>
-                                                    <td class="hidden"><input type="hidden" name="rao_fe_ap_id" value="" disabled></td>
+                                                    <td class="hidden"><input type="hidden" name="rao_cont_ap_id" value="" disabled></td>
                                                 `;
 
                                                 attributeIds.forEach(function (attrId) {
@@ -939,26 +1096,26 @@ td.action-buttons{
                                             }
                                             
                                              // Create the total input first
-                                             if (json.rao_fe_ob && Array.isArray(json.rao_fe_ob) && json.rao_fe_ob.length > 0) {
-                                                json.rao_fe_ob.forEach(function (obItem) {
+                                             if (json.rao_cont_ob && Array.isArray(json.rao_cont_ob) && json.rao_cont_ob.length > 0) {
+                                                json.rao_cont_ob.forEach(function (obItem) {
                                                     let obRow = `
                                                     <tr class="ob-data-row">
                                                         <td><input type="date" name="ob_date_data[]" value="${obItem.ob_ref_date || ''}" disabled></td>
                                                         <td><input type="text" name="ob_reference_no[]" value="${obItem.ob_ref_no || ''}" disabled></td>
                                                         <td><input type="text" name="ob_particulars[]" value="${obItem.ob_particulars || ''}" disabled></td>
                                                         <td class="total-data"><input type="number" name="ob_total[]" value="${obItem.ob_totals || ''}" disabled></td>
-                                                        <td class="hidden"><input type="hidden" name="rao_fe_ob_id" value="${obItem.rao_fe_ob_id || ''}" disabled></td>
+                                                        <td class="hidden"><input type="hidden" name="rao_cont_ob_id" value="${obItem.rao_cont_ob_id || ''}" disabled></td>
                                                     `;
 
-                                                    // Filter the associated ob_fe_ob_data based on rao_fe_ob_id
-                                                    if (json.rao_fe_ob_data && Array.isArray(json.rao_fe_ob_data)) {
-                                                        const relatedObData = json.rao_fe_ob_data.filter(function (obData) {
-                                                            return obData.rao_fe_ob_id === obItem.rao_fe_ob_id;
+                                                    // Filter the associated ob_cont_ob_data based on rao_cont_ob_id
+                                                    if (json.rao_cont_ob_data && Array.isArray(json.rao_cont_ob_data)) {
+                                                        const relatedObData = json.rao_cont_ob_data.filter(function (obData) {
+                                                            return obData.rao_cont_ob_id === obItem.rao_cont_ob_id;
                                                         });
 
                                                         if (relatedObData.length > 0) {
                                                             relatedObData.forEach(function (obData) {
-                                                                const attrId = obData.rao_fe_att_id;  // Get the attribute ID
+                                                                const attrId = obData.rao_cont_att_id;  // Get the attribute ID
 
                                                                 // Create a new <td> with an input for each attribute
                                                                 obRow += `
@@ -976,14 +1133,14 @@ td.action-buttons{
                                                     $('#viewDataModal .inp-group-ob-data-row').append(obRow);
                                                 });
                                             } else {
-                                                // If no `rao_fe_ob` data exists, create an empty row
+                                                // If no `rao_cont_ob` data exists, create an empty row
                                                 let emptyRow = `
                                                 <tr class="ob-data-row">
                                                     <td><input type="date" name="ob_date_data[]" value="" disabled></td>
                                                     <td><input type="text" name="ob_reference_no[]" value="" disabled></td>
                                                     <td><input type="text" name="ob_particulars[]" value="" disabled></td>
                                                     <td class="total-data"><input type="number" name="ob_total[]" value="" disabled></td>
-                                                    <td class="hidden"><input type="hidden" name="rao_fe_ob_id" value="" disabled></td>
+                                                    <td class="hidden"><input type="hidden" name="rao_cont_ob_id" value="" disabled></td>
                                                 `;
 
                                                 // Add attribute input fields (if needed)
@@ -1067,7 +1224,7 @@ td.action-buttons{
 
 
                                                 attributeList.forEach((attr, index) => {
-                                                    let attrId = json.rao_fe_ap_data.find(apData => apData.attribute_name === attr)?.rao_fe_att_id;
+                                                    let attrId = json.rao_cont_ap_data.find(apData => apData.attribute_name === attr)?.rao_cont_att_id;
 
                                                     // If attrId is empty or undefined, use the corresponding entry in attributeIds
                                                     if (!attrId && attributeIds && attributeIds.length > index) {
@@ -1117,7 +1274,7 @@ td.action-buttons{
                                                 }
 
                                                 attributeList.forEach((attr, index) => {
-                                                    let attrId = json.rao_fe_ob_data.find(obData => obData.attribute_name === attr)?.rao_fe_att_id;
+                                                    let attrId = json.rao_cont_ob_data.find(obData => obData.attribute_name === attr)?.rao_cont_att_id;
 
                                                     // Fallback to `attributeIds` if `attrId` is not found
                                                     if (!attrId && attributeIds && attributeIds.length > index) {
@@ -1159,10 +1316,9 @@ td.action-buttons{
                             });
                         });
 
-                     //FOR DELETE
-                     $(document).on('click', '.deleteBtn', function(event) {
+                      $(document).on('click', '.deleteBtn', function(event) {
                         event.preventDefault();
-                        var rao_fe_id = $(this).data('rao_id'); // Get ID from data attribute
+                        var rao_cont_id = $(this).data('rao_id'); // Get ID from data attribute
                         var table = $('#example').DataTable();
 
                         // Open the modal
@@ -1173,7 +1329,7 @@ td.action-buttons{
                         $.ajax({
                             url: "delete.php",
                             type: "POST",
-                            data: { rao_fe_id: rao_fe_id },
+                            data: { rao_cont_id: rao_cont_id },
                             success: function(response) {
                             var json = JSON.parse(response);
                             if (json.status === 'success') {
@@ -1224,15 +1380,15 @@ td.action-buttons{
                                         var status = json.status;
                                         
                                         if (status == 'true') {
-                                        // Fetch rao_fe_id from the response
-                                        var rao_fe_id = json.rao_fe_id;
+                                        // Fetch rao_cont_id from the response
+                                        var rao_cont_id = json.rao_cont_id;
 
                                         // Hide the AttributeModal
                                         $('#AttributeModal').modal('hide');
                                         alert('Attributes added successfully!');
 
-                                        // Set the rao_fe_id in the addUserModal's input field
-                                        $('#addUserModal #rao_fe_id').val(rao_fe_id);
+                                        // Set the rao_cont_id in the addUserModal's input field
+                                        $('#addUserModal #rao_cont_id').val(rao_cont_id);
 
                                         // Update dynamic headers in the table
                                         var attributeList = json.attribute_name; // Assuming attribute_name is an array of attribute names
@@ -1270,7 +1426,6 @@ td.action-buttons{
                             }
                         });
 
-                        //FOR UPDATE Attribute
                         $(document).on('submit', '#updateAttributeForm', function (e) {
                             e.preventDefault();
 
@@ -1278,13 +1433,13 @@ td.action-buttons{
                             const modalId = modal.attr('id');
                             const sourceModal = modal.data('source-modal');
 
-                            let rao_fe_id = $('#UpdateAttributeModal #rao_fe_id').val();
+                            let rao_cont_id = $('#UpdateAttributeModal #rao_cont_id').val();
                             let visibleModal = null;
                             
-                            if (!rao_fe_id) {
+                            if (!rao_cont_id) {
                                 ['#addUserModal', '#exampleModal'].forEach((modalSelector) => {
                                     if ($(modalSelector).is(':visible')) {
-                                        rao_fe_id = $(`${modalSelector} #rao_fe_id`).val();
+                                        rao_cont_id = $(`${modalSelector} #rao_cont_id`).val();
                                         visibleModal = modalSelector;
                                     }
                                 });
@@ -1296,10 +1451,10 @@ td.action-buttons{
                                 console.log('No modal is visible.');
                             }
 
-                            console.log("rao_fe_id:", rao_fe_id);
+                            console.log("rao_cont_id:", rao_cont_id);
 
-                            if (!rao_fe_id) {
-                                alert('Error: RAO fe ID is missing.');
+                            if (!rao_cont_id) {
+                                alert('Error: RAO Cont ID is missing.');
                                 return;
                             }
 
@@ -1309,7 +1464,7 @@ td.action-buttons{
 
                             rows.each(function() {
                                 const row = $(this);
-                                const rao_fe_att_id = row.find('input[name="rao_fe_att_id[]"]').val();
+                                const rao_cont_att_id = row.find('input[name="rao_cont_att_id[]"]').val();
                                 const column_name = row.find('input[name="column_name[]"]').val().trim();
                                 
                                 if (column_name === "") {
@@ -1318,7 +1473,7 @@ td.action-buttons{
                                 }
 
                                 attributeData.push({
-                                    rao_fe_att_id: rao_fe_att_id || '',
+                                    rao_cont_att_id: rao_cont_att_id || '',
                                     column_name: column_name
                                 });
                             });
@@ -1330,13 +1485,13 @@ td.action-buttons{
                             }
 
                             console.log("Form Data Structure:", {
-                                rao_fe_id: rao_fe_id,
-                                rao_fe_att_id: attributeData.map(item => item.rao_fe_att_id),
+                                rao_cont_id: rao_cont_id,
+                                rao_cont_att_id: attributeData.map(item => item.rao_cont_att_id),
                                 column_name: attributeData.map(item => item.column_name)
                             });
 
-                            formData.append('rao_fe_id', rao_fe_id);
-                            formData.append('rao_fe_att_id', JSON.stringify(attributeData.map(item => item.rao_fe_att_id)));
+                            formData.append('rao_cont_id', rao_cont_id);
+                            formData.append('rao_cont_att_id', JSON.stringify(attributeData.map(item => item.rao_cont_att_id)));
                             formData.append('column_name', JSON.stringify(attributeData.map(item => item.column_name)));
 
                             $.ajax({
@@ -1415,7 +1570,7 @@ td.action-buttons{
 
                                                     json.restored_attributes.forEach(function(attr) {
                                                         const newCell = `<td>
-                                                            <input type="number" name="ap_attr_${attr.rao_fe_att_id}[]" value="" step="0.01">
+                                                            <input type="number" name="ap_attr_${attr.rao_cont_att_id}[]" value="" step="0.01">
                                                         </td>`;
                                                         
                                                         actionCell.before(newCell);
@@ -1429,7 +1584,7 @@ td.action-buttons{
 
                                                     json.restored_attributes.forEach(function(attr) {
                                                         const newCell = `<td>
-                                                            <input type="number" name="ob_attr_${attr.rao_fe_att_id}[]" value="" step="0.01">
+                                                            <input type="number" name="ob_attr_${attr.rao_cont_att_id}[]" value="" step="0.01">
                                                         </td>`;
                                                         
                                                         actionCell.before(newCell);
@@ -1452,7 +1607,7 @@ td.action-buttons{
 
                                                         json.restored_attributes.forEach(function(attr) {
                                                             const newCell = `<td>
-                                                                <input type="number" name="${config.prefix}_attr_${config.type}_${attr.rao_fe_att_id}" disabled="">
+                                                                <input type="number" name="${config.prefix}_attr_${config.type}_${attr.rao_cont_att_id}" disabled="">
                                                             </td>`;
                                                             actionCell.before(newCell);
                                                         });
@@ -1487,7 +1642,7 @@ td.action-buttons{
 
                                                     json.new_attributes.forEach(function(attr) {
                                                         const newCell = `<td>
-                                                            <input type="number" name="ap_attr_${attr.rao_fe_att_id}[]" value="" step="0.01">
+                                                            <input type="number" name="ap_attr_${attr.rao_cont_att_id}[]" value="" step="0.01">
                                                         </td>`;
                                                         
                                                         actionCell.before(newCell);
@@ -1501,7 +1656,7 @@ td.action-buttons{
 
                                                     json.new_attributes.forEach(function(attr) {
                                                         const newCell = `<td>
-                                                            <input type="number" name="ob_attr_${attr.rao_fe_att_id}[]" value="" step="0.01">
+                                                            <input type="number" name="ob_attr_${attr.rao_cont_att_id}[]" value="" step="0.01">
                                                         </td>`;
                                                         
                                                         actionCell.before(newCell);
@@ -1524,7 +1679,7 @@ td.action-buttons{
 
                                                         json.new_attributes.forEach(function(attr) {
                                                             const newCell = `<td>
-                                                                <input type="number" name="${config.prefix}_attr_${config.type}_${attr.rao_fe_att_id}" disabled="">
+                                                                <input type="number" name="${config.prefix}_attr_${config.type}_${attr.rao_cont_att_id}" disabled="">
                                                             </td>`;
                                                             actionCell.before(newCell);
                                                         });
@@ -1647,7 +1802,7 @@ td.action-buttons{
                             e.preventDefault();
 
                             let formData = {
-                                rao_fe_id: $('#addUserModal #rao_fe_id').val(),
+                                rao_cont_id: $('#addUserModal #rao_cont_id').val(),
                                 period_covered: $('#addUserModal #periodcovered').val(),
                                 chairman: $('#addUserModal #chairmanname').val(),
                                 brgy_captain: $('#addUserModal #brgycaptain').val(),
@@ -1790,7 +1945,7 @@ td.action-buttons{
                             var trid =  $('#exampleModal #trid').val()
 
                             let formData = {
-                                rao_fe_id: $('#exampleModal #rao_fe_id').val(),
+                                rao_cont_id: $('#exampleModal #rao_cont_id').val(),
                                 period_covered: $('#exampleModal #period_covered').val(),
                                 chairman: $('#exampleModal #chairman_name').val(),
                                 brgy_captain: $('#exampleModal #brgy_captain').val(),
@@ -1804,7 +1959,7 @@ td.action-buttons{
                             // AP rows with row IDs
                             $('#exampleModal .inp-group-ap-data-row .ap-data-row').each(function () {
                                 let apRowData = {
-                                    rao_fe_ap_id: $(this).find('input[name="rao_fe_ap_id"]').val(),
+                                    rao_cont_ap_id: $(this).find('input[name="rao_cont_ap_id"]').val(),
                                     date: $(this).find('input[name="ap_date_data[]"]').val(),
                                     reference_no: $(this).find('input[name="ap_reference_no[]"]').val(),
                                     particulars: $(this).find('input[name="ap_particulars[]"]').val(),
@@ -1828,7 +1983,7 @@ td.action-buttons{
                             // OB rows with row IDs
                             $('#exampleModal .inp-group-ob-data-row .ob-data-row').each(function () {
                                 let obRowData = {
-                                    rao_fe_ob_id: $(this).find('input[name="rao_fe_ob_id"]').val(),
+                                    rao_cont_ob_id: $(this).find('input[name="rao_cont_ob_id"]').val(),
                                     date: $(this).find('input[name="ob_date_data[]"]').val(),
                                     reference_no: $(this).find('input[name="ob_reference_no[]"]').val(),
                                     particulars: $(this).find('input[name="ob_particulars[]"]').val(),
@@ -1849,7 +2004,7 @@ td.action-buttons{
                                 formData.ob_data.push(obRowData);
                             });
 
-                            // AP totals using rao_fe_id
+                            // AP totals using rao_cont_id
                             $('#exampleModal .inp-group-ap-totals .totals-row').each(function () {
                                 let totalName = $(this).find('input[name^="ap_total_"]').attr('name');
                                 let totalValue = $(this).find('input[name^="ap_total_"]').val();
@@ -1875,7 +2030,7 @@ td.action-buttons{
                                 });
                             });
 
-                            // OB totals using rao_fe_id
+                            // OB totals using rao_cont_id
                             $('#exampleModal .inp-group-ob-totals .totals-row').each(function () {
                                 let totalName = $(this).find('input[name^="ob_total_"]').attr('name');
                                 let totalValue = $(this).find('input[name^="ob_total_"]').val();
@@ -1921,13 +2076,13 @@ td.action-buttons{
                                         var button = `
                                                 <td>
                                                     <div class="buttons">
-                                                        <a href="javascript:void(0);" data-id="${rao_fe_id}" class="update-btn btn-sm editbtn">
+                                                        <a href="javascript:void(0);" data-id="${rao_cont_id}" class="update-btn btn-sm editbtn">
                                                             <i class="bx bx-sync"></i>
                                                         </a>  
-                                                        <a href="!#;" data-rao_id="${rao_fe_id}" class="delete-btn btn-sm deleteBtn">
+                                                        <a href="!#;" data-rao_id="${rao_cont_id}" class="delete-btn btn-sm deleteBtn">
                                                             <i class="bx bxs-trash"></i>
                                                         </a>
-                                                        <a href="!#;" data-item-id="${rao_fe_id}" class="update-btn btn-sm infoBtn">
+                                                        <a href="!#;" data-item-id="${rao_cont_id}" class="update-btn btn-sm infoBtn">
                                                             <i class="bx bx-info-circle"></i>
                                                         </a>
                                                     </div>
@@ -1960,13 +2115,13 @@ td.action-buttons{
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add New Column for Report of Appropriations and Obligations (RAO-FE)</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Add New Column for Report of Appropriations and Obligations Continuing (RAO-CONT)</h5>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         
                         <div class="modal-header">
                             <div class="dropdown" data-control="checkbox-dropdown">
-                                <label>List of FE: </label>
+                                <label>List of Capital Outlays: </label>
                                 <label class="dropdown-label">Select</label>
 
                                 <div class="dropdown-list">
@@ -2034,7 +2189,7 @@ td.action-buttons{
 
                         <div class="modal-body">
                             <form id="updateAttributeForm">
-                            <input type="hidden" id="rao_fe_id" name="rao_fe_id">
+                            <input type="hidden" id="rao_cont_id" name="rao_cont_id">
                                 <div class="attribute-container">
                                 <table id="viewDataTable" class="table-table attribute">
                                     <thead>
@@ -2066,14 +2221,14 @@ td.action-buttons{
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Report of Appropriations and Obligations (RAO-FE)</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Report of Appropriations and Obligations Continuing(RAO-CONT)</h5>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="rao-container">
                                 <!-- Header Section -->
                                 <div class="rao-header">
-                                    <h1>Report of Appropriations and Obligations (RAO-FE)</h1>
+                                    <h1>Report of Appropriations and Obligations(RAO-CONT)</h1>
                                     <p id="period_covered" style="text-align: center;"></p>
                                     <div class="details">
                                         <div class="info">
@@ -2087,7 +2242,7 @@ td.action-buttons{
                                             <label>Province:</label> <input type="text" value="CEBU" disabled />
                                         </div>
                                         <div class="info">
-                                            <label>Fund Source:</label> <input type="text" value=" General Fund (Maintenance and Other Operating Expenses)"  disabled />
+                                            <label>Fund Source:</label> <input type="text" value="General Fund (Capital Outlay)"  disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -2102,7 +2257,7 @@ td.action-buttons{
                                             <th colspan="2" class="stick-head">Reference For Appropriations</th><!-- Date and Ref No -->
                                             <th rowspan="2" class="stick-head">Particulars</th> 
                                             <th rowspan="2" class="stick-head">Totals</th>
-                                            <th colspan="5" class="dynamic-stick-head">MAINTENANCE AND OTHER OPERATING EXPENSES</th><!-- Dynamic Heads max 5 -->
+                                            <th colspan="5" class="dynamic-stick-head">Capital Outlay</th><!-- Dynamic Heads max 5 -->
                                             
                                         </tr>
                                         <tr id="dynamic-heads">
@@ -2140,7 +2295,7 @@ td.action-buttons{
                                             <th colspan="2" class="stick-head">Reference For Obligations</th><!-- Date and Ref No -->
                                             <th rowspan="2" class="stick-head">Particulars</th> 
                                             <th rowspan="2" class="stick-head">Totals</th>
-                                            <th colspan="5" class="dynamic-stick-head">MAINTENANCE AND OTHER OPERATING EXPENSES</th>
+                                            <th colspan="5" class="dynamic-stick-head">Capital Outlay</th>
 
                                         </tr>
                                         
@@ -2210,13 +2365,13 @@ td.action-buttons{
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Update Report of Appropriations and Obligations (RAO-FE)</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Update Report of Appropriations and Obligations Continuing (RAO-CONT)</h5>
                             <button type="button" data-bs-toggle="modal" data-bs-target="#UpdateAttributeModal" class="add-table-btn">Update Columns</button>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form id="updateUser">
-                            <input type="hidden" id="rao_fe_id" name="rao_fe_id">
+                            <input type="hidden" id="rao_cont_id" name="rao_cont_id">
                             <input type="hidden" id="trid" name="trid">
                             <div class="row">
                                 <div class="col-md-6">
@@ -2251,7 +2406,7 @@ td.action-buttons{
                                             <th colspan="2" class="stick-head">Reference For Appropriations</th><!-- Date and Ref No -->
                                             <th rowspan="2" class="stick-head">Particulars</th> 
                                             <th rowspan="2" class="stick-head">Totals</th>
-                                            <th colspan="5" class="dynamic-stick-head">MAINTENANCE AND OTHER OPERATING EXPENSES</th><!-- Dynamic Heads max 5 -->
+                                            <th colspan="5" class="dynamic-stick-head">Capital Outlay</th><!-- Dynamic Heads max 5 -->
                                             
                                         </tr>
                                         <tr id="dynamic-heads">
@@ -2289,7 +2444,7 @@ td.action-buttons{
                                             <th colspan="2" class="stick-head">Reference For Obligations</th><!-- Date and Ref No -->
                                             <th rowspan="2" class="stick-head">Particulars</th> 
                                             <th rowspan="2" class="stick-head">Totals</th>
-                                            <th colspan="5" class="dynamic-stick-head">MAINTENANCE AND OTHER OPERATING EXPENSES</th>
+                                            <th colspan="5" class="dynamic-stick-head">Capital Outlay</th>
 
                                         </tr>
                                         
@@ -2355,13 +2510,13 @@ td.action-buttons{
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add Report of Appropriations and Obligations (RAO-FE)</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Add Report of Appropriations and Obligations Continuing (RAO-CONT)</h5>
                             <button type="button" data-bs-toggle="modal" data-bs-target="#UpdateAttributeModal" class="add-popup">Change Columns</button>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form id="addUser" action="">
-                                <input type="hidden" id="rao_fe_id" name="rao_fe_id">
+                                <input type="hidden" id="rao_cont_id" name="rao_cont_id">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -2395,7 +2550,7 @@ td.action-buttons{
                                             <th colspan="2" class="stick-head">Reference For Appropriations</th><!-- Date and Ref No -->
                                             <th rowspan="2" class="stick-head">Particulars</th> 
                                             <th rowspan="2" class="stick-head">Totals</th>
-                                            <th colspan="5" class="dynamic-stick-head">MAINTENANCE AND OTHER OPERATING EXPENSES</th><!-- Dynamic Heads max 5 -->
+                                            <th colspan="5" class="dynamic-stick-head">Capital Outlay</th><!-- Dynamic Heads max 5 -->
                                             
                                         </tr>
                                         <tr id="dynamic-heads">
@@ -2433,7 +2588,7 @@ td.action-buttons{
                                             <th colspan="2" class="stick-head">Reference For Obligations</th><!-- Date and Ref No -->
                                             <th rowspan="2" class="stick-head">Particulars</th> 
                                             <th rowspan="2" class="stick-head">Totals</th>
-                                            <th colspan="5" class="dynamic-stick-head">MAINTENANCE AND OTHER OPERATING EXPENSES</th>
+                                            <th colspan="5" class="dynamic-stick-head">Capital Outlay</th>
 
                                         </tr>
                                         
@@ -2654,6 +2809,224 @@ function updateVisibility(selected, modal) {
 
 
 
+<!--  
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    // Function to apply the behavior only inside modals with IDs #exampleModal and #addUserModal
+    const applyModalBehavior = (modal) => {
+        // Dropdown to control visibility
+        const sectionSelector = modal.querySelector("#sectionSelector");
+
+        // Sections in the table
+        const allSections = modal.querySelectorAll(".rao-table thead, .rao-table tbody:not(.inp-group-ob-totals.AB)"); // Exclude AB balance
+        const appropriationsSections = modal.querySelectorAll(
+            ".rao-table thead.appropriations-head, .rao-table tbody.inp-group-ap-data-row, .rao-table tbody.inp-group-ap-totals"
+        );
+        const obligationsSections = modal.querySelectorAll(
+            ".rao-table thead.obligations-head, .rao-table tbody.inp-group-ob-data-row, .rao-table tbody.inp-group-ob-totals:not(.AB)"
+        );
+        const appropriationsBalance = modal.querySelector("tbody.inp-group-ob-totals.AB"); // Balance section (always visible)
+
+        // Buttons
+        const addRowApButton = modal.querySelector(".add-row-ap");
+        const addRowObButton = modal.querySelector(".add-row-ob");
+
+        // Helper function to show/hide sections based on selected option
+        const updateVisibility = (selected) => {
+            // Hide all sections initially, except for the balance section
+            allSections.forEach((section) => (section.style.display = "none"));
+
+            // Hide all buttons initially
+            addRowApButton.style.display = "none";
+            addRowObButton.style.display = "none";
+
+            // Show the relevant sections and buttons based on selection
+            if (selected === "appropriations") {
+                appropriationsSections.forEach((section) => (section.style.display = ""));
+                addRowApButton.style.display = "inline-block"; // Show add appropriations button
+            } else if (selected === "obligations") {
+                obligationsSections.forEach((section) => (section.style.display = ""));
+                addRowObButton.style.display = "inline-block"; // Show add obligations button
+            }
+
+            // Ensure the Appropriations Balance is always visible
+            if (appropriationsBalance) {
+                appropriationsBalance.style.display = "";
+            }
+
+            // Perform validation when the section is changed
+            handleValidation(modal);
+        };
+
+        // Event listener for dropdown change
+        sectionSelector.addEventListener("change", (e) => {
+            updateVisibility(e.target.value);
+        });
+
+        // Initialize with "Appropriations" selected by default
+        updateVisibility("appropriations");
+    };
+
+    // Apply behavior to specific modals
+    const exampleModal = document.querySelector("#exampleModal");
+    const addUserModal = document.querySelector("#addUserModal");
+
+    if (exampleModal) {
+        applyModalBehavior(exampleModal); // Apply the behavior to #exampleModal
+    }
+
+    if (addUserModal) {
+        applyModalBehavior(addUserModal); // Apply the behavior to #addUserModal
+    }
+});
+
+// Example validation function (modified to handle visibility changes)
+function handleValidation(modal) {
+    // Create flags to track if there are missing fields in appropriations or obligations
+    let missingApFields = false;
+    let missingObFields = false;
+
+    // Loop through all required fields and categorize them based on the section
+    const requiredFields = modal.querySelectorAll("[required]");
+    requiredFields.forEach((field) => {
+        if (!field.value.trim()) {
+            // Check if the field belongs to appropriations or obligations
+            const isApField = field.closest(".inp-group-ap-data-row");
+            const isObField = field.closest(".inp-group-ob-data-row");
+
+            if (isApField) {
+                missingApFields = true; // Set flag if an appropriations field is missing
+                console.log("Missing field in Appropriations Row:", field.closest(".ap-data-row"));
+            } else if (isObField) {
+                missingObFields = true; // Set flag if an obligations field is missing
+                console.log("Missing field in Obligations Row:", field.closest(".ob-data-row"));
+            }
+        }
+    });
+
+    // Build the simplified alert message based on missing fields
+    let alertMessage = "";
+
+    if (missingApFields) {
+        alertMessage += "Missing inputs in Appropriations.\n";
+    }
+
+    if (missingObFields) {
+        alertMessage += "Missing inputs in Obligations.\n";
+    }
+
+    // Display the alert message if there are any missing inputs
+    if (alertMessage) {
+        alert(alertMessage);
+    }
+
+    // Show visibility adjustments for sections with missing fields
+    if (missingApFields) {
+        updateVisibility("appropriations", modal);
+    }
+
+    if (missingObFields) {
+        updateVisibility("obligations", modal);
+    }
+}
+
+// Modified updateVisibility to accept modal as an argument
+function updateVisibility(selected, modal) {
+    const allSections = modal.querySelectorAll(".rao-table thead, .rao-table tbody:not(.inp-group-ob-totals.AB)");
+    const appropriationsSections = modal.querySelectorAll(
+        ".rao-table thead.appropriations-head, .rao-table tbody.inp-group-ap-data-row, .rao-table tbody.inp-group-ap-totals"
+    );
+    const obligationsSections = modal.querySelectorAll(
+        ".rao-table thead.obligations-head, .rao-table tbody.inp-group-ob-data-row, .rao-table tbody.inp-group-ob-totals:not(.AB)"
+    );
+    const appropriationsBalance = modal.querySelector("tbody.inp-group-ob-totals.AB");
+
+    // Hide all sections initially
+    allSections.forEach((section) => (section.style.display = "none"));
+
+    // Show the relevant sections based on selection
+    if (selected === "appropriations") {
+        appropriationsSections.forEach((section) => (section.style.display = ""));
+    } else if (selected === "obligations") {
+        obligationsSections.forEach((section) => (section.style.display = ""));
+    }
+
+    // Ensure the Appropriations Balance is always visible
+    if (appropriationsBalance) {
+        appropriationsBalance.style.display = "";
+    }
+}
+</script> -->
+
+<!-- <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Function to apply the behavior only inside modals with IDs #exampleModal and #addUserModal
+        const applyModalBehavior = (modal) => {
+            // Dropdown to control visibility
+            const sectionSelector = modal.querySelector("#sectionSelector");
+
+            // Sections in the table
+            const allSections = modal.querySelectorAll(".rao-table thead, .rao-table tbody:not(.inp-group-ob-totals.AB)"); // Exclude AB balance
+            const appropriationsSections = modal.querySelectorAll(
+                ".rao-table thead.appropriations-head, .rao-table tbody.inp-group-ap-data-row, .rao-table tbody.inp-group-ap-totals"
+            );
+            const obligationsSections = modal.querySelectorAll(
+                ".rao-table thead.obligations-head, .rao-table tbody.inp-group-ob-data-row, .rao-table tbody.inp-group-ob-totals:not(.AB)"
+            );
+            const appropriationsBalance = modal.querySelector("tbody.inp-group-ob-totals.AB"); // Balance section (always visible)
+
+            // Buttons
+            const addRowApButton = modal.querySelector(".add-row-ap");
+            const addRowObButton = modal.querySelector(".add-row-ob");
+
+            // Helper function to show/hide sections based on selected option
+            const updateVisibility = (selected) => {
+                // Hide all sections initially, except for the balance section
+                allSections.forEach((section) => (section.style.display = "none"));
+
+                // Hide all buttons initially
+                addRowApButton.style.display = "none";
+                addRowObButton.style.display = "none";
+
+                // Show the relevant sections and buttons based on selection
+                if (selected === "appropriations") {
+                    appropriationsSections.forEach((section) => (section.style.display = ""));
+                    addRowApButton.style.display = "inline-block"; // Show add appropriations button
+                } else if (selected === "obligations") {
+                    obligationsSections.forEach((section) => (section.style.display = ""));
+                    addRowObButton.style.display = "inline-block"; // Show add obligations button
+                }
+
+                // Ensure the Appropriations Balance is always visible
+                if (appropriationsBalance) {
+                    appropriationsBalance.style.display = "";
+                }
+            };
+
+            // Event listener for dropdown
+            sectionSelector.addEventListener("change", (e) => {
+                updateVisibility(e.target.value);
+            });
+
+            // Initialize with "Appropriations" selected by default
+            updateVisibility("appropriations");
+        };
+
+        // Apply behavior to specific modals
+        const exampleModal = document.querySelector("#exampleModal");
+        const addUserModal = document.querySelector("#addUserModal");
+
+        if (exampleModal) {
+            applyModalBehavior(exampleModal); // Apply the behavior to #exampleModal
+        }
+
+        if (addUserModal) {
+            applyModalBehavior(addUserModal); // Apply the behavior to #addUserModal
+        }
+    });
+</script> -->
+
+
     <script>
         //Today's Date Script
         // Set today's date to the input field with id="todayDate"
@@ -2722,27 +3095,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function fetchData() {
-        let raoFeId = null;
+        let raoContId = null;
         ['#addUserModal', '#exampleModal', '#UpdateAttributeModal'].forEach((modalId) => {
             if ($(modalId).is(':visible')) {
-                raoFeId = $(`${modalId} #rao_fe_id`).val();
+                raoContId = $(`${modalId} #rao_cont_id`).val();
             }
         });
 
-        if (!raoFeId) {
-            console.error('No active modal or rao_fe_id not found');
+        if (!raoContId) {
+            console.error('No active modal or rao_cont_id not found');
             alert('Unable to fetch the ID. Please ensure the modal is active.');
             return;
         }
 
-        console.log("raoFeId: ", raoFeId);
+        console.log("raoContId: ", raoContId);
         
-        $(`#UpdateAttributeModal #rao_fe_id`).val(raoFeId);
+        $(`#UpdateAttributeModal #rao_cont_id`).val(raoContId);
         const columnLists = document.querySelector("#UpdateAttributeModal .column-lists");
 
         $.ajax({
             url: "fetch_table_columns.php",
-            data: { rao_fe_id: raoFeId},
+            data: { rao_cont_id: raoContId },
             type: 'GET',
             dataType: 'json',
             success: function (response) {
@@ -2751,7 +3124,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     response.attributes.forEach((attribute, index) => {
                         addRow({
                             counter: index + 1,
-                            rao_fe_att_id: attribute.rao_fe_att_id,
+                            rao_cont_att_id: attribute.rao_cont_att_id,
                             name: attribute.attribute_name,
                             has_ap_value: attribute.has_ap_value, // Pass this to addRow
                             has_ob_value: attribute.has_ob_value  // Pass this to addRow
@@ -2790,7 +3163,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const rowData = data || {
         counter: attrCounter,
         name: '',
-        rao_fe_att_id: '',
+        rao_cont_att_id: '',
         has_ap_value: false, // Default
         has_ob_value: false  // Default
     };
@@ -2804,7 +3177,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <input type="hidden" name="attr_counter[]" value="${rowData.counter}">
         </td>
         <td class="hidden">
-            <input type="hidden" name="rao_fe_att_id[]" value="${rowData.rao_fe_att_id}">
+            <input type="hidden" name="rao_cont_att_id[]" value="${rowData.rao_cont_att_id}">
         </td>
         <td>
             <input type="text" name="column_name[]" value="${rowData.name}" required>
@@ -2964,7 +3337,7 @@ document.addEventListener('DOMContentLoaded', function () {
             hiddenId.classList.add('hidden');
             const IdInput = document.createElement('input');
             IdInput.setAttribute('type', 'hidden');
-            IdInput.setAttribute('name', 'rao_fe_att_id[]');
+            IdInput.setAttribute('name', 'rao_cont_att_id[]');
             IdInput.setAttribute('required', 'false');
             IdInput.value = ""; //no value 
             hiddenId.appendChild(IdInput);
@@ -3080,6 +3453,789 @@ document.querySelector('#UpdateAttributeModal #dynamic-options').addEventListene
 });
 </script>
 
+<!-- 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const updateAttributeModal = document.getElementById('UpdateAttributeModal');
+    let modalInitialized = false;
+    let attrCounter = 1;
+
+    $('#UpdateAttributeModal').on('show.bs.modal', function () {
+        if (!modalInitialized) {
+            initializeUpdateAttributeModal();
+            modalInitialized = true;
+        }
+        populateDropdown();
+    });
+
+    function initializeUpdateAttributeModal() {
+        console.log('UpdateAttributeModal initialized');
+        attrCounter = document.querySelectorAll("#UpdateAttributeModal .column-lists tr").length + 1;
+
+        const addButton = document.querySelector('#UpdateAttributeModal .modal-footer .add-row');
+        if (addButton) {
+            addButton.addEventListener('click', addRowHandler);
+        }
+
+        fetchData();
+    }
+
+    function fetchData() {
+        let raoContId = null;
+        ['#addUserModal', '#exampleModal', '#UpdateAttributeModal'].forEach((modalId) => {
+            if ($(modalId).is(':visible')) {
+                raoContId = $(`${modalId} #rao_cont_id`).val();
+            }
+        });
+
+        if (!raoContId) {
+            console.error('No active modal or rao_cont_id not found');
+            alert('Unable to fetch the ID. Please ensure the modal is active.');
+            return;
+        }
+
+        console.log("raoContId: ", raoContId);
+        
+        $(`#UpdateAttributeModal #rao_cont_id`).val(raoContId);
+        const columnLists = document.querySelector("#UpdateAttributeModal .column-lists");
+
+        $.ajax({
+            url: "fetch_table_columns.php",
+            data: { rao_cont_id: raoContId },
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                columnLists.innerHTML = '';
+                if (response.attributes && response.attributes.length > 0) {
+                    response.attributes.forEach((attribute, index) => {
+                        addRow({
+                            counter: index + 1,
+                            rao_cont_att_id: attribute.rao_cont_att_id,
+                            name: attribute.attribute_name
+                        });
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching data:', error);
+                alert('Failed to fetch data. Please try again.');
+            }
+        });
+    }
+
+    function addRowHandler(event) {
+        event.preventDefault();
+        addRow();
+    }
+
+    function addRow(data = null, afterElement = null) {
+        const columnLists = document.querySelector("#UpdateAttributeModal .column-lists");
+        if (!columnLists) {
+            console.error("Column list container not found");
+            return;
+        }
+
+        const newRow = document.createElement("tr");
+
+        const rowData = data || {
+            counter: attrCounter,
+            name: '',
+            rao_cont_att_id: ''
+        };
+
+        newRow.innerHTML = `
+            <td>
+                <label>${rowData.counter}</label>
+                <input type="hidden" name="attr_counter[]" value="${rowData.counter}">
+            </td>
+            <td class="hidden">
+                <input type="hidden" name="rao_cont_att_id[]" value="${rowData.rao_cont_att_id}">
+            </td>
+            <td>
+                <input type="text" name="column_name[]" value="${rowData.name}" class="form-control" required>
+            </td>
+            <td class="action-buttons">
+                <a href="#" class="add"><i class="bx bx-plus"></i></a>
+                <a href="#" class="delete"><i class="bx bx-x"></i></a>
+            </td>
+        `;
+
+        if (afterElement) {
+            afterElement.insertAdjacentElement('afterend', newRow);
+        } else {
+            columnLists.appendChild(newRow);
+        }
+
+        attachRowListeners(newRow);
+        attrCounter++;
+        updateCounters();
+    }
+
+    function attachRowListeners(row) {
+        const deleteButton = row.querySelector('.delete');
+        const addButton = row.querySelector('.add-row');
+
+        deleteButton.onclick = function (event) {
+            event.preventDefault();
+            if (confirm("Are you sure you want to remove this row?")) {
+                row.remove();
+                updateCounters();
+            }
+        };
+
+        addButton.onclick = function (event) {
+            event.preventDefault();
+            addRow(null, row);
+        };
+    }
+
+    function updateCounters() {
+        const rows = document.querySelectorAll("#UpdateAttributeModal .column-lists tr");
+        let counter = 1;
+
+        rows.forEach(row => {
+            const label = row.querySelector('label');
+            const hiddenInput = row.querySelector('input[name="attr_counter[]"]');
+
+            if (label) label.textContent = counter;
+            if (hiddenInput) hiddenInput.value = counter;
+
+            counter++;
+        });
+
+        attrCounter = counter;
+    }
+
+    function updateCounters() {
+        const rows = document.querySelectorAll("#UpdateAttributeModal .column-lists tr");
+        let counter = 1;
+
+        rows.forEach(row => {
+            const label = row.querySelector('label');
+            const hiddenInput = row.querySelector('input[name="attr_counter[]"]');
+
+            if (label) label.textContent = counter;
+            if (hiddenInput) hiddenInput.value = counter;
+
+            counter++;
+        });
+
+        attrCounter = counter;
+    }
+
+    // Fetch and populate the dropdown with checkboxes
+    function populateDropdown() {
+        console.log("populateDropdown() is called");
+        $.ajax({
+            url: 'get_all_attributes.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                console.log("Response received:", response); 
+                const dropdownOptions = $('#UpdateAttributeModal .modal-header #dynamic-options');
+                dropdownOptions.empty(); // Clear existing options
+
+                if (response.status === 'true' && Array.isArray(response.attributes)) {
+                    response.attributes.forEach(function (item) {
+                        dropdownOptions.append(`
+                            <label class="dropdown-option">
+                                <input type="checkbox" name="dropdown-group" value="${item.value}" class="checkbox-item" />
+                                ${item.label}
+                            </label>
+                        `);
+                    });
+                } else {
+                    console.error("Invalid response format or no attributes available.");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching attributes:', error);
+            }
+        });
+
+        // Add listener to append selected checkboxes to the column list when checked
+        $('#UpdateAttributeModal').on('change', '#dynamic-options input[type="checkbox"]', function () {
+            appendCheckedAttributes();
+        });
+    }
+    function normalizeAttribute(attribute) {
+        return attribute
+            .toLowerCase()      // Convert to lowercase
+            .replace(/\s+/g, '') // Remove spaces
+            .replace(/_/g, '');  // Remove underscores
+    }
+
+   function appendCheckedAttributes() {
+    const checkboxes = document.querySelectorAll('#dynamic-options input[type="checkbox"]');
+    const columnList = document.querySelector('#UpdateAttributeModal .column-lists');
+    console.log("ColumnList:", columnList);
+
+    checkboxes.forEach(function (checkbox) {
+        // Check if the attribute is already added (check against attribute_name[] to ensure no duplicates)
+        const existingRow = Array.from(columnList.querySelectorAll('input[name="column_name[]"]')).find(
+            (input) => normalizeAttribute(input.value) === normalizeAttribute(checkbox.value)
+        );
+
+        if (checkbox.checked) {
+            if (existingRow) return; // Skip if already appended
+
+            // Create a new row for the checked attribute
+            const newRow = document.createElement("tr");
+
+            // Column 1: Label with counter
+            const labelCell = document.createElement('td');
+            const label = document.createElement('label');
+            label.textContent = attrCounter; // Set the counter value
+            labelCell.appendChild(label);
+            newRow.appendChild(labelCell);
+
+            //HIDDEN input name  = "attr_counter[] value that matches the attrCounter"
+            
+            
+            // Column 2: Hidden input for rao_cont_att_id
+            const hiddenRaoContAttIdCell = document.createElement('td');
+            const hiddenRaoContAttId = document.createElement('input');
+            hiddenRaoContAttId.setAttribute('type', 'hidden');
+            hiddenRaoContAttId.setAttribute('name', 'rao_cont_att_id[]');
+            hiddenRaoContAttId.setAttribute('value', checkbox.value); // Use checkbox value as the ID
+            hiddenRaoContAttIdCell.appendChild(hiddenRaoContAttId);
+            newRow.appendChild(hiddenRaoContAttIdCell);
+
+            // Column 3: Input for attribute name (same as checkbox value)
+            const inputCell = document.createElement('td');
+            const input = document.createElement('input');
+            input.setAttribute('type', 'text');
+            input.setAttribute('name', 'column_name[]');
+            input.setAttribute('required', 'true');
+            input.value = checkbox.value; // Set the input value to the checkbox value
+            inputCell.appendChild(input);
+            newRow.appendChild(inputCell);
+
+            // Column 4: Action buttons (add and delete)
+            const actionCell = document.createElement('td');
+            actionCell.classList.add('action-buttons');
+            actionCell.innerHTML = `
+                <a href="#" class="delete"><i class="bx bx-x"></i></a>
+            `;
+            newRow.appendChild(actionCell);
+
+            // Attach event listeners for action buttons (add and delete)
+            attachRowListeners(newRow);
+
+            // Append the new row to the column list
+            columnList.appendChild(newRow);
+
+            // Increment the counter for the next row
+            attrCounter++;
+        } else {
+            // If the checkbox is unchecked, remove the corresponding row
+            const rowToRemove = existingRow?.closest('tr');
+            if (rowToRemove) {
+                rowToRemove.remove();
+            }
+        }
+    });
+
+    // Update counters after adding/removing rows
+    updateCounters();
+}
+
+
+    const checkAllLink = document.getElementById('checkAll');
+    const dropdownLabel = document.querySelector('#UpdateAttributeModal .dropdown-label');
+
+// "Check All" functionality
+checkAllLink.addEventListener('click', function (event) {
+    event.preventDefault();
+
+    const checkboxes = document.querySelectorAll('#UpdateAttributeModal #dynamic-options input[type="checkbox"]');
+    const allChecked = Array.from(checkboxes).every((checkbox) => checkbox.checked);
+
+    // Toggle all checkboxes
+    checkboxes.forEach((checkbox) => {
+        checkbox.checked = !allChecked;
+    });
+
+    // Update "Check All" link text
+    checkAllLink.textContent = allChecked ? 'Check All' : 'Uncheck All';
+
+    // Update rows and dropdown label
+    appendCheckedAttributes(); // Rebuild rows
+    updateSelectedCount();     // Update dropdown label
+});
+
+// Function to update the selected count in the dropdown label
+function updateSelectedCount() {
+    const checkboxes = document.querySelectorAll('#UpdateAttributeModal #dynamic-options input[type="checkbox"]');
+    const selectedCount = Array.from(checkboxes).filter((checkbox) => checkbox.checked).length;
+    console.log("checkboxes.length: ",checkboxes.length);
+    console.log("selectedCount: ",selectedCount);
+
+
+    if (selectedCount === 0) {
+        dropdownLabel.textContent = 'None are Selected';
+    } else if (selectedCount === checkboxes.length) {
+        dropdownLabel.textContent = 'All are Selected';
+    } else {
+        dropdownLabel.textContent = `${selectedCount} are Selected`;
+    }
+
+}
+
+// Handle individual checkbox change (if dynamically added)
+document.querySelector('#UpdateAttributeModal #dynamic-options').addEventListener('change', function (event) {
+    if (event.target.matches('input[type="checkbox"]')) {
+        updateSelectedCount();
+    }
+});
+
+
+    // Initialize selected count on page load
+    updateSelectedCount();
+    updateCounters();
+    
+    $('#UpdateAttributeModal').on('hidden.bs.modal', function () {
+        const columnLists = document.querySelector("#UpdateAttributeModal .column-lists");
+        columnLists.innerHTML = '';
+        modalInitialized = false;
+        attrCounter = 1;
+    });
+});
+</script> -->
+
+
+
+<!-- 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modal1 = document.getElementById('AttributeModal');
+    let modal1Initialized = false;
+    let attrCounter = 1; // Start counter at 1
+
+    $('#AttributeModal').on('show.bs.modal', function () {
+        if (!modal1Initialized) {
+            initializeModal1();
+            modal1Initialized = true;
+        }
+    });
+
+    function initializeModal1() {
+        console.log('Attribute Modal is initialized');
+
+        // Initialize the counter based on the current number of rows
+        attrCounter = document.querySelectorAll("#AttributeModal .column-lists tr").length + 1;
+
+        // Add event listener for adding new input groups
+        const addButton = document.querySelector('#AttributeModal .modal-footer .add-row');
+        
+        addButton.removeEventListener('click', addInputHandler); // Remove previous listener to prevent duplicates
+        addButton.addEventListener('click', addInputHandler);
+
+        // Form submission handler
+        document.querySelector('#updateUser').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            // Add your API call or data processing here
+            console.log('Form submitted', Object.fromEntries(formData));
+        });
+
+        function addInputHandler(event) {
+            event.preventDefault();
+            addInput();
+        }
+
+        function removeInput(event) {
+            event.preventDefault();
+            if (confirm("Are you sure you want to remove this row?")) {
+                const inputGroup = event.target.closest('#AttributeModal tr');
+                if (inputGroup) {
+                    inputGroup.remove();
+                    update_attr_Counter();
+                }
+            }
+        }
+
+        function update_attr_Counter() {
+            const rows = document.querySelectorAll("#AttributeModal .column-lists tr");
+            let updatedCounter = 1;
+
+            rows.forEach(function(row) {
+                const label = row.querySelector("label");
+                const hiddenInput = row.querySelector("input[type='hidden']");
+
+                if (label) {
+                    label.textContent = updatedCounter;
+                }
+                if (hiddenInput) {
+                    hiddenInput.value = updatedCounter;
+                }
+                updatedCounter++;
+            });
+
+            attrCounter = updatedCounter;
+        }
+
+        function addInput(afterElement = null) {
+            
+            const newRow = document.createElement("tr");
+
+            const cells = [
+                createCell('label', '', {name: 'counter[]', value: attrCounter}),
+                createCell('input', '', {
+                    type: 'text', 
+                    name: 'attribute_name[]',
+                    required: true
+                }),
+            ];
+
+            cells.forEach(cell => newRow.appendChild(cell));
+
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'attr_counter[]';
+            hiddenInput.value = attrCounter;
+            newRow.appendChild(hiddenInput);
+
+            const actionCell = document.createElement('td');
+            actionCell.classList.add('action-buttons');
+            actionCell.innerHTML = `
+                <a href="#" class="add"><i class="bx bx-plus"></i> </a>
+                <a href="#" class="delete"><i class="bx bx-x"></i></a>
+            `;
+
+            newRow.appendChild(actionCell);
+
+            actionCell.querySelector('.delete').addEventListener('click', function(event) {
+                event.preventDefault();
+                if (confirm("Are you sure you want to remove this row?")) {
+                    newRow.remove();
+                    update_attr_Counter();
+                }
+            });
+
+            actionCell.querySelector('.add').addEventListener('click', function(event) {
+                event.preventDefault();
+                addInput(newRow);
+            });
+
+            if (afterElement) {
+                afterElement.insertAdjacentElement('afterend', newRow);
+            } else {
+                document.querySelector("#AttributeModal .column-lists").appendChild(newRow);
+            }
+
+            attrCounter++; // Increment the counter after adding a new row
+            update_attr_Counter();
+            console.log("New Row Added");
+        }
+
+        function createCell(elementType, textContent = '', attributes = {}) {
+            const cell = document.createElement('td');
+            const element = document.createElement(elementType);
+
+            if (textContent) element.textContent = textContent;
+
+            for (const [key, value] of Object.entries(attributes)) {
+                element.setAttribute(key, value);
+            }
+
+            cell.appendChild(element);
+            return cell;
+        }
+    }
+
+    $('#AttributeModal').on('hidden.bs.modal', function () {
+        // Clear existing table rows
+        document.querySelector("#AttributeModal .column-lists").innerHTML = '';
+        
+        const addButton = document.querySelector('#AttributeModal .modal-footer .add-row');
+        const form = document.querySelector('#updateUser');
+        
+        // Clean up event listeners
+        addButton.replaceWith(addButton.cloneNode(true));
+        form.replaceWith(form.cloneNode(true));
+        modal1Initialized = false;
+    });
+});
+</script> -->
+
+
+<!-- <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modal1 = document.getElementById('AttributeModal');
+    let modal1Initialized = false;
+    let attrCounter = 1; // Start counter at 1
+
+    $('#AttributeModal').on('show.bs.modal', function () {
+        if (!modal1Initialized) {
+            initializeModal1();
+            modal1Initialized = true;
+        }
+        populateDropdown(); // Populate the dropdown when the modal is opened
+    });
+
+    function initializeModal1() {
+        console.log('Attribute Modal is initialized');
+
+        // Initialize the counter based on the current number of rows
+        attrCounter = document.querySelectorAll("#AttributeModal .column-lists tr").length + 1;
+
+        // Add event listener for adding new input groups
+        const addButton = document.querySelector('#AttributeModal .modal-footer .add-row');
+        
+        addButton.removeEventListener('click', addInputHandler); // Remove previous listener to prevent duplicates
+        addButton.addEventListener('click', addInputHandler);
+
+        // Form submission handler
+        document.querySelector('#updateUser').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            console.log('Form submitted', Object.fromEntries(formData));
+        });
+
+        function addInputHandler(event) {
+            event.preventDefault();
+            addInput();
+        }
+
+        function removeInput(event) {
+            event.preventDefault();
+            if (confirm("Are you sure you want to remove this row?")) {
+                const inputGroup = event.target.closest('#AttributeModal tr');
+                if (inputGroup) {
+                    inputGroup.remove();
+                    update_attr_Counter();
+                }
+            }
+        }
+
+        function update_attr_Counter() {
+            const rows = document.querySelectorAll("#AttributeModal .column-lists tr");
+            let updatedCounter = 1;
+
+            rows.forEach(function(row) {
+                const label = row.querySelector("label");
+                const hiddenInput = row.querySelector("input[type='hidden']");
+
+                if (label) {
+                    label.textContent = updatedCounter;
+                }
+                if (hiddenInput) {
+                    hiddenInput.value = updatedCounter;
+                }
+                updatedCounter++;
+            });
+
+            attrCounter = updatedCounter;
+        }
+
+        function addInput(afterElement = null) {
+            const newRow = document.createElement("tr");
+
+            const cells = [
+                createCell('label', '', {name: 'counter[]', value: attrCounter}),
+                createCell('input', '', {
+                    type: 'text', 
+                    name: 'attribute_name[]',
+                    required: true
+                }),
+            ];
+
+            cells.forEach(cell => newRow.appendChild(cell));
+
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'attr_counter[]';
+            hiddenInput.value = attrCounter;
+            newRow.appendChild(hiddenInput);
+
+            const actionCell = document.createElement('td');
+            actionCell.classList.add('action-buttons');
+            actionCell.innerHTML = `
+                <a href="#" class="add"><i class="bx bx-plus"></i> </a>
+                <a href="#" class="delete"><i class="bx bx-x"></i></a>
+            `;
+
+            newRow.appendChild(actionCell);
+
+            actionCell.querySelector('.delete').addEventListener('click', function(event) {
+                event.preventDefault();
+                if (confirm("Are you sure you want to remove this row?")) {
+                    newRow.remove();
+                    update_attr_Counter();
+                }
+            });
+
+            actionCell.querySelector('.add').addEventListener('click', function(event) {
+                event.preventDefault();
+                addInput(newRow);
+            });
+
+            if (afterElement) {
+                afterElement.insertAdjacentElement('afterend', newRow);
+            } else {
+                document.querySelector("#AttributeModal .column-lists").appendChild(newRow);
+            }
+
+            attrCounter++; // Increment the counter after adding a new row
+            update_attr_Counter();
+            console.log("New Row Added");
+        }
+
+        function createCell(elementType, textContent = '', attributes = {}) {
+            const cell = document.createElement('td');
+            const element = document.createElement(elementType);
+
+            if (textContent) element.textContent = textContent;
+
+            for (const [key, value] of Object.entries(attributes)) {
+                element.setAttribute(key, value);
+            }
+
+            cell.appendChild(element);
+            return cell;
+        }
+    }
+
+    $('#AttributeModal').on('hidden.bs.modal', function () {
+        // Clear existing table rows
+        document.querySelector("#AttributeModal .column-lists").innerHTML = '';
+        
+        const addButton = document.querySelector('#AttributeModal .modal-footer .add-row');
+        const form = document.querySelector('#updateUser');
+        
+        // Clean up event listeners
+        addButton.replaceWith(addButton.cloneNode(true));
+        form.replaceWith(form.cloneNode(true));
+        modal1Initialized = false;
+    });
+
+    // Fetch and populate the dropdown
+    function populateDropdown() {
+    console.log("populateDropdown() is called"); // Check if this is logged
+    $.ajax({
+        url: 'get_all_attributes.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            console.log("Response received:", response); // Log response
+            const dropdownOptions = $('#AttributeModal .modal-header #dynamic-options');
+            console.log("Dropdown container:", dropdownOptions); // Check if the container is correctly targeted
+            
+            dropdownOptions.empty(); // Clear existing options
+
+            if (response.status === 'true' && Array.isArray(response.attributes)) {
+                response.attributes.forEach(function (item) {
+                    console.log("Item: ", item.label, ":", item.value); //
+                    dropdownOptions.append(`
+                        <label class="dropdown-option">
+                            <input type="checkbox" name="dropdown-group" value="${item.value}" class="checkbox-item" />
+                            ${item.label}
+                        </label>
+                    `);
+                });
+                var dropdown = $('#AttributeModal .dropdown');
+                console.log(dropdown);
+                
+                console.log("Dropdown populated with options.");
+
+            } else {
+                console.error("Invalid response format or no attributes available.");
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('Error fetching attributes:', error);
+        }
+    });
+}
+
+
+
+
+});
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the "Check All" link, the dropdown label, and dynamically populated checkboxes inside the modal
+        const checkAllLink = document.getElementById('checkAll');
+        const dropdownLabel = document.querySelector('.dropdown-label');
+        
+        // Event listener for the "Check All" link
+        checkAllLink.addEventListener('click', function (event) {
+            // Prevent the default behavior of the link
+            event.preventDefault();
+
+            // Select all checkboxes inside the modal dynamically
+            const checkboxes = document.querySelectorAll('#dynamic-options input[type="checkbox"]');
+
+            // Check if all checkboxes are checked
+            const allChecked = Array.from(checkboxes).every(function (checkbox) {
+                return checkbox.checked;
+            });
+
+            // Toggle the checkboxes based on the current state
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = !allChecked;
+            });
+
+            // Change the text of the "Check All" link
+            if (allChecked) {
+                checkAllLink.textContent = 'Check All';
+            } else {
+                checkAllLink.textContent = 'Uncheck All';
+            }
+
+            // Update the dropdown label based on the selected checkboxes
+            updateSelectedCount();
+        });
+
+        // Function to update the selected count in the dropdown label
+        function updateSelectedCount() {
+            const checkboxes = document.querySelectorAll('#dynamic-options input[type="checkbox"]');
+            const selectedCount = Array.from(checkboxes).filter(function (checkbox) {
+                return checkbox.checked;
+            }).length;
+
+            // Update the label text based on the number of selected checkboxes
+            if (selectedCount === checkboxes.length) {
+                dropdownLabel.textContent = 'All are Selected';
+            } else if (selectedCount === 0) {
+                dropdownLabel.textContent = 'None are Selected';  // If no checkboxes are selected
+            } else {
+                dropdownLabel.textContent = `${selectedCount} are Selected`; // If some are selected
+            }
+        }
+
+        // Add dynamic checkboxes (just an example for the dynamic population)
+        const dynamicOptions = document.getElementById('dynamic-options');
+        const data = ["Column 1", "Column 2", "Column 3", "Column 4"]; // Replace this with your dynamic data
+
+        // Generate checkbox options dynamically
+        data.forEach(function (item, index) {
+            const label = document.createElement('label');
+            label.classList.add('dropdown-option');
+            
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.name = 'dropdown-group';
+            checkbox.value = item;
+            checkbox.classList.add('checkbox-item');
+
+            // Add event listener to each checkbox to update the selected count when toggled
+            checkbox.addEventListener('change', function () {
+                updateSelectedCount();
+            });
+
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(item));
+            dynamicOptions.appendChild(label);
+        });
+
+        // Initialize the selected count on page load
+        updateSelectedCount();
+    });
+</script> -->
 
 
 <script>
@@ -3450,12 +4606,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const obDataRowContainer = document.querySelector('#addUserModal .inp-group-ob-data-row');
         const addApButton = document.querySelector('#addUserModal .modal-footer .add-row-ap');
         const addObButton = document.querySelector('#addUserModal .modal-footer .add-row-ob');
-        const raoFeId = document.querySelector('#addUserModal #rao_fe_id');
+        const raoContId = document.querySelector('#addUserModal #rao_cont_id');
 
-        if (raoFeId) {
-            console.log('rao_fe_id found:', raoFeId.value);
+        if (raoContId) {
+            console.log('rao_cont_id found:', raoContId.value);
         } else {
-            console.error('rao_fe_id not found');
+            console.error('rao_cont_id not found');
         }
 
         console.log("Period Covered:", periodCoveredInput);
@@ -3465,7 +4621,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const selectedDate = this.value;
 
             console.log("Period Covered:", selectedDate);
-            fetch(`get_monthly.php?task=${task}&date=${selectedDate}&id=${raoFeId.value}`)
+            fetch(`get_monthly.php?task=${task}&date=${selectedDate}&id=${raoContId}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'true') {
@@ -3632,7 +4788,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Add attribute inputs with identification
             attributes.forEach(attr => {
-                const attrId = attr.rao_fe_att_id;
+                const attrId = attr.rao_cont_att_id;
                 const td = document.createElement('td');
                 const input = document.createElement('input');
                 input.type = 'number';
@@ -3671,7 +4827,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         updateDateInputs();
         //Dynamic Rows
-        function addRow(type, afterElement = null, raoFeIdValue) {
+        function addRow(type, afterElement = null, raoContIdValue) {
             const container = type === 'ap' ? apDataRowContainer : obDataRowContainer;
             const newRow = document.createElement("tr");
             newRow.classList.add(type === 'ap' ? "ap-data-row" : "ob-data-row");
@@ -3680,7 +4836,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 createCell('input', '', {type: 'date', name: `${type}_date_data[]`, required: true}),
                 createCell('input', '', {type: 'text', name: `${type}_reference_no[]`, required: false}),
                 createCell('input', '', {type: 'text', name: `${type}_particulars[]`, required: false}),
-                createCell('input', '', {type: 'number', name: `${type}_total[]`, step: 0.01}, 'total-data')
+                createCell('input', '', {type: 'number', name: `${type}_total[]`,  step: 0.01}, 'total-data')
             ];
 
             baseCells.forEach(cell => newRow.appendChild(cell));
@@ -3704,12 +4860,12 @@ document.addEventListener('DOMContentLoaded', function () {
             $.ajax({
                 url: 'fetch_table_columns.php',
                 type: 'GET',
-                data: { rao_fe_id: raoFeIdValue },
+                data: { rao_cont_id: raoContIdValue },
                 dataType: 'json',
                 success: function(response) {
                     if (response && response.attributes) {
                         response.attributes.forEach(attr => {
-                            const attrId = attr.rao_fe_att_id;
+                            const attrId = attr.rao_cont_att_id;
                             // Add a prefix (ap_ or ob_) based on the type
                             const dynamicCell = createCell('input', '', {
                                 type: 'number',
@@ -3756,12 +4912,12 @@ document.addEventListener('DOMContentLoaded', function () {
             if (event.target.classList.contains('add-row-ap')) {
                 event.preventDefault();
                 const currentRow = event.target.closest('tr');
-                addRow('ap', currentRow, raoFeId.value);
+                addRow('ap', currentRow, raoContId.value);
                 updateDateInputs();
             } else if (event.target.classList.contains('add-row-ob')) {
                 event.preventDefault();
                 const currentRow = event.target.closest('tr');
-                addRow('ob', currentRow, raoFeId.value);
+                addRow('ob', currentRow, raoContId.value);
                 updateDateInputs();
             }
         });
@@ -3814,7 +4970,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const obDataRowContainer = document.querySelector('#exampleModal .inp-group-ob-data-row');
         const addApButton = document.querySelector('#exampleModal .modal-footer .add-row-ap');
         const addObButton = document.querySelector('#exampleModal .modal-footer .add-row-ob');
-        const raoFeId = document.querySelector('#exampleModal #rao_fe_id');
+        const raoContId = document.querySelector('#exampleModal #rao_cont_id');
 
         const task = "update";
 
@@ -3824,8 +4980,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const selectedDate = this.value;
 
             console.log("Period Covered:", selectedDate);
-            console.log("raoFeId get monthly:", raoFeId.value);
-            fetch(`get_monthly.php?task=${task}&date=${selectedDate}&id=${raoFeId.value}`)
+            console.log("raoContId get monthly:", raoContId.value);
+            fetch(`get_monthly.php?task=${task}&date=${selectedDate}&id=${raoContId.value}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'true') {
@@ -3851,10 +5007,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-        if (raoFeId) {
-            console.log('rao_fe_id found:', raoFeId.value);
+        if (raoContId) {
+            console.log('rao_cont_id found:', raoContId.value);
         } else {
-            console.error('rao_fe_id not found');
+            console.error('rao_cont_id not found');
         }
 
         if ((addApButton || addObButton) && periodCoveredInput) {
@@ -3937,7 +5093,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         //Dynamic Rows
-        function addRow(type, afterElement = null, raoFeIdValue) { 
+        function addRow(type, afterElement = null, raoContIdValue) { 
             const container = type === 'ap' ? apDataRowContainer : obDataRowContainer;
             const newRow = document.createElement("tr");
             newRow.classList.add(type === 'ap' ? "ap-data-row" : "ob-data-row");
@@ -3947,7 +5103,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 createCell('input', '', {type: 'text', name: `${type}_reference_no[]`,  required: false}),
                 createCell('input', '', {type: 'text', name: `${type}_particulars[]`,  required: false}),
                 createCell('input', '', {type: 'number', name: `${type}_total[]`,  step: 0.01}, 'total-data'),
-                createCell('input', '', {type: 'hidden', name: `rao_fe_${type}_id`}, 'hidden'),
+                createCell('input', '', {type: 'hidden', name: `rao_cont_${type}_id`}, 'hidden'),
             ];
             
             baseCells.forEach(cell => newRow.appendChild(cell));
@@ -3969,12 +5125,12 @@ document.addEventListener('DOMContentLoaded', function () {
             $.ajax({
                 url: 'fetch_table_columns.php',
                 type: 'GET',
-                data: { rao_fe_id: raoFeIdValue },
+                data: { rao_cont_id: raoContIdValue },
                 dataType: 'json',
                 success: function(response) {
                     if (response && response.attributes) {
                         response.attributes.forEach(attr => {
-                            const attrId = attr.rao_fe_att_id;
+                            const attrId = attr.rao_cont_att_id;
                             // Add a prefix (ap_ or ob_) based on the type
                             const dynamicCell = createCell('input', '', {
                                 type: 'number',
@@ -4022,12 +5178,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (event.target.classList.contains('add-row-ap')) {
                     event.preventDefault();
                     const currentRow = event.target.closest('tr');
-                    addRow('ap', currentRow, raoFeId.value);
+                    addRow('ap', currentRow, raoContId.value);
                     updateDateInputs();
                 } else if (event.target.classList.contains('add-row-ob')) {
                     event.preventDefault();
                     const currentRow = event.target.closest('tr');
-                    addRow('ob', currentRow, raoFeId.value);
+                    addRow('ob', currentRow, raoContId.value);
                     updateDateInputs();
                 }
             });
@@ -4231,7 +5387,143 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 
-<section class="delete-modal">
+<!-- <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const container = document.querySelector('.rao-table-container');
+
+    let isMouseDown = false;
+    let startX;
+    let scrollLeft;
+
+    container.addEventListener('mousedown', (e) => {
+        isMouseDown = true;
+        startX = e.pageX - container.offsetLeft;
+        scrollLeft = container.scrollLeft;
+        container.style.cursor = 'grabbing'; // Change cursor to grabbing
+    });
+
+    container.addEventListener('mouseleave', () => {
+        isMouseDown = false;
+        container.style.cursor = 'grab'; // Reset cursor to grab
+    });
+
+    container.addEventListener('mouseup', () => {
+        isMouseDown = false;
+        container.style.cursor = 'grab'; // Reset cursor to grab
+    });
+
+    container.addEventListener('mousemove', (e) => {
+        if (!isMouseDown) return;
+
+        e.preventDefault();
+        const x = e.pageX - container.offsetLeft;
+        const scroll = (x - startX) * 2; // Control the drag speed by changing the multiplier (e.g., *2 for faster scrolling)
+        container.scrollLeft = scrollLeft - scroll;
+    });
+});
+
+</script> -->
+
+
+
+<!-- 
+<script>
+  (function($) {
+  var CheckboxDropdown = function(el) {
+    var _this = this;
+    this.isOpen = false;
+    this.areAllChecked = false;
+    this.$el = $(el);
+    this.$label = this.$el.find('.dropdown-label');
+    this.$checkAll = this.$el.find('[data-toggle="check-all"]').first();
+    this.$inputs = this.$el.find('[type="checkbox"]');
+    
+    this.onCheckBox();
+    
+    this.$label.on('click', function(e) {
+      e.preventDefault();
+      _this.toggleOpen();
+    });
+    
+    this.$checkAll.on('click', function(e) {
+      e.preventDefault();
+      _this.onCheckAll();
+    });
+    
+    this.$inputs.on('change', function(e) {
+      _this.onCheckBox();
+    });
+  };
+  
+  CheckboxDropdown.prototype.onCheckBox = function() {
+    this.updateStatus();
+  };
+  
+  CheckboxDropdown.prototype.updateStatus = function() {
+    var checked = this.$el.find(':checked');
+    
+    this.areAllChecked = false;
+    this.$checkAll.html('Check All');
+    
+    if(checked.length <= 0) {
+      this.$label.html('Select Options');
+    }
+    else if(checked.length === 1) {
+      this.$label.html(checked.parent('label').text());
+    }
+    else if(checked.length === this.$inputs.length) {
+      this.$label.html('All Selected');
+      this.areAllChecked = true;
+      this.$checkAll.html('Uncheck All');
+    }
+    else {
+      this.$label.html(checked.length + ' Selected');
+    }
+  };
+  
+  CheckboxDropdown.prototype.onCheckAll = function(checkAll) {
+    if(!this.areAllChecked || checkAll) {
+      this.areAllChecked = true;
+      this.$checkAll.html('Uncheck All');
+      this.$inputs.prop('checked', true);
+    }
+    else {
+      this.areAllChecked = false;
+      this.$checkAll.html('Check All');
+      this.$inputs.prop('checked', false);
+    }
+    
+    this.updateStatus();
+  };
+  
+  CheckboxDropdown.prototype.toggleOpen = function(forceOpen) {
+    var _this = this;
+    
+    if(!this.isOpen || forceOpen) {
+       this.isOpen = true;
+       this.$el.addClass('on');
+      $(document).on('click', function(e) {
+        if(!$(e.target).closest('[data-control]').length) {
+         _this.toggleOpen();
+        }
+      });
+    }
+    else {
+      this.isOpen = false;
+      this.$el.removeClass('on');
+      $(document).off('click');
+    }
+  };
+  
+  var checkboxesDropdowns = document.querySelectorAll('[data-control="checkbox-dropdown"]');
+  for(var i = 0, length = checkboxesDropdowns.length; i < length; i++) {
+    new CheckboxDropdown(checkboxesDropdowns[i]);
+  }
+})(jQuery);
+
+
+</script> -->
+ <section class="delete-modal">
                 <!-- Delete Confirmation Modal -->
                 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">

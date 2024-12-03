@@ -1,5 +1,6 @@
 <?php
 require 'database.php';
+
 $username = $_SESSION['valid_username'] ?? '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -35,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $query = $pdo->prepare("UPDATE tb_user SET password = ? WHERE username = ?");
             $query->execute([$hashedPassword, $_SESSION['valid_username']]);
             session_destroy();
-            echo json_encode(['success' => true, 'message' => 'Password changed successfully.']);
+            echo json_encode(['success' => true, 'message' => 'Password changed successfully. Redirecting...']);
         } else {
             echo json_encode(['success' => false, 'message' => 'Passwords do not match or are too short.']);
         }
@@ -51,16 +52,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Forgot Password</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/boxicons.min.css">
-
-    <title>Barangay Mantalogon Information System</title>
-    <link rel="icon" href="assets/image/logo.png">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <section class="forgot-password">
         <div class="slider-container">
             <div class="logo">
                 <a href="login.php">
-                <img src="assets/image/Logo.png" alt="Logo"><br><br>
+                    <img src="assets/image/Logo.png" alt="Logo"><br><br>
                 </a>
             </div>
             <!-- Step 1: Username -->
@@ -73,21 +72,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
             </div>
 
-           <!-- Step 2: Verification -->
+            <!-- Step 2: Verification -->
             <div class="slide" id="step-verification">
                 <h2>Password Verification</h2>
                 <p>Enter the six-digit verification code sent to your email.</p>
-                <form id="verificationForm">
-                    <div class="code-container">
-                        <input type="number" class="code" maxlength="1" data-index="0" placeholder="0" min="0" max="9" required />
-                        <input type="number" class="code" maxlength="1" data-index="1" placeholder="0" min="0" max="9" required />
-                        <input type="number" class="code" maxlength="1" data-index="2" placeholder="0" min="0" max="9" required />
-                        <input type="number" class="code" maxlength="1" data-index="3" placeholder="0" min="0" max="9" required />
-                        <input type="number" class="code" maxlength="1" data-index="4" placeholder="0" min="0" max="9" required />
-                        <input type="number" class="code" maxlength="1" data-index="5" placeholder="0" min="0" max="9" required />
-                    </div>
-                    <button type="submit">Verify</button>
-                </form>
+                <div class="code-container">
+                    <input type="number" class="code" maxlength="1" data-index="0" placeholder="0" min="0" max="9" required />
+                    <input type="number" class="code" maxlength="1" data-index="1" placeholder="0" min="0" max="9" required />
+                    <input type="number" class="code" maxlength="1" data-index="2" placeholder="0" min="0" max="9" required />
+                    <input type="number" class="code" maxlength="1" data-index="3" placeholder="0" min="0" max="9" required />
+                    <input type="number" class="code" maxlength="1" data-index="4" placeholder="0" min="0" max="9" required />
+                    <input type="number" class="code" maxlength="1" data-index="5" placeholder="0" min="0" max="9" required />
+                </div>
             </div>
 
             <!-- Step 3: Reset Password -->
@@ -105,6 +101,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </section>
 
     <script>
+        // Function to show alert
+        function showAlert(message, alertClass) {
+            var alertDiv = $('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' + message +
+                '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+            alertDiv.css({
+                "position": "fixed",
+                "top": "10px",
+                "right": "10px",
+                "z-index": "9999",
+                "background-color": alertClass === "alert-danger" ? "#f8d7da" : "#d4edda",
+                "border-color": alertClass === "alert-danger" ? "#f5c6cb" : "#c3e6cb"
+            });
+            $("body").append(alertDiv);
+            setTimeout(function () { alertDiv.alert('close'); }, 900);
+        }
+
         const sliderSteps = {
             username: document.getElementById('step-username'),
             verification: document.getElementById('step-verification'),
@@ -114,7 +126,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const showStep = (step) => {
             Object.values(sliderSteps).forEach(s => s.classList.remove('active'));
             sliderSteps[step].classList.add('active');
-            document.querySelector('.slider-container').style.transform = 'translateX(0)';
         };
 
         document.getElementById('usernameForm').addEventListener('submit', async (e) => {
@@ -128,22 +139,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
             const result = await response.json();
             if (result.success) showStep('verification');
-            else alert(result.message);
+            else showAlert(result.message, 'alert-danger');
         });
 
-        document.getElementById('verificationForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            formData.append('step', 'verification');
+        const codes = document.querySelectorAll('.code');
+        codes.forEach((code, idx) => {
+            code.addEventListener('input', async () => {
+                const verificationCode = Array.from(codes)
+                    .map((input) => input.value)
+                    .join('');
 
-            const response = await fetch('', {
-                method: 'POST',
-                body: formData
+                if (verificationCode.length === 6) {
+                    const formData = new FormData();
+                    formData.append('step', 'verification');
+                    formData.append('verification_code', verificationCode);
+
+                    const response = await fetch('', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        showAlert('Verification code is correct.', 'alert-success');
+                        showStep('password');
+                    } else {
+                        showAlert(result.message, 'alert-danger');
+                    }
+                }
             });
-            const result = await response.json();
-            if (result.success) showStep('password');
-            else alert(result.message);
         });
+          // Automatically focus the next input field
+            codes.forEach((code, idx) => {
+                code.addEventListener('input', (e) => {
+                    if (e.target.value.length === 1) {
+                        const next = codes[idx + 1];
+                        if (next) next.focus();
+                    }
+                });
+
+                code.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && e.target.value === '') {
+                        const prev = codes[idx - 1];
+                        if (prev) prev.focus();
+                    }
+                });
+            });
 
         document.getElementById('passwordForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -156,61 +197,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
             const result = await response.json();
             if (result.success) {
-                alert(result.message);
-                location.reload();
-            } else alert(result.message);
-        });
-
-        const codes = document.querySelectorAll('.code');
-
-    // Automatically focus the next input field
-    codes.forEach((code, idx) => {
-        code.addEventListener('input', (e) => {
-            if (e.target.value.length === 1) {
-                const next = codes[idx + 1];
-                if (next) next.focus();
+                showAlert(result.message, 'alert-success');
+                setTimeout(() => window.location.href = 'login.php', 1000);
+            } else {
+                showAlert(result.message, 'alert-danger');
             }
         });
-
-        code.addEventListener('keydown', (e) => {
-            if (e.key === 'Backspace' && e.target.value === '') {
-                const prev = codes[idx - 1];
-                if (prev) prev.focus();
-            }
-        });
-    });
-
-    // Handle form submission for verification
-    document.getElementById('verificationForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        // Combine all individual inputs into one string
-        const verificationCode = Array.from(codes)
-            .map((input) => input.value)
-            .join('');
-
-        if (verificationCode.length !== 6) {
-            alert('Please enter the complete 6-digit code.');
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('step', 'verification');
-        formData.append('verification_code', verificationCode);
-
-        // Submit the verification code
-        const response = await fetch('', {
-            method: 'POST',
-            body: formData
-        });
-
-        const result = await response.json();
-        if (result.success) {
-            showStep('password');
-        } else {
-            alert(result.message);
-        }
-    });
     </script>
 </body>
 </html>

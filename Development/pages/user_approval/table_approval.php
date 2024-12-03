@@ -36,86 +36,55 @@ include '../../sidebar.php';
                             <th>Birth Date</th>
                             <th>Barangay Position</th>
                             <th>Username</th>
-                            <th>Buttons</th>
+                            <th>Actions</th>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
-                    <script type="text/javascript">
-                     $(document).ready(function() {
-                    // Array to store selected checkbox IDs
-                    var selectedIds = [];
+                    <script>
+    $(document).ready(function () {
+        const table = $('#example').DataTable({
+            serverSide: true,
+            processing: true,
+            ajax: { url: 'fetch_data.php', type: 'POST' },
+            columnDefs: [
+                { targets: [0], visible: false, searchable: false },
+                { orderable: false, targets: [6] },
+            ],
+        });
 
-                    var table = $('#example').DataTable({
-                        "fnCreatedRow": function(nRow, aData, iDataIndex) {
-                            $(nRow).attr('id', aData[0]);
-                        },
-                        'serverSide': 'true',
-                        'processing': 'true',
-                        'paging': 'true',
-                        'order': [],
-                        'ajax': {
-                            'url': 'fetch_data.php',
-                            'type': 'post',
-                        },
-                        "aoColumnDefs": [
-                            {
-                            "targets": [0],  // Target the first column (aData[0])
-                            "visible": false, // Hide the column
-                            "searchable": false // Disable search for this column if needed
-                            },
-                            {
-                            "bSortable": false,
-                            "aTargets": []
-                        }],
-                    });
-                });
-
-                document.addEventListener('DOMContentLoaded', function () {
-    // Function to send approval/disapproval status
-    function updateApprovalStatus(userId, status, reason = '') {
-        fetch('updateApproval.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ user_id: userId, status, reason }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert(data.message);
-                location.reload(); // Reload the table to reflect changes
-            } else {
-                alert(data.message);
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    }
-
-    // Approve button click event
-    document.addEventListener('click', function (e) {
-        if (e.target.classList.contains('btn-approve')) {
-            const userId = e.target.getAttribute('data-id');
-            if (confirm('Are you sure you want to approve this user?')) {
-                updateApprovalStatus(userId, 1); // Approve the user
-            }
+        function updateApprovalStatus(userId, status, reason = '') {
+            $.ajax({
+                url: 'updateApproval.php',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ user_id: userId, status, reason }),
+                success: function (response) {
+                    alert(response.message);
+                    table.ajax.reload(); // Refresh table data
+                },
+                error: function () {
+                    alert('An error occurred. Please try again.');
+                },
+            });
         }
-    });
 
-    // Disapprove button click event
-    document.addEventListener('click', function (e) {
-        if (e.target.classList.contains('btn-disapprove')) {
-            const userId = e.target.getAttribute('data-id');
+        $(document).on('click', '.btn-approve', function () {
+            const userId = $(this).data('id');
+            if (confirm('Are you sure you want to approve this user?')) {
+                updateApprovalStatus(userId, 1);
+            }
+        });
+
+        $(document).on('click', '.btn-disapprove', function () {
+            const userId = $(this).data('id');
             const reason = prompt('Please provide a reason for disapproval:');
             if (reason) {
-                updateApprovalStatus(userId, 0, reason); // Disapprove the user with a reason
+                updateApprovalStatus(userId, 3, reason);
             }
-        }
+        });
     });
-});
-
-        </script>
+</script>
         </section><!-- .home-->
     </body> 
 </html>
