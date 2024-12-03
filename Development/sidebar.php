@@ -94,6 +94,64 @@ if (isset($conn) && $conn) {
           </li>
 
           <li class="nav-link dropdown-sidebar">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Financial">
+            <i class='bx bxs-wallet icon'></i>
+              <span class="text nav-text">Financial Library</span>
+              <i class='bx bx-chevron-down arrow'></i>
+            </a>
+            <ul class="nav-link dropdown-sidebar-content">
+              <li>
+                <a href="../../pages/rao/table_rao_records.php" title="RAO-PS Table">
+                  <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">RAO-PS Table</span>
+                </a>
+              </li>
+              <li>
+                <a href="../../pages/rao-cont/table_rao_cont_records.php" title="RAO-CONT Table">
+                 <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">RAO-CONT Table</span>
+                </a>
+              </li>
+              <li>
+                <a href="../../pages/rao-fe/table_rao_fe_records.php" title="RAO-FE Table">
+                 <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">RAO-FE Table</span>
+                </a>
+              </li>
+              <li>
+                <a href="../../pages/rao-mooe/table_rao_mooe_records.php" title="RAO-MOOE Table">
+                 <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">RAO-MOOE Table</span>
+                </a>
+              </li>
+              <li>
+                <a href="../../pages/rao-bdrrmf/table_rao_bdrrmf_records.php" title="RAO-BDRRMF Table">
+                 <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">RAO-BDRRMF Table</span>
+                </a>
+              </li>
+              <li>
+                <a href="../../pages/rao-dev/table_rao_dev_records.php" title="RAO-DEV Table">
+                 <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">RAO-DEV Table</span>
+                </a>
+              </li>
+              <li>
+                <a href="../../pages/rao-sk/table_rao_sk_records.php" title="RAO-SK Table">
+                 <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">RAO-SK Table</span>
+                </a>
+              </li>
+              <li>
+                <a href="../../pages/cashbook/table_cashbook_records.php" title="Cashbook Table">
+                  <i class='bx bx-wallet icon'></i>
+                  <span class="text nav-text">Cashbook Table</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-link dropdown-sidebar">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Certificates">
               <i class='bx bxs-certification icon'></i>
               <span class="text nav-text">Certificate Library</span>
@@ -144,46 +202,6 @@ if (isset($conn) && $conn) {
                 <a href="../../pages/item-transactions/item_transaction.php" title="Item Transaction">
                   <i class='bx bx-briefcase icon'></i>
                   <span class="text nav-text">Item Transactions</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-      
-          <li class="nav-link dropdown-sidebar">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Financial">
-            <i class='bx bxs-wallet icon'></i>
-              <span class="text nav-text">Financial Library</span>
-              <i class='bx bx-chevron-down arrow'></i>
-            </a>
-            <ul class="nav-link dropdown-sidebar-content">
-              <li>
-                <a href="../../pages/rao/table_rao_records.php" title="RAO-PS Table">
-                  <i class='bx bx-wallet icon'></i>
-                  <span class="text nav-text">RAO-PS Table</span>
-                </a>
-              </li>
-              <li>
-                <a href="../../pages/rao-cont/table_rao_cont_records.php" title="RAO-CONT Table">
-                 <i class='bx bx-wallet icon'></i>
-                  <span class="text nav-text">RAO-CONT Table</span>
-                </a>
-              </li>
-              <li>
-                <a href="../../pages/rao-fe/table_rao_fe_records.php" title="RAO-FE Table">
-                 <i class='bx bx-wallet icon'></i>
-                  <span class="text nav-text">RAO-FE Table</span>
-                </a>
-              </li>
-              <li>
-                <a href="../../pages/rao-mooe/table_rao_mooe_records.php" title="RAO-MOOE Table">
-                 <i class='bx bx-wallet icon'></i>
-                  <span class="text nav-text">RAO-MOOE Table</span>
-                </a>
-              </li>
-              <li>
-                <a href="../../pages/cashbook/table_cashbook_records.php" title="Cashbook Table">
-                  <i class='bx bx-wallet icon'></i>
-                  <span class="text nav-text">Cashbook Table</span>
                 </a>
               </li>
             </ul>

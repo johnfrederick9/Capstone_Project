@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 "border-color": alertClass === "alert-danger" ? "#f5c6cb" : "#c3e6cb"
             });
             $("body").append(alertDiv);
-            setTimeout(function () { alertDiv.alert('close'); }, 900);
+            setTimeout(function () { alertDiv.alert('close'); }, 500);
         }
 
         const sliderSteps = {
@@ -138,7 +138,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 body: formData
             });
             const result = await response.json();
-            if (result.success) showStep('verification');
+            if (result.success){
+                showAlert('Username is correct.', 'alert-success');
+                showStep('verification');
+            } 
             else showAlert(result.message, 'alert-danger');
         });
 

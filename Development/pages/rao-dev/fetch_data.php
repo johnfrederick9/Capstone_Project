@@ -51,11 +51,16 @@ while ($row = mysqli_fetch_assoc($query)) {
     $sub_array[] = $row['period_covered'];
     $sub_array[] = $row['chairman'];
     $sub_array[] = $row['brgy_captain'];
-    $sub_array[] = '<div class="buttons">
-                        <a href="javascript:void(0);" data-id="' . $row['rao_dev_id'] . '" class="update-btn btn-sm editbtn"><i class="bx bx-sync"></i></a>  
-                        <a href="javascript:void(0);" data-rao_id="' . $row['rao_dev_id'] . '" class="delete-btn btn-sm deleteBtn"><i class="bx bxs-trash"></i></a>
-                        <a href="javascript:void(0);" data-item-id="' . $row['rao_dev_id'] . '" class="update-btn btn-sm infoBtn"><i class="bx bx-info-circle"></i></a>
-                    </div>';
+    $sub_array[] = '
+    <div class="dropdown">
+			<button class="action-btn" onclick="toggleDropdown(this)">
+				ACTIONS <i class="bx bx-chevron-down"></i>
+			</button>
+			<div class="dropdown-menu">
+                        <a href="javascript:void(0);" data-id="' . $row['rao_dev_id'] . '" class="dropdown-item update-btn editbtn"><i class="bx bx-sync"></i></a>  
+                        <a href="javascript:void(0);" data-rao_id="' . $row['rao_dev_id'] . '" class="dropdown-item delete-btn deleteBtn"><i class="bx bx-trash"></i></a>
+                        <a href="javascript:void(0);" data-item-id="' . $row['rao_dev_id'] . '" class="dropdown-item view-btn infoBtn"><i class="bx bx-info-circle"></i></a>
+			</div>';
     $data[] = $sub_array;
 }
 

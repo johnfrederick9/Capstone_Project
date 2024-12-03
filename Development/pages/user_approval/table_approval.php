@@ -41,6 +41,7 @@ include '../../sidebar.php';
                         <tbody>
                         </tbody>
                     </table>
+                    </section><!-- .home-->
                     <script>
     $(document).ready(function () {
         const table = $('#example').DataTable({
@@ -53,6 +54,9 @@ include '../../sidebar.php';
             ],
         });
 
+        let selectedUserId = null;
+
+        // Function to update approval status
         function updateApprovalStatus(userId, status, reason = '') {
             $.ajax({
                 url: 'updateApproval.php',
@@ -60,31 +64,109 @@ include '../../sidebar.php';
                 contentType: 'application/json',
                 data: JSON.stringify({ user_id: userId, status, reason }),
                 success: function (response) {
-                    alert(response.message);
+                    // Use the custom showAlert function for success messages
+                    if (status === 1) {
+                        showAlert('Successfully approved the account!', 'alert-success');
+                    } else if (status === 3) {
+                        showAlert('Successfully disapproved the account!', 'alert-danger');
+                    }
                     table.ajax.reload(); // Refresh table data
                 },
                 error: function () {
-                    alert('An error occurred. Please try again.');
+                    // Use the custom showAlert function for error messages
+                    showAlert('An error occurred. Please try again.', 'alert-danger');
                 },
             });
         }
 
+        // Approve button click
         $(document).on('click', '.btn-approve', function () {
-            const userId = $(this).data('id');
-            if (confirm('Are you sure you want to approve this user?')) {
-                updateApprovalStatus(userId, 1);
-            }
+            selectedUserId = $(this).data('id');
+            $('#approvalModal').modal('show');
         });
 
+        // Disapprove button click
         $(document).on('click', '.btn-disapprove', function () {
-            const userId = $(this).data('id');
-            const reason = prompt('Please provide a reason for disapproval:');
+            selectedUserId = $(this).data('id');
+            $('#disapprovalModal').modal('show');
+        });
+
+        // Approval modal - Yes
+        $('#approveYes').on('click', function () {
+            updateApprovalStatus(selectedUserId, 1);
+            $('#approvalModal').modal('hide');
+        });
+
+        // Disapproval modal - Submit
+        $('#disapproveSubmit').on('click', function () {
+            const reason = $('#disapproveReason').val().trim();
             if (reason) {
-                updateApprovalStatus(userId, 3, reason);
+                updateApprovalStatus(selectedUserId, 3, reason);
+                $('#disapprovalModal').modal('hide');
+            } else {
+                showAlert('Please provide a reason for disapproval.', 'alert-warning');
             }
         });
     });
+
+    // Function to show alert
+    function showAlert(message, alertClass) {
+        var alertDiv = $('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' + message +
+            '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+        alertDiv.css({
+            "position": "fixed",
+            "top": "10px",
+            "right": "10px",
+            "z-index": "9999",
+            "background-color": alertClass === "alert-danger" ? "#f8d7da" : "#d4edda",
+            "border-color": alertClass === "alert-danger" ? "#f5c6cb" : "#c3e6cb"
+        });
+        $("body").append(alertDiv);
+        setTimeout(function () { alertDiv.alert('close'); }, 500);
+    }
 </script>
-        </section><!-- .home-->
+
+        <section class="approval-modal">
+        <!-- Approval Modal -->
+        <div id="approvalModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ApprovalConfirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Approve Account</h5>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you want to approve this account?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="approveYes">Yes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+        <!-- Disapproval Modal -->
+        <div id="disapprovalModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="disapprovalConfirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Disapprove Account</h5>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="disapproveReason">Reason for disapproval:</label>
+                        <textarea id="disapproveReason" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="disapproveSubmit">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
     </body> 
 </html>

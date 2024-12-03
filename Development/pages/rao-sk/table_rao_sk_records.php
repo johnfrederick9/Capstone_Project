@@ -447,7 +447,7 @@ td.action-buttons{
                             <h1>Records of Appropriations and Obligations (RAO-SK)</h1>
                         </div>
                         <div class="table-actions">    
-                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#AttributeModal" class="add-popup">+ Add Record</button>
+                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#AttributeModal" class="add-table-btn">+ Add Record</button>
                             <!--<button class="print-btn" title="Print">
                                 <i class="bx bx-printer"></i>
                             </button>-->
@@ -1159,33 +1159,34 @@ td.action-buttons{
                         });
 
                         //FOR DELETE
-                        $(document).on('click', '.deleteBtn', function(event) {
-                            var table = $('#example').DataTable();
-                            event.preventDefault();
-                            var rao_sk_id = $(this).data('rao_id');
-                            console.log('RAO SK ID:', rao_sk_id); 
-                            if (confirm("Are you sure want to remove this rao Record ? ")) {
-                                $.ajax({
-                                    url: "delete.php",
-                                    data: {
-                                        rao_sk_id: rao_sk_id,
-                                    },
-                                    type: "post",
-                                    success: function(data) {
-                                        var json = JSON.parse(data);
-                                        status = json.status;
-                                        if (status == 'success') {
-                                            $("#" + rao_sk_id).closest('tr').remove();
-                                        } else {
-                                            alert('Failed');
-                                            return;
-                                        }
-                                    }
-                                });
+                      $(document).on('click', '.deleteBtn', function(event) {
+                        event.preventDefault();
+                        var rao_sk_id = $(this).data('rao_id'); // Get ID from data attribute
+                        var table = $('#example').DataTable();
+
+                        // Open the modal
+                        $('#deleteConfirmationModal').modal('show');
+
+                        // Handle the confirmation
+                        $('#confirmDeleteBtn').off('click').on('click', function() {
+                        $.ajax({
+                            url: "delete.php",
+                            type: "POST",
+                            data: { rao_sk_id: rao_sk_id },
+                            success: function(response) {
+                            var json = JSON.parse(response);
+                            if (json.status === 'success') {
+                                // Remove the row from DataTable
+                                table.row($(event.target).closest('tr')).remove().draw();
                             } else {
-                                return null;
+                                alert('Deletion failed');
                             }
-                        })
+                            // Close the modal
+                            $('#deleteConfirmationModal').modal('hide');
+                            }
+                        });
+                        });
+                    });
                        
                         /////Dynamic Attributes
                         $(document).on('submit', '#attributeForm', function(e) {
@@ -2209,7 +2210,7 @@ td.action-buttons{
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Update Report of Appropriations and Obligations (RAO-SK)</h5>
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#UpdateAttributeModal" class="add-popup">Update Columns</button>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#UpdateAttributeModal" class="add-table-btn">Update Columns</button>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -2354,7 +2355,7 @@ td.action-buttons{
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Add Report of Appropriations and Obligations (RAO-SK)</h5>
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#UpdateAttributeModal" class="add-popup">Change Columns</button>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#UpdateAttributeModal" class="add-table-btn">Change Columns</button>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -4232,6 +4233,69 @@ document.addEventListener('DOMContentLoaded', function () {
     initializeModal('addUserModal');
     initializeModal('viewDataModal');
 })();
+</script>
+<section class="delete-modal">
+                <!-- Delete Confirmation Modal -->
+                <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Remove for you</h5>
+                        <p>This data will be removed, Would you like to remove it ?</p>
+                        <button type="button" class="btn btn-primary" id="confirmDeleteBtn">Remove</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </section>
+<script>
+ function toggleDropdown(button) {
+    // Get the dropdown menu associated with the button
+    var dropdownMenu = button.nextElementSibling;
+    
+    // Get the icon element in the button
+    var icon = button.querySelector('i');
+
+    // Toggle the display of the dropdown menu
+    if (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") {
+        dropdownMenu.style.display = "flex"; // Show the menu as flex (horizontal layout)
+        icon.classList.remove('bx-chevron-down');
+        icon.classList.add('bx-chevron-up');
+    } else {
+        dropdownMenu.style.display = "none"; // Hide the menu
+        icon.classList.remove('bx-chevron-up');
+        icon.classList.add('bx-chevron-down');
+    }
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+    if (!event.target.matches('.action-btn') && !event.target.closest('.dropdown')) {
+        var dropdowns = document.getElementsByClassName("dropdown-menu");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.style.display === "flex") {
+                openDropdown.style.display = "none";
+
+                // Reset the icon to down-arrow for each open button
+                var icon = openDropdown.previousElementSibling.querySelector('i');
+                icon.classList.remove('bx-chevron-up');
+                icon.classList.add('bx-chevron-down');
+            }
+        }
+    }
+}
+</script>
+<script>
+    // Add event listener for the Enter key when the modal is open
+document.addEventListener('keydown', function(event) {
+    const modalOpen = document.getElementById('deleteConfirmationModal').classList.contains('show');
+    if (modalOpen && event.key === 'Enter') {
+        event.preventDefault();
+        document.getElementById('confirmDeleteBtn').click();
+    }
+});
 </script>
 
 

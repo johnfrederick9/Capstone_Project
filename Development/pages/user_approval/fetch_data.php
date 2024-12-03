@@ -11,10 +11,11 @@ $sql = "SELECT *,
             WHEN isApproved = 3 THEN 'Disapproved' 
             ELSE 'Pending' 
         END as approval_status 
-        FROM tb_user WHERE 1=1";
+        FROM tb_user 
+        WHERE barangayposition != 'Barangay Captain'"; // Exclude rows with position as 'captain'
 
 // Get the total number of rows (before applying filters)
-$totalQuery = mysqli_query($con, "SELECT COUNT(*) as total FROM tb_user");
+$totalQuery = mysqli_query($con, "SELECT COUNT(*) as total FROM tb_user WHERE barangayposition != 'captain'");
 $total_all_rows = mysqli_fetch_assoc($totalQuery)['total'];
 
 // Search filter
