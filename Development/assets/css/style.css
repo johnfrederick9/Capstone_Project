@@ -28,6 +28,7 @@ Table of contents
 19. additional_css-bootstrap
 20. Model For Resident and Employee
 21. Verification 
+22. table-dropdown
 --------------------------------------------- */
 /* ===== Reusable Comments - Here ===== */
 
@@ -575,7 +576,8 @@ body.dark {
   margin-bottom: 20px;
 }
 
-.search-form input[type="text"] {
+.search-form input[type="text"],
+input[type="password"] {
   flex: 1;
   padding: 10px;
   font-size: 16px;
@@ -1626,7 +1628,7 @@ body.dark .home .calendar-event .event-scheduler label {
 */
 .login{
   height: 100vh; /* Full viewport height */
-  background-image: url(../image/forgot_password.jpg);
+  background-image: url(../image/login_bg.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -1735,7 +1737,7 @@ body.dark .home .calendar-event .event-scheduler label {
 .register {
   height: 100vh; /* Full viewport height */
   margin: 0;
-  background-image: url(../image/white-bg-register.jpg);
+  background-image: url(../image/register_bg.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -1853,6 +1855,15 @@ body.dark .home .calendar-event .event-scheduler label {
   border-radius: 10px;
   margin-top: 5px;
 }
+
+.input-field input[type=password]{
+  border: none;
+  background: none;
+  outline: none;
+  width: 100%;
+  padding: 5px;
+  font-size: 1rem;
+} 
 
 /* ===== Blotter Modal Resident Search Suggestion ===== */
 .blotter-modal .suggestions-list {
@@ -2452,6 +2463,37 @@ body.dark .home .dashboard .calendar-container{
   transition: background-color 0.3s;
   align-self: flex-end;
   width: fit-content;
+}
+
+.profile a{
+  margin-top: 10px;
+}
+.cpbtn {
+  margin: -10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 12px 20px; /* More padding for better aesthetics */
+  border-radius: 8px; /* Slightly more rounded corners */
+  font-size: 16px;
+  font-weight: bold; /* Make the text stand out */
+  transition: all 0.3s ease; /* Smooth transition for all properties */
+  align-self: flex-end;
+  width: fit-content;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+}
+
+.cpbtn:hover {
+  background-color: #218838; /* Darker green for hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+.cpbtn:active {
+  background-color: #1e7e34; /* Even darker green for active state */
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Smaller shadow for active */
+  transform: translateY(0); /* Reset lift effect */
 }
 
 .add button.btn:hover {
@@ -4156,3 +4198,58 @@ font-size: 18px;
                       transform: translateY(0);
                   }
               }
+/* 
+---------------------------------------------
+22. table-dropdown
+--------------------------------------------- 
+*/
+/* General styles for the dropdown */
+    .table_dropdown {
+      display: inline-block;
+      position: relative;
+      margin-left: 10px;
+  }
+
+  .table_dropdown .dropdown-toggle {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+  }
+
+  .table_dropdown .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      min-width: 150px;
+      border-radius: 5px;
+      overflow: hidden;
+  }
+
+  .table_dropdown:hover .dropdown-menu {
+      display: block;
+  }
+
+  .table_dropdown .dropdown-menu li {
+      list-style: none;
+  }
+
+  .table_dropdown .dropdown-menu li a {
+      display: block;
+      padding: 10px;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+  }
+
+  .table_dropdown .dropdown-menu li a:hover {
+      background-color: #f1f1f1;
+  }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2024 at 02:32 PM
+-- Generation Time: Dec 05, 2024 at 03:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -52,13 +52,13 @@ CREATE TABLE `tb_blotter` (
 INSERT INTO `tb_blotter` (`blotter_id`, `blotter_complainant`, `blotter_complainant_no`, `blotter_complainant_add`, `blotter_complainee`, `blotter_complainee_no`, `blotter_complainee_add`, `blotter_complaint`, `blotter_status`, `blotter_action`, `blotter_incidence`, `blotter_date_recorded`, `blotter_date_settled`, `blotter_recorded_by`, `isDisplayed`) VALUES
 (22, 'John Frederick D. Gelay', '+63 968 651 3790', 'dfasdfa', 'Pauline Cielo D. Gelay', '+63 968 651 3790', 'dafasf', 'asdfasdffss', 'Pending', 'asdfasdf', 'asdfasf', '2024-10-06', '2024-10-06', 'asdf', 0),
 (23, 'asdfasf a. asdf', '', '65sd4f6 sadfasf', 'Frederick s. John ', '', 'asdfasf', 'asdfasf', 'Settled', 'sdfasf', 'sadfasfd', '2024-12-31', '2024-12-31', 'asdfsaf', 0),
-(24, 'John Frederick D. Gelay', '', '65464', 'asdf a. asdf', '', '65', '4654', 'Settled', '46', '464', '1111-11-11', '0011-11-04', '1', 1),
+(24, 'John Frederick D. Gelay', '', '65464', 'asdf a. asdf', '', '65', '4654', 'Pending', '46', '464', '1111-11-11', '0011-11-04', '1', 1),
 (25, 'John Frederick D. Gelay', '46464', '6546', 'john frederickl a. Gelay', '654', '646', '46', '46', '464', '64', '4645-06-04', '6546-06-06', '4654564', 0),
 (26, 'Pauline Cielo D. Gelay', '+63 968 651 3790', '3123123', 'John Frederick D. Gelay', '+63 968 651 3790', '313131', '31313', 'Settled', '31313', '1313', '2023-12-31', '2024-12-31', 'asd', 1),
 (27, 'john frederickl a. Gelay', '', 'fasfasf', 'asdf a. fffff', '', 'asdfsafasf', 'safasf', 'Pending', 'safasfasf', 'safasfasf', '2024-11-07', '2024-11-07', 'asfasf', 1),
-(28, 'Pauline Cielo D. Gelay', '63', 'fasfasf', 'asdf a. fffff', '63', 'asdfsafasf', 'safasf', 'asfsaf', 'safasfasf', 'safasfasf', '2024-11-07', '2024-11-07', 'asfasf', 1),
-(29, 'asdf a. asdffd', '+63 968 651 3790', 'asdfasf', 'John Frederick D. Gelay', '+63 968 651 3790', 'sadfasfa', 'asfasf', 'asdfaf', 'ssadfaf', 'asdfasf', '2024-12-31', '2024-12-31', 'dfsa', 1),
-(30, 'John Fredericds a. Gelay', '', 'asdfasdf', 'John Fredericds a. Gelay', '', 'asdfasdfadsfasf', 'asdfasf', 'afasdfs', 'asdfasdfasd', 'fasdfas', '2024-11-07', '2024-11-07', 'zcZXc', 1),
+(28, 'Pauline Cielo D. Gelay', '', 'fasfasf', 'asdf a. fffff', '', 'asdfsafasf', 'safasf', 'Pending', 'safasfasf', 'safasfasf', '2024-11-07', '2024-11-07', 'asfasf', 1),
+(29, 'asdf a. asdffd', '+63 968 651 3790', 'asdfasf', 'John Frederick D. Gelay', '+63 968 651 3790', 'sadfasfa', 'asfasf', 'Pending', 'ssadfaf', 'asdfasf', '2024-12-31', '2024-12-31', 'dfsa', 1),
+(30, 'John Fredericds a. Gelay', '', 'asdfasdf', 'John Fredericds a. Gelay', '', 'asdfasdfadsfasf', 'asdfasf', 'Pending', 'asdfasdfasd', 'fasdfas', '2024-11-07', '2024-11-07', 'zcZXc', 1),
 (31, 'asdf', 'asdfa', 'asdfasdfas', 'asdfasdfff', 'dfasfsa', 'dfsadfsadf', 'sdfsdf', 'Settled', 'asdfasf', 'asdfasf', '2023-01-31', '2023-12-31', 'asdfasf', 1),
 (32, 'asdf', 'asdfa', 'asdfasdfas', 'asdfasdfff', 'dfasfsa', 'dfsadfsadf', 'sdfsdf', 'Settled', 'asdfasf', 'asdfasf', '2023-01-31', '2023-12-31', 'asdfasf', 1),
 (33, 'asdf', 'asdfa', 'asdfasdfas', 'asdfasdfff', 'dfasfsa', 'dfsadfsadf', 'sdfsdf', 'Settled', 'asdfasf', 'asdfasf', '2023-01-31', '2023-12-31', 'asdfasf', 1),
@@ -66,7 +66,7 @@ INSERT INTO `tb_blotter` (`blotter_id`, `blotter_complainant`, `blotter_complain
 (35, 'ojaosdfasdf', '', 'sadfasdfsad', 'asdfasf', '', 'fasdfasdfs', 'fdasfdsa', 'Pending', 'asdfasdf', 'asdfasf', '2024-11-20', '2024-11-20', 'asdfasdf', 1),
 (36, 'asdf a. asdf', '', 'asdfasdf', 'asdf a. fffff', '', 'asdfasdf', 'asdfasdf', 'Pending', 'asdfasf', 'asfsaf', '2024-12-31', '2024-12-31', 'asdf', 1),
 (37, 'asdfasdfasdf', '', 'sadfsadfsdf', 'asfsadfsadf', '', 'dsafsdfsdfs', 'fsafsaf', 'Pending', '123', '123', '2024-12-31', '2024-12-30', 'asdfasf', 1),
-(38, 'asdfasdf a. asdfasdfasdf', '', 'sadfsadfsdf', 'John Frederick D. Gelay', '', 'dsafsdfsdfs', 'fsafsaf', 'Pending', '123', '123', '2024-12-31', '2024-12-30', 'asdfasf', 1),
+(38, 'asdfasdf a. asdfasdfasdf', '', 'sadfsadfsdf', 'John Frederick D. Gelay', '', 'dsafsdfsdfs', 'fsafsaf', 'Unsettled', '123', '123', '2024-12-31', '2024-12-30', 'asdfasf', 1),
 (39, 'John Doe', '+63 968 651 3790', 'asdfasdf', 'Jane Smith', '+63 968 651 3790', 'sadfsadfasdf', 'asdfas', 'Pending', 'asdfsadf', 'asdfsdf', '2024-12-31', '2024-12-31', 'asdfsaf', 1),
 (40, 'John Frederick D. Gelay', '', 'asdfasd', 'Pauline Cielo D. Gelay', '', 'fasdfdsafdsaf', 'asdfdasfasdf', 'Pending', 'adfasdf', 'asdfasdf', '2024-12-31', '2024-12-31', 'adfasf', 1),
 (41, 'asdfasdfsdf', '', 'asdfsdfasdf', 'sadfsfasd', '', 'fsdfsdfasf', 'safsdfsdf', 'Pending', 'asdf', 'sadfasdfas', '2024-12-31', '2024-12-31', 'asdfasdf', 1),
@@ -407,7 +407,8 @@ CREATE TABLE `tb_event` (
 
 INSERT INTO `tb_event` (`event_id`, `event_name`, `event_location`, `event_type`, `event_start`, `event_end`, `isDisplayed`) VALUES
 (63, 'liga', 'liga', 'liga', '2024-11-25', '2024-11-26', 0),
-(64, 'Ligo', 'asdfa', 'asdf', '2024-11-30', '2024-12-01', 1);
+(64, 'Ligo', 'asdfa', 'asdf', '2024-11-30', '2024-12-01', 0),
+(65, '123', '123', '123', '2024-12-03', '2024-12-05', 0);
 
 -- --------------------------------------------------------
 
@@ -456,7 +457,8 @@ CREATE TABLE `tb_household` (
 INSERT INTO `tb_household` (`household_name`, `household_head`, `household_address`, `household_contact`, `id`, `household_id`, `isDisplayed`) VALUES
 ('asdfasdf', 'asdfffdasfadf', 'sadfasdf', '+63 968 651 3790', 2, 122, 1),
 ('', '', '', NULL, 6, 110920, 1),
-('', '', '', NULL, 7, 112354, 1);
+('adf', 'adf', 'asdf', '+63 968 651 3790', 7, 112354, 1),
+('', '', '', NULL, 8, 12354, 0);
 
 -- --------------------------------------------------------
 
@@ -588,7 +590,7 @@ CREATE TABLE `tb_item_transaction` (
 --
 
 INSERT INTO `tb_item_transaction` (`transaction_id`, `borrower_name`, `borrower_address`, `reserved_on`, `date_borrowed`, `return_date`, `approved_by`, `released_by`, `returned_by`, `date_returned`, `transaction_status`, `isDisplayed`) VALUES
-(12, 'Joshua Belandres', 'Mantalongon ', '2024-09-23', '2024-09-23', '2024-09-23', 'Zenaida Belandres', 'Angebon Reyes', 'John Frederick Gelayff', '2024-09-25', 'Partially', 1),
+(12, 'Joshua Belandres', 'Mantalongon ', '2024-09-23', '2024-09-23', '2024-09-23', 'Zenaida Belandres', 'Angebon Reyes', 'John Frederick Gelay', '2024-09-25', 'Partially', 1),
 (21, 'fasdfasd', 'fsafsfasda', '2024-09-26', '2024-09-26', '2024-09-27', 'sfasdf', 'asdf', '12', '0000-00-00', 'Ongoing', 1),
 (22, 'asdfa', 'sdfasdf', '2024-10-06', '2024-10-06', '2024-10-06', 'dasd', 'ASD', NULL, NULL, 'Ongoing', 0),
 (23, 'sdfasf', 'asfasf', '2024-12-30', '2024-12-30', '2024-12-31', 'sdzv', 'safasfas', NULL, NULL, 'Ongoing', 0),
@@ -750,6 +752,288 @@ INSERT INTO `tb_rao_ap_data` (`rao_id`, `rao_ap_data_id`, `ap_ref_date`, `ap_ref
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tb_rao_bd`
+--
+
+CREATE TABLE `tb_rao_bd` (
+  `rao_bd_id` int(11) NOT NULL,
+  `chairman` varchar(255) NOT NULL,
+  `period_covered` date NOT NULL,
+  `brgy_captain` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_bd`
+--
+
+INSERT INTO `tb_rao_bd` (`rao_bd_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
+(7, 'Zenaida Belandres', '2024-12-01', 'John Frederick Gelay', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_bd_ap`
+--
+
+CREATE TABLE `tb_rao_bd_ap` (
+  `rao_bd_id` int(11) NOT NULL,
+  `rao_bd_ap_id` int(11) NOT NULL,
+  `ap_ref_date` date NOT NULL,
+  `ap_ref_no` varchar(255) NOT NULL,
+  `ap_particulars` varchar(255) NOT NULL,
+  `ap_total` double NOT NULL,
+  `ap_pre_disaster` double NOT NULL,
+  `ap_quick_response` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_bd_ap`
+--
+
+INSERT INTO `tb_rao_bd_ap` (`rao_bd_id`, `rao_bd_ap_id`, `ap_ref_date`, `ap_ref_no`, `ap_particulars`, `ap_total`, `ap_pre_disaster`, `ap_quick_response`, `isDisplayed`) VALUES
+(7, 15, '2024-12-01', 'Appropriations', 'Annual Budget', 572528.87, 400770.21, 171758.66, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_bd_ob`
+--
+
+CREATE TABLE `tb_rao_bd_ob` (
+  `rao_bd_id` int(11) NOT NULL,
+  `rao_bd_ob_id` int(11) NOT NULL,
+  `ob_ref_date` date NOT NULL,
+  `ob_ref_no` varchar(255) NOT NULL,
+  `ob_particulars` varchar(255) NOT NULL,
+  `ob_total` double NOT NULL,
+  `ob_pre_disaster` double NOT NULL,
+  `ap_quick_response` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_bd_totals`
+--
+
+CREATE TABLE `tb_rao_bd_totals` (
+  `rao_bd_total_id` int(11) NOT NULL,
+  `rao_bd_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `total` double NOT NULL,
+  `pre_disaster` double NOT NULL,
+  `quick_response` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_bd_totals`
+--
+
+INSERT INTO `tb_rao_bd_totals` (`rao_bd_total_id`, `rao_bd_id`, `total_type`, `total`, `pre_disaster`, `quick_response`, `isDisplayed`) VALUES
+(21, 7, 'TA', 572528.87, 400770.21, 171758.66, 1),
+(22, 7, 'BF', 572528.87, 400770.21, 171758.66, 1),
+(23, 7, 'TO', 0, 0, 0, 1),
+(24, 7, 'OB', 0, 0, 0, 1),
+(25, 7, 'AB', 572528.87, 400770.21, 171758.66, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_co`
+--
+
+CREATE TABLE `tb_rao_co` (
+  `rao_co_id` int(11) NOT NULL,
+  `chairman` varchar(255) NOT NULL,
+  `period_covered` date NOT NULL,
+  `brgy_captain` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_co`
+--
+
+INSERT INTO `tb_rao_co` (`rao_co_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
+(1, 'Pending...', '0000-00-00', 'Pending...', 0),
+(2, 'John Frederick Gelay', '2024-12-01', 'Joshua Belandres', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_cocont`
+--
+
+CREATE TABLE `tb_rao_cocont` (
+  `rao_cocont_id` int(11) NOT NULL,
+  `chairman` varchar(255) NOT NULL,
+  `period_covered` date NOT NULL,
+  `brgy_captain` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_cocont`
+--
+
+INSERT INTO `tb_rao_cocont` (`rao_cocont_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
+(1, 'Angebon Reyes', '2024-11-01', 'Joshua Belandres', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_cocont_ap`
+--
+
+CREATE TABLE `tb_rao_cocont_ap` (
+  `rao_cocont_id` int(11) NOT NULL,
+  `rao_cocont_ap_id` int(11) NOT NULL,
+  `ap_ref_date` date NOT NULL,
+  `ap_ref_no` varchar(255) NOT NULL,
+  `ap_particulars` varchar(255) NOT NULL,
+  `ap_totals` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_cocont_ap`
+--
+
+INSERT INTO `tb_rao_cocont_ap` (`rao_cocont_id`, `rao_cocont_ap_id`, `ap_ref_date`, `ap_ref_no`, `ap_particulars`, `ap_totals`) VALUES
+(1, 1, '2024-11-01', 'Appropriations', 'Annual Budget', 4247573.23);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_cocont_ap_data`
+--
+
+CREATE TABLE `tb_rao_cocont_ap_data` (
+  `rao_cocont_ap_data_id` int(11) NOT NULL,
+  `rao_cocont_ap_id` int(11) NOT NULL,
+  `rao_cocont_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_cocont_ap_data`
+--
+
+INSERT INTO `tb_rao_cocont_ap_data` (`rao_cocont_ap_data_id`, `rao_cocont_ap_id`, `rao_cocont_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, 1, 'Data 1', 4247573.23, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_cocont_ap_totals`
+--
+
+CREATE TABLE `tb_rao_cocont_ap_totals` (
+  `rao_cocont_id` int(11) NOT NULL,
+  `rao_cocont_ap_total_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `rao_cocont_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_cocont_ap_totals`
+--
+
+INSERT INTO `tb_rao_cocont_ap_totals` (`rao_cocont_id`, `rao_cocont_ap_total_id`, `total_type`, `rao_cocont_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, 'ap_total_TA', 0, '', 4247573.23, 1),
+(1, 2, 'TA', 1, 'Data 1', 4247573.23, 1),
+(1, 3, 'ap_total_BF', 0, '', 4247573.23, 1),
+(1, 4, 'BF', 1, 'Data 1', 4247573.23, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_cocont_attributes`
+--
+
+CREATE TABLE `tb_rao_cocont_attributes` (
+  `rao_cocont_id` int(11) NOT NULL,
+  `rao_cocont_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_cocont_attributes`
+--
+
+INSERT INTO `tb_rao_cocont_attributes` (`rao_cocont_id`, `rao_cocont_att_id`, `attribute_name`, `isDisplayed`) VALUES
+(1, 1, 'Data 1', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_cocont_ob`
+--
+
+CREATE TABLE `tb_rao_cocont_ob` (
+  `rao_cocont_id` int(11) NOT NULL,
+  `rao_cocont_ob_id` int(11) NOT NULL,
+  `ob_ref_date` date NOT NULL,
+  `ob_ref_no` varchar(255) NOT NULL,
+  `ob_particulars` varchar(255) NOT NULL,
+  `ob_totals` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_cocont_ob_data`
+--
+
+CREATE TABLE `tb_rao_cocont_ob_data` (
+  `rao_cocont_ob_data_id` int(11) NOT NULL,
+  `rao_cocont_ob_id` int(11) NOT NULL,
+  `rao_cocont_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_cocont_ob_totals`
+--
+
+CREATE TABLE `tb_rao_cocont_ob_totals` (
+  `rao_cocont_id` int(11) NOT NULL,
+  `rao_cocont_ob_total_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `rao_cocont_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_cocont_ob_totals`
+--
+
+INSERT INTO `tb_rao_cocont_ob_totals` (`rao_cocont_id`, `rao_cocont_ob_total_id`, `total_type`, `rao_cocont_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, 'ob_total_TO', 0, '', 0, 1),
+(1, 2, 'TO', 1, 'Data 1', 0, 1),
+(1, 3, 'ob_total_OB', 0, '', 0, 1),
+(1, 4, 'OB', 1, 'Data 1', 0, 1),
+(1, 5, 'ob_total_AB', 0, '', 4247573.23, 1),
+(1, 6, 'AB', 1, 'Data 1', 4247573.23, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tb_rao_cont`
 --
 
@@ -770,7 +1054,7 @@ INSERT INTO `tb_rao_cont` (`rao_cont_id`, `chairman`, `period_covered`, `brgy_ca
 (84, 'John Frederick Gelay', '2024-10-01', 'Joshua Belandres', 0),
 (85, 'Zen', '2024-11-01', 'Joshua Belandres', 0),
 (86, '1asdad', '2332-12-31', 'asdf', 0),
-(87, 'asd', '2001-11-09', 'asdf', 1);
+(87, 'asd', '2001-11-09', 'asdf', 0);
 
 -- --------------------------------------------------------
 
@@ -918,18 +1202,18 @@ INSERT INTO `tb_rao_cont_ap_totals` (`rao_cont_id`, `rao_cont_ap_total_id`, `tot
 (86, 534, 'BF', 283, 'MES', 0, 0),
 (86, 535, 'BF', 284, 'Road Concreting', 0, 0),
 (86, 536, 'BF', 285, 'asdf', 0, 0),
-(87, 537, 'ap_total_TA', 0, '', 0, 1),
-(87, 538, 'TA', 286, 'Data 1', 0, 1),
-(87, 539, 'TA', 287, 'Electrification', 0, 1),
-(87, 540, 'ap_total_BF', 0, '', 0, 1),
-(87, 541, 'BF', 286, 'Data 1', 0, 1),
-(87, 542, 'BF', 287, 'Electrification', 0, 1),
-(87, 543, 'ap_total_TA', 0, '', 0, 1),
-(87, 544, 'TA', 286, 'Data 1', 0, 1),
-(87, 545, 'TA', 287, 'Electrification', 0, 1),
-(87, 546, 'ap_total_BF', 0, '', 0, 1),
-(87, 547, 'BF', 286, 'Data 1', 0, 1),
-(87, 548, 'BF', 287, 'Electrification', 0, 1);
+(87, 537, 'ap_total_TA', 0, '', 0, 0),
+(87, 538, 'TA', 286, 'Data 1', 0, 0),
+(87, 539, 'TA', 287, 'Electrification', 0, 0),
+(87, 540, 'ap_total_BF', 0, '', 0, 0),
+(87, 541, 'BF', 286, 'Data 1', 0, 0),
+(87, 542, 'BF', 287, 'Electrification', 0, 0),
+(87, 543, 'ap_total_TA', 0, '', 0, 0),
+(87, 544, 'TA', 286, 'Data 1', 0, 0),
+(87, 545, 'TA', 287, 'Electrification', 0, 0),
+(87, 546, 'ap_total_BF', 0, '', 0, 0),
+(87, 547, 'BF', 286, 'Data 1', 0, 0),
+(87, 548, 'BF', 287, 'Electrification', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -979,8 +1263,8 @@ INSERT INTO `tb_rao_cont_attributes` (`rao_cont_id`, `rao_cont_att_id`, `attribu
 (86, 283, 'MES', 0),
 (86, 284, 'Road Concreting', 0),
 (86, 285, 'asdf', 0),
-(87, 286, 'Data 1', 1),
-(87, 287, 'Electrification', 1);
+(87, 286, 'Data 1', 0),
+(87, 287, 'Electrification', 0);
 
 -- --------------------------------------------------------
 
@@ -1027,10 +1311,10 @@ CREATE TABLE `tb_rao_cont_ob_data` (
 
 INSERT INTO `tb_rao_cont_ob_data` (`rao_cont_ob_data_id`, `rao_cont_ob_id`, `rao_cont_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
 (522, 63, 256, 'Data 1', 10, 0),
-(523, 64, 286, 'Data 1', 0, 1),
-(524, 64, 287, 'Electrification', 0, 1),
-(525, 65, 286, 'Data 1', 0, 1),
-(526, 65, 287, 'Electrification', 0, 1);
+(523, 64, 286, 'Data 1', 0, 0),
+(524, 64, 287, 'Electrification', 0, 0),
+(525, 65, 286, 'Data 1', 0, 0),
+(526, 65, 287, 'Electrification', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1155,24 +1439,1028 @@ INSERT INTO `tb_rao_cont_ob_totals` (`rao_cont_id`, `rao_cont_ob_total_id`, `tot
 (86, 802, 'AB', 283, 'MES', 0, 0),
 (86, 803, 'AB', 284, 'Road Concreting', 0, 0),
 (86, 804, 'AB', 285, 'asdf', 0, 0),
-(87, 805, 'ob_total_TO', 0, '', 0, 1),
-(87, 806, 'TO', 286, 'Data 1', 0, 1),
-(87, 807, 'TO', 287, 'Electrification', 0, 1),
-(87, 808, 'ob_total_OB', 0, '', 0, 1),
-(87, 809, 'OB', 286, 'Data 1', 0, 1),
-(87, 810, 'OB', 287, 'Electrification', 0, 1),
-(87, 811, 'ob_total_AB', 0, '', 0, 1),
-(87, 812, 'AB', 286, 'Data 1', 0, 1),
-(87, 813, 'AB', 287, 'Electrification', 0, 1),
-(87, 814, 'ob_total_TO', 0, '', 0, 1),
-(87, 815, 'TO', 286, 'Data 1', 0, 1),
-(87, 816, 'TO', 287, 'Electrification', 0, 1),
-(87, 817, 'ob_total_OB', 0, '', 0, 1),
-(87, 818, 'OB', 286, 'Data 1', 0, 1),
-(87, 819, 'OB', 287, 'Electrification', 0, 1),
-(87, 820, 'ob_total_AB', 0, '', 0, 1),
-(87, 821, 'AB', 286, 'Data 1', 0, 1),
-(87, 822, 'AB', 287, 'Electrification', 0, 1);
+(87, 805, 'ob_total_TO', 0, '', 0, 0),
+(87, 806, 'TO', 286, 'Data 1', 0, 0),
+(87, 807, 'TO', 287, 'Electrification', 0, 0),
+(87, 808, 'ob_total_OB', 0, '', 0, 0),
+(87, 809, 'OB', 286, 'Data 1', 0, 0),
+(87, 810, 'OB', 287, 'Electrification', 0, 0),
+(87, 811, 'ob_total_AB', 0, '', 0, 0),
+(87, 812, 'AB', 286, 'Data 1', 0, 0),
+(87, 813, 'AB', 287, 'Electrification', 0, 0),
+(87, 814, 'ob_total_TO', 0, '', 0, 0),
+(87, 815, 'TO', 286, 'Data 1', 0, 0),
+(87, 816, 'TO', 287, 'Electrification', 0, 0),
+(87, 817, 'ob_total_OB', 0, '', 0, 0),
+(87, 818, 'OB', 286, 'Data 1', 0, 0),
+(87, 819, 'OB', 287, 'Electrification', 0, 0),
+(87, 820, 'ob_total_AB', 0, '', 0, 0),
+(87, 821, 'AB', 286, 'Data 1', 0, 0),
+(87, 822, 'AB', 287, 'Electrification', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_co_ap`
+--
+
+CREATE TABLE `tb_rao_co_ap` (
+  `rao_co_id` int(11) NOT NULL,
+  `rao_co_ap_id` int(11) NOT NULL,
+  `ap_ref_date` date NOT NULL,
+  `ap_ref_no` varchar(255) NOT NULL,
+  `ap_particulars` varchar(255) NOT NULL,
+  `ap_totals` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_co_ap_data`
+--
+
+CREATE TABLE `tb_rao_co_ap_data` (
+  `rao_co_ap_data_id` int(11) NOT NULL,
+  `rao_co_ap_id` int(11) NOT NULL,
+  `rao_co_att_id` varchar(255) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_co_ap_totals`
+--
+
+CREATE TABLE `tb_rao_co_ap_totals` (
+  `rao_co_id` int(11) NOT NULL,
+  `rao_co_ap_total_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `rao_co_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_co_ap_totals`
+--
+
+INSERT INTO `tb_rao_co_ap_totals` (`rao_co_id`, `rao_co_ap_total_id`, `total_type`, `rao_co_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(2, 1, 'ap_total_TA', 0, '', 0, 1),
+(2, 2, 'TA', 4, 'Electrification', 0, 1),
+(2, 3, 'TA', 5, 'Travel Training Expenses', 0, 1),
+(2, 4, 'ap_total_BF', 0, '', 0, 1),
+(2, 5, 'BF', 4, 'Electrification', 0, 1),
+(2, 6, 'BF', 5, 'Travel Training Expenses', 0, 1),
+(1, 7, 'TA', 6, 'Electrification', 0, 0),
+(1, 8, 'BF', 6, 'Electrification', 0, 0),
+(1, 9, 'TA', 7, 'Travel Training Expenses', 0, 0),
+(1, 10, 'BF', 7, 'Travel Training Expenses', 0, 0),
+(2, 11, 'TA', 8, 'Data 1', 0, 1),
+(2, 12, 'BF', 8, 'Data 1', 0, 1),
+(2, 13, 'TA', 9, 'Data 2', 0, 1),
+(2, 14, 'BF', 9, 'Data 2', 0, 1),
+(2, 15, 'TA', 10, 'Data 3', 0, 1),
+(2, 16, 'BF', 10, 'Data 3', 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_co_attributes`
+--
+
+CREATE TABLE `tb_rao_co_attributes` (
+  `rao_co_id` int(11) NOT NULL,
+  `rao_co_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_co_attributes`
+--
+
+INSERT INTO `tb_rao_co_attributes` (`rao_co_id`, `rao_co_att_id`, `attribute_name`, `isDisplayed`) VALUES
+(1, 1, 'Data 1', 0),
+(1, 2, 'Data 2', 0),
+(1, 3, 'Data 3', 0),
+(2, 4, 'Electrification', 1),
+(2, 5, 'Travel Training Expenses', 1),
+(1, 6, 'Electrification', 0),
+(1, 7, 'Travel Training Expenses', 0),
+(2, 8, 'Data 1', 1),
+(2, 9, 'Data 2', 1),
+(2, 10, 'Data 3', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_co_ob`
+--
+
+CREATE TABLE `tb_rao_co_ob` (
+  `rao_co_id` int(11) NOT NULL,
+  `rao_co_ob_id` int(11) NOT NULL,
+  `ob_ref_date` date NOT NULL,
+  `ob_ref_no` varchar(255) NOT NULL,
+  `ob_particulars` varchar(255) NOT NULL,
+  `ob_totals` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_co_ob_data`
+--
+
+CREATE TABLE `tb_rao_co_ob_data` (
+  `rao_co_ob_data_id` int(11) NOT NULL,
+  `rao_co_ob_id` int(11) NOT NULL,
+  `rao_co_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_co_ob_totals`
+--
+
+CREATE TABLE `tb_rao_co_ob_totals` (
+  `rao_co_id` int(11) NOT NULL,
+  `rao_co_ob_total_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `rao_co_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_co_ob_totals`
+--
+
+INSERT INTO `tb_rao_co_ob_totals` (`rao_co_id`, `rao_co_ob_total_id`, `total_type`, `rao_co_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(2, 1, 'ob_total_TO', 0, '', 0, 1),
+(2, 2, 'TO', 4, 'Electrification', 0, 1),
+(2, 3, 'TO', 5, 'Travel Training Expenses', 0, 1),
+(2, 4, 'ob_total_OB', 0, '', 0, 1),
+(2, 5, 'OB', 4, 'Electrification', 0, 1),
+(2, 6, 'OB', 5, 'Travel Training Expenses', 0, 1),
+(2, 7, 'ob_total_AB', 0, '', 0, 1),
+(2, 8, 'AB', 4, 'Electrification', 0, 1),
+(2, 9, 'AB', 5, 'Travel Training Expenses', 0, 1),
+(1, 10, 'TO', 6, 'Electrification', 0, 0),
+(1, 11, 'OB', 6, 'Electrification', 0, 0),
+(1, 12, 'AB', 6, 'Electrification', 0, 0),
+(1, 13, 'TO', 7, 'Travel Training Expenses', 0, 0),
+(1, 14, 'OB', 7, 'Travel Training Expenses', 0, 0),
+(1, 15, 'AB', 7, 'Travel Training Expenses', 0, 0),
+(2, 16, 'TO', 8, 'Data 1', 0, 1),
+(2, 17, 'OB', 8, 'Data 1', 0, 1),
+(2, 18, 'AB', 8, 'Data 1', 0, 1),
+(2, 19, 'TO', 9, 'Data 2', 0, 1),
+(2, 20, 'OB', 9, 'Data 2', 0, 1),
+(2, 21, 'AB', 9, 'Data 2', 0, 1),
+(2, 22, 'TO', 10, 'Data 3', 0, 1),
+(2, 23, 'OB', 10, 'Data 3', 0, 1),
+(2, 24, 'AB', 10, 'Data 3', 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_dev`
+--
+
+CREATE TABLE `tb_rao_dev` (
+  `rao_dev_id` int(11) NOT NULL,
+  `chairman` varchar(255) NOT NULL,
+  `period_covered` date NOT NULL,
+  `brgy_captain` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_dev`
+--
+
+INSERT INTO `tb_rao_dev` (`rao_dev_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
+(1, 'Joshua Belandres', '2024-12-01', 'Zenaida Belandres', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_dev_ap`
+--
+
+CREATE TABLE `tb_rao_dev_ap` (
+  `rao_dev_id` int(11) NOT NULL,
+  `rao_dev_ap_id` int(11) NOT NULL,
+  `ap_ref_date` date NOT NULL,
+  `ap_ref_no` varchar(255) NOT NULL,
+  `ap_particulars` varchar(255) NOT NULL,
+  `ap_totals` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_dev_ap`
+--
+
+INSERT INTO `tb_rao_dev_ap` (`rao_dev_id`, `rao_dev_ap_id`, `ap_ref_date`, `ap_ref_no`, `ap_particulars`, `ap_totals`) VALUES
+(1, 1, '2024-12-01', 'Appropriations', 'Annual Budget', 1709481);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_dev_ap_data`
+--
+
+CREATE TABLE `tb_rao_dev_ap_data` (
+  `rao_dev_ap_data_id` int(11) NOT NULL,
+  `rao_dev_ap_id` int(11) NOT NULL,
+  `rao_dev_att_id` varchar(255) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_dev_ap_data`
+--
+
+INSERT INTO `tb_rao_dev_ap_data` (`rao_dev_ap_data_id`, `rao_dev_ap_id`, `rao_dev_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, '1', 'Road Concreting', 749481, 1),
+(2, 1, '2', 'Solar Streetlight', 150000, 1),
+(3, 1, '3', 'Watershed Kang-ibang', 30000, 1),
+(4, 1, '4', 'Dep-ed Counterpart', 100000, 1),
+(5, 1, '5', 'Footbridge', 30000, 1),
+(6, 1, '6', 'Campacass', 200000, 1),
+(7, 1, '7', 'Sampig Spring BOX', 50000, 1),
+(8, 1, '8', 'Spillway Alang-alang', 100000, 1),
+(9, 1, '9', 'Association', 300000, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_dev_ap_totals`
+--
+
+CREATE TABLE `tb_rao_dev_ap_totals` (
+  `rao_dev_id` int(11) NOT NULL,
+  `rao_dev_ap_total_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `rao_dev_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_dev_ap_totals`
+--
+
+INSERT INTO `tb_rao_dev_ap_totals` (`rao_dev_id`, `rao_dev_ap_total_id`, `total_type`, `rao_dev_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, 'ap_total_TA', 0, '', 1709481, 1),
+(1, 2, 'TA', 1, 'Road Concreting', 749481, 1),
+(1, 3, 'TA', 2, 'Solar Streetlight', 150000, 1),
+(1, 4, 'TA', 3, 'Watershed Kang-ibang', 30000, 1),
+(1, 5, 'TA', 4, 'Dep-ed Counterpart', 100000, 1),
+(1, 6, 'TA', 5, 'Footbridge', 30000, 1),
+(1, 7, 'TA', 6, 'Campacass', 200000, 1),
+(1, 8, 'TA', 7, 'Sampig Spring BOX', 50000, 1),
+(1, 9, 'TA', 8, 'Spillway Alang-alang', 100000, 1),
+(1, 10, 'ap_total_BF', 0, '', 1709481, 1),
+(1, 11, 'BF', 1, 'Road Concreting', 749481, 1),
+(1, 12, 'BF', 2, 'Solar Streetlight', 150000, 1),
+(1, 13, 'BF', 3, 'Watershed Kang-ibang', 30000, 1),
+(1, 14, 'BF', 4, 'Dep-ed Counterpart', 100000, 1),
+(1, 15, 'BF', 5, 'Footbridge', 30000, 1),
+(1, 16, 'BF', 6, 'Campacass', 200000, 1),
+(1, 17, 'BF', 7, 'Sampig Spring BOX', 50000, 1),
+(1, 18, 'BF', 8, 'Spillway Alang-alang', 100000, 1),
+(1, 19, 'TA', 9, 'Association', 300000, 1),
+(1, 20, 'BF', 9, 'Association', 300000, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_dev_attributes`
+--
+
+CREATE TABLE `tb_rao_dev_attributes` (
+  `rao_dev_id` int(11) NOT NULL,
+  `rao_dev_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_dev_attributes`
+--
+
+INSERT INTO `tb_rao_dev_attributes` (`rao_dev_id`, `rao_dev_att_id`, `attribute_name`, `isDisplayed`) VALUES
+(1, 1, 'Road Concreting', 1),
+(1, 2, 'Solar Streetlight', 1),
+(1, 3, 'Watershed Kang-ibang', 1),
+(1, 4, 'Dep-ed Counterpart', 1),
+(1, 5, 'Footbridge', 1),
+(1, 6, 'Campacass', 1),
+(1, 7, 'Sampig Spring BOX', 1),
+(1, 8, 'Spillway Alang-alang', 1),
+(1, 9, 'Association', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_dev_ob`
+--
+
+CREATE TABLE `tb_rao_dev_ob` (
+  `rao_dev_id` int(11) NOT NULL,
+  `rao_dev_ob_id` int(11) NOT NULL,
+  `ob_ref_date` date NOT NULL,
+  `ob_ref_no` varchar(255) NOT NULL,
+  `ob_particulars` varchar(255) NOT NULL,
+  `ob_totals` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_dev_ob_data`
+--
+
+CREATE TABLE `tb_rao_dev_ob_data` (
+  `rao_dev_ob_data_id` int(11) NOT NULL,
+  `rao_dev_ob_id` int(11) NOT NULL,
+  `rao_dev_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_dev_ob_totals`
+--
+
+CREATE TABLE `tb_rao_dev_ob_totals` (
+  `rao_dev_id` int(11) NOT NULL,
+  `rao_dev_ob_total_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `rao_dev_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_dev_ob_totals`
+--
+
+INSERT INTO `tb_rao_dev_ob_totals` (`rao_dev_id`, `rao_dev_ob_total_id`, `total_type`, `rao_dev_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, 'ob_total_TO', 0, '', 0, 1),
+(1, 2, 'TO', 1, 'Road Concreting', 0, 1),
+(1, 3, 'TO', 2, 'Solar Streetlight', 0, 1),
+(1, 4, 'TO', 3, 'Watershed Kang-ibang', 0, 1),
+(1, 5, 'TO', 4, 'Dep-ed Counterpart', 0, 1),
+(1, 6, 'TO', 5, 'Footbridge', 0, 1),
+(1, 7, 'TO', 6, 'Campacass', 0, 1),
+(1, 8, 'TO', 7, 'Sampig Spring BOX', 0, 1),
+(1, 9, 'TO', 8, 'Spillway Alang-alang', 0, 1),
+(1, 10, 'ob_total_OB', 0, '', 0, 1),
+(1, 11, 'OB', 1, 'Road Concreting', 0, 1),
+(1, 12, 'OB', 2, 'Solar Streetlight', 0, 1),
+(1, 13, 'OB', 3, 'Watershed Kang-ibang', 0, 1),
+(1, 14, 'OB', 4, 'Dep-ed Counterpart', 0, 1),
+(1, 15, 'OB', 5, 'Footbridge', 0, 1),
+(1, 16, 'OB', 6, 'Campacass', 0, 1),
+(1, 17, 'OB', 7, 'Sampig Spring BOX', 0, 1),
+(1, 18, 'OB', 8, 'Spillway Alang-alang', 0, 1),
+(1, 19, 'ob_total_AB', 0, '', 1709481, 1),
+(1, 20, 'AB', 1, 'Road Concreting', 749481, 1),
+(1, 21, 'AB', 2, 'Solar Streetlight', 150000, 1),
+(1, 22, 'AB', 3, 'Watershed Kang-ibang', 30000, 1),
+(1, 23, 'AB', 4, 'Dep-ed Counterpart', 100000, 1),
+(1, 24, 'AB', 5, 'Footbridge', 30000, 1),
+(1, 25, 'AB', 6, 'Campacass', 200000, 1),
+(1, 26, 'AB', 7, 'Sampig Spring BOX', 50000, 1),
+(1, 27, 'AB', 8, 'Spillway Alang-alang', 100000, 1),
+(1, 28, 'TO', 9, 'Association', 0, 1),
+(1, 29, 'OB', 9, 'Association', 0, 1),
+(1, 30, 'AB', 9, 'Association', 300000, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_fe`
+--
+
+CREATE TABLE `tb_rao_fe` (
+  `rao_fe_id` int(11) NOT NULL,
+  `chairman` varchar(255) NOT NULL,
+  `period_covered` date NOT NULL,
+  `brgy_captain` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_fe`
+--
+
+INSERT INTO `tb_rao_fe` (`rao_fe_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
+(1, 'Angebon Reyes', '2024-12-01', 'Joshua Belandres', 0),
+(2, 'Pending...', '0000-00-00', 'Pending...', 1),
+(3, 'Pending...', '0000-00-00', 'Pending...', 1),
+(4, 'Zenaida Belandres', '2024-09-01', 'John Frederick Gelay', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_fe_ap`
+--
+
+CREATE TABLE `tb_rao_fe_ap` (
+  `rao_fe_id` int(11) NOT NULL,
+  `rao_fe_ap_id` int(11) NOT NULL,
+  `ap_ref_date` date NOT NULL,
+  `ap_ref_no` varchar(255) NOT NULL,
+  `ap_particulars` varchar(255) NOT NULL,
+  `ap_totals` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_fe_ap`
+--
+
+INSERT INTO `tb_rao_fe_ap` (`rao_fe_id`, `rao_fe_ap_id`, `ap_ref_date`, `ap_ref_no`, `ap_particulars`, `ap_totals`) VALUES
+(1, 1, '2024-12-01', 'Appropriations', 'Annual Budget', 453.58),
+(4, 2, '2024-09-01', 'Appropriations', 'Annual Budget', 601.65),
+(4, 3, '2024-09-01', 'Appropriations', 'Additional', 60);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_fe_ap_data`
+--
+
+CREATE TABLE `tb_rao_fe_ap_data` (
+  `rao_fe_ap_data_id` int(11) NOT NULL,
+  `rao_fe_ap_id` int(11) NOT NULL,
+  `rao_fe_att_id` varchar(255) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_fe_ap_data`
+--
+
+INSERT INTO `tb_rao_fe_ap_data` (`rao_fe_ap_data_id`, `rao_fe_ap_id`, `rao_fe_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, '1', 'Data 1', 453.58, 0),
+(2, 1, '2', 'Data 2', 0, 0),
+(3, 2, '9', 'Data 1', 100.45, 1),
+(4, 2, '10', 'Data 2', 200.55, 1),
+(5, 2, '11', 'Data 3', 300.65, 1),
+(6, 3, '9', 'Data 1', 10, 1),
+(7, 3, '10', 'Data 2', 20, 1),
+(8, 3, '11', 'Data 3', 30, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_fe_ap_totals`
+--
+
+CREATE TABLE `tb_rao_fe_ap_totals` (
+  `rao_fe_id` int(11) NOT NULL,
+  `rao_fe_ap_total_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `rao_fe_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_fe_ap_totals`
+--
+
+INSERT INTO `tb_rao_fe_ap_totals` (`rao_fe_id`, `rao_fe_ap_total_id`, `total_type`, `rao_fe_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, 'ap_total_TA', 0, '', 453.58, 0),
+(1, 2, 'TA', 1, 'Data 1', 453.58, 0),
+(1, 3, 'TA', 2, 'Data 2', 0, 0),
+(1, 4, 'ap_total_BF', 0, '', 453.58, 0),
+(1, 5, 'BF', 1, 'Data 1', 453.58, 0),
+(1, 6, 'BF', 2, 'Data 2', 0, 0),
+(4, 7, 'ap_total_TA', 0, '', 661.65, 1),
+(4, 8, 'TA', 9, 'Data 1', 110.45, 1),
+(4, 9, 'TA', 10, 'Data 2', 220.55, 1),
+(4, 10, 'TA', 11, 'Data 3', 330.65, 1),
+(4, 11, 'ap_total_BF', 0, '', 661.65, 1),
+(4, 12, 'BF', 9, 'Data 1', 110.45, 1),
+(4, 13, 'BF', 10, 'Data 2', 220.55, 1),
+(4, 14, 'BF', 11, 'Data 3', 330.65, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_fe_attributes`
+--
+
+CREATE TABLE `tb_rao_fe_attributes` (
+  `rao_fe_id` int(11) NOT NULL,
+  `rao_fe_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_fe_attributes`
+--
+
+INSERT INTO `tb_rao_fe_attributes` (`rao_fe_id`, `rao_fe_att_id`, `attribute_name`, `isDisplayed`) VALUES
+(1, 1, 'Data 1', 0),
+(1, 2, 'Data 2', 0),
+(2, 3, 'Data 1', 1),
+(2, 4, 'Data 2', 1),
+(2, 5, 'Data 3', 1),
+(3, 6, 'Data 1', 1),
+(3, 7, 'Data 2', 1),
+(3, 8, 'Data 3', 1),
+(4, 9, 'Data 1', 1),
+(4, 10, 'Data 2', 1),
+(4, 11, 'Data 3', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_fe_ob`
+--
+
+CREATE TABLE `tb_rao_fe_ob` (
+  `rao_fe_id` int(11) NOT NULL,
+  `rao_fe_ob_id` int(11) NOT NULL,
+  `ob_ref_date` date NOT NULL,
+  `ob_ref_no` varchar(255) NOT NULL,
+  `ob_particulars` varchar(255) NOT NULL,
+  `ob_totals` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_fe_ob`
+--
+
+INSERT INTO `tb_rao_fe_ob` (`rao_fe_id`, `rao_fe_ob_id`, `ob_ref_date`, `ob_ref_no`, `ob_particulars`, `ob_totals`) VALUES
+(4, 1, '2024-09-01', 'Obligations', 'Salary and Wages: Tanod', 62.55);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_fe_ob_data`
+--
+
+CREATE TABLE `tb_rao_fe_ob_data` (
+  `rao_fe_ob_data_id` int(11) NOT NULL,
+  `rao_fe_ob_id` int(11) NOT NULL,
+  `rao_fe_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_fe_ob_data`
+--
+
+INSERT INTO `tb_rao_fe_ob_data` (`rao_fe_ob_data_id`, `rao_fe_ob_id`, `rao_fe_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, 9, 'Data 1', 10.75, 1),
+(2, 1, 10, 'Data 2', 20.85, 1),
+(3, 1, 11, 'Data 3', 30.95, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_fe_ob_totals`
+--
+
+CREATE TABLE `tb_rao_fe_ob_totals` (
+  `rao_fe_id` int(11) NOT NULL,
+  `rao_fe_ob_total_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `rao_fe_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_fe_ob_totals`
+--
+
+INSERT INTO `tb_rao_fe_ob_totals` (`rao_fe_id`, `rao_fe_ob_total_id`, `total_type`, `rao_fe_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, 'ob_total_TO', 0, '', 0, 0),
+(1, 2, 'TO', 1, 'Data 1', 0, 0),
+(1, 3, 'TO', 2, 'Data 2', 0, 0),
+(1, 4, 'ob_total_OB', 0, '', 0, 0),
+(1, 5, 'OB', 1, 'Data 1', 0, 0),
+(1, 6, 'OB', 2, 'Data 2', 0, 0),
+(1, 7, 'ob_total_AB', 0, '', 453.58, 0),
+(1, 8, 'AB', 1, 'Data 1', 453.58, 0),
+(1, 9, 'AB', 2, 'Data 2', 0, 0),
+(4, 10, 'ob_total_TO', 0, '', 62.55, 1),
+(4, 11, 'TO', 9, 'Data 1', 10.75, 1),
+(4, 12, 'TO', 10, 'Data 2', 20.85, 1),
+(4, 13, 'TO', 11, 'Data 3', 30.95, 1),
+(4, 14, 'ob_total_OB', 0, '', 62.55, 1),
+(4, 15, 'OB', 9, 'Data 1', 10.75, 1),
+(4, 16, 'OB', 10, 'Data 2', 20.85, 1),
+(4, 17, 'OB', 11, 'Data 3', 30.95, 1),
+(4, 18, 'ob_total_AB', 0, '', 599.1, 1),
+(4, 19, 'AB', 9, 'Data 1', 99.7, 1),
+(4, 20, 'AB', 10, 'Data 2', 199.7, 1),
+(4, 21, 'AB', 11, 'Data 3', 299.7, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_mooe`
+--
+
+CREATE TABLE `tb_rao_mooe` (
+  `rao_mooe_id` int(11) NOT NULL,
+  `chairman` varchar(255) NOT NULL,
+  `period_covered` date NOT NULL,
+  `brgy_captain` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_mooe`
+--
+
+INSERT INTO `tb_rao_mooe` (`rao_mooe_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
+(7, 'Angebon Reyes', '2024-12-01', 'Joshua Belandres', 0),
+(8, 'Pending...', '0000-00-00', 'Pending...', 0),
+(9, 'Angebon Reyes', '2024-10-01', 'Joshua Belandres', 1),
+(10, 'John Frederick Gelay', '2024-11-01', 'Joshua Belandres', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_mooe_ap`
+--
+
+CREATE TABLE `tb_rao_mooe_ap` (
+  `rao_mooe_id` int(11) NOT NULL,
+  `rao_mooe_ap_id` int(11) NOT NULL,
+  `ap_ref_date` date NOT NULL,
+  `ap_ref_no` varchar(255) NOT NULL,
+  `ap_particulars` varchar(255) NOT NULL,
+  `ap_totals` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_mooe_ap`
+--
+
+INSERT INTO `tb_rao_mooe_ap` (`rao_mooe_id`, `rao_mooe_ap_id`, `ap_ref_date`, `ap_ref_no`, `ap_particulars`, `ap_totals`) VALUES
+(7, 7, '2024-12-01', 'Appropriations', 'Annual Budget', 522827.97),
+(9, 8, '2024-10-01', 'Appropriations', 'Annual Budget', 12786.25),
+(10, 9, '2024-11-01', 'Appropriations', 'Annual Budget', 1561);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_mooe_ap_data`
+--
+
+CREATE TABLE `tb_rao_mooe_ap_data` (
+  `rao_mooe_ap_data_id` int(11) NOT NULL,
+  `rao_mooe_ap_id` int(11) NOT NULL,
+  `rao_mooe_att_id` varchar(255) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_mooe_ap_data`
+--
+
+INSERT INTO `tb_rao_mooe_ap_data` (`rao_mooe_ap_data_id`, `rao_mooe_ap_id`, `rao_mooe_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(41, 7, '35', 'Data 1', 4356.45, 0),
+(42, 7, '36', 'Data 2', 42757.12, 0),
+(43, 7, '37', 'Data 3', 475714.4, 0),
+(44, 7, '38', 'Data 4', 0, 0),
+(45, 7, '39', 'Data 5', 0, 0),
+(46, 7, '40', 'Data 6', 0, 0),
+(47, 7, '41', 'Data 7', 0, 0),
+(48, 7, '42', 'Data 8', 0, 0),
+(49, 8, '51', 'Data 1', 1245.25, 1),
+(50, 8, '52', 'Data 2', 11541, 1),
+(51, 8, '53', 'Data 3', 0, 1),
+(52, 8, '54', 'Data 4', 0, 1),
+(53, 8, '55', 'Data 5', 0, 1),
+(54, 8, '56', 'Data 6', 0, 1),
+(55, 8, '57', 'Data 7', 0, 1),
+(56, 8, '58', 'Data 8', 0, 1),
+(57, 9, '59', 'Data 1', 1561, 1),
+(58, 9, '60', 'Data 2', 0, 1),
+(59, 9, '61', 'Data 3', 0, 1),
+(60, 9, '62', 'Data 4', 0, 1),
+(61, 9, '63', 'Data 5', 0, 1),
+(62, 9, '64', 'Data 6', 0, 1),
+(63, 9, '65', 'Data 7', 0, 1),
+(64, 9, '66', 'Data 8', 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_mooe_ap_totals`
+--
+
+CREATE TABLE `tb_rao_mooe_ap_totals` (
+  `rao_mooe_id` int(11) NOT NULL,
+  `rao_mooe_ap_total_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `rao_mooe_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_mooe_ap_totals`
+--
+
+INSERT INTO `tb_rao_mooe_ap_totals` (`rao_mooe_id`, `rao_mooe_ap_total_id`, `total_type`, `rao_mooe_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(7, 81, 'ap_total_TA', 0, '', 522827.97, 0),
+(7, 82, 'TA', 35, 'Data 1', 4356.45, 0),
+(7, 83, 'TA', 36, 'Data 2', 42757.12, 0),
+(7, 84, 'TA', 37, 'Data 3', 475714.4, 0),
+(7, 85, 'TA', 38, 'Data 4', 0, 0),
+(7, 86, 'TA', 39, 'Data 5', 0, 0),
+(7, 87, 'TA', 40, 'Data 6', 0, 0),
+(7, 88, 'TA', 41, 'Data 7', 0, 0),
+(7, 89, 'TA', 42, 'Data 8', 0, 0),
+(7, 90, 'ap_total_BF', 0, '', 522827.97, 0),
+(7, 91, 'BF', 35, 'Data 1', 4356.45, 0),
+(7, 92, 'BF', 36, 'Data 2', 42757.12, 0),
+(7, 93, 'BF', 37, 'Data 3', 475714.4, 0),
+(7, 94, 'BF', 38, 'Data 4', 0, 0),
+(7, 95, 'BF', 39, 'Data 5', 0, 0),
+(7, 96, 'BF', 40, 'Data 6', 0, 0),
+(7, 97, 'BF', 41, 'Data 7', 0, 0),
+(7, 98, 'BF', 42, 'Data 8', 0, 0),
+(9, 99, 'ap_total_TA', 0, '', 12786.25, 1),
+(9, 100, 'TA', 51, 'Data 1', 1245.25, 1),
+(9, 101, 'TA', 52, 'Data 2', 11541, 1),
+(9, 102, 'TA', 53, 'Data 3', 0, 1),
+(9, 103, 'TA', 54, 'Data 4', 0, 1),
+(9, 104, 'TA', 55, 'Data 5', 0, 1),
+(9, 105, 'TA', 56, 'Data 6', 0, 1),
+(9, 106, 'TA', 57, 'Data 7', 0, 1),
+(9, 107, 'TA', 58, 'Data 8', 0, 1),
+(9, 108, 'ap_total_BF', 0, '', 12786.25, 1),
+(9, 109, 'BF', 51, 'Data 1', 1245.25, 1),
+(9, 110, 'BF', 52, 'Data 2', 11541, 1),
+(9, 111, 'BF', 53, 'Data 3', 0, 1),
+(9, 112, 'BF', 54, 'Data 4', 0, 1),
+(9, 113, 'BF', 55, 'Data 5', 0, 1),
+(9, 114, 'BF', 56, 'Data 6', 0, 1),
+(9, 115, 'BF', 57, 'Data 7', 0, 1),
+(9, 116, 'BF', 58, 'Data 8', 0, 1),
+(10, 117, 'ap_total_TA', 0, '', 1561, 1),
+(10, 118, 'TA', 59, 'Data 1', 1561, 1),
+(10, 119, 'TA', 60, 'Data 2', 0, 1),
+(10, 120, 'TA', 61, 'Data 3', 0, 1),
+(10, 121, 'TA', 62, 'Data 4', 0, 1),
+(10, 122, 'TA', 63, 'Data 5', 0, 1),
+(10, 123, 'TA', 64, 'Data 6', 0, 1),
+(10, 124, 'TA', 65, 'Data 7', 0, 1),
+(10, 125, 'TA', 66, 'Data 8', 0, 1),
+(10, 126, 'ap_total_BF', 0, '', 1561, 1),
+(10, 127, 'BF', 59, 'Data 1', 1561, 1),
+(10, 128, 'BF', 60, 'Data 2', 0, 1),
+(10, 129, 'BF', 61, 'Data 3', 0, 1),
+(10, 130, 'BF', 62, 'Data 4', 0, 1),
+(10, 131, 'BF', 63, 'Data 5', 0, 1),
+(10, 132, 'BF', 64, 'Data 6', 0, 1),
+(10, 133, 'BF', 65, 'Data 7', 0, 1),
+(10, 134, 'BF', 66, 'Data 8', 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_mooe_attributes`
+--
+
+CREATE TABLE `tb_rao_mooe_attributes` (
+  `rao_mooe_id` int(11) NOT NULL,
+  `rao_mooe_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_mooe_attributes`
+--
+
+INSERT INTO `tb_rao_mooe_attributes` (`rao_mooe_id`, `rao_mooe_att_id`, `attribute_name`, `isDisplayed`) VALUES
+(7, 35, 'Data 1', 0),
+(7, 36, 'Data 2', 0),
+(7, 37, 'Data 3', 0),
+(7, 38, 'Data 4', 0),
+(7, 39, 'Data 5', 0),
+(7, 40, 'Data 6', 0),
+(7, 41, 'Data 7', 0),
+(7, 42, 'Data 8', 0),
+(8, 43, 'Data 1', 0),
+(8, 44, 'Data 2', 0),
+(8, 45, 'Data 3', 0),
+(8, 46, 'Data 4', 0),
+(8, 47, 'Data 5', 0),
+(8, 48, 'Data 6', 0),
+(8, 49, 'Data 7', 0),
+(8, 50, 'Data 8', 0),
+(9, 51, 'Data 1', 1),
+(9, 52, 'Data 2', 1),
+(9, 53, 'Data 3', 1),
+(9, 54, 'Data 4', 1),
+(9, 55, 'Data 5', 1),
+(9, 56, 'Data 6', 1),
+(9, 57, 'Data 7', 1),
+(9, 58, 'Data 8', 1),
+(10, 59, 'Data 1', 1),
+(10, 60, 'Data 2', 1),
+(10, 61, 'Data 3', 1),
+(10, 62, 'Data 4', 1),
+(10, 63, 'Data 5', 1),
+(10, 64, 'Data 6', 1),
+(10, 65, 'Data 7', 1),
+(10, 66, 'Data 8', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_mooe_ob`
+--
+
+CREATE TABLE `tb_rao_mooe_ob` (
+  `rao_mooe_id` int(11) NOT NULL,
+  `rao_mooe_ob_id` int(11) NOT NULL,
+  `ob_ref_date` date NOT NULL,
+  `ob_ref_no` varchar(255) NOT NULL,
+  `ob_particulars` varchar(255) NOT NULL,
+  `ob_totals` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_mooe_ob`
+--
+
+INSERT INTO `tb_rao_mooe_ob` (`rao_mooe_id`, `rao_mooe_ob_id`, `ob_ref_date`, `ob_ref_no`, `ob_particulars`, `ob_totals`) VALUES
+(7, 3, '2024-12-01', 'Obligations', 'Salary and Wages: Tanod', 431400.32);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_mooe_ob_data`
+--
+
+CREATE TABLE `tb_rao_mooe_ob_data` (
+  `rao_mooe_ob_data_id` int(11) NOT NULL,
+  `rao_mooe_ob_id` int(11) NOT NULL,
+  `rao_mooe_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_mooe_ob_data`
+--
+
+INSERT INTO `tb_rao_mooe_ob_data` (`rao_mooe_ob_data_id`, `rao_mooe_ob_id`, `rao_mooe_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(13, 3, 35, 'Data 1', 2435.4, 0),
+(14, 3, 36, 'Data 2', 7542.52, 0),
+(15, 3, 37, 'Data 3', 421422.4, 0),
+(16, 3, 38, 'Data 4', 0, 0),
+(17, 3, 39, 'Data 5', 0, 0),
+(18, 3, 40, 'Data 6', 0, 0),
+(19, 3, 41, 'Data 7', 0, 0),
+(20, 3, 42, 'Data 8', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_mooe_ob_totals`
+--
+
+CREATE TABLE `tb_rao_mooe_ob_totals` (
+  `rao_mooe_id` int(11) NOT NULL,
+  `rao_mooe_ob_total_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `rao_mooe_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_mooe_ob_totals`
+--
+
+INSERT INTO `tb_rao_mooe_ob_totals` (`rao_mooe_id`, `rao_mooe_ob_total_id`, `total_type`, `rao_mooe_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(7, 121, 'ob_total_TO', 0, '', 431400.32, 0),
+(7, 122, 'TO', 35, 'Data 1', 2435.4, 0),
+(7, 123, 'TO', 36, 'Data 2', 7542.52, 0),
+(7, 124, 'TO', 37, 'Data 3', 421422.4, 0),
+(7, 125, 'TO', 38, 'Data 4', 0, 0),
+(7, 126, 'TO', 39, 'Data 5', 0, 0),
+(7, 127, 'TO', 40, 'Data 6', 0, 0),
+(7, 128, 'TO', 41, 'Data 7', 0, 0),
+(7, 129, 'TO', 42, 'Data 8', 0, 0),
+(7, 130, 'ob_total_OB', 0, '', 431400.32, 0),
+(7, 131, 'OB', 35, 'Data 1', 2435.4, 0),
+(7, 132, 'OB', 36, 'Data 2', 7542.52, 0),
+(7, 133, 'OB', 37, 'Data 3', 421422.4, 0),
+(7, 134, 'OB', 38, 'Data 4', 0, 0),
+(7, 135, 'OB', 39, 'Data 5', 0, 0),
+(7, 136, 'OB', 40, 'Data 6', 0, 0),
+(7, 137, 'OB', 41, 'Data 7', 0, 0),
+(7, 138, 'OB', 42, 'Data 8', 0, 0),
+(7, 139, 'ob_total_AB', 0, '', 91427.65, 0),
+(7, 140, 'AB', 35, 'Data 1', 1921.05, 0),
+(7, 141, 'AB', 36, 'Data 2', 35214.6, 0),
+(7, 142, 'AB', 37, 'Data 3', 54292, 0),
+(7, 143, 'AB', 38, 'Data 4', 0, 0),
+(7, 144, 'AB', 39, 'Data 5', 0, 0),
+(7, 145, 'AB', 40, 'Data 6', 0, 0),
+(7, 146, 'AB', 41, 'Data 7', 0, 0),
+(7, 147, 'AB', 42, 'Data 8', 0, 0),
+(9, 148, 'ob_total_TO', 0, '', 0, 1),
+(9, 149, 'TO', 51, 'Data 1', 0, 1),
+(9, 150, 'TO', 52, 'Data 2', 0, 1),
+(9, 151, 'TO', 53, 'Data 3', 0, 1),
+(9, 152, 'TO', 54, 'Data 4', 0, 1),
+(9, 153, 'TO', 55, 'Data 5', 0, 1),
+(9, 154, 'TO', 56, 'Data 6', 0, 1),
+(9, 155, 'TO', 57, 'Data 7', 0, 1),
+(9, 156, 'TO', 58, 'Data 8', 0, 1),
+(9, 157, 'ob_total_OB', 0, '', 0, 1),
+(9, 158, 'OB', 51, 'Data 1', 0, 1),
+(9, 159, 'OB', 52, 'Data 2', 0, 1),
+(9, 160, 'OB', 53, 'Data 3', 0, 1),
+(9, 161, 'OB', 54, 'Data 4', 0, 1),
+(9, 162, 'OB', 55, 'Data 5', 0, 1),
+(9, 163, 'OB', 56, 'Data 6', 0, 1),
+(9, 164, 'OB', 57, 'Data 7', 0, 1),
+(9, 165, 'OB', 58, 'Data 8', 0, 1),
+(9, 166, 'ob_total_AB', 0, '', 12786.25, 1),
+(9, 167, 'AB', 51, 'Data 1', 1245.25, 1),
+(9, 168, 'AB', 52, 'Data 2', 11541, 1),
+(9, 169, 'AB', 53, 'Data 3', 0, 1),
+(9, 170, 'AB', 54, 'Data 4', 0, 1),
+(9, 171, 'AB', 55, 'Data 5', 0, 1),
+(9, 172, 'AB', 56, 'Data 6', 0, 1),
+(9, 173, 'AB', 57, 'Data 7', 0, 1),
+(9, 174, 'AB', 58, 'Data 8', 0, 1),
+(10, 175, 'ob_total_TO', 0, '', 0, 1),
+(10, 176, 'TO', 59, 'Data 1', 0, 1),
+(10, 177, 'TO', 60, 'Data 2', 0, 1),
+(10, 178, 'TO', 61, 'Data 3', 0, 1),
+(10, 179, 'TO', 62, 'Data 4', 0, 1),
+(10, 180, 'TO', 63, 'Data 5', 0, 1),
+(10, 181, 'TO', 64, 'Data 6', 0, 1),
+(10, 182, 'TO', 65, 'Data 7', 0, 1),
+(10, 183, 'TO', 66, 'Data 8', 0, 1),
+(10, 184, 'ob_total_OB', 0, '', 0, 1),
+(10, 185, 'OB', 59, 'Data 1', 0, 1),
+(10, 186, 'OB', 60, 'Data 2', 0, 1),
+(10, 187, 'OB', 61, 'Data 3', 0, 1),
+(10, 188, 'OB', 62, 'Data 4', 0, 1),
+(10, 189, 'OB', 63, 'Data 5', 0, 1),
+(10, 190, 'OB', 64, 'Data 6', 0, 1),
+(10, 191, 'OB', 65, 'Data 7', 0, 1),
+(10, 192, 'OB', 66, 'Data 8', 0, 1),
+(10, 193, 'ob_total_AB', 0, '', 1561, 1),
+(10, 194, 'AB', 59, 'Data 1', 1561, 1),
+(10, 195, 'AB', 60, 'Data 2', 0, 1),
+(10, 196, 'AB', 61, 'Data 3', 0, 1),
+(10, 197, 'AB', 62, 'Data 4', 0, 1),
+(10, 198, 'AB', 63, 'Data 5', 0, 1),
+(10, 199, 'AB', 64, 'Data 6', 0, 1),
+(10, 200, 'AB', 65, 'Data 7', 0, 1),
+(10, 201, 'AB', 66, 'Data 8', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1201,6 +2489,339 @@ CREATE TABLE `tb_rao_ob_data` (
 
 INSERT INTO `tb_rao_ob_data` (`rao_id`, `rao_ob_data_id`, `ob_ref_date`, `ob_ref_no`, `ob_particulars`, `ob_total`, `ob_salary`, `ob_cash_gift`, `ob_year_end`, `ob_mid_year`, `ob_sri`, `ob_others`) VALUES
 (77, 42, '0000-00-00', '', '', 0, 0, 0, 0, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_ps`
+--
+
+CREATE TABLE `tb_rao_ps` (
+  `rao_ps_id` int(11) NOT NULL,
+  `chairman` varchar(255) NOT NULL,
+  `period_covered` date NOT NULL,
+  `brgy_captain` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_ps`
+--
+
+INSERT INTO `tb_rao_ps` (`rao_ps_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
+(7, 'John Frederick ', '2024-12-02', 'Joshua ', 0),
+(8, 'Zenaida Belandres', '2024-11-01', 'Joshua Belandres', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_ps_ap`
+--
+
+CREATE TABLE `tb_rao_ps_ap` (
+  `rao_ps_id` int(11) NOT NULL,
+  `rao_ps_ap_id` int(11) NOT NULL,
+  `ap_ref_date` date NOT NULL,
+  `ap_ref_no` varchar(255) NOT NULL,
+  `ap_particulars` varchar(255) NOT NULL,
+  `ap_total` double NOT NULL,
+  `ap_salary` double NOT NULL,
+  `ap_cash_gift` double NOT NULL,
+  `ap_year_end` double NOT NULL,
+  `ap_mid_year` double NOT NULL,
+  `ap_sri` double NOT NULL,
+  `ap_others` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_ps_ap`
+--
+
+INSERT INTO `tb_rao_ps_ap` (`rao_ps_id`, `rao_ps_ap_id`, `ap_ref_date`, `ap_ref_no`, `ap_particulars`, `ap_total`, `ap_salary`, `ap_cash_gift`, `ap_year_end`, `ap_mid_year`, `ap_sri`, `ap_others`, `isDisplayed`) VALUES
+(7, 1, '2024-12-01', 'Appropriations', 'Annual Budget', 5134533.86, 4242000, 110000, 178000, 178000, 220000, 206533.86, 0),
+(7, 2, '2024-12-01', 'Appropriations', 'Additional', 100000, 100000, 0, 0, 0, 0, 0, 0),
+(7, 3, '2024-12-01', 'Appropriations', 'Additional', 100000, 100000, 0, 0, 0, 0, 0, 0),
+(8, 4, '2024-11-01', 'Appropriations', 'Annual Budget', 26000, 12000, 14000, 0, 0, 0, 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_ps_ob`
+--
+
+CREATE TABLE `tb_rao_ps_ob` (
+  `rao_ps_id` int(11) NOT NULL,
+  `rao_ps_ob_id` int(11) NOT NULL,
+  `ob_ref_date` date NOT NULL,
+  `ob_ref_no` varchar(255) NOT NULL,
+  `ob_particulars` varchar(255) NOT NULL,
+  `ob_total` double NOT NULL,
+  `ob_salary` double NOT NULL,
+  `ob_cash_gift` double NOT NULL,
+  `ob_year_end` double NOT NULL,
+  `ob_mid_year` double NOT NULL,
+  `ob_sri` double NOT NULL,
+  `ob_others` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_ps_ob`
+--
+
+INSERT INTO `tb_rao_ps_ob` (`rao_ps_id`, `rao_ps_ob_id`, `ob_ref_date`, `ob_ref_no`, `ob_particulars`, `ob_total`, `ob_salary`, `ob_cash_gift`, `ob_year_end`, `ob_mid_year`, `ob_sri`, `ob_others`, `isDisplayed`) VALUES
+(7, 1, '2024-12-02', 'Obligations', 'Salary and Wages: Tanod', 98000, 48000, 48000, 1000, 1000, 0, 0, 0),
+(7, 2, '2024-12-01', 'Obligations', 'Salary and Wages: Tanod', 100000, 50000, 50000, 0, 0, 0, 0, 0),
+(7, 3, '2024-12-02', 'Obligations', 'Salary and Wages: Additional', 23500, 15000, 0, 0, 8500, 0, 0, 0),
+(7, 4, '2024-12-02', 'Obligations', 'Salary and Wages: Additional', 23500, 15000, 0, 0, 8500, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_ps_totals`
+--
+
+CREATE TABLE `tb_rao_ps_totals` (
+  `rao_ps_total_id` int(11) NOT NULL,
+  `rao_ps_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `total` double NOT NULL,
+  `salary` double NOT NULL,
+  `cash_gift` double NOT NULL,
+  `year_end` double NOT NULL,
+  `mid_year` double NOT NULL,
+  `sri` double NOT NULL,
+  `others` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_ps_totals`
+--
+
+INSERT INTO `tb_rao_ps_totals` (`rao_ps_total_id`, `rao_ps_id`, `total_type`, `total`, `salary`, `cash_gift`, `year_end`, `mid_year`, `sri`, `others`, `isDisplayed`) VALUES
+(1, 7, 'TA', 26000, 12000, 14000, 0, 0, 0, 0, 0),
+(2, 7, 'BF', 26000, 12000, 14000, 0, 0, 0, 0, 0),
+(3, 7, 'TO', 0, 0, 0, 0, 0, 0, 0, 0),
+(4, 7, 'OB', 0, 0, 0, 0, 0, 0, 0, 0),
+(5, 7, 'AB', 26000, 12000, 14000, 0, 0, 0, 0, 0),
+(6, 8, 'TA', 26000, 12000, 14000, 0, 0, 0, 0, 1),
+(7, 8, 'BF', 26000, 12000, 14000, 0, 0, 0, 0, 1),
+(8, 8, 'TO', 0, 0, 0, 0, 0, 0, 0, 1),
+(9, 8, 'OB', 0, 0, 0, 0, 0, 0, 0, 1),
+(10, 8, 'AB', 26000, 12000, 14000, 0, 0, 0, 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_sk`
+--
+
+CREATE TABLE `tb_rao_sk` (
+  `rao_sk_id` int(11) NOT NULL,
+  `chairman` varchar(255) NOT NULL,
+  `period_covered` date NOT NULL,
+  `brgy_captain` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_sk`
+--
+
+INSERT INTO `tb_rao_sk` (`rao_sk_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
+(1, 'Angebon Reyes', '2024-12-01', 'Joshua Belandres', 1),
+(2, 'Angebon Reyes', '2024-11-01', 'Zenaida Belandres', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_sk_ap`
+--
+
+CREATE TABLE `tb_rao_sk_ap` (
+  `rao_sk_id` int(11) NOT NULL,
+  `rao_sk_ap_id` int(11) NOT NULL,
+  `ap_ref_date` date NOT NULL,
+  `ap_ref_no` varchar(255) NOT NULL,
+  `ap_particulars` varchar(255) NOT NULL,
+  `ap_totals` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_sk_ap`
+--
+
+INSERT INTO `tb_rao_sk_ap` (`rao_sk_id`, `rao_sk_ap_id`, `ap_ref_date`, `ap_ref_no`, `ap_particulars`, `ap_totals`) VALUES
+(1, 1, '2024-12-01', 'Appropriations', 'Particulars', 3232.09),
+(2, 2, '2024-11-01', 'Appropriations', 'SK FUNDS', 601.43);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_sk_ap_data`
+--
+
+CREATE TABLE `tb_rao_sk_ap_data` (
+  `rao_sk_ap_data_id` int(11) NOT NULL,
+  `rao_sk_ap_id` int(11) NOT NULL,
+  `rao_sk_att_id` varchar(255) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_sk_ap_data`
+--
+
+INSERT INTO `tb_rao_sk_ap_data` (`rao_sk_ap_data_id`, `rao_sk_ap_id`, `rao_sk_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, '1', 'Data 1', 1758.56, 1),
+(2, 1, '2', 'Data 2', 1473.53, 1),
+(3, 1, '3', 'Data 3', 0, 1),
+(4, 2, '4', 'Data 1', 100.42, 0),
+(5, 2, '5', 'Data 2', 200.54, 0),
+(6, 2, '6', 'Data 3', 300.47, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_sk_ap_totals`
+--
+
+CREATE TABLE `tb_rao_sk_ap_totals` (
+  `rao_sk_id` int(11) NOT NULL,
+  `rao_sk_ap_total_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `rao_sk_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_sk_ap_totals`
+--
+
+INSERT INTO `tb_rao_sk_ap_totals` (`rao_sk_id`, `rao_sk_ap_total_id`, `total_type`, `rao_sk_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, 'ap_total_TA', 0, '', 3232.09, 1),
+(1, 2, 'TA', 1, 'Data 1', 1758.56, 1),
+(1, 3, 'TA', 2, 'Data 2', 1473.53, 1),
+(1, 4, 'ap_total_BF', 0, '', 3232.09, 1),
+(1, 5, 'BF', 1, 'Data 1', 1758.56, 1),
+(1, 6, 'BF', 2, 'Data 2', 1473.53, 1),
+(1, 7, 'TA', 3, 'Data 3', 0, 1),
+(1, 8, 'BF', 3, 'Data 3', 0, 1),
+(2, 9, 'ap_total_TA', 0, '', 601.43, 0),
+(2, 10, 'TA', 4, 'Data 1', 100.42, 0),
+(2, 11, 'TA', 5, 'Data 2', 200.54, 0),
+(2, 12, 'TA', 6, 'Data 3', 300.47, 0),
+(2, 13, 'ap_total_BF', 0, '', 601.43, 0),
+(2, 14, 'BF', 4, 'Data 1', 100.42, 0),
+(2, 15, 'BF', 5, 'Data 2', 200.54, 0),
+(2, 16, 'BF', 6, 'Data 3', 300.47, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_sk_attributes`
+--
+
+CREATE TABLE `tb_rao_sk_attributes` (
+  `rao_sk_id` int(11) NOT NULL,
+  `rao_sk_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_sk_attributes`
+--
+
+INSERT INTO `tb_rao_sk_attributes` (`rao_sk_id`, `rao_sk_att_id`, `attribute_name`, `isDisplayed`) VALUES
+(1, 1, 'Data 1', 1),
+(1, 2, 'Data 2', 1),
+(1, 3, 'Data 3', 1),
+(2, 4, 'Data 1', 0),
+(2, 5, 'Data 2', 0),
+(2, 6, 'Data 3', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_sk_ob`
+--
+
+CREATE TABLE `tb_rao_sk_ob` (
+  `rao_sk_id` int(11) NOT NULL,
+  `rao_sk_ob_id` int(11) NOT NULL,
+  `ob_ref_date` date NOT NULL,
+  `ob_ref_no` varchar(255) NOT NULL,
+  `ob_particulars` varchar(255) NOT NULL,
+  `ob_totals` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_sk_ob_data`
+--
+
+CREATE TABLE `tb_rao_sk_ob_data` (
+  `rao_sk_ob_data_id` int(11) NOT NULL,
+  `rao_sk_ob_id` int(11) NOT NULL,
+  `rao_sk_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_sk_ob_totals`
+--
+
+CREATE TABLE `tb_rao_sk_ob_totals` (
+  `rao_sk_id` int(11) NOT NULL,
+  `rao_sk_ob_total_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `rao_sk_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_sk_ob_totals`
+--
+
+INSERT INTO `tb_rao_sk_ob_totals` (`rao_sk_id`, `rao_sk_ob_total_id`, `total_type`, `rao_sk_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, 'ob_total_TO', 0, '', 0, 1),
+(1, 2, 'TO', 1, 'Data 1', 0, 1),
+(1, 3, 'TO', 2, 'Data 2', 0, 1),
+(1, 4, 'ob_total_OB', 0, '', 0, 1),
+(1, 5, 'OB', 1, 'Data 1', 0, 1),
+(1, 6, 'OB', 2, 'Data 2', 0, 1),
+(1, 7, 'ob_total_AB', 0, '', 3232.09, 1),
+(1, 8, 'AB', 1, 'Data 1', 1758.56, 1),
+(1, 9, 'AB', 2, 'Data 2', 1473.53, 1),
+(1, 10, 'TO', 3, 'Data 3', 0, 1),
+(1, 11, 'OB', 3, 'Data 3', 0, 1),
+(1, 12, 'AB', 3, 'Data 3', 0, 1),
+(2, 13, 'ob_total_TO', 0, '', 0, 0),
+(2, 14, 'TO', 4, 'Data 1', 0, 0),
+(2, 15, 'TO', 5, 'Data 2', 0, 0),
+(2, 16, 'TO', 6, 'Data 3', 0, 0),
+(2, 17, 'ob_total_OB', 0, '', 0, 0),
+(2, 18, 'OB', 4, 'Data 1', 0, 0),
+(2, 19, 'OB', 5, 'Data 2', 0, 0),
+(2, 20, 'OB', 6, 'Data 3', 0, 0),
+(2, 21, 'ob_total_AB', 0, '', 601.43, 0),
+(2, 22, 'AB', 4, 'Data 1', 100.42, 0),
+(2, 23, 'AB', 5, 'Data 2', 200.54, 0),
+(2, 24, 'AB', 6, 'Data 3', 300.47, 0);
 
 -- --------------------------------------------------------
 
@@ -1266,7 +2887,7 @@ CREATE TABLE `tb_resident` (
   `resident_address` varchar(100) NOT NULL,
   `resident_educationalattainment` varchar(100) NOT NULL,
   `resident_birthdate` date NOT NULL,
-  `resident_age` int(11) NOT NULL,
+  `resident_age` int(11) DEFAULT NULL,
   `resident_status` varchar(30) NOT NULL,
   `resident_householdrole` varchar(50) NOT NULL,
   `resident_maidenname` varchar(50) NOT NULL,
@@ -1295,11 +2916,12 @@ CREATE TABLE `tb_resident` (
 --
 
 INSERT INTO `tb_resident` (`resident_id`, `resident_firstname`, `resident_middlename`, `resident_lastname`, `resident_sex`, `resident_suffixes`, `resident_address`, `resident_educationalattainment`, `resident_birthdate`, `resident_age`, `resident_status`, `resident_householdrole`, `resident_maidenname`, `resident_contact`, `resident_occupation`, `resident_religion`, `resident_indigenous`, `isDisplayed`, `resident_pension`, `resident_beneficiaries`, `resident_lactating`, `resident_pregnant`, `resident_PWD`, `resident_SY`, `resident_height`, `resident_weight`, `resident_heightstat`, `resident_weightstat`, `resident_BMIstat`, `resident_medical`, `household_id`) VALUES
-(217, 'gsdfgdfg', 'fdsgsfdgd', 'sdfgsdf', 'Male', ' ', 'Sitio Sto. Nino', 'Elementary', '2001-11-09', 23, 'Single', 'daughter', 'gsdfgds', '', 'asdfasdf', 'asdfasdf', '0', 1, 'asdfasfd', 'asdfasdf', '', '', '', '', NULL, NULL, '', '', '', '', 122),
+(217, 'gsdfgdfg', 'fdsgsfdgd', 'sdfgsdf', 'Male', ' ', 'Sitio Sto. Nino', 'Elementary', '2001-11-09', 23, 'Single', 'daughter', 'gsdfgds', '', 'asdfasdf', 'asdfasdf', '0', 1, 'asdfasfd', 'asdfasdf', 'fasfa', 'sdfasdfasd', 'fdsafads', 'fasdfasf', 0, 0, 'sdfasdf', 'asdfas', 'Under Weight', 'asdfas', 122),
 (218, 'asfasdf', 'dasfdsafas', 'asdfasdf', 'Male', 'Jr', 'Sitio Sto. Nino', 'High School, Undergrad', '1984-11-09', 40, 'Single', '12', 'sadfasdf', '', 'asdfasd', 'asdfasdf', '0', 1, 'asdfasfd', 'asdfasdf', '', '', '', '', NULL, NULL, '', '', '', '', 122),
 (222, 'asdfasdf', 'dsafsaf', 'asdfasdf', 'Male', ' ', 'Sitio Suwa', 'Vocational', '2001-11-09', 23, 'Single', 'asdfasf', 'sdfasfadsf', '', 'asdfasdf', 'asdfasdf', 'asdfasf', 1, 'sdfasfa', 'sdfasf', '', '', '', '', NULL, NULL, '', '', '', '', 110920),
 (223, 'asdfadsf', 'asdfsafsaf', 'asdfasfasdfsaffd', 'Male', ' ', 'Sitio Sto. Nino', 'Bachelor Degree', '1960-11-09', 64, 'Single', 'son', 'asdfasf', '', 'asdfasd', 'asdfasdf', 'asdfasdfffasd', 1, 'asdfasfd', 'asdfas', '', '', '', '', NULL, NULL, '', '', '', '', 112354),
-(224, 'asdfadsf', 'asdfsafsaf', 'xxxxxc', 'Male', ' ', 'Sitio Sto. Nino', 'High School, Graduate', '2001-11-09', 23, 'Single', 'son', 'asdfasf', '', 'asdfasd', 'asdfasdf', 'asdfasdfffasd', 1, 'asdfasfd', 'asdfas', '', '', '', '', NULL, NULL, '', '', '', '', 112354);
+(224, 'asdfadsf', 'asdfsafsaf', 'xxxxxc', 'Male', ' ', 'Sitio Sto. Nino', 'High School, Graduate', '2001-11-09', 23, 'Single', 'son', 'asdfasf', '', 'asdfasd', 'asdfasdf', 'asdfasdfffasd', 1, 'asdfasfd', 'asdfas', '', '', '', '', NULL, NULL, '', '', '', '', 112354),
+(293, 'dfasfas', 'fasfasf', 'asdfas', 'Male', ' ', 'Sitio Suwa', 'Elementary', '2001-11-09', 23, 'Single', 'asfsaf', 'adsfasdf', '', 'asdfa', 'asdfa', 'asfasf', 0, 'asdfasf', 'asfasf', '', '', '', '', NULL, NULL, '', '', '', '', 12354);
 
 --
 -- Triggers `tb_resident`
@@ -1374,20 +2996,21 @@ CREATE TABLE `tb_user` (
   `theme` varchar(10) NOT NULL DEFAULT '''light''',
   `suffix` varchar(10) NOT NULL,
   `profile_picture` varchar(255) DEFAULT 'profile_default.png',
-  `approval_status` enum('pending','approved','rejected') DEFAULT 'pending',
   `user_age` int(11) DEFAULT NULL,
   `isApproved` tinyint(4) NOT NULL DEFAULT 0,
-  `disapprovalReason` text DEFAULT NULL
+  `disapprovalReason` text DEFAULT NULL,
+  `approval_status` enum('Pending','Approved','Disapproved') DEFAULT 'Pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_user`
 --
 
-INSERT INTO `tb_user` (`user_id`, `lastname`, `firstname`, `middlename`, `sex`, `birthdate`, `barangayposition`, `username`, `password`, `verification_code`, `theme`, `suffix`, `profile_picture`, `approval_status`, `user_age`, `isApproved`, `disapprovalReason`) VALUES
-(93, 'Nepomuceno', 'Josephine', 'Belarma', 'Female', '2001-11-09', 'Barangay Captain', 'john-bc', '$2y$10$kDRMuCt82KEV7CWEE47FQu.j5/K5P80nV/rvgpaevnzKnKlpTXskG', '110921', 'dark', ' ', 'profile_default.png', 'pending', NULL, 1, NULL),
-(99, 'gelay', 'john', 'domecillo', 'Male', '2001-11-09', 'Barangay Health Worker', 'john-bhw', '$2y$10$B6l2sSneziX4m87uPhn/.eb4XUEbv3l9Iy06JtsTuXUlP8yca3e3O', '110920', 'dark', ' ', 'profile_default.png', 'pending', NULL, 1, NULL),
-(100, 'gelay', 'john', 'domecillo', 'Male', '2001-11-09', 'Barangay Personnel', 'john-bp', '$2y$10$k0sgidv0z3MwFeNuVgLzpOZ3LSrKduJgBGVTkU7ElNAIsNb4UbAdi', '110901', 'dark', ' ', 'profile_default.png', 'pending', NULL, 1, NULL);
+INSERT INTO `tb_user` (`user_id`, `lastname`, `firstname`, `middlename`, `sex`, `birthdate`, `barangayposition`, `username`, `password`, `verification_code`, `theme`, `suffix`, `profile_picture`, `user_age`, `isApproved`, `disapprovalReason`, `approval_status`) VALUES
+(93, 'Nepomuceno', 'Josephine', 'Belarma', 'Female', '2001-11-09', 'Barangay Captain', 'john-bc', '$2y$10$xqitP33W6cx7wpxiiXaN1OBxGqgIfAX2L1StRbss1xcuuzbqYnXMq', '110921', 'dark', ' ', 'profile_default.png', NULL, 1, NULL, 'Approved'),
+(101, 'gelay', 'john', 'domecillo', 'Male', '2001-11-09', 'Barangay Secretary', 'john-bs', '$2y$10$OYxztQxQTDVNnkW3Y1hFsu1/0eu.wt.jfuVbeWrSB5Ytxgv.nxL2.', '111111', '\'light\'', ' ', 'profile_default.png', NULL, 1, NULL, 'Pending'),
+(102, 'gelay', 'john', 'frederick', 'Male', '2004-11-09', 'Barangay Treasurer', 'john-br', '$2y$10$fLtu3SJp/X2gewBpVTf7c.53BoqKWEueBXe..4BZD15k5FxLoNceq', NULL, '\'light\'', 'Jr.', 'profile_default.png', NULL, 1, NULL, 'Pending'),
+(103, 'gelay', 'john clarence', 'herbias', 'Male', '2001-11-11', 'Barangay Personnel', 'john-bp', '$2y$10$9xRYA192PNJk9xvtDFZbzuaULLNos.bRFxojGCI1tVsXs7.baQ7vG', '110901', '\'light\'', ' ', 'profile_default.png', NULL, 1, NULL, 'Pending');
 
 --
 -- Indexes for dumped tables
@@ -1524,6 +3147,93 @@ ALTER TABLE `tb_rao_ap_data`
   ADD KEY `rao_id` (`rao_id`);
 
 --
+-- Indexes for table `tb_rao_bd`
+--
+ALTER TABLE `tb_rao_bd`
+  ADD PRIMARY KEY (`rao_bd_id`);
+
+--
+-- Indexes for table `tb_rao_bd_ap`
+--
+ALTER TABLE `tb_rao_bd_ap`
+  ADD PRIMARY KEY (`rao_bd_ap_id`),
+  ADD KEY `rao_bd_id` (`rao_bd_id`);
+
+--
+-- Indexes for table `tb_rao_bd_ob`
+--
+ALTER TABLE `tb_rao_bd_ob`
+  ADD PRIMARY KEY (`rao_bd_ob_id`),
+  ADD KEY `rao_bd_id` (`rao_bd_id`);
+
+--
+-- Indexes for table `tb_rao_bd_totals`
+--
+ALTER TABLE `tb_rao_bd_totals`
+  ADD PRIMARY KEY (`rao_bd_total_id`),
+  ADD KEY `rao_bd_id` (`rao_bd_id`);
+
+--
+-- Indexes for table `tb_rao_co`
+--
+ALTER TABLE `tb_rao_co`
+  ADD PRIMARY KEY (`rao_co_id`);
+
+--
+-- Indexes for table `tb_rao_cocont`
+--
+ALTER TABLE `tb_rao_cocont`
+  ADD PRIMARY KEY (`rao_cocont_id`);
+
+--
+-- Indexes for table `tb_rao_cocont_ap`
+--
+ALTER TABLE `tb_rao_cocont_ap`
+  ADD PRIMARY KEY (`rao_cocont_ap_id`);
+
+--
+-- Indexes for table `tb_rao_cocont_ap_data`
+--
+ALTER TABLE `tb_rao_cocont_ap_data`
+  ADD PRIMARY KEY (`rao_cocont_ap_data_id`),
+  ADD KEY `rao_cocont_ap_id` (`rao_cocont_ap_id`);
+
+--
+-- Indexes for table `tb_rao_cocont_ap_totals`
+--
+ALTER TABLE `tb_rao_cocont_ap_totals`
+  ADD PRIMARY KEY (`rao_cocont_ap_total_id`),
+  ADD KEY `rao_cocont_id` (`rao_cocont_id`);
+
+--
+-- Indexes for table `tb_rao_cocont_attributes`
+--
+ALTER TABLE `tb_rao_cocont_attributes`
+  ADD PRIMARY KEY (`rao_cocont_att_id`),
+  ADD KEY `rao_cocont_id` (`rao_cocont_id`);
+
+--
+-- Indexes for table `tb_rao_cocont_ob`
+--
+ALTER TABLE `tb_rao_cocont_ob`
+  ADD PRIMARY KEY (`rao_cocont_ob_id`),
+  ADD KEY `rao_cocont_id` (`rao_cocont_id`);
+
+--
+-- Indexes for table `tb_rao_cocont_ob_data`
+--
+ALTER TABLE `tb_rao_cocont_ob_data`
+  ADD PRIMARY KEY (`rao_cocont_ob_data_id`),
+  ADD KEY `rao_cocont_ob_id` (`rao_cocont_ob_id`);
+
+--
+-- Indexes for table `tb_rao_cocont_ob_totals`
+--
+ALTER TABLE `tb_rao_cocont_ob_totals`
+  ADD PRIMARY KEY (`rao_cocont_ob_total_id`),
+  ADD KEY `rao_cocont_id` (`rao_cocont_id`);
+
+--
 -- Indexes for table `tb_rao_cont`
 --
 ALTER TABLE `tb_rao_cont`
@@ -1577,11 +3287,307 @@ ALTER TABLE `tb_rao_cont_ob_totals`
   ADD KEY `rao_cont_id` (`rao_cont_id`);
 
 --
+-- Indexes for table `tb_rao_co_ap`
+--
+ALTER TABLE `tb_rao_co_ap`
+  ADD PRIMARY KEY (`rao_co_ap_id`),
+  ADD KEY `rao_co_id` (`rao_co_id`);
+
+--
+-- Indexes for table `tb_rao_co_ap_data`
+--
+ALTER TABLE `tb_rao_co_ap_data`
+  ADD PRIMARY KEY (`rao_co_ap_data_id`),
+  ADD KEY `rao_co_ap_id` (`rao_co_ap_id`);
+
+--
+-- Indexes for table `tb_rao_co_ap_totals`
+--
+ALTER TABLE `tb_rao_co_ap_totals`
+  ADD PRIMARY KEY (`rao_co_ap_total_id`),
+  ADD KEY `rao_co_id` (`rao_co_id`);
+
+--
+-- Indexes for table `tb_rao_co_attributes`
+--
+ALTER TABLE `tb_rao_co_attributes`
+  ADD PRIMARY KEY (`rao_co_att_id`),
+  ADD KEY `rao_co_id` (`rao_co_id`);
+
+--
+-- Indexes for table `tb_rao_co_ob`
+--
+ALTER TABLE `tb_rao_co_ob`
+  ADD PRIMARY KEY (`rao_co_ob_id`),
+  ADD KEY `rao_co_id` (`rao_co_id`);
+
+--
+-- Indexes for table `tb_rao_co_ob_data`
+--
+ALTER TABLE `tb_rao_co_ob_data`
+  ADD PRIMARY KEY (`rao_co_ob_data_id`),
+  ADD KEY `rao_co_ob_id` (`rao_co_ob_id`);
+
+--
+-- Indexes for table `tb_rao_co_ob_totals`
+--
+ALTER TABLE `tb_rao_co_ob_totals`
+  ADD PRIMARY KEY (`rao_co_ob_total_id`),
+  ADD KEY `rao_co_id` (`rao_co_id`);
+
+--
+-- Indexes for table `tb_rao_dev`
+--
+ALTER TABLE `tb_rao_dev`
+  ADD PRIMARY KEY (`rao_dev_id`);
+
+--
+-- Indexes for table `tb_rao_dev_ap`
+--
+ALTER TABLE `tb_rao_dev_ap`
+  ADD PRIMARY KEY (`rao_dev_ap_id`),
+  ADD KEY `rao_dev_id` (`rao_dev_id`);
+
+--
+-- Indexes for table `tb_rao_dev_ap_data`
+--
+ALTER TABLE `tb_rao_dev_ap_data`
+  ADD PRIMARY KEY (`rao_dev_ap_data_id`),
+  ADD KEY `rao_dev_ap_id` (`rao_dev_ap_id`);
+
+--
+-- Indexes for table `tb_rao_dev_ap_totals`
+--
+ALTER TABLE `tb_rao_dev_ap_totals`
+  ADD PRIMARY KEY (`rao_dev_ap_total_id`),
+  ADD KEY `rao_dev_id` (`rao_dev_id`);
+
+--
+-- Indexes for table `tb_rao_dev_attributes`
+--
+ALTER TABLE `tb_rao_dev_attributes`
+  ADD PRIMARY KEY (`rao_dev_att_id`),
+  ADD KEY `rao_dev_id` (`rao_dev_id`);
+
+--
+-- Indexes for table `tb_rao_dev_ob`
+--
+ALTER TABLE `tb_rao_dev_ob`
+  ADD PRIMARY KEY (`rao_dev_ob_id`),
+  ADD KEY `rao_dev_id` (`rao_dev_id`);
+
+--
+-- Indexes for table `tb_rao_dev_ob_data`
+--
+ALTER TABLE `tb_rao_dev_ob_data`
+  ADD PRIMARY KEY (`rao_dev_ob_data_id`),
+  ADD KEY `rao_dev_ob_id` (`rao_dev_ob_id`);
+
+--
+-- Indexes for table `tb_rao_dev_ob_totals`
+--
+ALTER TABLE `tb_rao_dev_ob_totals`
+  ADD PRIMARY KEY (`rao_dev_ob_total_id`),
+  ADD KEY `rao_dev_id` (`rao_dev_id`);
+
+--
+-- Indexes for table `tb_rao_fe`
+--
+ALTER TABLE `tb_rao_fe`
+  ADD PRIMARY KEY (`rao_fe_id`);
+
+--
+-- Indexes for table `tb_rao_fe_ap`
+--
+ALTER TABLE `tb_rao_fe_ap`
+  ADD PRIMARY KEY (`rao_fe_ap_id`),
+  ADD KEY `rao_fe_id` (`rao_fe_id`);
+
+--
+-- Indexes for table `tb_rao_fe_ap_data`
+--
+ALTER TABLE `tb_rao_fe_ap_data`
+  ADD PRIMARY KEY (`rao_fe_ap_data_id`),
+  ADD KEY `rao_fe_ap_id` (`rao_fe_ap_id`);
+
+--
+-- Indexes for table `tb_rao_fe_ap_totals`
+--
+ALTER TABLE `tb_rao_fe_ap_totals`
+  ADD PRIMARY KEY (`rao_fe_ap_total_id`),
+  ADD KEY `rao_fe_id` (`rao_fe_id`);
+
+--
+-- Indexes for table `tb_rao_fe_attributes`
+--
+ALTER TABLE `tb_rao_fe_attributes`
+  ADD PRIMARY KEY (`rao_fe_att_id`),
+  ADD KEY `rao_fe_id` (`rao_fe_id`);
+
+--
+-- Indexes for table `tb_rao_fe_ob`
+--
+ALTER TABLE `tb_rao_fe_ob`
+  ADD PRIMARY KEY (`rao_fe_ob_id`),
+  ADD KEY `rao_fe_id` (`rao_fe_id`);
+
+--
+-- Indexes for table `tb_rao_fe_ob_data`
+--
+ALTER TABLE `tb_rao_fe_ob_data`
+  ADD PRIMARY KEY (`rao_fe_ob_data_id`),
+  ADD KEY `rao_fe_ob_id` (`rao_fe_ob_id`);
+
+--
+-- Indexes for table `tb_rao_fe_ob_totals`
+--
+ALTER TABLE `tb_rao_fe_ob_totals`
+  ADD PRIMARY KEY (`rao_fe_ob_total_id`),
+  ADD KEY `rao_fe_id` (`rao_fe_id`);
+
+--
+-- Indexes for table `tb_rao_mooe`
+--
+ALTER TABLE `tb_rao_mooe`
+  ADD PRIMARY KEY (`rao_mooe_id`);
+
+--
+-- Indexes for table `tb_rao_mooe_ap`
+--
+ALTER TABLE `tb_rao_mooe_ap`
+  ADD PRIMARY KEY (`rao_mooe_ap_id`),
+  ADD KEY `rao_mooe_id` (`rao_mooe_id`);
+
+--
+-- Indexes for table `tb_rao_mooe_ap_data`
+--
+ALTER TABLE `tb_rao_mooe_ap_data`
+  ADD PRIMARY KEY (`rao_mooe_ap_data_id`),
+  ADD KEY `rao_mooe_ap_id` (`rao_mooe_ap_id`);
+
+--
+-- Indexes for table `tb_rao_mooe_ap_totals`
+--
+ALTER TABLE `tb_rao_mooe_ap_totals`
+  ADD PRIMARY KEY (`rao_mooe_ap_total_id`),
+  ADD KEY `rao_mooe_id` (`rao_mooe_id`);
+
+--
+-- Indexes for table `tb_rao_mooe_attributes`
+--
+ALTER TABLE `tb_rao_mooe_attributes`
+  ADD PRIMARY KEY (`rao_mooe_att_id`),
+  ADD KEY `rao_mooe_id` (`rao_mooe_id`);
+
+--
+-- Indexes for table `tb_rao_mooe_ob`
+--
+ALTER TABLE `tb_rao_mooe_ob`
+  ADD PRIMARY KEY (`rao_mooe_ob_id`),
+  ADD KEY `rao_mooe_id` (`rao_mooe_id`);
+
+--
+-- Indexes for table `tb_rao_mooe_ob_data`
+--
+ALTER TABLE `tb_rao_mooe_ob_data`
+  ADD PRIMARY KEY (`rao_mooe_ob_data_id`),
+  ADD KEY `rao_mooe_ob_id` (`rao_mooe_ob_id`);
+
+--
+-- Indexes for table `tb_rao_mooe_ob_totals`
+--
+ALTER TABLE `tb_rao_mooe_ob_totals`
+  ADD PRIMARY KEY (`rao_mooe_ob_total_id`),
+  ADD KEY `rao_mooe_id` (`rao_mooe_id`);
+
+--
 -- Indexes for table `tb_rao_ob_data`
 --
 ALTER TABLE `tb_rao_ob_data`
   ADD PRIMARY KEY (`rao_ob_data_id`),
   ADD KEY `rao_id` (`rao_id`);
+
+--
+-- Indexes for table `tb_rao_ps`
+--
+ALTER TABLE `tb_rao_ps`
+  ADD PRIMARY KEY (`rao_ps_id`);
+
+--
+-- Indexes for table `tb_rao_ps_ap`
+--
+ALTER TABLE `tb_rao_ps_ap`
+  ADD PRIMARY KEY (`rao_ps_ap_id`),
+  ADD KEY `rao_ps_id` (`rao_ps_id`);
+
+--
+-- Indexes for table `tb_rao_ps_ob`
+--
+ALTER TABLE `tb_rao_ps_ob`
+  ADD PRIMARY KEY (`rao_ps_ob_id`),
+  ADD KEY `rao_ps_id` (`rao_ps_id`);
+
+--
+-- Indexes for table `tb_rao_ps_totals`
+--
+ALTER TABLE `tb_rao_ps_totals`
+  ADD PRIMARY KEY (`rao_ps_total_id`),
+  ADD KEY `rao_ps_id` (`rao_ps_id`);
+
+--
+-- Indexes for table `tb_rao_sk`
+--
+ALTER TABLE `tb_rao_sk`
+  ADD PRIMARY KEY (`rao_sk_id`);
+
+--
+-- Indexes for table `tb_rao_sk_ap`
+--
+ALTER TABLE `tb_rao_sk_ap`
+  ADD PRIMARY KEY (`rao_sk_ap_id`),
+  ADD KEY `rao_sk_id` (`rao_sk_id`);
+
+--
+-- Indexes for table `tb_rao_sk_ap_data`
+--
+ALTER TABLE `tb_rao_sk_ap_data`
+  ADD PRIMARY KEY (`rao_sk_ap_data_id`),
+  ADD KEY `rao_sk_ap_id` (`rao_sk_ap_id`);
+
+--
+-- Indexes for table `tb_rao_sk_ap_totals`
+--
+ALTER TABLE `tb_rao_sk_ap_totals`
+  ADD PRIMARY KEY (`rao_sk_ap_total_id`),
+  ADD KEY `rao_sk_id` (`rao_sk_id`);
+
+--
+-- Indexes for table `tb_rao_sk_attributes`
+--
+ALTER TABLE `tb_rao_sk_attributes`
+  ADD PRIMARY KEY (`rao_sk_att_id`),
+  ADD KEY `rao_sk_id` (`rao_sk_id`);
+
+--
+-- Indexes for table `tb_rao_sk_ob`
+--
+ALTER TABLE `tb_rao_sk_ob`
+  ADD PRIMARY KEY (`rao_sk_ob_id`),
+  ADD KEY `rao_sk_id` (`rao_sk_id`);
+
+--
+-- Indexes for table `tb_rao_sk_ob_data`
+--
+ALTER TABLE `tb_rao_sk_ob_data`
+  ADD PRIMARY KEY (`rao_sk_ob_data_id`),
+  ADD KEY `rao_sk_ob_id` (`rao_sk_ob_id`);
+
+--
+-- Indexes for table `tb_rao_sk_ob_totals`
+--
+ALTER TABLE `tb_rao_sk_ob_totals`
+  ADD PRIMARY KEY (`rao_sk_ob_total_id`),
+  ADD KEY `rao_sk_id` (`rao_sk_id`);
 
 --
 -- Indexes for table `tb_request`
@@ -1682,7 +3688,7 @@ ALTER TABLE `tb_employee`
 -- AUTO_INCREMENT for table `tb_event`
 --
 ALTER TABLE `tb_event`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `tb_financial`
@@ -1694,7 +3700,7 @@ ALTER TABLE `tb_financial`
 -- AUTO_INCREMENT for table `tb_household`
 --
 ALTER TABLE `tb_household`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tb_indigency`
@@ -1745,6 +3751,84 @@ ALTER TABLE `tb_rao_ap_data`
   MODIFY `rao_ap_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
+-- AUTO_INCREMENT for table `tb_rao_bd`
+--
+ALTER TABLE `tb_rao_bd`
+  MODIFY `rao_bd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_bd_ap`
+--
+ALTER TABLE `tb_rao_bd_ap`
+  MODIFY `rao_bd_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_bd_ob`
+--
+ALTER TABLE `tb_rao_bd_ob`
+  MODIFY `rao_bd_ob_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_bd_totals`
+--
+ALTER TABLE `tb_rao_bd_totals`
+  MODIFY `rao_bd_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_co`
+--
+ALTER TABLE `tb_rao_co`
+  MODIFY `rao_co_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_cocont`
+--
+ALTER TABLE `tb_rao_cocont`
+  MODIFY `rao_cocont_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_cocont_ap`
+--
+ALTER TABLE `tb_rao_cocont_ap`
+  MODIFY `rao_cocont_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_cocont_ap_data`
+--
+ALTER TABLE `tb_rao_cocont_ap_data`
+  MODIFY `rao_cocont_ap_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_cocont_ap_totals`
+--
+ALTER TABLE `tb_rao_cocont_ap_totals`
+  MODIFY `rao_cocont_ap_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_cocont_attributes`
+--
+ALTER TABLE `tb_rao_cocont_attributes`
+  MODIFY `rao_cocont_att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_cocont_ob`
+--
+ALTER TABLE `tb_rao_cocont_ob`
+  MODIFY `rao_cocont_ob_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_cocont_ob_data`
+--
+ALTER TABLE `tb_rao_cocont_ob_data`
+  MODIFY `rao_cocont_ob_data_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_cocont_ob_totals`
+--
+ALTER TABLE `tb_rao_cocont_ob_totals`
+  MODIFY `rao_cocont_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `tb_rao_cont`
 --
 ALTER TABLE `tb_rao_cont`
@@ -1793,10 +3877,268 @@ ALTER TABLE `tb_rao_cont_ob_totals`
   MODIFY `rao_cont_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=823;
 
 --
+-- AUTO_INCREMENT for table `tb_rao_co_ap`
+--
+ALTER TABLE `tb_rao_co_ap`
+  MODIFY `rao_co_ap_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_co_ap_data`
+--
+ALTER TABLE `tb_rao_co_ap_data`
+  MODIFY `rao_co_ap_data_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_co_ap_totals`
+--
+ALTER TABLE `tb_rao_co_ap_totals`
+  MODIFY `rao_co_ap_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_co_attributes`
+--
+ALTER TABLE `tb_rao_co_attributes`
+  MODIFY `rao_co_att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_co_ob`
+--
+ALTER TABLE `tb_rao_co_ob`
+  MODIFY `rao_co_ob_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_co_ob_data`
+--
+ALTER TABLE `tb_rao_co_ob_data`
+  MODIFY `rao_co_ob_data_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_co_ob_totals`
+--
+ALTER TABLE `tb_rao_co_ob_totals`
+  MODIFY `rao_co_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_dev`
+--
+ALTER TABLE `tb_rao_dev`
+  MODIFY `rao_dev_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_dev_ap`
+--
+ALTER TABLE `tb_rao_dev_ap`
+  MODIFY `rao_dev_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_dev_ap_data`
+--
+ALTER TABLE `tb_rao_dev_ap_data`
+  MODIFY `rao_dev_ap_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_dev_ap_totals`
+--
+ALTER TABLE `tb_rao_dev_ap_totals`
+  MODIFY `rao_dev_ap_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_dev_attributes`
+--
+ALTER TABLE `tb_rao_dev_attributes`
+  MODIFY `rao_dev_att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_dev_ob`
+--
+ALTER TABLE `tb_rao_dev_ob`
+  MODIFY `rao_dev_ob_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_dev_ob_data`
+--
+ALTER TABLE `tb_rao_dev_ob_data`
+  MODIFY `rao_dev_ob_data_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_dev_ob_totals`
+--
+ALTER TABLE `tb_rao_dev_ob_totals`
+  MODIFY `rao_dev_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_fe`
+--
+ALTER TABLE `tb_rao_fe`
+  MODIFY `rao_fe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_fe_ap`
+--
+ALTER TABLE `tb_rao_fe_ap`
+  MODIFY `rao_fe_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_fe_ap_data`
+--
+ALTER TABLE `tb_rao_fe_ap_data`
+  MODIFY `rao_fe_ap_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_fe_ap_totals`
+--
+ALTER TABLE `tb_rao_fe_ap_totals`
+  MODIFY `rao_fe_ap_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_fe_attributes`
+--
+ALTER TABLE `tb_rao_fe_attributes`
+  MODIFY `rao_fe_att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_fe_ob`
+--
+ALTER TABLE `tb_rao_fe_ob`
+  MODIFY `rao_fe_ob_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_fe_ob_data`
+--
+ALTER TABLE `tb_rao_fe_ob_data`
+  MODIFY `rao_fe_ob_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_fe_ob_totals`
+--
+ALTER TABLE `tb_rao_fe_ob_totals`
+  MODIFY `rao_fe_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_mooe`
+--
+ALTER TABLE `tb_rao_mooe`
+  MODIFY `rao_mooe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_mooe_ap`
+--
+ALTER TABLE `tb_rao_mooe_ap`
+  MODIFY `rao_mooe_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_mooe_ap_data`
+--
+ALTER TABLE `tb_rao_mooe_ap_data`
+  MODIFY `rao_mooe_ap_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_mooe_ap_totals`
+--
+ALTER TABLE `tb_rao_mooe_ap_totals`
+  MODIFY `rao_mooe_ap_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_mooe_attributes`
+--
+ALTER TABLE `tb_rao_mooe_attributes`
+  MODIFY `rao_mooe_att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_mooe_ob`
+--
+ALTER TABLE `tb_rao_mooe_ob`
+  MODIFY `rao_mooe_ob_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_mooe_ob_data`
+--
+ALTER TABLE `tb_rao_mooe_ob_data`
+  MODIFY `rao_mooe_ob_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_mooe_ob_totals`
+--
+ALTER TABLE `tb_rao_mooe_ob_totals`
+  MODIFY `rao_mooe_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
+
+--
 -- AUTO_INCREMENT for table `tb_rao_ob_data`
 --
 ALTER TABLE `tb_rao_ob_data`
   MODIFY `rao_ob_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_ps`
+--
+ALTER TABLE `tb_rao_ps`
+  MODIFY `rao_ps_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_ps_ap`
+--
+ALTER TABLE `tb_rao_ps_ap`
+  MODIFY `rao_ps_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_ps_ob`
+--
+ALTER TABLE `tb_rao_ps_ob`
+  MODIFY `rao_ps_ob_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_ps_totals`
+--
+ALTER TABLE `tb_rao_ps_totals`
+  MODIFY `rao_ps_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_sk`
+--
+ALTER TABLE `tb_rao_sk`
+  MODIFY `rao_sk_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_sk_ap`
+--
+ALTER TABLE `tb_rao_sk_ap`
+  MODIFY `rao_sk_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_sk_ap_data`
+--
+ALTER TABLE `tb_rao_sk_ap_data`
+  MODIFY `rao_sk_ap_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_sk_ap_totals`
+--
+ALTER TABLE `tb_rao_sk_ap_totals`
+  MODIFY `rao_sk_ap_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_sk_attributes`
+--
+ALTER TABLE `tb_rao_sk_attributes`
+  MODIFY `rao_sk_att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_sk_ob`
+--
+ALTER TABLE `tb_rao_sk_ob`
+  MODIFY `rao_sk_ob_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_sk_ob_data`
+--
+ALTER TABLE `tb_rao_sk_ob_data`
+  MODIFY `rao_sk_ob_data_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_sk_ob_totals`
+--
+ALTER TABLE `tb_rao_sk_ob_totals`
+  MODIFY `rao_sk_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `tb_request`
@@ -1814,13 +4156,13 @@ ALTER TABLE `tb_residency`
 -- AUTO_INCREMENT for table `tb_resident`
 --
 ALTER TABLE `tb_resident`
-  MODIFY `resident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=225;
+  MODIFY `resident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=343;
 
 --
 -- AUTO_INCREMENT for table `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- Constraints for dumped tables
@@ -1843,6 +4185,60 @@ ALTER TABLE `tb_document_files`
 --
 ALTER TABLE `tb_rao_ap_data`
   ADD CONSTRAINT `tb_rao_ap_data_ibfk_1` FOREIGN KEY (`rao_id`) REFERENCES `tb_rao` (`rao_id`);
+
+--
+-- Constraints for table `tb_rao_bd_ap`
+--
+ALTER TABLE `tb_rao_bd_ap`
+  ADD CONSTRAINT `tb_rao_bd_ap_ibfk_1` FOREIGN KEY (`rao_bd_id`) REFERENCES `tb_rao_bd` (`rao_bd_id`);
+
+--
+-- Constraints for table `tb_rao_bd_ob`
+--
+ALTER TABLE `tb_rao_bd_ob`
+  ADD CONSTRAINT `tb_rao_bd_ob_ibfk_1` FOREIGN KEY (`rao_bd_id`) REFERENCES `tb_rao_bd` (`rao_bd_id`);
+
+--
+-- Constraints for table `tb_rao_bd_totals`
+--
+ALTER TABLE `tb_rao_bd_totals`
+  ADD CONSTRAINT `tb_rao_bd_totals_ibfk_1` FOREIGN KEY (`rao_bd_id`) REFERENCES `tb_rao_bd` (`rao_bd_id`);
+
+--
+-- Constraints for table `tb_rao_cocont_ap_data`
+--
+ALTER TABLE `tb_rao_cocont_ap_data`
+  ADD CONSTRAINT `tb_rao_cocont_ap_data_ibfk_1` FOREIGN KEY (`rao_cocont_ap_id`) REFERENCES `tb_rao_cocont_ap` (`rao_cocont_ap_id`);
+
+--
+-- Constraints for table `tb_rao_cocont_ap_totals`
+--
+ALTER TABLE `tb_rao_cocont_ap_totals`
+  ADD CONSTRAINT `tb_rao_cocont_ap_totals_ibfk_1` FOREIGN KEY (`rao_cocont_id`) REFERENCES `tb_rao_cocont` (`rao_cocont_id`);
+
+--
+-- Constraints for table `tb_rao_cocont_attributes`
+--
+ALTER TABLE `tb_rao_cocont_attributes`
+  ADD CONSTRAINT `tb_rao_cocont_attributes_ibfk_1` FOREIGN KEY (`rao_cocont_id`) REFERENCES `tb_rao_cocont` (`rao_cocont_id`);
+
+--
+-- Constraints for table `tb_rao_cocont_ob`
+--
+ALTER TABLE `tb_rao_cocont_ob`
+  ADD CONSTRAINT `tb_rao_cocont_ob_ibfk_1` FOREIGN KEY (`rao_cocont_id`) REFERENCES `tb_rao_cocont` (`rao_cocont_id`);
+
+--
+-- Constraints for table `tb_rao_cocont_ob_data`
+--
+ALTER TABLE `tb_rao_cocont_ob_data`
+  ADD CONSTRAINT `tb_rao_cocont_ob_data_ibfk_1` FOREIGN KEY (`rao_cocont_ob_id`) REFERENCES `tb_rao_cocont_ob` (`rao_cocont_ob_id`);
+
+--
+-- Constraints for table `tb_rao_cocont_ob_totals`
+--
+ALTER TABLE `tb_rao_cocont_ob_totals`
+  ADD CONSTRAINT `tb_rao_cocont_ob_totals_ibfk_1` FOREIGN KEY (`rao_cocont_id`) REFERENCES `tb_rao_cocont` (`rao_cocont_id`);
 
 --
 -- Constraints for table `tb_rao_cont_ap`
@@ -1869,10 +4265,232 @@ ALTER TABLE `tb_rao_cont_ob_totals`
   ADD CONSTRAINT `tb_rao_cont_ob_totals_ibfk_1` FOREIGN KEY (`rao_cont_id`) REFERENCES `tb_rao_cont` (`rao_cont_id`);
 
 --
+-- Constraints for table `tb_rao_co_ap`
+--
+ALTER TABLE `tb_rao_co_ap`
+  ADD CONSTRAINT `tb_rao_co_ap_ibfk_1` FOREIGN KEY (`rao_co_id`) REFERENCES `tb_rao_co` (`rao_co_id`);
+
+--
+-- Constraints for table `tb_rao_co_ap_data`
+--
+ALTER TABLE `tb_rao_co_ap_data`
+  ADD CONSTRAINT `tb_rao_co_ap_data_ibfk_1` FOREIGN KEY (`rao_co_ap_id`) REFERENCES `tb_rao_co_ap` (`rao_co_ap_id`);
+
+--
+-- Constraints for table `tb_rao_co_ap_totals`
+--
+ALTER TABLE `tb_rao_co_ap_totals`
+  ADD CONSTRAINT `tb_rao_co_ap_totals_ibfk_1` FOREIGN KEY (`rao_co_id`) REFERENCES `tb_rao_co` (`rao_co_id`);
+
+--
+-- Constraints for table `tb_rao_co_attributes`
+--
+ALTER TABLE `tb_rao_co_attributes`
+  ADD CONSTRAINT `tb_rao_co_attributes_ibfk_1` FOREIGN KEY (`rao_co_id`) REFERENCES `tb_rao_co` (`rao_co_id`);
+
+--
+-- Constraints for table `tb_rao_co_ob`
+--
+ALTER TABLE `tb_rao_co_ob`
+  ADD CONSTRAINT `tb_rao_co_ob_ibfk_1` FOREIGN KEY (`rao_co_id`) REFERENCES `tb_rao_co` (`rao_co_id`);
+
+--
+-- Constraints for table `tb_rao_co_ob_data`
+--
+ALTER TABLE `tb_rao_co_ob_data`
+  ADD CONSTRAINT `tb_rao_co_ob_data_ibfk_1` FOREIGN KEY (`rao_co_ob_id`) REFERENCES `tb_rao_cont_ob` (`rao_cont_ob_id`);
+
+--
+-- Constraints for table `tb_rao_co_ob_totals`
+--
+ALTER TABLE `tb_rao_co_ob_totals`
+  ADD CONSTRAINT `tb_rao_co_ob_totals_ibfk_1` FOREIGN KEY (`rao_co_id`) REFERENCES `tb_rao_co` (`rao_co_id`);
+
+--
+-- Constraints for table `tb_rao_dev_ap`
+--
+ALTER TABLE `tb_rao_dev_ap`
+  ADD CONSTRAINT `tb_rao_dev_ap_ibfk_1` FOREIGN KEY (`rao_dev_id`) REFERENCES `tb_rao_dev` (`rao_dev_id`);
+
+--
+-- Constraints for table `tb_rao_dev_ap_data`
+--
+ALTER TABLE `tb_rao_dev_ap_data`
+  ADD CONSTRAINT `tb_rao_dev_ap_data_ibfk_1` FOREIGN KEY (`rao_dev_ap_id`) REFERENCES `tb_rao_dev_ap` (`rao_dev_ap_id`);
+
+--
+-- Constraints for table `tb_rao_dev_ap_totals`
+--
+ALTER TABLE `tb_rao_dev_ap_totals`
+  ADD CONSTRAINT `tb_rao_dev_ap_totals_ibfk_1` FOREIGN KEY (`rao_dev_id`) REFERENCES `tb_rao_dev` (`rao_dev_id`);
+
+--
+-- Constraints for table `tb_rao_dev_attributes`
+--
+ALTER TABLE `tb_rao_dev_attributes`
+  ADD CONSTRAINT `tb_rao_dev_attributes_ibfk_1` FOREIGN KEY (`rao_dev_id`) REFERENCES `tb_rao_dev` (`rao_dev_id`);
+
+--
+-- Constraints for table `tb_rao_dev_ob`
+--
+ALTER TABLE `tb_rao_dev_ob`
+  ADD CONSTRAINT `tb_rao_dev_ob_ibfk_1` FOREIGN KEY (`rao_dev_id`) REFERENCES `tb_rao_dev` (`rao_dev_id`);
+
+--
+-- Constraints for table `tb_rao_dev_ob_data`
+--
+ALTER TABLE `tb_rao_dev_ob_data`
+  ADD CONSTRAINT `tb_rao_dev_ob_data_ibfk_1` FOREIGN KEY (`rao_dev_ob_id`) REFERENCES `tb_rao_dev_ob` (`rao_dev_ob_id`);
+
+--
+-- Constraints for table `tb_rao_dev_ob_totals`
+--
+ALTER TABLE `tb_rao_dev_ob_totals`
+  ADD CONSTRAINT `tb_rao_dev_ob_totals_ibfk_1` FOREIGN KEY (`rao_dev_id`) REFERENCES `tb_rao_dev` (`rao_dev_id`);
+
+--
+-- Constraints for table `tb_rao_fe_ap`
+--
+ALTER TABLE `tb_rao_fe_ap`
+  ADD CONSTRAINT `tb_rao_fe_ap_ibfk_1` FOREIGN KEY (`rao_fe_id`) REFERENCES `tb_rao_fe` (`rao_fe_id`);
+
+--
+-- Constraints for table `tb_rao_fe_ap_data`
+--
+ALTER TABLE `tb_rao_fe_ap_data`
+  ADD CONSTRAINT `tb_rao_fe_ap_data_ibfk_1` FOREIGN KEY (`rao_fe_ap_id`) REFERENCES `tb_rao_fe_ap` (`rao_fe_ap_id`);
+
+--
+-- Constraints for table `tb_rao_fe_ap_totals`
+--
+ALTER TABLE `tb_rao_fe_ap_totals`
+  ADD CONSTRAINT `tb_rao_fe_ap_totals_ibfk_1` FOREIGN KEY (`rao_fe_id`) REFERENCES `tb_rao_fe` (`rao_fe_id`);
+
+--
+-- Constraints for table `tb_rao_fe_attributes`
+--
+ALTER TABLE `tb_rao_fe_attributes`
+  ADD CONSTRAINT `tb_rao_fe_attributes_ibfk_1` FOREIGN KEY (`rao_fe_id`) REFERENCES `tb_rao_fe` (`rao_fe_id`);
+
+--
+-- Constraints for table `tb_rao_fe_ob`
+--
+ALTER TABLE `tb_rao_fe_ob`
+  ADD CONSTRAINT `tb_rao_fe_ob_ibfk_1` FOREIGN KEY (`rao_fe_id`) REFERENCES `tb_rao_fe` (`rao_fe_id`);
+
+--
+-- Constraints for table `tb_rao_fe_ob_data`
+--
+ALTER TABLE `tb_rao_fe_ob_data`
+  ADD CONSTRAINT `tb_rao_fe_ob_data_ibfk_1` FOREIGN KEY (`rao_fe_ob_id`) REFERENCES `tb_rao_fe_ob` (`rao_fe_ob_id`);
+
+--
+-- Constraints for table `tb_rao_fe_ob_totals`
+--
+ALTER TABLE `tb_rao_fe_ob_totals`
+  ADD CONSTRAINT `tb_rao_fe_ob_totals_ibfk_1` FOREIGN KEY (`rao_fe_id`) REFERENCES `tb_rao_fe` (`rao_fe_id`);
+
+--
+-- Constraints for table `tb_rao_mooe_ap`
+--
+ALTER TABLE `tb_rao_mooe_ap`
+  ADD CONSTRAINT `tb_rao_mooe_ap_ibfk_1` FOREIGN KEY (`rao_mooe_id`) REFERENCES `tb_rao_mooe` (`rao_mooe_id`);
+
+--
+-- Constraints for table `tb_rao_mooe_ap_data`
+--
+ALTER TABLE `tb_rao_mooe_ap_data`
+  ADD CONSTRAINT `tb_rao_mooe_ap_data_ibfk_1` FOREIGN KEY (`rao_mooe_ap_id`) REFERENCES `tb_rao_mooe_ap` (`rao_mooe_ap_id`);
+
+--
+-- Constraints for table `tb_rao_mooe_ap_totals`
+--
+ALTER TABLE `tb_rao_mooe_ap_totals`
+  ADD CONSTRAINT `tb_rao_mooe_ap_totals_ibfk_1` FOREIGN KEY (`rao_mooe_id`) REFERENCES `tb_rao_mooe` (`rao_mooe_id`);
+
+--
+-- Constraints for table `tb_rao_mooe_attributes`
+--
+ALTER TABLE `tb_rao_mooe_attributes`
+  ADD CONSTRAINT `tb_rao_mooe_attributes_ibfk_1` FOREIGN KEY (`rao_mooe_id`) REFERENCES `tb_rao_mooe` (`rao_mooe_id`);
+
+--
+-- Constraints for table `tb_rao_mooe_ob`
+--
+ALTER TABLE `tb_rao_mooe_ob`
+  ADD CONSTRAINT `tb_rao_mooe_ob_ibfk_1` FOREIGN KEY (`rao_mooe_id`) REFERENCES `tb_rao_mooe` (`rao_mooe_id`);
+
+--
+-- Constraints for table `tb_rao_mooe_ob_data`
+--
+ALTER TABLE `tb_rao_mooe_ob_data`
+  ADD CONSTRAINT `tb_rao_mooe_ob_data_ibfk_1` FOREIGN KEY (`rao_mooe_ob_id`) REFERENCES `tb_rao_mooe_ob` (`rao_mooe_ob_id`);
+
+--
+-- Constraints for table `tb_rao_mooe_ob_totals`
+--
+ALTER TABLE `tb_rao_mooe_ob_totals`
+  ADD CONSTRAINT `tb_rao_mooe_ob_totals_ibfk_1` FOREIGN KEY (`rao_mooe_id`) REFERENCES `tb_rao_mooe` (`rao_mooe_id`);
+
+--
 -- Constraints for table `tb_rao_ob_data`
 --
 ALTER TABLE `tb_rao_ob_data`
   ADD CONSTRAINT `tb_rao_ob_data_ibfk_1` FOREIGN KEY (`rao_id`) REFERENCES `tb_rao` (`rao_id`);
+
+--
+-- Constraints for table `tb_rao_ps_ap`
+--
+ALTER TABLE `tb_rao_ps_ap`
+  ADD CONSTRAINT `tb_rao_ps_ap_ibfk_1` FOREIGN KEY (`rao_ps_id`) REFERENCES `tb_rao_ps` (`rao_ps_id`);
+
+--
+-- Constraints for table `tb_rao_ps_ob`
+--
+ALTER TABLE `tb_rao_ps_ob`
+  ADD CONSTRAINT `tb_rao_ps_ob_ibfk_1` FOREIGN KEY (`rao_ps_id`) REFERENCES `tb_rao_ps` (`rao_ps_id`);
+
+--
+-- Constraints for table `tb_rao_sk_ap`
+--
+ALTER TABLE `tb_rao_sk_ap`
+  ADD CONSTRAINT `tb_rao_sk_ap_ibfk_1` FOREIGN KEY (`rao_sk_id`) REFERENCES `tb_rao_sk` (`rao_sk_id`);
+
+--
+-- Constraints for table `tb_rao_sk_ap_data`
+--
+ALTER TABLE `tb_rao_sk_ap_data`
+  ADD CONSTRAINT `tb_rao_sk_ap_data_ibfk_1` FOREIGN KEY (`rao_sk_ap_id`) REFERENCES `tb_rao_sk_ap` (`rao_sk_ap_id`);
+
+--
+-- Constraints for table `tb_rao_sk_ap_totals`
+--
+ALTER TABLE `tb_rao_sk_ap_totals`
+  ADD CONSTRAINT `tb_rao_sk_ap_totals_ibfk_1` FOREIGN KEY (`rao_sk_id`) REFERENCES `tb_rao_sk` (`rao_sk_id`);
+
+--
+-- Constraints for table `tb_rao_sk_attributes`
+--
+ALTER TABLE `tb_rao_sk_attributes`
+  ADD CONSTRAINT `tb_rao_sk_attributes_ibfk_1` FOREIGN KEY (`rao_sk_id`) REFERENCES `tb_rao_sk` (`rao_sk_id`);
+
+--
+-- Constraints for table `tb_rao_sk_ob`
+--
+ALTER TABLE `tb_rao_sk_ob`
+  ADD CONSTRAINT `tb_rao_sk_ob_ibfk_1` FOREIGN KEY (`rao_sk_id`) REFERENCES `tb_rao_sk` (`rao_sk_id`);
+
+--
+-- Constraints for table `tb_rao_sk_ob_data`
+--
+ALTER TABLE `tb_rao_sk_ob_data`
+  ADD CONSTRAINT `tb_rao_sk_ob_data_ibfk_1` FOREIGN KEY (`rao_sk_ob_id`) REFERENCES `tb_rao_sk_ob` (`rao_sk_ob_id`);
+
+--
+-- Constraints for table `tb_rao_sk_ob_totals`
+--
+ALTER TABLE `tb_rao_sk_ob_totals`
+  ADD CONSTRAINT `tb_rao_sk_ob_totals_ibfk_1` FOREIGN KEY (`rao_sk_id`) REFERENCES `tb_rao_sk` (`rao_sk_id`);
 
 --
 -- Constraints for table `tb_resident`

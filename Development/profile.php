@@ -95,21 +95,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                                 </div>
                                 <div class="profile-info">
-                                    <p><strong><?php echo $firstname . ' ' . $middlename_initial . ' ' . $lastname;?></strong></p>
-                                    <p><?php echo $row["barangayposition"];?></p>
-                                    <p>Sex: <?php echo $row["sex"];?></p>
-                                    <p>Birth Date: <?php echo date("F j, Y", strtotime($row["birthdate"])); ?></p>
+                                <p><strong><?php echo $firstname . ' ' . $middlename_initial . ' ' . $lastname; ?></strong></p>
+                                <p><?php echo $row["barangayposition"]; ?></p>
+                                <p>Sex: <?php echo $row["sex"]; ?></p>
+                                <p>Birth Date: <?php echo date("F j, Y", strtotime($row["birthdate"])); ?></p>
 
-                                    <form method="POST" enctype="multipart/form-data">
-                                        <!-- Other form fields -->
+                                <form method="POST" enctype="multipart/form-data">
+                                    <!-- Other form fields -->
 
-                                        <!-- Hidden input to identify the form submission -->
-                                        <input type="hidden" name="profile_update" value="true">
+                                    <!-- Hidden input to identify the form submission -->
+                                    <input type="hidden" name="profile_update" value="true">
 
-                                        <button type="submit" class="btn btn-primary" id="profile_update" onclick="return confirm('Are you sure you want to update your profile?')">Update</button>
-                                    </form>
+                                    <!-- Update Profile Button -->
+                                    <button type="submit" class="btn btn-primary" id="profile_update" onclick="return confirm('Are you sure you want to update your profile?')">Update</button>
 
-                                </div>
+                                    
+                                </form>
+                            </div>
+
                             </div>
                             <div class="form-section">
                                 <div class="form-grid">
@@ -153,6 +156,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <label for="username">Username</label>
                                     <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($row["username"]);?>">
                                 </div>
+                                <!-- Change Password Button -->
+                                <button><a href="../change_password.php?user_id=<?php echo $row['user_id']; ?>" class="cpbtn">Change Password</a>
                             </div>
                         </div> 
                     </form>

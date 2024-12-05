@@ -133,6 +133,7 @@ include '../../sidebar_mainofficials.php';
                         <h5 class="modal-title" id="deleteConfirmationModalLabel">Choose a print option:</h5>
                             <button id="printOption1" class="btn btn-primary" data-id=""><i class="bx bx-printer"></i> Certificate of Indigency</button>
                             <button id="printOption2" class="btn btn-secondary" data-id=""><i class="bx bx-printer"></i> Certificate of Indigency-BIR</button>
+                            <button id="printOption3" class="btn btn-secondary" data-id=""><i class="bx bx-printer"></i> Certificate of Indigent</button>
                     </div>
                 </div>
             </div>

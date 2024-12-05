@@ -103,43 +103,7 @@ if (isset($conn) && $conn) {
               <li>
                 <a href="../rao/table_rao_records.php" title="RAO-PS Table">
                   <i class='bx bx-wallet icon'></i>
-                  <span class="text nav-text">RAO-PS Table</span>
-                </a>
-              </li>
-              <li>
-                <a href="../rao-cont/table_rao_cont_records.php" title="RAO-CONT Table">
-                 <i class='bx bx-wallet icon'></i>
-                  <span class="text nav-text">RAO-CONT Table</span>
-                </a>
-              </li>
-              <li>
-                <a href="../rao-fe/table_rao_fe_records.php" title="RAO-FE Table">
-                 <i class='bx bx-wallet icon'></i>
-                  <span class="text nav-text">RAO-FE Table</span>
-                </a>
-              </li>
-              <li>
-                <a href="../rao-mooe/table_rao_mooe_records.php" title="RAO-MOOE Table">
-                 <i class='bx bx-wallet icon'></i>
-                  <span class="text nav-text">RAO-MOOE Table</span>
-                </a>
-              </li>
-              <li>
-                <a href="../rao-bdrrmf/table_rao_bdrrmf_records.php" title="RAO-BDRRMF Table">
-                 <i class='bx bx-wallet icon'></i>
-                  <span class="text nav-text">RAO-BDRRMF Table</span>
-                </a>
-              </li>
-              <li>
-                <a href="../rao-dev/table_rao_dev_records.php" title="RAO-DEV Table">
-                 <i class='bx bx-wallet icon'></i>
-                  <span class="text nav-text">RAO-DEV Table</span>
-                </a>
-              </li>
-              <li>
-                <a href="../rao-sk/table_rao_sk_records.php" title="RAO-SK Table">
-                 <i class='bx bx-wallet icon'></i>
-                  <span class="text nav-text">RAO-SK Table</span>
+                  <span class="text nav-text">RAO Table</span>
                 </a>
               </li>
               <li>
@@ -227,6 +191,13 @@ if (isset($conn) && $conn) {
                 </a>
               </li>
             </ul>
+          </li>
+
+          <li class="nav-link">
+            <a href="../calendar/event_calendar.php"  title="Calendar">
+              <i class='bx bxs-calendar-event icon' ></i>
+              <span class="text nav-text">Event Calendar</span>
+            </a>
           </li>
         </ul>
       </div>

@@ -436,10 +436,19 @@ td.action-buttons{
                             <h1>Records of Appropriations and Obligations (BDRRMF)</h1>
                         </div>
                         <div class="table-actions">    
+                        <div class="dropdown table_dropdown">
+                        <button class="dropdown-toggle">Other RAO Sources</button>
+                            <ul class="dropdown-menu">
+                                <li><a href="../../pages/rao/table_rao_records.php">RAO-PS</a></li>
+                                <li><a href="../../pages/rao-cont/table_rao_cont_records.php">RAO-CONT</a></li>
+                                <li><a href="../../pages/rao-fe/table_rao_fe_records.php">RAO-FE</a></li>
+                                <li><a href="../../pages/rao-mooe/table_rao_mooe_records.php">RAO-MOOE</a></li>
+                                <li><a href="../../pages/rao-dev/table_rao_dev_records.php">RAO-DEV</a></li>
+                                <li><a href="../../pages/rao-sk/table_rao_sk_records.php">RAO-SK</a></li>
+                                <li><a href="../../pages/rao-co/table_rao_co_cont_records.php">RAO-CO</a></li>
+                            </ul>
+                        </div>  
                             <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-table-btn">+ Add Table</button>
-                            <!--<button class="print-btn" title="Print">
-                                <i class="bx bx-printer"></i>
-                            </button>-->
                         </div>
                     </div>
                     <table id="example" class="table-table">
