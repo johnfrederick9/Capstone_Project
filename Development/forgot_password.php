@@ -31,19 +31,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $password = trim($_POST['password'] ?? '');
         $confirmPassword = trim($_POST['confirmpassword'] ?? '');
 
-        if ($password === $confirmPassword && strlen($password) >= 6) {
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-            $query = $pdo->prepare("UPDATE tb_user SET password = ? WHERE username = ?");
-            $query->execute([$hashedPassword, $_SESSION['valid_username']]);
-            session_destroy();
-            echo json_encode(['success' => true, 'message' => 'Password changed successfully. Redirecting...']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Passwords do not match or are too short.']);
+        if ($password !== $confirmPassword) {
+            echo json_encode(['success' => false, 'message' => 'Passwords do not match.']);
+            exit;
         }
+
+        if (strlen($password) < 6) {
+            echo json_encode(['success' => false, 'message' => 'Password must be at least 6 characters long.']);
+            exit;
+        }
+
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+        // Check if the new password matches the current password
+        $query = $pdo->prepare("SELECT password FROM tb_user WHERE username = ?");
+        $query->execute([$_SESSION['valid_username']]);
+        $user = $query->fetch(PDO::FETCH_ASSOC);
+
+        if ($user && password_verify($password, $user['password'])) {
+            echo json_encode(['success' => false, 'message' => 'New password cannot be the same as the current password.']);
+            exit;
+        }
+
+        // Update the password
+        $query = $pdo->prepare("UPDATE tb_user SET password = ? WHERE username = ?");
+        $query->execute([$hashedPassword, $_SESSION['valid_username']]);
+
+        // Clear session after updating
+        session_destroy();
+        echo json_encode(['success' => true, 'message' => 'Password changed successfully. Redirecting...']);
     }
     exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
