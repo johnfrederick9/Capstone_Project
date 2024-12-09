@@ -130,11 +130,11 @@ if (mysqli_num_rows($result) > 0) {
                                     </select>
                                 </div>
                                 <!-- Hidden Input Fields -->
-                                <div class="input-wrapper" id="dateSettledWrapper">
+                                <div class="input-wrapper" id="dateSettledWrapper" style="display:none;">
                                     <label for="blotter_date_settled" class="input-label">Date Settled:</label>
                                     <input type="date" id="blotter_date_settledField" name="blotter_date_settled" class="input-field">
                                 </div>
-                                <div class="input-wrapper" id="recordedByWrapper">
+                                <div class="input-wrapper" id="recordedByWrapper" style="display:none;">
                                     <label for="blotter_recorded_by" class="input-label">Recorded By:</label>
                                     <input type="text" id="blotter_recorded_byField" name="blotter_recorded_by" class="input-field">
                                 </div>
@@ -220,14 +220,6 @@ if (mysqli_num_rows($result) > 0) {
                                                     <option value="New">New</option>
                                                     <option value="Pending">Pending</option>
                                                 </select>
-                                        </div>
-                                        <div class="input-wrapper">
-                                            <label for="blotter_date_settled" class="input-label">Date Settled:</label>
-                                            <input type="date" id="blotter_date_settled" name="blotter_date_settled" class="input-field">
-                                        </div>
-                                        <div class="input-wrapper">
-                                            <label for="blotter_recorded_by" class="input-label">Recorded By:</label>
-                                            <input type="text" id="blotter_recorded_by" name="blotter_recorded_by" class="input-field"  >
                                         </div>
                                     </div>
                                 </div>
