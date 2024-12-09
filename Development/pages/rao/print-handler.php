@@ -129,7 +129,7 @@ try {
     <title>Report of Appropriations and Obligations (RA-PS)</title>
       <style>
      @page {
-        size: 11in 8.5in; /* Explicitly define width and height in landscape */
+        size: 10in 8.5in; /* Explicitly define width and height in landscape */
         margin: 0.5cm; /* Set consistent margins */
     }
 
