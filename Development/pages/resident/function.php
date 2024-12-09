@@ -458,6 +458,16 @@ function showAlert(message, alertClass) {
                     $('#view_indigenous').text(json.resident_indigenous || "N/A");
                     $('#view_pension').text(json.resident_pension || "N/A");
                     $('#view_beneficiaries').text(json.resident_beneficiaries || "N/A");
+                    $('#view_1').text(json.resident_height || "Not Updated");
+                    $('#view_2').text(json.resident_weight || "Not Updated");
+                    $('#view_3').text(json.resident_BMIstat || "Not Updated");
+                    $('#view_4').text(json.resident_heightstat || "Not Updated");
+                    $('#view_5').text(json.resident_weightstat || "Not Updated");
+                    $('#view_6').text(json.resident_medical || "Not Updated");
+                    $('#view_7').text(json.resident_lactating || "Not Updated");
+                    $('#view_8').text(json.resident_pregnant || "Not Updated");
+                    $('#view_9').text(json.resident_PWD || "Not Updated");
+                    $('#view_10').text(json.resident_SY || "Not Updated");
                 } catch (e) {
                     console.error("JSON parsing error:", e);
                     alert("An error occurred while processing the data.");

@@ -145,7 +145,50 @@
                 }
             })
         });
-       c
+        $(document).ready(function() {
+    // Event listener for the print button
+    $(document).on('click', '.print-btn', function() {
+        var residency_id = $(this).data('id'); // Get the bemp_id
+
+        // Make an AJAX request to fetch the certificate content
+        $.ajax({
+            url: 'fetch_certificate.php', // URL to fetch the certificate HTML
+            type: 'POST',
+            data: { id: residency_id },
+            success: function(response) {
+                // Create a new window to print the content
+                var printWindow = window.open('', '', 'height=600,width=800');
+                printWindow.document.write(response);
+                printWindow.document.close();
+
+                // Wait for all images in the new window to load
+                var images = printWindow.document.images;
+                var totalImages = images.length;
+                var loadedImages = 0;
+
+                if (totalImages === 0) {
+                    // If there are no images, proceed to print
+                    printWindow.focus();
+                    printWindow.print();
+                    printWindow.close();
+                } else {
+                    // Check each image for load completion
+                    for (var i = 0; i < totalImages; i++) {
+                        images[i].onload = images[i].onerror = function() {
+                            loadedImages++;
+                            if (loadedImages === totalImages) {
+                                // All images have loaded, proceed to print
+                                printWindow.focus();
+                                printWindow.print();
+                                printWindow.close();
+                            }
+                        };
+                    }
+                }
+            }
+        });
+    });
+});
     $(document).on('click', '.deleteBtn', function(event) {
     event.preventDefault();
     var residency_id = $(this).data('id'); // Get residency ID from data attribute

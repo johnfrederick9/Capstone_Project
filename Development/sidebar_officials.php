@@ -1,5 +1,5 @@
 <?php
-require 'database.php';
+include 'database.php';
 if (isset($conn) && $conn) {
     if (!empty($_SESSION["user_id"])) {
         $user_id = $_SESSION["user_id"];
@@ -75,7 +75,7 @@ if (isset($conn) && $conn) {
           <li class="nav-link">
             <a href="../employee/table_employee.php" title="Employee">
               <i class='bx bxs-group icon'></i>
-              <span class="text nav-text">Employee Management</span>
+              <span class="text nav-text">Staff Management</span>
             </a>
           </li>
 
