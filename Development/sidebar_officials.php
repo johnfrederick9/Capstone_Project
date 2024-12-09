@@ -192,13 +192,6 @@ if (isset($conn) && $conn) {
               </li>
             </ul>
           </li>
-
-          <li class="nav-link">
-            <a href="../calendar/event_calendar.php"  title="Calendar">
-              <i class='bx bxs-calendar-event icon' ></i>
-              <span class="text nav-text">Event Calendar</span>
-            </a>
-          </li>
         </ul>
       </div>
       <div class="bottom-content">
