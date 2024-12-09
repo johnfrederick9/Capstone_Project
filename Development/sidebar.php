@@ -75,7 +75,7 @@ if (isset($conn) && $conn) {
           <li class="nav-link">
             <a href="../../pages/employee/table_employee.php" title="Employee">
               <i class='bx bxs-group icon'></i>
-              <span class="text nav-text">Employee Management</span>
+              <span class="text nav-text">Staff Management</span>
             </a>
           </li>
 

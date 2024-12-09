@@ -145,6 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <option value="" disabled <?php echo empty($row['sex']) ? 'selected' : ''; ?>>Sex</option>
                                             <option value="Male" <?php echo $row['sex'] === 'Male' ? 'selected' : ''; ?>>Male</option>
                                             <option value="Female" <?php echo $row['sex'] === 'Female' ? 'selected' : ''; ?>>Female</option>
+                                            <option value="LGBTQ" <?php echo $row['sex'] === 'LGBTQ' ? 'selected' : ''; ?>>LGBTQ</option>
                                         </select>
                                     </div>
                                     <div class="form-group">

@@ -8,7 +8,7 @@ include '../../sidebar.php';
                 <div class="table-container">
                     <div class="table-header">
                     <div class="head">
-                            <h1>Employee Table</h1>
+                            <h1>Barangay Workers Table</h1>
                         </div>
                         <div class="table-actions">    
                         <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-table-btn">+ Add</button>
@@ -46,7 +46,7 @@ include '../../sidebar.php';
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Update employee</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Update Barangay Workers</h5>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -144,9 +144,6 @@ include '../../sidebar.php';
                                 <label for="position" class="input-label">Position:</label>
                                 <select id="positionField" class="input-field" name="employee_position" require>
                                     <option value=" " disabled selected>Enter Position</option>
-                                    <option value="Barangay Captain">Barangay Captain</option>
-                                    <option value="Barangay Secretary">Barangay Secretary</option>
-                                    <option value="Barangay Treasurer">Barangay Treasurer</option>
                                     <option value="Barangay Treasurer">Barangay Personnel</option>
                                     <option value="Barangay Treasurer">Barangay Health Worker</option>
                                 </select>
@@ -166,7 +163,7 @@ include '../../sidebar.php';
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add employee</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Add Barangay Workers</h5>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -263,9 +260,6 @@ include '../../sidebar.php';
                                 <label for="position" class="input-label">Position:</label>
                                 <select id="employee_position" class="input-field" name="employee_position" require>
                                     <option value=" " disabled selected>Enter Position</option>
-                                    <option value="Barangay Captain">Barangay Captain</option>
-                                    <option value="Barangay Secretary">Barangay Secretary</option>
-                                    <option value="Barangay Treasurer">Barangay Treasurer</option>
                                     <option value="Barangay Treasurer">Barangay Personnel</option>
                                     <option value="Barangay Treasurer">Barangay Health Worker</option>
                                 </select>

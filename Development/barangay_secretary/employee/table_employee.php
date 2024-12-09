@@ -8,7 +8,7 @@ include '../../sidebar_mainofficials.php';
                 <div class="table-container">
                     <div class="table-header">
                     <div class="head">
-                            <h1>Employee Table</h1>
+                            <h1>Barangay Workers Table</h1>
                         </div>
                         <div class="table-actions">    
                         <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-table-btn">+ Add</button>
@@ -46,7 +46,7 @@ include '../../sidebar_mainofficials.php';
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Update employee</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Update Barangay Workers</h5>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -166,7 +166,7 @@ include '../../sidebar_mainofficials.php';
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add employee</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Add Barangay Workers</h5>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">

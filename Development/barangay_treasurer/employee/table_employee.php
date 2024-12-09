@@ -19,7 +19,7 @@ include "../../sidebar_officials.php";
                 <div class="table-container">
                     <div class="table-header">
                     <div class="head">
-                            <h1>Employee Table</h1>
+                            <h1>Barangay Workers Table</h1>
                         </div>
                         <div class="table-actions">    
                         <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-popup">+ Add Employee</button>
