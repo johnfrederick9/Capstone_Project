@@ -144,22 +144,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
     });
 
-    // Automatically focus the next input field
-    codes.forEach((code, idx) => {
-        code.addEventListener('input', (e) => {
-            if (e.target.value.length === 1) {
-                const next = codes[idx + 1];
-                if (next) next.focus();
-            }
-        });
+ // Automatically focus the next input field
+ codes[0].focus()
 
-        code.addEventListener('keydown', (e) => {
-            if (e.key === 'Backspace' && e.target.value === '') {
-                const prev = codes[idx - 1];
-                if (prev) prev.focus();
-            }
-        });
-    });
+codes.forEach((code, idx) => {
+    code.addEventListener('keydown', (e) => {
+        if(e.key >= 0 && e.key <=9) {
+            codes[idx].value = ''
+            setTimeout(() => codes[idx + 1].focus(), 10)
+        } else if(e.key === 'Backspace') {
+            setTimeout(() => codes[idx - 1].focus(), 10)
+        }
+    })
+})
 
     document.getElementById('passwordForm').addEventListener('submit', async (e) => {
         e.preventDefault();

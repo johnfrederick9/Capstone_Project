@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Step 2: Verification -->
             <div class="slide" id="step-verification">
                 <h2>Password Verification</h2>
-                <p>Enter the six-digit verification code sent to your email.</p>
+                <p>Enter your six-digit verification code.</p>
                 <div class="code-container">
                     <input type="number" class="code" maxlength="1" data-index="0" placeholder="0" min="0" max="9" required />
                     <input type="number" class="code" maxlength="1" data-index="1" placeholder="0" min="0" max="9" required />
@@ -195,21 +195,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
         });
           // Automatically focus the next input field
-            codes.forEach((code, idx) => {
-                code.addEventListener('input', (e) => {
-                    if (e.target.value.length === 1) {
-                        const next = codes[idx + 1];
-                        if (next) next.focus();
-                    }
-                });
+            codes[0].focus()
 
+            codes.forEach((code, idx) => {
                 code.addEventListener('keydown', (e) => {
-                    if (e.key === 'Backspace' && e.target.value === '') {
-                        const prev = codes[idx - 1];
-                        if (prev) prev.focus();
+                    if(e.key >= 0 && e.key <=9) {
+                        codes[idx].value = ''
+                        setTimeout(() => codes[idx + 1].focus(), 10)
+                    } else if(e.key === 'Backspace') {
+                        setTimeout(() => codes[idx - 1].focus(), 10)
                     }
-                });
-            });
+                })
+            })
 
         document.getElementById('passwordForm').addEventListener('submit', async (e) => {
             e.preventDefault();
