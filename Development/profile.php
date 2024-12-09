@@ -106,8 +106,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <!-- Hidden input to identify the form submission -->
                                     <input type="hidden" name="profile_update" value="true">
 
-                                    <!-- Update Profile Button -->
-                                    <button type="submit" class="btn btn-primary" id="profile_update" onclick="return confirm('Are you sure you want to update your profile?')">Update</button>
+                                      <!-- Change Password Button -->
+                                <button><a href="../change_password.php?user_id=<?php echo $row['user_id']; ?>" class="cpbtn">Change Password</a>
+                                 
 
                                     
                                 </form>
@@ -156,8 +157,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <label for="username">Username</label>
                                     <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($row["username"]);?>">
                                 </div>
-                                <!-- Change Password Button -->
-                                <button><a href="../change_password.php?user_id=<?php echo $row['user_id']; ?>" class="cpbtn">Change Password</a>
+
+                                   <!-- Update Profile Button -->
+                                   <button type="submit" class="btn btn-primary" id="profile_update" onclick="return confirm('Are you sure you want to update your profile?')">Update</button>
+                              
                             </div>
                         </div> 
                     </form>

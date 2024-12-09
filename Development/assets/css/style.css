@@ -3603,6 +3603,31 @@ font-size: 18px;
 .profile .form-section {
   padding: 10px;
 }
+.profile button{
+  margin-top: 10px;
+}
+
+.profile .cpbtn {
+  margin-top: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 12px 20px; /* More padding for better aesthetics */
+  border-radius: 8px; /* Slightly more rounded corners */
+  font-size: 16px;
+  font-weight: bold; /* Make the text stand out */
+  transition: all 0.3s ease; /* Smooth transition for all properties */
+  align-self: flex-end;
+  width: fit-content;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+}
+
+.profile .cpbtn:hover {
+  background-color: #218838; /* Darker green for hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
 
 .profile .form-grid {
   display: grid;
