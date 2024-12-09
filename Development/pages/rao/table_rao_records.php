@@ -1126,6 +1126,44 @@ td.action-buttons{
                             });
                         });
 
+
+                        $(document).on('click', '.print-btn', function() {
+                        var rao_ps_id = $('#rao_ps_id').val(); // Get the ID from hidden input
+                        console.log("Print", rao_ps_id); //
+
+                        $.ajax({
+                            url: 'print-handler.php',
+                            type: 'POST',
+                            data: { rao_ps_id: rao_ps_id },
+                            success: function(response) {
+                                var printWindow = window.open('', '', 'height=600,width=800');
+                                printWindow.document.write(response);
+                                printWindow.document.close();
+
+                                var images = printWindow.document.images;
+                                var totalImages = images.length;
+                                var loadedImages = 0;
+
+                                if (totalImages === 0) {
+                                    printWindow.focus();
+                                    printWindow.print();
+                                    //printWindow.close();
+                                } else {
+                                    for (var i = 0; i < totalImages; i++) {
+                                        images[i].onload = images[i].onerror = function() {
+                                            loadedImages++;
+                                            if (loadedImages === totalImages) {
+                                                printWindow.focus();
+                                                printWindow.print();
+                                                printWindow.close();
+                                            }
+                                        };
+                                    }
+                                }
+                            }
+                        });
+                    });
+
         
                         
                     
@@ -1285,41 +1323,11 @@ td.action-buttons{
                                     </div>
                                 </div>
                                 
-                                    <a href="#" class="btn" id="print-btn">Print</a>
+                                <div class="modal-footer">
+                                    <button class="print-btn btn btn-primary">Print</button>
+                                </div>
                                 </div>
 
-                                <script>
-                                    document.getElementById('print-btn').addEventListener('click', function (e) {
-                                        e.preventDefault(); // Prevent default behavior of the anchor tag
-
-                                        const rao_ps_id = 7; // Replace with dynamic fetching logic if needed
-
-                                        // Construct the dynamic URL with the parameter
-                                        const url = `fetch_financial.php?id_rao_ps=${rao_ps_id}`;
-
-                                        // Redirect the user to the constructed URL
-                                        window.location.href = url;
-                                    });
-                                </script>
-
-                                <style>
-                                    .btn {
-                                        display: block; /* Make the button behave like a block element */
-                                        margin: 0 auto; /* Center the button horizontally */
-                                        padding: 10px 20px; /* Add some padding for better appearance */
-                                        font-size: 16px; /* Adjust font size for readability */
-                                        text-align: center; /* Center the text within the button */
-                                        background-color: #007bff; /* Set a background color */
-                                        color: #fff; /* Text color */
-                                        text-decoration: none; /* Remove underline */
-                                        border: none; /* Remove border */
-                                        border-radius: 5px; /* Rounded corners */
-                                        cursor: pointer; /* Pointer cursor on hover */
-                                    }
-                                    .btn:hover {
-                                        background-color: #0056b3; /* Darken the background on hover */
-                                    }
-                                </style>
                             </div>
                         </div>
                     </div>
