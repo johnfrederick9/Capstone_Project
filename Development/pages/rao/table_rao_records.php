@@ -1101,7 +1101,7 @@ td.action-buttons{
                         });
 
 
-                        $(document).on('click', '#viewDataModal #printbtn', function () {
+                        $(document).on('click', '#print-btn', function () {
                         var rao_ps_id = $('#viewDataModal #rao_ps_id').val(); // Get the ID from hidden input
                         console.log("Print", rao_ps_id); // Log for debugging
 
@@ -1298,8 +1298,8 @@ td.action-buttons{
                                     </div>
                                 </div>
                                 
-                                <div class="modal-footer">
-                                    <button class="print-btn btn btn-primary">Print</button>
+                                <div class="cashbook-actions">
+                                    <button id="print-btn">Print</button>
                                 </div>
                                 </div>
 

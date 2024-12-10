@@ -1,6 +1,6 @@
 <?php
 include '../../head.php';
-include '../../sidebar_officials.php';
+include '../../sidebar.php';
 ?>
 <style>
 
@@ -425,6 +425,23 @@ td.action-buttons{
   margin-right: 10px;
 }
 
+.cashbook-actions {
+    text-align: right;
+}
+
+.cashbook-actions button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.cashbook-actions button:hover {
+    background-color: #45a049;
+}
 
 
 </style>
@@ -437,10 +454,19 @@ td.action-buttons{
                             <h1>Records of Appropriations and Obligations Continuing (RAO-CONT)</h1>
                         </div>
                         <div class="table-actions">    
+                        <div class="dropdown table_dropdown">
+                        <button class="dropdown-toggle">Other RAO Sources</button>
+                            <ul class="dropdown-menu">
+                                <li><a href="../../pages/rao/table_rao_records.php">RAO-PS</a></li>
+                                <li><a href="../../pages/rao-fe/table_rao_fe_records.php">RAO-FE</a></li>
+                                <li><a href="../../pages/rao-mooe/table_rao_mooe_records.php">RAO-MOOE</a></li>
+                                <li><a href="../../pages/rao-bdrrmf/table_rao_bdrrmf_records.php">RAO-BDRRMF</a></li>
+                                <li><a href="../../pages/rao-dev/table_rao_dev_records.php">RAO-DEV</a></li>
+                                <li><a href="../../pages/rao-sk/table_rao_sk_records.php">RAO-SK</a></li>
+                                <li><a href="../../pages/rao-co/table_rao_co_cont_records.php">RAO-CO</a></li>
+                            </ul>
+                        </div>  
                             <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#AttributeModal" class="add-table-btn">+ Add Record</button>
-                            <!--<button class="print-btn" title="Print">
-                                <i class="bx bx-printer"></i>
-                            </button>-->
                         </div>
                     </div>
                     <table id="example" class="table-table">
@@ -2107,6 +2133,44 @@ td.action-buttons{
                             });
                         });
 
+                        
+                        $(document).on('click', '#print-btn', function() {
+                        var rao_cont_id = $('#viewDataModal #rao_cont_id').val(); // Get the ID from hidden input
+                        console.log("Print", rao_cont_id); //
+
+                        $.ajax({
+                            url: 'print-handler.php',
+                            type: 'POST',
+                            data: { rao_cont_id: rao_cont_id },
+                            success: function(response) {
+                                var printWindow = window.open('', '', 'height=600,width=800');
+                                printWindow.document.write(response);
+                                printWindow.document.close();
+
+                                var images = printWindow.document.images;
+                                var totalImages = images.length;
+                                var loadedImages = 0;
+
+                                if (totalImages === 0) {
+                                    printWindow.focus();
+                                    printWindow.print();
+                                    //printWindow.close();
+                                } else {
+                                    for (var i = 0; i < totalImages; i++) {
+                                        images[i].onload = images[i].onerror = function() {
+                                            loadedImages++;
+                                            if (loadedImages === totalImages) {
+                                                printWindow.focus();
+                                                printWindow.print();
+                                                printWindow.close();
+                                            }
+                                        };
+                                    }
+                                }
+                            }
+                        });
+                    });
+
                     </script>
                 </section><!-- .home-->
                 <!-- Modal -->
@@ -2230,6 +2294,7 @@ td.action-buttons{
                                 <div class="rao-header">
                                     <h1>Report of Appropriations and Obligations(RAO-CONT)</h1>
                                     <p id="period_covered" style="text-align: center;"></p>
+                                    <input type="hidden" id="rao_cont_id" name="rao_cont_id">
                                     <div class="details">
                                         <div class="info">
                                             <label>Barangay:</label> <input type="text" value="MANTALONGON" disabled/>
@@ -2353,6 +2418,11 @@ td.action-buttons{
                                             <p>Punong Barangay</p>
                                         </div>
                                     </div>
+                                </div>
+
+                                
+                                <div class="cashbook-actions">
+                                    <button id="print-btn">Print</button>
                                 </div>
 
                             </div>
@@ -2511,7 +2581,7 @@ td.action-buttons{
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Add Report of Appropriations and Obligations Continuing (RAO-CONT)</h5>
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#UpdateAttributeModal" class="add-popup">Change Columns</button>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#UpdateAttributeModal" class="add-table-btn">Change Columns</button>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
