@@ -1,6 +1,6 @@
 <?php
 include '../../head.php';
-include '../../sidebar_officials.php';
+include '../../sidebar.php';
 ?>
 <style>
 
@@ -428,31 +428,48 @@ td.action-buttons{
 
 </style>
 <body>
-    <section class="home">  
-        <div class="financial_rao">
-                <div class="table-container">
-                    <div class="table-header">
-                    <div class="head">
-                            <h1>Records of Appropriations and Obligations</h1>
-                        </div>
-                        <div class="table-actions">    
+<section class="home">  
+    <div class="financial_rao">
+        <div class="table-container">
+            <div class="table-header">
+                <div class="head">
+                    <h1>Records of Appropriations and Obligations</h1>
+                </div>
+                <div class="table-actions">  
+                        <div class="dropdown table_dropdown">
+                                <button class="dropdown-toggle">Other RAO Sources</button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="../../pages/rao/table_rao_records.php">RAO-PS</a></li>
+                                    <li><a href="../../pages/rao-cont/table_rao_cont_records.php">RAO-CONT</a></li>
+                                    <li><a href="../../pages/rao-fe/table_rao_fe_records.php">RAO-FE</a></li>
+                                    <li><a href="../../pages/rao-mooe/table_rao_mooe_records.php">RAO-MOOE</a></li>
+                                    <li><a href="../../pages/rao-bdrrmf/table_rao_bdrrmf_records.php">RAO-BDRRMF</a></li>
+                                    <li><a href="../../pages/rao-dev/table_rao_dev_records.php">RAO-DEV</a></li>
+                                    <li><a href="../../pages/rao-sk/table_rao_sk_records.php">RAO-SK</a></li>
+                                    <li><a href="../../pages/rao-co/table_rao_co_cont_records.php">RAO-CO</a></li>
+                                    <li><a href="../../pages/co-cont/table_rao_cocont_records.php">RAO-CO-CONT</a></li>
+                                </ul>
+                            </div>  
                             <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-table-btn">+ Add Table</button>
-                            <!--<button class="print-btn" title="Print">
-                                <i class="bx bx-printer"></i>
-                            </button>-->
+                        
                         </div>
                     </div>
                     <table id="example" class="table-table">
-                    <thead>
-                        <th>#</th>
-                        <th>Period Covered</th>
-                        <th>Chairman</th>
-                        <th>Barangay Captain</th>
-                        <th>Action</th>
-                    </thead>
-                    <tbody>
-                    </tbody>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Period Covered</th>
+                                <th>Chairman</th>
+                                <th>Barangay Captain</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
                     </table>
+                </div>
+            </div>
+        </section>
                 </div><!-- .table-container-->
                     <script type="text/javascript">
                         $(document).ready(function() {
@@ -772,6 +789,51 @@ td.action-buttons{
                             });
                         });
 
+                        $(document).ready(function() {
+                            // Event listener for the print button
+                            $(document).on('click', '.print-btn', function() {
+                                var rao_ps_id = $(this).data('id'); // Get the indigency_id
+
+                                // Make an AJAX request to fetch the certificate content
+                                $.ajax({
+                                    url: 'fetch_financial.php', // URL to fetch the certificate HTML
+                                    type: 'POST',
+                                    data: { id: rao_ps_id },
+                                    success: function(response) {
+                                        // Create a new window to print the content
+                                        var printWindow = window.open('', '', 'height=600,width=800');
+                                        printWindow.document.write(response);
+                                        printWindow.document.close();
+
+                                        // Wait for all images in the new window to load
+                                        var images = printWindow.document.images;
+                                        var totalImages = images.length;
+                                        var loadedImages = 0;
+
+                                        if (totalImages === 0) {
+                                            // If there are no images, proceed to print
+                                            printWindow.focus();
+                                            printWindow.print();
+                                            printWindow.close();
+                                        } else {
+                                            // Check each image for load completion
+                                            for (var i = 0; i < totalImages; i++) {
+                                                images[i].onload = images[i].onerror = function() {
+                                                    loadedImages++;
+                                                    if (loadedImages === totalImages) {
+                                                        // All images have loaded, proceed to print
+                                                        printWindow.focus();
+                                                        printWindow.print();
+                                                        printWindow.close();
+                                                    }
+                                                };
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                        });
+
                         //FOR EDIT
                         $('#example').on('click', '.editbtn', function (event) {
                             var table = $('#example').DataTable();
@@ -1063,6 +1125,47 @@ td.action-buttons{
                             });
                             });
                         });
+
+
+                        $(document).on('click', '.printbtn', function() {
+                        var rao_ps_id = $('#rao_ps_id').val(); // Get the ID from hidden input
+                        console.log("Print", rao_ps_id); //
+
+                        $.ajax({
+                            url: 'print-handler.php',
+                            type: 'POST',
+                            data: { rao_ps_id: rao_ps_id },
+                            success: function(response) {
+                                var printWindow = window.open('', '', 'height=600,width=800');
+                                printWindow.document.write(response);
+                                printWindow.document.close();
+
+                                var images = printWindow.document.images;
+                                var totalImages = images.length;
+                                var loadedImages = 0;
+
+                                if (totalImages === 0) {
+                                    printWindow.focus();
+                                    printWindow.print();
+                                    //printWindow.close();
+                                } else {
+                                    for (var i = 0; i < totalImages; i++) {
+                                        images[i].onload = images[i].onerror = function() {
+                                            loadedImages++;
+                                            if (loadedImages === totalImages) {
+                                                printWindow.focus();
+                                                printWindow.print();
+                                                printWindow.close();
+                                            }
+                                        };
+                                    }
+                                }
+                            }
+                        });
+                    });
+
+        
+                        
                     
                     </script>
                 </section><!-- .home-->
@@ -1081,6 +1184,7 @@ td.action-buttons{
                             <div class="rao-container">
                             <div class="rao-header">
                                     <h1>Report of Appropriations and Obligations (RA-PS)</h1>
+                                    <input type="hidden" id="rao_ps_id" name="rao_ps_id">
                                     <p id="period_covered" style="text-align: center;"></p>
                                     <div class="details">
                                         <div class="info">
@@ -1218,7 +1322,10 @@ td.action-buttons{
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary printbtn">Print</button>
+                                </div>
+                                </div>
 
                             </div>
                         </div>
