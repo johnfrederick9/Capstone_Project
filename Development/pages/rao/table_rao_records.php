@@ -1127,7 +1127,7 @@ td.action-buttons{
                         });
 
 
-                        $(document).on('click', '.print-btn', function() {
+                        $(document).on('click', '.printbtn', function() {
                         var rao_ps_id = $('#rao_ps_id').val(); // Get the ID from hidden input
                         console.log("Print", rao_ps_id); //
 
@@ -1322,9 +1322,8 @@ td.action-buttons{
                                         </div>
                                     </div>
                                 </div>
-                                
                                 <div class="modal-footer">
-                                    <button class="print-btn btn btn-primary">Print</button>
+                                    <button class="btn btn-primary printbtn">Print</button>
                                 </div>
                                 </div>
 
