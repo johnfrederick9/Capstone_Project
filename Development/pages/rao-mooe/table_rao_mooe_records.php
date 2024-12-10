@@ -435,6 +435,24 @@ td.action-buttons{
   margin-right: 10px;
 }
 
+.cashbook-actions {
+    text-align: right;
+}
+
+.cashbook-actions button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.cashbook-actions button:hover {
+    background-color: #45a049;
+}
+
 
 
 </style>
@@ -1960,6 +1978,43 @@ td.action-buttons{
                             });
                         });
 
+                        $(document).on('click', '#print-btn', function() {
+                        var rao_mooe_id = $('#viewDataModal #rao_mooe_id').val(); // Get the ID from hidden input
+                        console.log("Print", rao_mooe_id); //
+
+                        $.ajax({
+                            url: 'print-handler.php',
+                            type: 'POST',
+                            data: { rao_mooe_id: rao_mooe_id },
+                            success: function(response) {
+                                var printWindow = window.open('', '', 'height=600,width=800');
+                                printWindow.document.write(response);
+                                printWindow.document.close();
+
+                                var images = printWindow.document.images;
+                                var totalImages = images.length;
+                                var loadedImages = 0;
+
+                                if (totalImages === 0) {
+                                    printWindow.focus();
+                                    printWindow.print();
+                                    //printWindow.close();
+                                } else {
+                                    for (var i = 0; i < totalImages; i++) {
+                                        images[i].onload = images[i].onerror = function() {
+                                            loadedImages++;
+                                            if (loadedImages === totalImages) {
+                                                printWindow.focus();
+                                                printWindow.print();
+                                                printWindow.close();
+                                            }
+                                        };
+                                    }
+                                }
+                            }
+                        });
+                    });
+
                     </script>
                 </section><!-- .home-->
                 <!-- Modal -->
@@ -2083,6 +2138,7 @@ td.action-buttons{
                                 <div class="rao-header">
                                     <h1>Report of Appropriations and Obligations (RAO-MOOE)</h1>
                                     <p id="period_covered" style="text-align: center;"></p>
+                                    <input type="hidden" id="rao_mooe_id" name="rao_mooe_id">
                                     <div class="details">
                                         <div class="info">
                                             <label>Barangay:</label> <input type="text" value="MANTALONGON" disabled/>
@@ -2206,6 +2262,10 @@ td.action-buttons{
                                             <p>Punong Barangay</p>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="cashbook-actions">
+                                    <button id="print-btn">Print</button>
                                 </div>
 
                             </div>

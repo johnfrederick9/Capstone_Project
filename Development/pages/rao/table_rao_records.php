@@ -426,6 +426,25 @@ td.action-buttons{
   margin-right: 10px;
 }
 
+
+.cashbook-actions {
+    text-align: right;
+}
+
+.cashbook-actions button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.cashbook-actions button:hover {
+    background-color: #45a049;
+}
+
 </style>
 <body>
 <section class="home">  
@@ -789,51 +808,6 @@ td.action-buttons{
                             });
                         });
 
-                        $(document).ready(function() {
-                            // Event listener for the print button
-                            $(document).on('click', '.print-btn', function() {
-                                var rao_ps_id = $(this).data('id'); // Get the indigency_id
-
-                                // Make an AJAX request to fetch the certificate content
-                                $.ajax({
-                                    url: 'fetch_financial.php', // URL to fetch the certificate HTML
-                                    type: 'POST',
-                                    data: { id: rao_ps_id },
-                                    success: function(response) {
-                                        // Create a new window to print the content
-                                        var printWindow = window.open('', '', 'height=600,width=800');
-                                        printWindow.document.write(response);
-                                        printWindow.document.close();
-
-                                        // Wait for all images in the new window to load
-                                        var images = printWindow.document.images;
-                                        var totalImages = images.length;
-                                        var loadedImages = 0;
-
-                                        if (totalImages === 0) {
-                                            // If there are no images, proceed to print
-                                            printWindow.focus();
-                                            printWindow.print();
-                                            printWindow.close();
-                                        } else {
-                                            // Check each image for load completion
-                                            for (var i = 0; i < totalImages; i++) {
-                                                images[i].onload = images[i].onerror = function() {
-                                                    loadedImages++;
-                                                    if (loadedImages === totalImages) {
-                                                        // All images have loaded, proceed to print
-                                                        printWindow.focus();
-                                                        printWindow.print();
-                                                        printWindow.close();
-                                                    }
-                                                };
-                                            }
-                                        }
-                                    }
-                                });
-                            });
-                        });
-
                         //FOR EDIT
                         $('#example').on('click', '.editbtn', function (event) {
                             var table = $('#example').DataTable();
@@ -1127,15 +1101,15 @@ td.action-buttons{
                         });
 
 
-                        $(document).on('click', '.print-btn', function() {
-                        var rao_ps_id = $('#rao_ps_id').val(); // Get the ID from hidden input
-                        console.log("Print", rao_ps_id); //
+                        $(document).on('click', '#viewDataModal #print-btn', function () {
+                        var rao_ps_id = $('#viewDataModal #rao_ps_id').val(); // Get the ID from hidden input
+                        console.log("Print", rao_ps_id); // Log for debugging
 
                         $.ajax({
                             url: 'print-handler.php',
                             type: 'POST',
                             data: { rao_ps_id: rao_ps_id },
-                            success: function(response) {
+                            success: function (response) {
                                 var printWindow = window.open('', '', 'height=600,width=800');
                                 printWindow.document.write(response);
                                 printWindow.document.close();
@@ -1150,7 +1124,7 @@ td.action-buttons{
                                     //printWindow.close();
                                 } else {
                                     for (var i = 0; i < totalImages; i++) {
-                                        images[i].onload = images[i].onerror = function() {
+                                        images[i].onload = images[i].onerror = function () {
                                             loadedImages++;
                                             if (loadedImages === totalImages) {
                                                 printWindow.focus();
@@ -1160,9 +1134,10 @@ td.action-buttons{
                                         };
                                     }
                                 }
-                            }
+                            },
                         });
                     });
+
 
         
                         
@@ -1323,9 +1298,9 @@ td.action-buttons{
                                     </div>
                                 </div>
                                 
-                                <div class="modal-footer">
-                                    <button class="print-btn btn btn-primary">Print</button>
-                                </div>
+                                <div class="cashbook-actions">
+                                <button id="print-btn">Print</button>
+                            </div>
                                 </div>
 
                             </div>

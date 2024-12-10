@@ -1830,6 +1830,45 @@ button[data-group]:not(.active) {
                             }
                         });
 
+
+                        $(document).on('click', '#print-btn', function() {
+                            var cashbook_id = $('#cashbook_id').val(); // Get the ID from hidden input
+                            console.log("Print", cashbook_id); //
+
+                            $.ajax({
+                                url: 'print-handler.php',
+                                type: 'POST',
+                                data: { cashbook_id: cashbook_id},
+                                success: function(response) {
+                                    var printWindow = window.open('', '', 'height=600,width=800');
+                                    printWindow.document.write(response);
+                                    printWindow.document.close();
+
+                                    var images = printWindow.document.images;
+                                    var totalImages = images.length;
+                                    var loadedImages = 0;
+
+                                    if (totalImages === 0) {
+                                        printWindow.focus();
+                                        printWindow.print();
+                                        //printWindow.close();
+                                    } else {
+                                        for (var i = 0; i < totalImages; i++) {
+                                            images[i].onload = images[i].onerror = function() {
+                                                loadedImages++;
+                                                if (loadedImages === totalImages) {
+                                                    printWindow.focus();
+                                                    printWindow.print();
+                                                    printWindow.close();
+                                                }
+                                            };
+                                        }
+                                    }
+                                }
+                            });
+                        });
+
+
                     </script>
                 </section><!-- .home-->
                 <!-- Modal -->
@@ -1967,6 +2006,7 @@ button[data-group]:not(.active) {
                             <div class="cashbook-actions">
                                 <button id="print-btn">Print</button>
                             </div>
+                            <button id="print-btn">Prin1t</button>
                         </div>
                     </div>
                     </div>
