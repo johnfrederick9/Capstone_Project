@@ -223,12 +223,6 @@ if (isset($conn) && $conn) {
               </li>
             </ul>
           </li>-->
-        <li>
-          <a href="../user_approval/table_approval.php" title="Accounts Appoval">
-          <i class='bx bxs-check-circle icon'></i>
-            <span class="text nav-text">Accounts Appoval</span>
-          </a>
-        </li>
         <li>          
         <a href="#!" data-id="<?php echo $row['user_id']; ?>" data-bs-toggle="modal" data-bs-target="#UpdateProfileModal" title="Profile" class="editbtn">
                 <i class='bx bxs-user icon'></i>
