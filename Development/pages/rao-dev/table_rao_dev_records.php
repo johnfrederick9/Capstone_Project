@@ -478,6 +478,7 @@ td.action-buttons{
                                 <li><a href="../../pages/rao-bdrrmf/table_rao_bdrrmf_records.php">RAO-BDRRMF</a></li>
                                 <li><a href="../../pages/rao-sk/table_rao_sk_records.php">RAO-SK</a></li>
                                 <li><a href="../../pages/rao-co/table_rao_co_cont_records.php">RAO-CO</a></li>
+                                <li><a href="../../pages/co-cont/table_rao_cocont_records.php">RAO-CO-CONT</a></li>
                             </ul>
                         </div>  
                             <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#AttributeModal" class="add-table-btn">+ Add Record</button>
