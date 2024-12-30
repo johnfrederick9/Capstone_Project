@@ -48,7 +48,7 @@ $(document).ready(function() {
                             imageContainer.append('<div class="image-wrapper"><img src="' + image.filepath + '" class="img-fluid img-thumbnail m-2" alt="Document Image"></div>');
                         });
                     } else {
-                        imageContainer.append('<p>No images available for this document.</p>');
+                        imageContainer.append('<p></p>');
                     }
                 },
                 error: function(xhr, status, error) {
@@ -68,34 +68,92 @@ $(document).ready(function() {
             });
         }
 
-        function printContentFromPage(url, ids = '') {
-            $.ajax({
-                url: url,
-                type: 'GET',
-                data: { ids: ids },
-                success: function(response) {
-                    var iframe = document.createElement('iframe');
-                    iframe.style.position = 'absolute';
-                    iframe.style.width = '0px';
-                    iframe.style.height = '0px';
-                    iframe.style.border = 'none';
-                    document.body.appendChild(iframe);
+        function printContentFromPage(url, idsString = '') {
+    let queryString = idsString ? `?ids=${idsString}` : '';
+    $.ajax({
+        url: `${url}${queryString}`,
+        type: 'GET',
+        success: function (response) {
+            // Create an invisible iframe to load the print content
+            let iframe = document.createElement('iframe');
+            iframe.style.position = 'absolute';
+            iframe.style.width = '0px';
+            iframe.style.height = '0px';
+            iframe.style.border = 'none';
+            document.body.appendChild(iframe);
 
-                    var doc = iframe.contentWindow.document;
-                    doc.open();
-                    doc.write(response);
-                    doc.close();
+            // Write response content into the iframe
+            let iframeDoc = iframe.contentWindow.document;
+            iframeDoc.open();
+            iframeDoc.write(response);
+            iframeDoc.close();
 
-                    iframe.contentWindow.focus();
-                    iframe.contentWindow.print();
+            // Wait for all images in the iframe to load
+            let images = iframeDoc.querySelectorAll('img');
+            let totalImages = images.length;
+            let loadedImages = 0;
 
-                    document.body.removeChild(iframe);
-                },
-                error: function() {
-                    showAlert("Failed to load print content.", "alert-danger");
+            if (totalImages > 0) {
+                images.forEach((img) => {
+                    img.addEventListener('load', imageLoaded);
+                    img.addEventListener('error', imageLoaded);
+                });
+            } else {
+                // Trigger print immediately if no images
+                triggerPrint(iframe);
+            }
+
+            function imageLoaded() {
+                loadedImages++;
+                if (loadedImages === totalImages) {
+                    triggerPrint(iframe);
                 }
-            });
+            }
+        },
+        error: function () {
+            showAlert("Failed to load print content.", "alert-danger");
+        },
+    });
+}
+
+// Function to trigger printing from the iframe
+function triggerPrint(iframe) {
+    let iframeWindow = iframe.contentWindow;
+
+    // Add a print-only style to ensure proper isolation of print content
+    let style = iframeWindow.document.createElement('style');
+    style.textContent = `
+        @media print {
+            body {
+                display: block;
+            }
         }
+    `;
+    iframeWindow.document.head.appendChild(style);
+
+    // Trigger print
+    iframeWindow.focus();
+    iframeWindow.print();
+
+    // Cleanup after printing
+    document.body.removeChild(iframe);
+}
+
+// Print selected rows
+$('.print-btn').click(function () {
+    if (selectedIds.length > 0) {
+        let idsString = selectedIds.join(',');
+        printContentFromPage('print_selected.php', idsString);
+    } else {
+        showAlert("Please select at least one row to print.", "alert-danger");
+    }
+});
+
+// Print all rows
+$('.print-all-btn').click(function () {
+    printContentFromPage('print_all.php');
+});
+
 
         $('#selectAll').click(function() {
             var checkedStatus = this.checked;
@@ -121,19 +179,6 @@ $(document).ready(function() {
             } else {
                 selectedIds = selectedIds.filter(item => item !== id);
             }
-        });
-
-        $('.print-btn').click(function() {
-            if (selectedIds.length > 0) {
-                var idsString = selectedIds.join(',');
-                printContentFromPage('print_selected.php', idsString);
-            } else {
-                showAlert("Please select at least one row to print.", "alert-danger");
-            }
-        });
-
-        $('.print-all-btn').click(function() {
-            printContentFromPage('print_all.php');
         });
 
         function showAlert(message, alertClass) {
@@ -348,7 +393,7 @@ function loadImages(document_id) {
         } else {
             // Show message if no images are found
             const noImagesMessage = document.createElement('p');
-            noImagesMessage.textContent = 'No images uploaded for this document.';
+            noImagesMessage.textContent = '';
             imageContainer.appendChild(noImagesMessage);
         }
     })
