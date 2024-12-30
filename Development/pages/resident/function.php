@@ -460,9 +460,8 @@ function showAlert(message, alertClass) {
                     $('#view_beneficiaries').text(json.resident_beneficiaries || "N/A");
                     $('#view_1').text(json.resident_height || "Not Updated");
                     $('#view_2').text(json.resident_weight || "Not Updated");
-                    $('#view_3').text(json.resident_BMIstat || "Not Updated");
-                    $('#view_4').text(json.resident_heightstat || "Not Updated");
-                    $('#view_5').text(json.resident_weightstat || "Not Updated");
+                    $('#view_3').text(json.resident_BMI || "Not Updated");
+                    $('#view_4').text(json.resident_BMIstatus || "Not Updated");
                     $('#view_6').text(json.resident_medical || "Not Updated");
                     $('#view_7').text(json.resident_lactating || "Not Updated");
                     $('#view_8').text(json.resident_pregnant || "Not Updated");

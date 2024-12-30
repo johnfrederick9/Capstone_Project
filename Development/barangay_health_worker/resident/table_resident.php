@@ -28,9 +28,8 @@ include "../../sidebar_officials.php";
                             <th>Age</th>
                             <th>Height</th>
                             <th>Weight</th>
+                            <th>BMI</th>
                             <th>BMI Status</th>
-                            <th>Height Status</th>
-                            <th>Weight Status</th>
                             <th>Medical History</th>
                             <th>Buttons</th>
                         </thead>
@@ -86,16 +85,6 @@ include "../../sidebar_officials.php";
                             <div class="input-wrapper">
                                 <label for="" class="input-label">Weight Status:</label>
                                 <input type="text" placeholder="Weight Status" id="weightstatField" name="resident_weightstat" class="input-field">
-                            </div>
-                            <div class="input-wrapper">
-                                <label for="" class="input-label">BMI Status:</label>
-                                <select id="bmiField" class="input-field" name="resident_BMIstat" require>
-                                <option value="" disabled selected>Status</option>
-                                    <option value="Under Weight">Under Weight</option>
-                                    <option value="Normal">Normal</option>
-                                    <option value="Over Weight">Over Weight</option>
-                                    <option value="Obese">Obese</option>
-                                </select>
                             </div>
                             <div class="input-wrapper ">
                             <label for="" class="input-label">Medical History:</label>
@@ -239,11 +228,11 @@ include "../../sidebar_officials.php";
                                     <p><strong>Age:</strong> <span id="view_age"></span></p>
                                     <p><strong>Height:</strong> <span id="view_1"></span></p>
                                     <p><strong>Weight:</strong> <span id="view_2"></span></p>
-                                    <p><strong>BMI Status:</strong> <span id="view_3"></span></p>
+                                    
                                 </div>
                                 <div class="col-md-6">
-                                    <p><strong>Height Status:</strong> <span id="view_4"></span></p>
-                                    <p><strong>Weight Status:</strong> <span id="view_5"></span></p>
+                                    <p><strong>BMI:</strong> <span id="view_3"></span></p>
+                                    <p><strong>BMI Status:</strong> <span id="view_4"></span></p>
                                     <p><strong>Medical History:</strong> <span id="view_6"></span></p>
                                     <p><strong>Lactating:</strong> <span id="view_7"></span></p>
                                     <p><strong>Pregnant:</strong> <span id="view_8"></span></p>

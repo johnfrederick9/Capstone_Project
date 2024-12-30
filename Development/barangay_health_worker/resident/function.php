@@ -23,7 +23,7 @@ $(document).ready(function() {
                 },
                 {
                 "bSortable": false,
-                "aTargets": [0,1,2,3,5,6,7,8,9,10]
+                "aTargets": [0,1,2,3,5,6,7]
             }],
             // Event that triggers when the table is redrawn (pagination or search)
             "drawCallback": function() {
@@ -214,7 +214,7 @@ $(document).on('submit', '#updateUser', function(e) {
     var resident_SY = $('#syField').val();
     var trid = $('#trid').val();
     var resident_id = $('#resident_id').val();
-    if(resident_height && resident_weight && resident_heightstat && resident_weightstat && resident_BMIstat && resident_medical && resident_lactating && resident_pregnant && resident_PWD && resident_SY) {
+    if(resident_height && resident_weight && resident_heightstat && resident_weightstat && resident_medical && resident_lactating && resident_pregnant && resident_PWD && resident_SY) {
         $.ajax({
             url: "update.php",
             type: "post",
@@ -372,9 +372,8 @@ function showAlert(message, alertClass) {
                     $('#view_2').text(json.resident_weight || "Not Updated");
                     $('#view_birthdate').text(json.resident_birthdate || "Not Updated");
                     $('#view_age').text(json.resident_age || "Not Updated");
-                    $('#view_3').text(json.resident_BMIstat || "Not Updated");
-                    $('#view_4').text(json.resident_heightstat || "Not Updated");
-                    $('#view_5').text(json.resident_weightstat || "Not Updated");
+                    $('#view_3').text(json.resident_BMI || "Not Updated");
+                    $('#view_4').text(json.resident_BMIstatus || "Not Updated");
                     $('#view_6').text(json.resident_medical || "Not Updated");
                     $('#view_7').text(json.resident_lactating || "Not Updated");
                     $('#view_8').text(json.resident_pregnant || "Not Updated");

@@ -29,12 +29,30 @@ if (isset($_POST['resident_id'])) {
     $resident_weight = $_POST["resident_weight"];
     $resident_heightstat = $_POST["resident_heightstat"];
     $resident_weightstat = $_POST["resident_weightstat"];
-    $resident_BMIstat = $_POST["resident_BMIstat"];
     $resident_medical = $_POST["resident_medical"];
     $resident_lactating = $_POST["resident_lactating"];
     $resident_pregnant = $_POST["resident_pregnant"];
     $resident_PWD = $_POST["resident_PWD"];
     $resident_SY = $_POST["resident_SY"];
+
+    // Calculate BMI
+    $resident_BMI = null;
+    $resident_BMIstatus = 'N/A';
+    if ($resident_height > 0 && $resident_weight > 0) {
+        $height_meters = $resident_height / 100; // Convert height to meters
+        $resident_BMI = round($resident_weight / ($height_meters * $height_meters), 2);
+
+        // Determine BMI status
+        if ($resident_BMI < 18.5) {
+            $resident_BMIstatus = 'Underweight';
+        } elseif ($resident_BMI >= 18.5 && $resident_BMI <= 24.9) {
+            $resident_BMIstatus = 'Normal';
+        } elseif ($resident_BMI >= 25 && $resident_BMI <= 29.9) {
+            $resident_BMIstatus = 'Overweight';
+        } elseif ($resident_BMI >= 30) {
+            $resident_BMIstatus = 'Obese';
+        }
+    }
 
     // Update query
     $update_sql = "UPDATE tb_resident SET 
@@ -46,7 +64,8 @@ if (isset($_POST['resident_id'])) {
         resident_weight='$resident_weight',
         resident_heightstat='$resident_heightstat',
         resident_weightstat='$resident_weightstat',
-        resident_BMIstat='$resident_BMIstat',
+        resident_BMI='$resident_BMI',
+        resident_BMIstatus='$resident_BMIstatus',
         resident_medical='$resident_medical',
         resident_lactating='$resident_lactating',
         resident_pregnant='$resident_pregnant',

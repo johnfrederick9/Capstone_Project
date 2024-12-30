@@ -360,16 +360,15 @@ include '../../sidebar.php';
                                     <p><strong>Indigenous:</strong> <span id="view_indigenous"></span></p>
                                     <p><strong>Pension:</strong> <span id="view_pension"></span></p>
                                     <p><strong>Beneficiaries:</strong> <span id="view_beneficiaries"></span></p>
+                                    <p><strong>Medical History:</strong> <span id="view_6"></span></p>
                                 </div>
                                 <div class="col-md-6">
                                     <p><strong>Height:</strong> <span id="view_1"></span></p>
                                     <p><strong>Weight:</strong> <span id="view_2"></span></p>
-                                    <p><strong>BMI Status:</strong> <span id="view_3"></span></p>
-                                    <p><strong>Height Status:</strong> <span id="view_4"></span></p>
-                                    <p><strong>Weight Status:</strong> <span id="view_5"></span></p>
+                                    <p><strong>BMI:</strong> <span id="view_3"></span></p>
+                                    <p><strong>BMI Status:</strong> <span id="view_4"></span></p>
                                 </div>
                                 <div class="col-md-6">
-                                    <p><strong>Medical History:</strong> <span id="view_6"></span></p>
                                     <p><strong>Lactating:</strong> <span id="view_7"></span></p>
                                     <p><strong>Pregnant:</strong> <span id="view_8"></span></p>
                                     <p><strong>PWD:</strong> <span id="view_9"></span></p>
