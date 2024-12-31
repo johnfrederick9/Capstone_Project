@@ -48,7 +48,7 @@ $(document).ready(function() {
                             imageContainer.append('<div class="image-wrapper"><img src="' + image.filepath + '" class="img-fluid img-thumbnail m-2" alt="Document Image"></div>');
                         });
                     } else {
-                        imageContainer.append('<p>No images available for this document.</p>');
+                        imageContainer.append('<p></p>');
                     }
                 },
                 error: function(xhr, status, error) {
@@ -68,34 +68,92 @@ $(document).ready(function() {
             });
         }
 
-        function printContentFromPage(url, ids = '') {
-            $.ajax({
-                url: url,
-                type: 'GET',
-                data: { ids: ids },
-                success: function(response) {
-                    var iframe = document.createElement('iframe');
-                    iframe.style.position = 'absolute';
-                    iframe.style.width = '0px';
-                    iframe.style.height = '0px';
-                    iframe.style.border = 'none';
-                    document.body.appendChild(iframe);
+        function printContentFromPage(url, idsString = '') {
+    let queryString = idsString ? `?ids=${idsString}` : '';
+    $.ajax({
+        url: `${url}${queryString}`,
+        type: 'GET',
+        success: function (response) {
+            // Create an invisible iframe to load the print content
+            let iframe = document.createElement('iframe');
+            iframe.style.position = 'absolute';
+            iframe.style.width = '0px';
+            iframe.style.height = '0px';
+            iframe.style.border = 'none';
+            document.body.appendChild(iframe);
 
-                    var doc = iframe.contentWindow.document;
-                    doc.open();
-                    doc.write(response);
-                    doc.close();
+            // Write response content into the iframe
+            let iframeDoc = iframe.contentWindow.document;
+            iframeDoc.open();
+            iframeDoc.write(response);
+            iframeDoc.close();
 
-                    iframe.contentWindow.focus();
-                    iframe.contentWindow.print();
+            // Wait for all images in the iframe to load
+            let images = iframeDoc.querySelectorAll('img');
+            let totalImages = images.length;
+            let loadedImages = 0;
 
-                    document.body.removeChild(iframe);
-                },
-                error: function() {
-                    showAlert("Failed to load print content.", "alert-danger");
+            if (totalImages > 0) {
+                images.forEach((img) => {
+                    img.addEventListener('load', imageLoaded);
+                    img.addEventListener('error', imageLoaded);
+                });
+            } else {
+                // Trigger print immediately if no images
+                triggerPrint(iframe);
+            }
+
+            function imageLoaded() {
+                loadedImages++;
+                if (loadedImages === totalImages) {
+                    triggerPrint(iframe);
                 }
-            });
+            }
+        },
+        error: function () {
+            showAlert("Failed to load print content.", "alert-danger");
+        },
+    });
+}
+
+// Function to trigger printing from the iframe
+function triggerPrint(iframe) {
+    let iframeWindow = iframe.contentWindow;
+
+    // Add a print-only style to ensure proper isolation of print content
+    let style = iframeWindow.document.createElement('style');
+    style.textContent = `
+        @media print {
+            body {
+                display: block;
+            }
         }
+    `;
+    iframeWindow.document.head.appendChild(style);
+
+    // Trigger print
+    iframeWindow.focus();
+    iframeWindow.print();
+
+    // Cleanup after printing
+    document.body.removeChild(iframe);
+}
+
+// Print selected rows
+$('.print-btn').click(function () {
+    if (selectedIds.length > 0) {
+        let idsString = selectedIds.join(',');
+        printContentFromPage('print_selected.php', idsString);
+    } else {
+        showAlert("Please select at least one row to print.", "alert-danger");
+    }
+});
+
+// Print all rows
+$('.print-all-btn').click(function () {
+    printContentFromPage('print_all.php');
+});
+
 
         $('#selectAll').click(function() {
             var checkedStatus = this.checked;
@@ -123,19 +181,6 @@ $(document).ready(function() {
             }
         });
 
-        $('.print-btn').click(function() {
-            if (selectedIds.length > 0) {
-                var idsString = selectedIds.join(',');
-                printContentFromPage('print_selected.php', idsString);
-            } else {
-                showAlert("Please select at least one row to print.", "alert-danger");
-            }
-        });
-
-        $('.print-all-btn').click(function() {
-            printContentFromPage('print_all.php');
-        });
-
         function showAlert(message, alertClass) {
             var alertDiv = $('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' + message +
                 '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
@@ -154,86 +199,77 @@ $(document).ready(function() {
         }
 
         $(document).on('submit', '#addUser', function(e) {
-    e.preventDefault();
-    var formData = new FormData(this);
+        e.preventDefault();
+        var formData = new FormData(this);
 
-    var document_name = $('#document_name').val();
-    var document_date = $('#document_date').val();
-    var document_info = $('#document_info').val();
-    var document_type = $('#document_type').val();
+        var document_name = $('#document_name').val();
+        var document_date = $('#document_date').val();
+        var document_info = $('#document_info').val();
+        var document_type = $('#document_type').val();
 
-    if (document_name && document_date && document_info && document_type) {
+        if (document_name && document_date && document_info && document_type) {
+            $.ajax({
+                url: "add.php",
+                type: "post",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    var json = JSON.parse(data);
+                    var status = json.status; // Get status from JSON response
+                    
+                    if (status === 'duplicate') {
+                        showAlert("Document with the same name already exists.", "alert-danger");
+                    } else if (status === 'true') {
+                        $('#example').DataTable().draw();
+                        $('#addUserModal').modal('hide');
+                        showAlert("Document added successfully.", "alert-success");
+                        $('#addUser')[0].reset(); // Clear the form fields
+                    } else {
+                        showAlert('Failed: ' + (json.error || 'Unknown error'), "alert-danger");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    showAlert('AJAX error: ' + error, "alert-danger");
+                }
+            });
+        } else {
+            showAlert("Fill all the required fields", "alert-danger");
+        }
+    });
+    $(document).on('submit', '#updateUser', function (e) {
+        e.preventDefault();
+        var formData = new FormData(this); // Automatically includes all form fields and files
+
         $.ajax({
-            url: "add.php",
-            type: "post",
+            url: "update.php",
+            type: "POST",
             data: formData,
-            processData: false,
-            contentType: false,
-            success: function(data) {
+            processData: false, // Do not process data as a query string
+            contentType: false, // Do not set the content type header
+            success: function (data) {
                 var json = JSON.parse(data);
-                var status = json.status; // Get status from JSON response
-                
+                var status = json.status;
+
                 if (status === 'duplicate') {
                     showAlert("Document with the same name already exists.", "alert-danger");
                 } else if (status === 'true') {
                     $('#example').DataTable().draw();
-                    $('#addUserModal').modal('hide');
-                    showAlert("Document added successfully.", "alert-success");
-                    $('#addUser')[0].reset(); // Clear the form fields
+                    $('#exampleModal').modal('hide');
+                    showAlert("Document updated successfully.", "alert-success");
+                    // Clear file upload field and label
+                    $('#updateFileInput').val(''); // Clear the file input value
+                    $('#updateFileName').text('No files selected'); // Reset the label text
+                    $('#updateFileLabel').css('background-color', '#c70707'); // Reset label background color
                 } else {
-                    showAlert('Failed: ' + (json.error || 'Unknown error'), "alert-danger");
+                    showAlert("Failed to update document.", "alert-danger");
                 }
             },
-            error: function(xhr, status, error) {
-                showAlert('AJAX error: ' + error, "alert-danger");
+            error: function () {
+                showAlert("Error updating record.", "alert-danger");
             }
         });
-    } else {
-        showAlert("Fill all the required fields", "alert-danger");
-    }
-});
-        $(document).on('submit', '#updateUser', function(e) {
-            e.preventDefault();
-            var document_name = $('#nameField').val();
-            var document_date = $('#dateField').val();
-            var document_info = $('#infoField').val();
-            var document_type = $('#typeField').val();
-            var trid = $('#trid').val();
-            var document_id = $('#document_id').val();
-
-            if (document_name != '' && document_date != '' && document_info != '' && document_type != '') {
-                $.ajax({
-                    url: "update.php",
-                    type: "post",
-                    data: {
-                        document_name: document_name,
-                        document_date: document_date,
-                        document_info: document_info,
-                        document_type: document_type,
-                        document_id: document_id
-                    },
-                    success: function(data) {
-                        var json = JSON.parse(data);
-                        var status = json.status;
-
-                        if (status === 'duplicate') {
-                            showAlert("Document with the same name already exists.", "alert-danger");
-                        } else if (status === 'true') {
-                            $('#example').DataTable().draw();
-                            $('#exampleModal').modal('hide');
-                            showAlert("Document update successfully.", "alert-success");
-                        } else {
-                            showAlert("Failed to Update document.", "alert-danger");
-                        }
-                    },
-                    error: function() {
-                        showAlert("Error updating record.", "alert-danger");
-                    }
-                });
-            } else {
-                showAlert("Fill all the required fields.", "alert-danger");
-            }
-        });
+    });
 
         $(document).on('click', '.deleteBtn', function(event) {
             event.preventDefault();
@@ -264,30 +300,30 @@ $(document).ready(function() {
         });
 
         $('#example').on('click', '.editbtn', function(event) {
-    var table = $('#example').DataTable();
-    var trid = $(this).closest('tr').attr('id');
-    var document_id = $(this).data('id');
-    $('#exampleModal').modal('show');
+        var table = $('#example').DataTable();
+        var trid = $(this).closest('tr').attr('id');
+        var document_id = $(this).data('id');
+        $('#exampleModal').modal('show');
 
-    $.ajax({
-        url: "get_single_data.php",
-        data: { document_id: document_id },
-        type: "post",
-        success: function(data) {
-            var json = JSON.parse(data);
-            $('#nameField').val(json.document_name);
-            $('#dateField').val(json.document_date);
-            $('#infoField').val(json.document_info);
-            $('#typeField').val(json.document_type);
-            $('#updateFileName').val(json.filepath);  // File path from tb_document_files
-            $('#document_id').val(document_id);
-            $('#trid').val(trid);
-        },
-        error: function() {
-            showAlert("Failed to load record details.", "alert-danger");
-        }
+        $.ajax({
+            url: "get_single_data.php",
+            data: { document_id: document_id },
+            type: "post",
+            success: function(data) {
+                var json = JSON.parse(data);
+                $('#nameField').val(json.document_name);
+                $('#dateField').val(json.document_date);
+                $('#infoField').val(json.document_info);
+                $('#typeField').val(json.document_type);
+                $('#updateFileName').val(json.filepath);  // File path from tb_document_files
+                $('#document_id').val(document_id);
+                $('#trid').val(trid);
+            },
+            error: function() {
+                showAlert("Failed to load record details.", "alert-danger");
+            }
+        });
     });
-});
 });
 </script>
 <script>
@@ -348,7 +384,7 @@ function loadImages(document_id) {
         } else {
             // Show message if no images are found
             const noImagesMessage = document.createElement('p');
-            noImagesMessage.textContent = 'No images uploaded for this document.';
+            noImagesMessage.textContent = '';
             imageContainer.appendChild(noImagesMessage);
         }
     })

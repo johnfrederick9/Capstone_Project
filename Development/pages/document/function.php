@@ -199,78 +199,77 @@ $('.print-all-btn').click(function () {
         }
 
         $(document).on('submit', '#addUser', function(e) {
-    e.preventDefault();
-    var formData = new FormData(this);
+        e.preventDefault();
+        var formData = new FormData(this);
 
-    var document_name = $('#document_name').val();
-    var document_date = $('#document_date').val();
-    var document_info = $('#document_info').val();
-    var document_type = $('#document_type').val();
+        var document_name = $('#document_name').val();
+        var document_date = $('#document_date').val();
+        var document_info = $('#document_info').val();
+        var document_type = $('#document_type').val();
 
-    if (document_name && document_date && document_info && document_type) {
+        if (document_name && document_date && document_info && document_type) {
+            $.ajax({
+                url: "add.php",
+                type: "post",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    var json = JSON.parse(data);
+                    var status = json.status; // Get status from JSON response
+                    
+                    if (status === 'duplicate') {
+                        showAlert("Document with the same name already exists.", "alert-danger");
+                    } else if (status === 'true') {
+                        $('#example').DataTable().draw();
+                        $('#addUserModal').modal('hide');
+                        showAlert("Document added successfully.", "alert-success");
+                        $('#addUser')[0].reset(); // Clear the form fields
+                    } else {
+                        showAlert('Failed: ' + (json.error || 'Unknown error'), "alert-danger");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    showAlert('AJAX error: ' + error, "alert-danger");
+                }
+            });
+        } else {
+            showAlert("Fill all the required fields", "alert-danger");
+        }
+    });
+    $(document).on('submit', '#updateUser', function (e) {
+        e.preventDefault();
+        var formData = new FormData(this); // Automatically includes all form fields and files
+
         $.ajax({
-            url: "add.php",
-            type: "post",
+            url: "update.php",
+            type: "POST",
             data: formData,
-            processData: false,
-            contentType: false,
-            success: function(data) {
+            processData: false, // Do not process data as a query string
+            contentType: false, // Do not set the content type header
+            success: function (data) {
                 var json = JSON.parse(data);
-                var status = json.status; // Get status from JSON response
-                
+                var status = json.status;
+
                 if (status === 'duplicate') {
                     showAlert("Document with the same name already exists.", "alert-danger");
                 } else if (status === 'true') {
                     $('#example').DataTable().draw();
-                    $('#addUserModal').modal('hide');
-                    showAlert("Document added successfully.", "alert-success");
-                    $('#addUser')[0].reset(); // Clear the form fields
+                    $('#exampleModal').modal('hide');
+                    showAlert("Document updated successfully.", "alert-success");
+                    // Clear file upload field and label
+                    $('#updateFileInput').val(''); // Clear the file input value
+                    $('#updateFileName').text('No files selected'); // Reset the label text
+                    $('#updateFileLabel').css('background-color', '#c70707'); // Reset label background color
                 } else {
-                    showAlert('Failed: ' + (json.error || 'Unknown error'), "alert-danger");
+                    showAlert("Failed to update document.", "alert-danger");
                 }
             },
-            error: function(xhr, status, error) {
-                showAlert('AJAX error: ' + error, "alert-danger");
+            error: function () {
+                showAlert("Error updating record.", "alert-danger");
             }
         });
-    } else {
-        showAlert("Fill all the required fields", "alert-danger");
-    }
-});
-$(document).on('submit', '#updateUser', function (e) {
-    e.preventDefault();
-    var formData = new FormData(this); // Automatically includes all form fields and files
-
-    $.ajax({
-        url: "update.php",
-        type: "POST",
-        data: formData,
-        processData: false, // Do not process data as a query string
-        contentType: false, // Do not set the content type header
-        success: function (data) {
-            var json = JSON.parse(data);
-            var status = json.status;
-
-            if (status === 'duplicate') {
-                showAlert("Document with the same name already exists.", "alert-danger");
-            } else if (status === 'true') {
-                $('#example').DataTable().draw();
-                $('#exampleModal').modal('hide');
-                showAlert("Document updated successfully.", "alert-success");
-                 // Clear file upload field and label
-                 $('#updateFileInput').val(''); // Clear the file input value
-                $('#updateFileName').text('No files selected'); // Reset the label text
-                $('#updateFileLabel').css('background-color', '#c70707'); // Reset label background color
-            } else {
-                showAlert("Failed to update document.", "alert-danger");
-            }
-        },
-        error: function () {
-            showAlert("Error updating record.", "alert-danger");
-        }
     });
-});
-
 
         $(document).on('click', '.deleteBtn', function(event) {
             event.preventDefault();
@@ -301,30 +300,30 @@ $(document).on('submit', '#updateUser', function (e) {
         });
 
         $('#example').on('click', '.editbtn', function(event) {
-    var table = $('#example').DataTable();
-    var trid = $(this).closest('tr').attr('id');
-    var document_id = $(this).data('id');
-    $('#exampleModal').modal('show');
+        var table = $('#example').DataTable();
+        var trid = $(this).closest('tr').attr('id');
+        var document_id = $(this).data('id');
+        $('#exampleModal').modal('show');
 
-    $.ajax({
-        url: "get_single_data.php",
-        data: { document_id: document_id },
-        type: "post",
-        success: function(data) {
-            var json = JSON.parse(data);
-            $('#nameField').val(json.document_name);
-            $('#dateField').val(json.document_date);
-            $('#infoField').val(json.document_info);
-            $('#typeField').val(json.document_type);
-            $('#updateFileName').val(json.filepath);  // File path from tb_document_files
-            $('#document_id').val(document_id);
-            $('#trid').val(trid);
-        },
-        error: function() {
-            showAlert("Failed to load record details.", "alert-danger");
-        }
+        $.ajax({
+            url: "get_single_data.php",
+            data: { document_id: document_id },
+            type: "post",
+            success: function(data) {
+                var json = JSON.parse(data);
+                $('#nameField').val(json.document_name);
+                $('#dateField').val(json.document_date);
+                $('#infoField').val(json.document_info);
+                $('#typeField').val(json.document_type);
+                $('#updateFileName').val(json.filepath);  // File path from tb_document_files
+                $('#document_id').val(document_id);
+                $('#trid').val(trid);
+            },
+            error: function() {
+                showAlert("Failed to load record details.", "alert-danger");
+            }
+        });
     });
-});
 });
 </script>
 <script>

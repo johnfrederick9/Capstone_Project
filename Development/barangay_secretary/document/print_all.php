@@ -10,8 +10,8 @@ echo '<html>
     <title>Document Data</title>
     <style>
         @page {
-            size: 8.5in 11in; /* Short bond paper size */
-            margin: 10mm 15mm 20mm 15mm; /* Top: 15mm Right: 15mm Bottom: 20mm Left: 15mm */
+            size: 8.5in 11in;
+            margin: 10mm 15mm 20mm 15mm;
         }
         body {
             font-family: Arial, sans-serif;
@@ -46,8 +46,18 @@ echo '<html>
             font-size: 12px;
             margin: 0;
         }
+        .img-thumbnail {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+            margin: 5px;
+            max-width: 70px;
+            max-height: 70px;
+        }
+        .img-thumbnail:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
 
-        /* Hide print header and footer */
         @media print {
             body {
                 margin: 0;
@@ -74,17 +84,36 @@ echo '<html>
                 <th>Document Date</th>
                 <th>Document Info</th>
                 <th>Document Type</th>
+                <th>Images</th>
             </tr>
         </thead>
         <tbody>';
 
-
 while ($row = mysqli_fetch_assoc($query)) {
+    $document_id = $row['document_id'];
+
+    // Fetch images for the document
+    $imageQuery = "SELECT filepath FROM tb_document_files WHERE document_id = '$document_id'";
+    $imageResult = mysqli_query($con, $imageQuery);
+
+    $images = array();
+    while ($imageRow = mysqli_fetch_assoc($imageResult)) {
+        $filepath = $imageRow['filepath'];
+        if (file_exists($filepath)) {
+            $images[] = '<img src="' . $filepath . '" class="img-thumbnail" alt="Document Image">';
+        } else {
+            $images[] = '<p class="text-danger">Image not found</p>';
+        }
+    }
+
+    $imagesHTML = !empty($images) ? implode('', $images) : '<p>No images available</p>';
+
     echo '<tr>
-            <td>'.$row['document_name'].'</td>
-            <td>'.$row['document_date'].'</td>
-            <td>'.$row['document_info'].'</td>
-            <td>'.$row['document_type'].'</td>
+            <td>' . $row['document_name'] . '</td>
+            <td>' . $row['document_date'] . '</td>
+            <td>' . $row['document_info'] . '</td>
+            <td>' . $row['document_type'] . '</td>
+            <td>' . $imagesHTML . '</td>
           </tr>';
 }
 
@@ -92,12 +121,25 @@ echo '</tbody></table>';
 ?>
 
 <script>
-    // Print only once and prevent multiple print dialogs
     window.onload = function() {
-        window.print(); // Automatically open print dialog
-        window.onafterprint = function() {
-            window.close(); // Close the window after printing is done
-        };
+        const images = document.querySelectorAll("img");
+        const imagePromises = Array.from(images).map(img => {
+            return new Promise(resolve => {
+                if (img.complete) {
+                    resolve();
+                } else {
+                    img.onload = resolve;
+                    img.onerror = resolve;
+                }
+            });
+        });
+
+        Promise.all(imagePromises).then(() => {
+            window.print();
+            window.onafterprint = () => {
+                window.close();
+            };
+        });
     };
 </script>
 

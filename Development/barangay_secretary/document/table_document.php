@@ -1,6 +1,6 @@
 <?php
 include '../../head.php';
-include '../../sidebar_mainofficials.php';
+include '../../sidebar.php';
 ?>
 <style>
 #imageContainer {
@@ -87,8 +87,9 @@ object-fit: cover;
                                         <i class='bx bx-paperclip'></i> Attach Files
                                     </label>
                                     <span id="updateFileName">No files selected</span>
-                                    <input type="file" id="updateFileInput" name="filepath" class="file-input" multiple onchange="handleFileChange('updateFileInput', 'updateFileName', 'updateFileLabel')">
+                                    <input type="file" id="updateFileInput" name="document_files[]" class="file-input" multiple onchange="handleFileChange('updateFileInput', 'updateFileName', 'updateFileLabel')">
                                 </div>
+
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
@@ -123,13 +124,13 @@ object-fit: cover;
                                 <label for="documentType">Document Type</label>
                                 <input type="text" id="document_type" name="document_type" require>
                             </div>
-                            <!--<div class="file-upload">
+                            <div class="file-upload">
                                 <label for="addFileInput" id="addFileLabel" style="background-color: #ffdddd;">
                                     <i class='bx bx-paperclip'></i> Attach Files
                                 </label>
                                 <span id="addFileName">No files selected</span>
                                 <input type="file" id="addFileInput" name="document_files[]" class="file-input" multiple onchange="handleFileChange('addFileInput', 'addFileName', 'addFileLabel')">
-                            </div>-->
+                            </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
