@@ -3,11 +3,13 @@ include '../../head.php';
 include '../../sidebar.php';
 include '../../connection.php';
 
-// Fetch residents from the database
+// Updated query to include the condition for isDisplayed = 1
 $query = "SELECT resident_id, CONCAT(resident_firstname, ' ', 
                                      IF(resident_middlename != '' AND resident_middlename IS NOT NULL, CONCAT(LEFT(resident_middlename, 1), '.'), ''), ' ', 
-                                     resident_lastname) AS resident_fullname 
-          FROM tb_resident";
+                                     resident_lastname) 
+          AS resident_fullname 
+          FROM tb_resident 
+          WHERE isDisplayed = 1";
 $result = mysqli_query($conn, $query);
 
 $residents = [];
