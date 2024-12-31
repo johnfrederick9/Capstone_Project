@@ -82,13 +82,14 @@ object-fit: cover;
                                     <label for="documentType">Document Type</label>
                                     <input type="text" id="typeField" name="document_type" require>
                                 </div>
-                                <!--<div class="file-upload">
+                                <div class="file-upload">
                                     <label for="updateFileInput" id="updateFileLabel" style="background-color: #ffdddd;">
                                         <i class='bx bx-paperclip'></i> Attach Files
                                     </label>
                                     <span id="updateFileName">No files selected</span>
-                                    <input type="file" id="updateFileInput" name="filepath" class="file-input" multiple onchange="handleFileChange('updateFileInput', 'updateFileName', 'updateFileLabel')">
-                                </div>-->
+                                    <input type="file" id="updateFileInput" name="document_files[]" class="file-input" multiple onchange="handleFileChange('updateFileInput', 'updateFileName', 'updateFileLabel')">
+                                </div>
+
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
