@@ -1,14 +1,15 @@
 <?php
 include '../../head.php';
-include '../../sidebar_mainofficials.php';
+include '../../sidebar.php';
 include '../../connection.php';
 
-// Assuming you have a database connection in $conn
+// Updated query to include the condition for isDisplayed = 1
 $query = "SELECT resident_id, CONCAT(resident_firstname, ' ', 
                                      IF(resident_middlename != '' AND resident_middlename IS NOT NULL, CONCAT(LEFT(resident_middlename, 1), '.'), ''), ' ', 
                                      resident_lastname) 
           AS resident_fullname 
-          FROM tb_resident";
+          FROM tb_resident 
+          WHERE isDisplayed = 1";
 $result = mysqli_query($conn, $query);
 
 $residents = [];
@@ -18,6 +19,7 @@ if (mysqli_num_rows($result) > 0) {
     }
 }
 ?>
+
 <style>
     .form-group{
         margin-top: -5px;
@@ -61,6 +63,7 @@ if (mysqli_num_rows($result) > 0) {
                 </section><!-- .home-->
                  <!-- Modal -->
                 <!-- Update Request -->
+                <section class="request-modal">
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -74,7 +77,7 @@ if (mysqli_num_rows($result) > 0) {
                             <input type="hidden" name="trid" id="trid" value="">
                                 <div class="form-group">
                                     <label for="requestername">Requester Name</label>
-                                    <input type="text" id="requester_nameField" name="requester_nameField" required>
+                                    <input type="text" id="requester_nameField" name="requester_nameField" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="requesttype">Request Type</label>
@@ -105,19 +108,21 @@ if (mysqli_num_rows($result) > 0) {
                     </div>
                 </div>
             </div>
-            <!-- Add Modal -->
-            <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add Request Form</h5>
-                            <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
+           <!-- Add Request Modal -->
+        <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Request Form</h5>
+                        <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
                         <form id="addRequest" action="">
                             <div class="form-group">
                                 <label for="requestername">Requester Name</label>
-                                <input type="text" id="requester_name" name="requester_name" required>
+                                <input type="text" id="requester_name" name="requester_name" 
+                                    oninput="filterResidents(this.value)" autocomplete="off">
+                                <ul id="requestSuggestions" class="suggestions-list"></ul>
                             </div>
                             <div class="form-group">
                                 <label for="requesttype">Request Type</label>
@@ -134,21 +139,41 @@ if (mysqli_num_rows($result) > 0) {
                             <div class="form-group">
                                 <label for="requeststatus">Request Status</label>
                                 <select id="request_status" name="request_status">
-                                        <option value="" disabled selected>Status</option>
-                                            <option value="New">New</option>
-                                            <option value="Ongoing">Ongoing</option>
-                                            <option value="Completed">Completed</option>
-                                        </select>
+                                    <option value="" disabled selected>Status</option>
+                                    <option value="New">New</option>
+                                    <option value="Ongoing">Ongoing</option>
+                                    <option value="Completed">Completed</option>
+                                </select>
                             </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </form>
-                        </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
+
+    <script>
+        // Function to filter and display residents based on input
+        function filterResidents(inputValue) {
+            const suggestionsList = document.getElementById('requestSuggestions');
+            suggestionsList.innerHTML = '';
+
+            <?php foreach ($residents as $resident): ?>
+            if ("<?php echo strtolower($resident['resident_fullname']); ?>".includes(inputValue.toLowerCase())) {
+                const li = document.createElement('li');
+                li.textContent = "<?php echo htmlspecialchars($resident['resident_fullname']); ?>";
+                li.onclick = () => {
+                    document.getElementById('requester_name').value = li.textContent;
+                    suggestionsList.innerHTML = '';
+                };
+                suggestionsList.appendChild(li);
+            }
+            <?php endforeach; ?>
+        }
+    </script>
         <section class="delete-modal">
                 <!-- Delete Confirmation Modal -->
                 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">

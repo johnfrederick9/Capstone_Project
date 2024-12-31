@@ -136,43 +136,48 @@ $(document).ready(function() {
             }, 900);
         }
     });
-        $(document).on('submit', '#addRequest', function(e) {
-            e.preventDefault();
-            var requester_name = $('#requester_name').val();
-            var request_type = $('#request_type').val();
-            var request_description = $('#request_description').val();
-            var request_date = $('#request_date').val();
-            var request_status = $('#request_status').val();
-            if (requester_name !== '' && request_type !== '' && request_description !== '' && request_date !== '' && request_status !== '') {
-                $.ajax({
-                    url: "add.php",
-                    type: "post",
-                    data: {
-                        requester_name: requester_name,
-                        request_type: request_type,
-                        request_description: request_description,
-                        request_date: request_date,
-                        request_status: request_status,
-                    },
-                    success: function(data) {
-                        var json = JSON.parse(data);
-                        var status = json.status;
-                            if (status === 'duplicate') {
-                            showAlert("Request with the same name already exists.", "alert-danger");
-                            } else if (status == 'true') {
-                                $('#example').DataTable().draw();
-                                $('#addUserModal').modal('hide');
-                                showAlert("Request added successfully.", "alert-success");
-                                $('#addRequest')[0].reset();  // Clear the form fields
-                        } else {
-                            showAlert("Failed to add request.", "alert-danger");
-                        }
-                    }
-                });
-            } else {
-                alert('Fill all the required fields');
+ $(document).on('submit', '#addRequest', function(e) {
+    e.preventDefault();
+    var requester_name = $('#requester_name').val();
+    var request_type = $('#request_type').val();
+    var request_description = $('#request_description').val();
+    var request_date = $('#request_date').val();
+    var request_status = $('#request_status').val();
+
+    if (requester_name !== '' && request_type !== '' && request_description !== '' && request_date !== '' && request_status !== '') {
+        $.ajax({
+            url: "add.php",
+            type: "post",
+            data: {
+                requester_name: requester_name,
+                request_type: request_type,
+                request_description: request_description,
+                request_date: request_date,
+                request_status: request_status,
+            },
+            success: function(data) {
+                var json = JSON.parse(data);
+                var status = json.status;
+
+                if (status === 'not_found') {
+                    showAlert("Requester name not found in residents.", "alert-danger");
+                } else if (status === 'duplicate') {
+                    showAlert("Request with the same name already exists.", "alert-danger");
+                } else if (status === 'true') {
+                    $('#example').DataTable().draw();
+                    $('#addUserModal').modal('hide');
+                    showAlert("Request added successfully.", "alert-success");
+                    $('#addRequest')[0].reset(); // Clear the form fields
+                } else {
+                    showAlert("Failed to add request.", "alert-danger");
+                }
             }
         });
+    } else {
+        alert('Fill all the required fields');
+    }
+});
+
         $(document).on('submit', '#updateRequest', function(e) {
             e.preventDefault();
             var requester_name = $('#requester_nameField').val();
