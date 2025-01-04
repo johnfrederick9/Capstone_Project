@@ -78,14 +78,6 @@ include "../../sidebar_officials.php";
                                 <label for="Weight" class="input-label">Weight:</label>
                                 <input type="text" placeholder="Weight" id="weightField" name="resident_weight" class="input-field">
                             </div>
-                            <div class="input-wrapper">
-                                <label for="" class="input-label">Height Status:</label>
-                                <input type="text" placeholder="Height Status" id="heightstatField" name="resident_heightstat" class="input-field">
-                            </div>
-                            <div class="input-wrapper">
-                                <label for="" class="input-label">Weight Status:</label>
-                                <input type="text" placeholder="Weight Status" id="weightstatField" name="resident_weightstat" class="input-field">
-                            </div>
                             <div class="input-wrapper ">
                             <label for="" class="input-label">Medical History:</label>
                                 <input type="text" id="medField" name="resident_medical" class="input-field" require>
@@ -120,7 +112,7 @@ include "../../sidebar_officials.php";
                     </div>
                 </div>
             </div>
-            <!-- Add Resident -->
+            <!-- Add Resident
             <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -207,7 +199,7 @@ include "../../sidebar_officials.php";
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </section>
         <!-- View Modal -->
         <section class="view-modal">

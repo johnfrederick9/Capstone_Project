@@ -214,7 +214,7 @@ $(document).on('submit', '#updateUser', function(e) {
     var resident_SY = $('#syField').val();
     var trid = $('#trid').val();
     var resident_id = $('#resident_id').val();
-    if(resident_height && resident_weight && resident_heightstat && resident_weightstat && resident_medical && resident_lactating && resident_pregnant && resident_PWD && resident_SY) {
+    if(resident_height && resident_weight && resident_medical && resident_lactating && resident_pregnant && resident_PWD && resident_SY) {
         $.ajax({
             url: "update.php",
             type: "post",
