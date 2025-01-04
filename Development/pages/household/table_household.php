@@ -109,7 +109,19 @@ include '../../sidebar.php';
 
                                 <div class="form-group">
                                     <label for="documentInfo">Address</label>
-                                    <input type="text" id="addressField" name="household_address" require>
+                                    <select id="addressField" name="household_address" require>
+                                    <option value="" disabled selected>Address</option>
+                                    <option value="Sitio Sto. Nino">Sitio Sto. Nino</option>
+                                    <option value="Sitio Suwa">Sitio Suwa</option>
+                                    <option value="Sitio Private">Sitio Private</option>
+                                    <option value="Sitio Lahug">Sitio Lahug</option>
+                                    <option value="Sitio Lapa">Sitio Lapa</option>
+                                    <option value="Sitio Sampig">Sitio Sampig</option>
+                                    <option value="Sitio Alang-Alang">Sitio Alang-Alang</option>
+                                    <option value="Sitio Granchina">Sitio Granchina</option>
+                                    <option value="Sitio Catambisan">Sitio Catambisan</option>
+                                    <option value="Sitio Mag-Alambac">Sitio Mag-Alambac</option>
+                                </select> 
                                 </div>
                                 <div class="form-group">
                                 <label for="household_contact">Contact Number:</label>
