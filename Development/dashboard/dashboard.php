@@ -148,6 +148,7 @@ include 'reports_code.php';
         </div>
     </div>
 </section>
-
+  <!-- Calendar JS -->
+  <script src="../../assets/js/calendar(dashboard).js"></script>
 </body>
 </html>

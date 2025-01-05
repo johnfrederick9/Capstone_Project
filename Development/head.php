@@ -26,10 +26,6 @@
  <title>Barangay Mantalogon Information System</title>
  <link rel="icon" href="../../assets/image/logo_head.png">
   
-
-  <!-- Calendar JS -->
-  <script src="../../assets/js/calendar(dashboard).js"></script>
-  
   <!----===== Data Table JS ===== -->
   <script src="../../assets/js/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
   <script src="../../assets/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
