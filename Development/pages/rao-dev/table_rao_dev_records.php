@@ -400,16 +400,13 @@ td.action-buttons{
   position: absolute;
   top: 100%; /* Directly below the label */
   left: 0; /* Align with the left of the parent dropdown */
-  width: 100%; /* Make the dropdown list the same width as the label */
+  width: 500px; /* Make the dropdown list the same width as the label */
   border: 1px solid #ccc;
   background-color: white;
   padding: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 10;
   box-sizing: border-box; /* Ensure padding doesn’t affect width */
-  height: 500px;
-  width: 300px;
-  overflow-x: auto;
 }
 
 /* Show dropdown list when hovering over the parent */
@@ -430,6 +427,14 @@ td.action-buttons{
   background-color: #1ca500;
 }
 
+
+.dynamic-options {
+    max-height: 300px; 
+    overflow-y: auto; 
+    border: 1px solid #ccc; 
+    padding: 5px;
+    box-sizing: border-box;
+}
 
 .checkbox-item {
   margin-right: 10px;
@@ -2040,7 +2045,7 @@ td.action-buttons{
                                         Check All
                                     </a>
                                     <!-- Container for dynamically populated options -->
-                                    <div id="dynamic-options"></div>
+                                    <div id="dynamic-options" class="dynamic-options"></div>
                                 </div>
                             </div>
                         </div>
