@@ -431,6 +431,15 @@ td.action-buttons{
 }
 
 
+.dynamic-options {
+    max-height: 300px; 
+    overflow-y: auto; 
+    border: 1px solid #ccc; 
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+
 .checkbox-item {
   margin-right: 10px;
 }
@@ -2040,7 +2049,7 @@ td.action-buttons{
                                         Check All
                                     </a>
                                     <!-- Container for dynamically populated options -->
-                                    <div id="dynamic-options"></div>
+                                    <div id="dynamic-options" class="dynamic-options"></div>
                                 </div>
                             </div>
                         </div>
