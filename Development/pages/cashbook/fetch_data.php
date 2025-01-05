@@ -55,7 +55,10 @@ $data = array();
 while ($row = mysqli_fetch_assoc($query)) {
     $sub_array = array();
     $sub_array[] = $row['cashbook_id'];
-    $sub_array[] = $row['period_covered'];
+
+    $formatted_date = date("F j, Y", strtotime($row['period_covered']));
+    $sub_array[] = $formatted_date;
+    
     $sub_array[] = $row['treasurer_name'];
     $sub_array[] = '<div class="dropdown">
                     <button class="action-btn" onclick="toggleDropdown(this)">
