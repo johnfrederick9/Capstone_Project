@@ -1,15 +1,18 @@
 <?php
 require 'database.php';
 
+session_start(); // Ensure session is started
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    die("User is not logged in.");
+}
+
+$user_id = intval($_SESSION["user_id"]); // Sanitize user_id
+
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['profile_update'])) {
-        // Get the user_id from the session
-        if (!isset($_SESSION['user_id'])) {
-            die("User is not logged in."); // Ensure user_id is set
-        }
-
-        $user_id = intval($_SESSION["user_id"]); // Sanitize user_id
-
         // Retrieve form data
         $lastname = mysqli_real_escape_string($conn, $_POST['lastname']);
         $firstname = mysqli_real_escape_string($conn, $_POST['firstname']);
@@ -19,7 +22,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $birthdate = mysqli_real_escape_string($conn, $_POST['birthdate']);
         $username = mysqli_real_escape_string($conn, $_POST['username']);
 
-        // Construct the SQL query
+        // Handle profile picture upload
+        if (!empty($_FILES['profile_picture']['name'])) {
+            $target_dir = "../../uploads/profile_pictures/";
+            $profile_picture = basename($_FILES['profile_picture']['name']);
+            $target_file = $target_dir . $profile_picture;
+
+            // Validate file type
+            $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
+            if (!in_array($file_type, $allowed_types)) {
+                echo "<div class='alert alert-danger'>Invalid file type. Only JPG, PNG, and GIF are allowed.</div>";
+            } else {
+                // Move the uploaded file
+                if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $target_file)) {
+                    // Update profile picture in the database
+                    $sql = "UPDATE tb_user SET profile_picture = '$profile_picture' WHERE user_id = $user_id";
+                    mysqli_query($conn, $sql);
+                } else {
+                    echo "<div class='alert alert-danger'>Error uploading profile picture.</div>";
+                }
+            }
+        }
+
+        // Update user details in the database
         $sql = "UPDATE tb_user SET 
                     lastname = '$lastname',
                     firstname = '$firstname',
@@ -30,37 +56,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     username = '$username'
                 WHERE user_id = $user_id";
 
-        // Execute the query
         if (mysqli_query($conn, $sql)) {
-            echo "
-            <div id='toast' class='toast'>   
-                <div class='toast-content'>
-                    <i class='bx bxs-check-circle icon'></i>
-                    <div class='message'>
-                        <span class='text'>Profile Update Successful</span>
-                    </div>
-                </div>
-            </div>
-            <script>
-                const toast = document.getElementById('toast');
-                toast.classList.add('show');
-
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                    window.location.href = ''; // Reload the page
-                }, 800);
-            </script>
-            ";
+            echo "<div class='alert alert-success'>Profile updated successfully.</div>";
         } else {
             echo "<div class='alert alert-danger'>Error updating profile: " . mysqli_error($conn) . "</div>";
         }
     }
+
+    // Handle profile picture deletion
+    if (isset($_POST['delete_profile_picture'])) {
+        $sql = "UPDATE tb_user SET profile_picture = 'profile_default.png' WHERE user_id = $user_id";
+        if (mysqli_query($conn, $sql)) {
+            echo "<div class='alert alert-success'>Profile picture removed successfully.</div>";
+        } else {
+            echo "<div class='alert alert-danger'>Error removing profile picture: " . mysqli_error($conn) . "</div>";
+        }
+    }
 }
+
+// Fetch user details
+$result = mysqli_query($conn, "SELECT * FROM tb_user WHERE user_id = $user_id");
+$row = mysqli_fetch_assoc($result);
 ?>
 
-<!-- Update Profile Section -->
+<!-- Profile Section -->
 <section class="profile">
-    <div class="modal fade" id="UpdateProfileModal" tabindex="-1" aria-labelledby="exampleModalLabelProfile" aria-hidden="true" class="editbtn">
+    <div class="modal fade" id="UpdateProfileModal" tabindex="-1" aria-labelledby="exampleModalLabelProfile" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -68,81 +89,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                            <form id="updateprofile" action="" method="POST" enctype="multipart/form-data">
-                                <div class="container">
-                                    <div class="profile-section">
-                                    <div class="profile-picture">
-                                <?php
-                                    // Check if a profile picture exists for the user in the database
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <div class="container">
+                            <div class="profile-section">
+                                <div class="profile-picture">
+                                    <?php
                                     $profile_picture = !empty($row['profile_picture']) ? $row['profile_picture'] : 'profile_default.png';
                                     ?>
-                                    <!-- Display the profile picture (either the uploaded one or the default) -->
-                                    <img src="<?php echo '../../uploads/profile_pictures/' . $profile_picture; ?>" alt="Profile Picture">
-                                    
-                                    <!-- Buttons for choosing file and deleting image -->
+                                    <img src="<?php echo '../../uploads/profile_pictures/' . $profile_picture; ?>" alt="Profile Picture" id="profile_picture_preview">
+
                                     <div class="button-group" style="display: flex; gap: 5px;">
-                                        <!-- Choose File Button -->
                                         <button type="button" class="btn" title="Choose File Image" style="background: none; border: none;" onclick="document.getElementById('profile_picture_input').click()">
                                             <i class='bx bx-image' style="font-size: 20px;"></i>
                                         </button>
-                                        <input type="file" id="profile_picture_input" name="profile_picture" accept="image/*" style="display: none;">
+                                        <input type="file" id="profile_picture_input" name="profile_picture" accept="image/*" style="display: none;" onchange="previewProfilePicture(event)">
                                         
-                                        <!-- Delete Image Button -->
-                                        <button type="submit" name="delete_profile_picture" title="Delete Image" class="btn" style="background: none; border: none;" onclick="return confirm('Are you sure you want to delete your profile picture?')" >
+                                        <button type="submit" name="delete_profile_picture" title="Delete Image" class="btn" style="background: none; border: none;" onclick="return confirm('Are you sure you want to delete your profile picture?')">
                                             <i class='bx bx-trash' style="font-size: 20px;"></i>
                                         </button>
                                     </div>
-
                                 </div>
+
                                 <div class="profile-info">
-                                <p><strong><?php echo $firstname . ' ' . $middlename_initial . ' ' . $lastname; ?></strong></p>
-                                <p><?php echo $row["barangayposition"]; ?></p>
-                                <p>Sex: <?php echo $row["sex"]; ?></p>
-                                <p>Birth Date: <?php echo date("F j, Y", strtotime($row["birthdate"])); ?></p>
-
-                                <form method="POST" enctype="multipart/form-data">
-                                    <!-- Other form fields -->
-
-                                    <!-- Hidden input to identify the form submission -->
-                                    <input type="hidden" name="profile_update" value="true">
-
-                                      <!-- Change Password Button -->
-                                <button><a href="../change_password.php?user_id=<?php echo $row['user_id']; ?>" class="cpbtn">Change Password</a>
-                                 
-
-                                    
-                                </form>
+                                    <p><strong><?php echo htmlspecialchars($row['firstname'] . ' ' . $row['lastname']); ?></strong></p>
+                                    <p><?php echo htmlspecialchars($row['barangayposition']); ?></p>
+                                    <p>Sex: <?php echo htmlspecialchars($row['sex']); ?></p>
+                                    <p>Birth Date: <?php echo date("F j, Y", strtotime($row["birthdate"])); ?></p>
+                                     <!-- Change Password Button -->
+                                <button><a href="../change_password.php?user_id=<?php echo $row['user_id']; ?>" class="cpbtn">Change Password</a></button>
+                                </div>
                             </div>
 
-                            </div>
                             <div class="form-section">
                                 <div class="form-grid">
+                                    <!-- Form Fields -->
                                     <div class="form-group">
                                         <label for="lastname">Last Name</label>
-                                        <input type="text" id="lastname" name="lastname" value="<?php echo htmlspecialchars($row["lastname"]);?>">
+                                        <input type="text" id="lastname" name="lastname" value="<?php echo htmlspecialchars($row['lastname']); ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="firstname">First Name</label>
-                                        <input type="text" id="firstname" name="firstname" value="<?php echo htmlspecialchars($row["firstname"]);?>">
+                                        <input type="text" id="firstname" name="firstname" value="<?php echo htmlspecialchars($row['firstname']); ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="middlename">Middle Name</label>
-                                        <input type="text" id="middlename" name="middlename" value="<?php echo htmlspecialchars($row["middlename"]);?>">
+                                        <input type="text" id="middlename" name="middlename" value="<?php echo htmlspecialchars($row['middlename']); ?>">
                                     </div>
-
                                     <div class="form-group">
                                         <label for="suffix">Suffix</label>
-                                        <select id="suffix" class="input-field" name="suffix" required>
-                                            <option value=" " <?php echo $row['suffix'] === 'None' ? 'selected' : ''; ?>>None</option>
+                                        <select id="suffix" name="suffix">
+                                            <option value="" <?php echo empty($row['suffix']) ? 'selected' : ''; ?>>None</option>
                                             <option value="Sr." <?php echo $row['suffix'] === 'Sr.' ? 'selected' : ''; ?>>Sr.</option>
                                             <option value="Jr." <?php echo $row['suffix'] === 'Jr.' ? 'selected' : ''; ?>>Jr.</option>
                                         </select>
                                     </div>
-
                                     <div class="form-group">
                                         <label for="sex">Sex</label>
-                                        <select id="sex" class="input-field" name="sex" required>
-                                            <option value="" disabled <?php echo empty($row['sex']) ? 'selected' : ''; ?>>Sex</option>
+                                        <select id="sex" name="sex">
                                             <option value="Male" <?php echo $row['sex'] === 'Male' ? 'selected' : ''; ?>>Male</option>
                                             <option value="Female" <?php echo $row['sex'] === 'Female' ? 'selected' : ''; ?>>Female</option>
                                             <option value="LGBTQ" <?php echo $row['sex'] === 'LGBTQ' ? 'selected' : ''; ?>>LGBTQ</option>
@@ -150,23 +153,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </div>
                                     <div class="form-group">
                                         <label for="birthdate">Birth Date</label>
-                                        <input type="date" id="birthdate" name="birthdate" value="<?php echo htmlspecialchars($row["birthdate"]);?>">
+                                        <input type="date" id="birthdate" name="birthdate" value="<?php echo htmlspecialchars($row['birthdate']); ?>">
                                     </div>
                                 </div>
 
                                 <div class="form-group full-width">
                                     <label for="username">Username</label>
-                                    <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($row["username"]);?>">
+                                    <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($row['username']); ?>">
                                 </div>
 
-                                   <!-- Update Profile Button -->
-                                   <button type="submit" class="btn btn-primary" id="profile_update" onclick="return confirm('Are you sure you want to update your profile?')">Update</button>
-                              
+                                <button type="submit" name="profile_update" class="btn btn-primary">Update Profile</button>
                             </div>
-                        </div> 
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+function previewProfilePicture(event) {
+    const reader = new FileReader();
+    reader.onload = function() {
+        const output = document.getElementById('profile_picture_preview');
+        output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+</script>
