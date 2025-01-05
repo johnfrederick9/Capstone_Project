@@ -1,6 +1,6 @@
 <?php
 include '../../head.php';
-include '../../sidebar_mainofficials.php';
+include '../../sidebar.php';
 ?>
 <style>
 
@@ -428,47 +428,41 @@ td.action-buttons{
 
 </style>
 <body>
-<section class="home">  
-    <div class="financial_rao">
-        <div class="table-container">
-            <div class="table-header">
-                <div class="head">
-                    <h1>Records of Appropriations and Obligations</h1>
-                </div>
-                <div class="table-actions">  
+    <section class="home">  
+        <div class="financial_rao">
+                <div class="table-container">
+                    <div class="table-header">
+                    <div class="head">
+                            <h1>Records of Appropriations and Obligations (BDRRMF)</h1>
+                        </div>
+                        <div class="table-actions">    
                         <div class="dropdown table_dropdown">
-                                <button class="dropdown-toggle">Other RAO Sources</button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="../rao-cont/table_rao_cont_records.php">RAO-CONT</a></li>
-                                    <li><a href="../rao-fe/table_rao_fe_records.php">RAO-FE</a></li>
-                                    <li><a href="../rao-mooe/table_rao_mooe_records.php">RAO-MOOE</a></li>
-                                    <li><a href="../rao-bdrrmf/table_rao_bdrrmf_records.php">RAO-BDRRMF</a></li>
-                                    <li><a href="../rao-dev/table_rao_dev_records.php">RAO-DEV</a></li>
-                                    <li><a href="../rao-sk/table_rao_sk_records.php">RAO-SK</a></li>
-                                    <li><a href="../rao-co/table_rao_co_cont_records.php">RAO-CO</a></li>
-                                    <li><a href="../co-cont/table_rao_cocont_records.php">RAO-CO-CONT</a></li>
-                                </ul>
-                            </div>  
+                        <button class="dropdown-toggle">Other RAO Sources</button>
+                            <ul class="dropdown-menu">
+                                <li><a href="../rao/table_rao_records.php">RAO-PS</a></li>
+                                <li><a href="../rao-cont/table_rao_cont_records.php">RAO-CONT</a></li>
+                                <li><a href="../rao-fe/table_rao_fe_records.php">RAO-FE</a></li>
+                                <li><a href="../rao-mooe/table_rao_mooe_records.php">RAO-MOOE</a></li>
+                                <li><a href="../rao-dev/table_rao_dev_records.php">RAO-DEV</a></li>
+                                <li><a href="../rao-sk/table_rao_sk_records.php">RAO-SK</a></li>
+                                <li><a href="../rao-co/table_rao_co_cont_records.php">RAO-CO</a></li>
+                                <li><a href="../co-cont/table_rao_cocont_records.php">RAO-CO-CONT</a></li>
+                            </ul>
+                        </div>  
                             <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-table-btn">+ Add Table</button>
-                        
                         </div>
                     </div>
                     <table id="example" class="table-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Period Covered</th>
-                                <th>Chairman</th>
-                                <th>Barangay Captain</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
+                    <thead>
+                        <th>#</th>
+                        <th>Period Covered</th>
+                        <th>Chairman</th>
+                        <th>Barangay Captain</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
                     </table>
-                </div>
-            </div>
-        </section>
                 </div><!-- .table-container-->
                     <script type="text/javascript">
                         $(document).ready(function() {
@@ -478,7 +472,7 @@ td.action-buttons{
                             $('#example').DataTable({
                                 "fnCreatedRow": function(nRow, aData, iDataIndex) {
                                     $(nRow).attr('id', aData[0]);
-                                    $(nRow).find('.deleteBtn').attr('data-rao_ps_id', aData[0]);
+                                    $(nRow).find('.deleteBtn').attr('data-rao_bd_id', aData[0]);
                                 },
                                 'serverSide': 'true',
                                 'processing': 'true',
@@ -526,8 +520,7 @@ td.action-buttons{
                                     total: $(this).find('input[name="ap_total[]"]').val()
                                 };
 
-                                // Dynamically capture all known fields (salary, cash_gift, etc.)
-                                ['salary', 'cash_gift', 'year_end', 'mid_year', 'sri', 'others'].forEach(field => {
+                                ['pre_disaster', 'quick_response'].forEach(field => {
                                     apRowData[field] = $(this).find(`input[name="ap_${field}[]"]`).val()|| "";
                                 });
 
@@ -544,8 +537,7 @@ td.action-buttons{
                                     total: $(this).find('input[name="ob_total[]"]').val()
                                 };
 
-                                // Dynamically capture all known fields (salary, cash_gift, etc.)
-                                ['salary', 'cash_gift', 'year_end', 'mid_year', 'sri', 'others'].forEach(field => {
+                                ['pre_disaster', 'quick_response'].forEach(field => {
                                     obRowData[field] = $(this).find(`input[name="ob_${field}[]"]`).val()|| "";
                                 });
 
@@ -567,7 +559,7 @@ td.action-buttons{
                             totalRow.total = $(this).find('input[name^="ap_total_"]').val();
 
                             // Capture predefined attribute fields
-                            ['salary', 'cash_gift', 'year_end', 'mid_year', 'sri', 'others'].forEach(field => {
+                            ['pre_disaster', 'quick_response'].forEach(field => {
                                 let fieldValue = $(this).find(`input[name="ap_attr_${category}_${field}"]`).val();
                                 if (fieldValue !== undefined) {
                                     totalRow[field] = fieldValue;
@@ -593,7 +585,7 @@ td.action-buttons{
                             totalRow.total = $(this).find('input[name^="ob_total_"]').val();
 
                             // Capture predefined attribute fields
-                            ['salary', 'cash_gift', 'year_end', 'mid_year', 'sri', 'others'].forEach(field => {
+                            ['pre_disaster', 'quick_response'].forEach(field => {
                                 let fieldValue = $(this).find(`input[name="ob_attr_${category}_${field}"]`).val();
                                 if (fieldValue !== undefined) {
                                     totalRow[field] = fieldValue;
@@ -636,7 +628,7 @@ td.action-buttons{
                             var trid =  $('#exampleModal #trid').val()
 
                             let formData = {
-                                rao_ps_id: $('#exampleModal #rao_ps_id').val(),
+                                rao_bd_id: $('#exampleModal #rao_bd_id').val(),
                                 period_covered: $('#exampleModal #period_covered').val(),
                                 chairman: $('#exampleModal #chairman_name').val(),
                                 brgy_captain: $('#exampleModal #brgy_captain').val(),
@@ -650,15 +642,14 @@ td.action-buttons{
                              // Capture AP rows data
                              $('#exampleModal .inp-group-ap-data-row .ap-data-row').each(function () {
                                 let apRowData = {
-                                    rao_ps_ap_id: $(this).find('input[name="rao_ps_ap_id"]').val(),
+                                    rao_bd_ap_id: $(this).find('input[name="rao_bd_ap_id"]').val(),
                                     date: $(this).find('input[name="ap_date_data[]"]').val(),
                                     reference_no: $(this).find('input[name="ap_reference_no[]"]').val(),
                                     particulars: $(this).find('input[name="ap_particulars[]"]').val(),
                                     total: $(this).find('input[name="ap_total[]"]').val()
                                 };
 
-                                // Dynamically capture all known fields (salary, cash_gift, etc.)
-                                ['salary', 'cash_gift', 'year_end', 'mid_year', 'sri', 'others'].forEach(field => {
+                                ['pre_disaster', 'quick_response'].forEach(field => {
                                     apRowData[field] = $(this).find(`input[name="ap_${field}[]"]`).val()|| "";
                                 });
 
@@ -669,15 +660,14 @@ td.action-buttons{
                             // Capture OB rows data
                             $('#exampleModal .inp-group-ob-data-row .ob-data-row').each(function () {
                                 let obRowData = {
-                                    rao_ps_ob_id: $(this).find('input[name="rao_ps_ob_id"]').val(),
+                                    rao_bd_ob_id: $(this).find('input[name="rao_bd_ob_id"]').val(),
                                     date: $(this).find('input[name="ob_date_data[]"]').val(),
                                     reference_no: $(this).find('input[name="ob_reference_no[]"]').val(),
                                     particulars: $(this).find('input[name="ob_particulars[]"]').val(),
                                     total: $(this).find('input[name="ob_total[]"]').val()
                                 };
 
-                                // Dynamically capture all known fields (salary, cash_gift, etc.)
-                                ['salary', 'cash_gift', 'year_end', 'mid_year', 'sri', 'others'].forEach(field => {
+                                ['pre_disaster', 'quick_response'].forEach(field => {
                                     obRowData[field] = $(this).find(`input[name="ob_${field}[]"]`).val()|| "";
                                 });
 
@@ -699,7 +689,7 @@ td.action-buttons{
                                 totalRow.total = $(this).find('input[name^="ap_total_"]').val();
 
                                 // Capture predefined attribute fields
-                                ['salary', 'cash_gift', 'year_end', 'mid_year', 'sri', 'others'].forEach(field => {
+                                ['pre_disaster', 'quick_response'].forEach(field => {
                                     let fieldValue = $(this).find(`input[name="ap_attr_${category}_${field}"]`).val();
                                     if (fieldValue !== undefined) {
                                         totalRow[field] = fieldValue;
@@ -725,7 +715,7 @@ td.action-buttons{
                                 totalRow.total = $(this).find('input[name^="ob_total_"]').val();
 
                                 // Capture predefined attribute fields
-                                ['salary', 'cash_gift', 'year_end', 'mid_year', 'sri', 'others'].forEach(field => {
+                                ['pre_disaster', 'quick_response'].forEach(field => {
                                     let fieldValue = $(this).find(`input[name="ob_attr_${category}_${field}"]`).val();
                                     if (fieldValue !== undefined) {
                                         totalRow[field] = fieldValue;
@@ -757,13 +747,13 @@ td.action-buttons{
                                         var button = `
                                                 <td>
                                                     <div class="buttons">
-                                                        <a href="javascript:void(0);" data-id="${rao_ps_id}" class="update-btn btn-sm editbtn">
+                                                        <a href="javascript:void(0);" data-id="${rao_bd_id}" class="update-btn btn-sm editbtn">
                                                             <i class="bx bx-sync"></i>
                                                         </a>  
-                                                        <a href="!#;" data-rao_id="${rao_ps_id}" class="delete-btn btn-sm deleteBtn">
+                                                        <a href="!#;" data-rao_id="${rao_bd_id}" class="delete-btn btn-sm deleteBtn">
                                                             <i class="bx bxs-trash"></i>
                                                         </a>
-                                                        <a href="!#;" data-item-id="${rao_ps_id}" class="update-btn btn-sm infoBtn">
+                                                        <a href="!#;" data-item-id="${rao_bd_id}" class="update-btn btn-sm infoBtn">
                                                             <i class="bx bx-info-circle"></i>
                                                         </a>
                                                     </div>
@@ -788,66 +778,21 @@ td.action-buttons{
                             });
                         });
 
-                        $(document).ready(function() {
-                            // Event listener for the print button
-                            $(document).on('click', '.print-btn', function() {
-                                var rao_ps_id = $(this).data('id'); // Get the indigency_id
-
-                                // Make an AJAX request to fetch the certificate content
-                                $.ajax({
-                                    url: 'fetch_financial.php', // URL to fetch the certificate HTML
-                                    type: 'POST',
-                                    data: { id: rao_ps_id },
-                                    success: function(response) {
-                                        // Create a new window to print the content
-                                        var printWindow = window.open('', '', 'height=600,width=800');
-                                        printWindow.document.write(response);
-                                        printWindow.document.close();
-
-                                        // Wait for all images in the new window to load
-                                        var images = printWindow.document.images;
-                                        var totalImages = images.length;
-                                        var loadedImages = 0;
-
-                                        if (totalImages === 0) {
-                                            // If there are no images, proceed to print
-                                            printWindow.focus();
-                                            printWindow.print();
-                                            printWindow.close();
-                                        } else {
-                                            // Check each image for load completion
-                                            for (var i = 0; i < totalImages; i++) {
-                                                images[i].onload = images[i].onerror = function() {
-                                                    loadedImages++;
-                                                    if (loadedImages === totalImages) {
-                                                        // All images have loaded, proceed to print
-                                                        printWindow.focus();
-                                                        printWindow.print();
-                                                        printWindow.close();
-                                                    }
-                                                };
-                                            }
-                                        }
-                                    }
-                                });
-                            });
-                        });
-
                         //FOR EDIT
                         $('#example').on('click', '.editbtn', function (event) {
                             var table = $('#example').DataTable();
                             var trid = $(this).closest('tr').attr('id');
-                            var rao_ps_id = $(this).data('id');
+                            var rao_bd_id = $(this).data('id');
                             console.log(trid);
 
                             // Store data in modal for reference
-                            $('#updateUser').data('rao_ps_id', rao_ps_id);
+                            $('#updateUser').data('rao_bd_id', rao_bd_id);
                             $('#updateUser').data('trid', trid);
 
                             // Show modal and set rao_cont_id value
                             $('#exampleModal').modal('show');
-                            console.log("Rao Cont ID:", rao_ps_id);
-                            $('#exampleModal #rao_ps_id').val(rao_ps_id);
+                            console.log("Rao Cont ID:", rao_bd_id);
+                            $('#exampleModal #rao_bd_id').val(rao_bd_id);
                             $('#exampleModal #trid').val(trid);
 
                             $('#exampleModal .inp-group-ap-data-row').empty(); 
@@ -856,7 +801,7 @@ td.action-buttons{
                             // AJAX request to fetch data
                             $.ajax({
                                 url: "get_single_data.php",
-                                data: { rao_ps_id: rao_ps_id },
+                                data: { rao_bd_id: rao_bd_id },
                                 type: 'post',
                                 success: function (data) {
                                     try {
@@ -886,14 +831,10 @@ td.action-buttons{
                                                         <td><input type="date" name="${type}_date_data[]" value="${item[`${dataPrefix}_ref_date`] || ''}" required></td>
                                                         <td><input type="text" name="${type}_reference_no[]" value="${item[`${dataPrefix}_ref_no`] || ''}"></td>
                                                         <td><input type="text" name="${type}_particulars[]" value="${item[`${dataPrefix}_particulars`] || ''}"></td>
-                                                        <td class="total-data"><input type="number" name="${type}_total[]" value="${item[`${dataPrefix}_total`] || ''}"></td>
-                                                        <td class="hidden"><input type="hidden" name="rao_ps_${type}_id" value="${item[`rao_ps_${type}_id`] || ''}"></td>
-                                                        <td><input type="number" name="${type}_salary[]" value="${item[`${dataPrefix}_salary`] || ''}"></td>
-                                                        <td><input type="number" name="${type}_cash_gift[]" value="${item[`${dataPrefix}_cash_gift`] || ''}"></td>
-                                                        <td><input type="number" name="${type}_year_end[]" value="${item[`${dataPrefix}_year_end`] || ''}"></td>
-                                                        <td><input type="number" name="${type}_mid_year[]" value="${item[`${dataPrefix}_mid_year`] || ''}"></td>
-                                                        <td><input type="number" name="${type}_sri[]" value="${item[`${dataPrefix}_sri`] || ''}"></td>
-                                                        <td><input type="number" name="${type}_others[]" value="${item[`${dataPrefix}_others`] || ''}"></td>
+                                                        <td class="total-data"><input type="number" name="${type}_total[]" value="${item[`${dataPrefix}_total`] || ''}" step=0.01></td>
+                                                        <td class="hidden"><input type="hidden" name="rao_bd_${type}_id" value="${item[`rao_bd_${type}_id`] || ''}"></td>
+                                                        <td><input type="number" name="${type}_pre_disaster[]" value="${item[`${dataPrefix}_pre_disaster`] || ''}"></td>
+                                                        <td><input type="number" name="${type}_quick_response[]" value="${item[`${dataPrefix}_quick_response`] || ''}"></td>
                                                         <td class="action-data">
                                                             <!-- Optional: Add action buttons like delete -->
                                                         </td>
@@ -907,10 +848,10 @@ td.action-buttons{
                                         }
 
                                         // Call the function for AP data
-                                        createDynamicRow('ap', 'rao_ps_ap', 'inp-group-ap-data-row', 'ap');
+                                        createDynamicRow('ap', 'rao_bd_ap', 'inp-group-ap-data-row', 'ap');
 
                                         // Call the function for OB data
-                                        createDynamicRow('ob', 'rao_ps_ob', 'inp-group-ob-data-row', 'ob');
+                                        createDynamicRow('ob', 'rao_bd_ob', 'inp-group-ob-data-row', 'ob');
 
                                 
                                         } else {
@@ -948,17 +889,17 @@ td.action-buttons{
                         $('#example').on('click', '.infoBtn', function (event) {
                             var table = $('#example').DataTable();
                             var trid = $(this).closest('tr').attr('id');
-                            var rao_ps_id = $(this).data('id');
+                            var rao_bd_id = $(this).data('id');
                             console.log(trid);
 
                             // Store data in modal for reference
-                            $('#updateUser').data('rao_ps_id', rao_ps_id);
+                            $('#updateUser').data('rao_bd_id', rao_bd_id);
                             $('#updateUser').data('trid', trid);
 
                             // Show modal and set rao_cont_id value
                             $('#viewDataModal').modal('show');
-                            console.log("Rao Cont ID:", rao_ps_id);
-                            $('#viewDataModal #rao_ps_id').val(rao_ps_id);
+                            console.log("Rao Cont ID:", rao_bd_id);
+                            $('#viewDataModal #rao_bd_id').val(rao_bd_id);
                             $('#viewDataModal #trid').val(trid);
 
                             $('#viewDataModal .inp-group-ap-data-row').empty(); 
@@ -967,7 +908,7 @@ td.action-buttons{
                             // AJAX request to fetch data
                             $.ajax({
                                 url: "get_single_data.php",
-                                data: { rao_ps_id: rao_ps_id },
+                                data: { rao_bd_id: rao_bd_id },
                                 type: 'post',
                                 success: function (data) {
                                     try {
@@ -1000,13 +941,9 @@ td.action-buttons{
                                                         <td><input type="text" name="${type}_reference_no[]" value="${item[`${dataPrefix}_ref_no`] || ''}" disabled ></td>
                                                         <td><input type="text" name="${type}_particulars[]" value="${item[`${dataPrefix}_particulars`] || ''}" disabled ></td>
                                                         <td class="total-data"><input type="number" name="${type}_total[]" value="${item[`${dataPrefix}_total`] || ''}" disabled ></td>
-                                                        <td class="hidden"><input type="hidden" name="rao_ps_${type}_id" value="${item[`rao_ps_${type}_id`] || ''}" disabled ></td>
-                                                        <td><input type="number" name="${type}_salary[]" value="${item[`${dataPrefix}_salary`] || ''}" disabled ></td>
-                                                        <td><input type="number" name="${type}_cash_gift[]" value="${item[`${dataPrefix}_cash_gift`] || ''}" disabled ></td>
-                                                        <td><input type="number" name="${type}_year_end[]" value="${item[`${dataPrefix}_year_end`] || ''}" disabled ></td>
-                                                        <td><input type="number" name="${type}_mid_year[]" value="${item[`${dataPrefix}_mid_year`] || ''}" disabled ></td>
-                                                        <td><input type="number" name="${type}_sri[]" value="${item[`${dataPrefix}_sri`] || ''}" disabled ></td>
-                                                        <td><input type="number" name="${type}_others[]" value="${item[`${dataPrefix}_others`] || ''}" disabled ></td>
+                                                        <td class="hidden"><input type="hidden" name="rao_bd_${type}_id" value="${item[`rao_bd_${type}_id`] || ''}" disabled ></td>
+                                                        <td><input type="number" name="${type}_pre_disaster[]" value="${item[`${dataPrefix}_pre_disaster`] || ''}" disabled ></td>
+                                                        <td><input type="number" name="${type}_quick_response[]" value="${item[`${dataPrefix}_quick_response`] || ''}" disabled ></td>
                                                     </tr>
                                                     `;
 
@@ -1016,10 +953,10 @@ td.action-buttons{
                                         
                                         }
                                          // Call the function for AP data
-                                         createDynamicRow('ap', 'rao_ps_ap', 'inp-group-ap-data-row', 'ap');
+                                         createDynamicRow('ap', 'rao_bd_ap', 'inp-group-ap-data-row', 'ap');
 
                                         // Call the function for OB data
-                                        createDynamicRow('ob', 'rao_ps_ob', 'inp-group-ob-data-row', 'ob');
+                                        createDynamicRow('ob', 'rao_bd_ob', 'inp-group-ob-data-row', 'ob');
 
                                         // Dynamically handle totals
                                         function createTotalsRow(totalKey, containerSelector, prefix, labelMapping) {
@@ -1039,7 +976,7 @@ td.action-buttons{
                                                 totalRow.appendChild(labelCell);
 
                                             // Add total input fields dynamically
-                                                const fields = ['total', 'salary', 'cash_gift', 'year_end', 'mid_year', 'sri', 'others'];
+                                                const fields = ['total','pre_disaster', 'quick_response'];
 
                                                 fields.forEach(field => {
                                                     const inputCell = document.createElement('td');
@@ -1069,11 +1006,11 @@ td.action-buttons{
                                         };
 
                                         // Populate rows for appropriations and obligations
-                                        createTotalsRow('rao_ps_TA_totals', '#viewDataModal .inp-group-ap-totals', 'ap', labelMapping);
-                                        createTotalsRow('rao_ps_BF_totals', '#viewDataModal .inp-group-ap-totals', 'ap', labelMapping);
-                                        createTotalsRow('rao_ps_TO_totals', '#viewDataModal .inp-group-ob-totals', 'ob', labelMapping);
-                                        createTotalsRow('rao_ps_OB_totals', '#viewDataModal .inp-group-ob-totals', 'ob', labelMapping);
-                                        createTotalsRow('rao_ps_AB_totals', '#viewDataModal .inp-group-ob-totals', 'ob', labelMapping);
+                                        createTotalsRow('rao_bd_TA_totals', '#viewDataModal .inp-group-ap-totals', 'ap', labelMapping);
+                                        createTotalsRow('rao_bd_BF_totals', '#viewDataModal .inp-group-ap-totals', 'ap', labelMapping);
+                                        createTotalsRow('rao_bd_TO_totals', '#viewDataModal .inp-group-ob-totals', 'ob', labelMapping);
+                                        createTotalsRow('rao_bd_OB_totals', '#viewDataModal .inp-group-ob-totals', 'ob', labelMapping);
+                                        createTotalsRow('rao_bd_AB_totals', '#viewDataModal .inp-group-ob-totals', 'ob', labelMapping);
 
                                 
                                         } else {
@@ -1098,7 +1035,7 @@ td.action-buttons{
                         //FOR DELETE
                         $(document).on('click', '.deleteBtn', function(event) {
                             event.preventDefault();
-                            var rao_ps_id = $(this).data('id'); // Get project ID from data attribute
+                            var rao_bd_id = $(this).data('id'); // Get project ID from data attribute
                             var table = $('#example').DataTable();
 
                             // Open the modal
@@ -1109,7 +1046,7 @@ td.action-buttons{
                             $.ajax({
                                 url: "delete.php",
                                 type: "POST",
-                                data: { rao_ps_id: rao_ps_id },
+                                data: { rao_bd_id: rao_bd_id },
                                 success: function(response) {
                                 var json = JSON.parse(response);
                                 if (json.status === 'success') {
@@ -1124,47 +1061,6 @@ td.action-buttons{
                             });
                             });
                         });
-
-
-                        $(document).on('click', '.printbtn', function() {
-                        var rao_ps_id = $('#rao_ps_id').val(); // Get the ID from hidden input
-                        console.log("Print", rao_ps_id); //
-
-                        $.ajax({
-                            url: 'print-handler.php',
-                            type: 'POST',
-                            data: { rao_ps_id: rao_ps_id },
-                            success: function(response) {
-                                var printWindow = window.open('', '', 'height=600,width=800');
-                                printWindow.document.write(response);
-                                printWindow.document.close();
-
-                                var images = printWindow.document.images;
-                                var totalImages = images.length;
-                                var loadedImages = 0;
-
-                                if (totalImages === 0) {
-                                    printWindow.focus();
-                                    printWindow.print();
-                                    //printWindow.close();
-                                } else {
-                                    for (var i = 0; i < totalImages; i++) {
-                                        images[i].onload = images[i].onerror = function() {
-                                            loadedImages++;
-                                            if (loadedImages === totalImages) {
-                                                printWindow.focus();
-                                                printWindow.print();
-                                                printWindow.close();
-                                            }
-                                        };
-                                    }
-                                }
-                            }
-                        });
-                    });
-
-        
-                        
                     
                     </script>
                 </section><!-- .home-->
@@ -1176,14 +1072,13 @@ td.action-buttons{
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Update Report of Appropriations and Obligations (RAO)</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Update Report of Appropriations and Obligations (RAO-BDRMMF)</h5>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="rao-container">
                             <div class="rao-header">
-                                    <h1>Report of Appropriations and Obligations (RA-PS)</h1>
-                                    <input type="hidden" id="rao_ps_id" name="rao_ps_id">
+                                    <h1>Report of Appropriations and Obligations (RAO-BDRRMF)</h1>
                                     <p id="period_covered" style="text-align: center;"></p>
                                     <div class="details">
                                         <div class="info">
@@ -1196,7 +1091,7 @@ td.action-buttons{
                                             <label>Province:</label> <input type="text" value="CEBU" disabled />
                                         </div>
                                         <div class="info">
-                                            <label>Fund Source:</label> <input type="text" value="General Fund (Personal Services)"  disabled />
+                                            <label>Fund Source:</label> <input type="text" value="5% BDRRMF"  disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -1212,18 +1107,14 @@ td.action-buttons{
                                             <th colspan="2" class="stick-head">Reference For Appropriations</th><!-- Date and Ref No -->
                                             <th rowspan="2" class="stick-head">Particulars</th> 
                                             <th rowspan="2" class="stick-head">Totals</th>
-                                            <th colspan="5" class="dynamic-stick-head">Personal Services</th><!-- Dynamic Heads max 5 -->
+                                            <th colspan="5" class="dynamic-stick-head">BDRRMF</th><!-- Dynamic Heads max 5 -->
                                             
                                         </tr>
                                         <tr id="dynamic-heads">
                                             <th class="stick-head">Date</th>
                                             <th class="stick-head">Reference No</th>
-                                            <th class="dynamic-head">Salaries & Wages</th>
-                                            <th class="dynamic-head">Cash Gift P.E.I</th>
-                                            <th class="dynamic-head">Year End Bonus</th>
-                                            <th class="dynamic-head">Mid Year Pay</th>
-                                            <th class="dynamic-head">S.R.I</th>
-                                            <th class="dynamic-head">Other Personnel Benefits</th>
+                                            <th class="dynamic-head">Pre Disaster Programs</th>
+                                            <th class="dynamic-head">Quick Response</th>
                                         </tr>
 
                                     </thead>
@@ -1257,19 +1148,15 @@ td.action-buttons{
                                             <th colspan="2" class="stick-head">Reference For Obligations</th><!-- Date and Ref No -->
                                             <th rowspan="2" class="stick-head">Particulars</th> 
                                             <th rowspan="2" class="stick-head">Totals</th>
-                                            <th colspan="5" class="dynamic-stick-head">Capital Outlay</th>
+                                            <th colspan="5" class="dynamic-stick-head">BDRRMF</th>
 
                                         </tr>
                                         
                                         <tr id="dynamic-heads">
                                             <th class="stick-head">Date</th>
                                             <th class="stick-head">Reference No</th>
-                                            <th class="dynamic-head">Salaries & Wages</th>
-                                            <th class="dynamic-head">Cash Gift P.E.I</th>
-                                            <th class="dynamic-head">Year End Bonus</th>
-                                            <th class="dynamic-head">Mid Year Pay</th>
-                                            <th class="dynamic-head">S.R.I</th>
-                                            <th class="dynamic-head">Other Personnel Benefits</th>
+                                            <th class="dynamic-head">Pre Disaster Programs</th>
+                                            <th class="dynamic-head">Quick Response</th>
                                         </tr>
                                     </thead>
 
@@ -1321,10 +1208,7 @@ td.action-buttons{
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-primary printbtn">Print</button>
-                                </div>
-                                </div>
+
 
                             </div>
                         </div>
@@ -1336,12 +1220,12 @@ td.action-buttons{
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Update Report of Appropriations and Obligations (RAO)</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Update Report of Appropriations and Obligations (RAO-BDRRMF)</h5>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form id="updateUser">
-                            <input type="hidden" id="rao_ps_id" name="rao_ps_id">
+                            <input type="hidden" id="rao_bd_id" name="rao_bd_id">
                             <input type="hidden" id="trid" name="trid">
                             <div class="row">
                                 <div class="col-md-6">
@@ -1376,18 +1260,14 @@ td.action-buttons{
                                             <th colspan="2" class="stick-head">Reference For Appropriations</th><!-- Date and Ref No -->
                                             <th rowspan="2" class="stick-head">Particulars</th> 
                                             <th rowspan="2" class="stick-head">Totals</th>
-                                            <th colspan="5" class="dynamic-stick-head">Personal Services</th><!-- Dynamic Heads max 5 -->
+                                            <th colspan="5" class="dynamic-stick-head">BDRRMF</th><!-- Dynamic Heads max 5 -->
                                             
                                         </tr>
                                         <tr id="dynamic-heads">
                                             <th class="stick-head">Date</th>
                                             <th class="stick-head">Reference No</th>
-                                            <th class="dynamic-head">Salaries & Wages</th>
-                                            <th class="dynamic-head">Cash Gift P.E.I</th>
-                                            <th class="dynamic-head">Year End Bonus</th>
-                                            <th class="dynamic-head">Mid Year Pay</th>
-                                            <th class="dynamic-head">S.R.I</th>
-                                            <th class="dynamic-head">Other Personnel Benefits</th>
+                                            <th class="dynamic-head">Pre Disaster Programs</th>
+                                            <th class="dynamic-head">Quick Response</th>
                                             <th rowspan="2" class="action-head">Actions</th>
                                         </tr>
 
@@ -1422,19 +1302,15 @@ td.action-buttons{
                                             <th colspan="2" class="stick-head">Reference For Obligations</th><!-- Date and Ref No -->
                                             <th rowspan="2" class="stick-head">Particulars</th> 
                                             <th rowspan="2" class="stick-head">Totals</th>
-                                            <th colspan="5" class="dynamic-stick-head">Capital Outlay</th>
+                                            <th colspan="5" class="dynamic-stick-head">BDRRMF</th>
 
                                         </tr>
                                         
                                         <tr id="dynamic-heads">
                                             <th class="stick-head">Date</th>
                                             <th class="stick-head">Reference No</th>
-                                            <th class="dynamic-head">Salaries & Wages</th>
-                                            <th class="dynamic-head">Cash Gift P.E.I</th>
-                                            <th class="dynamic-head">Year End Bonus</th>
-                                            <th class="dynamic-head">Mid Year Pay</th>
-                                            <th class="dynamic-head">S.R.I</th>
-                                            <th class="dynamic-head">Other Personnel Benefits</th>
+                                            <th class="dynamic-head">Pre Disaster Programs</th>
+                                            <th class="dynamic-head">Quick Response</th>
                                             <th rowspan="2" class="action-head">Actions</th>
                                         </tr>
                                     </thead>
@@ -1496,7 +1372,7 @@ td.action-buttons{
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add Report of Appropriations and Obligations (RAO)</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Add Report of Appropriations and Obligations (RAO-BDRRMF)</h5>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -1535,18 +1411,14 @@ td.action-buttons{
                                             <th colspan="2" class="stick-head">Reference For Appropriations</th><!-- Date and Ref No -->
                                             <th rowspan="2" class="stick-head">Particulars</th> 
                                             <th rowspan="2" class="stick-head">Totals</th>
-                                            <th colspan="5" class="dynamic-stick-head">Personal Services</th><!-- Dynamic Heads max 5 -->
+                                            <th colspan="5" class="dynamic-stick-head">BDRRMF</th><!-- Dynamic Heads max 5 -->
                                             
                                         </tr>
                                         <tr id="dynamic-heads">
                                             <th class="stick-head">Date</th>
                                             <th class="stick-head">Reference No</th>
-                                            <th class="dynamic-head">Salaries & Wages</th>
-                                            <th class="dynamic-head">Cash Gift P.E.I</th>
-                                            <th class="dynamic-head">Year End Bonus</th>
-                                            <th class="dynamic-head">Mid Year Pay</th>
-                                            <th class="dynamic-head">S.R.I</th>
-                                            <th class="dynamic-head">Other Personnel Benefits</th>
+                                            <th class="dynamic-head">Pre Disaster Programs</th>
+                                            <th class="dynamic-head">Quick Response</th>
                                             <th rowspan="2" class="action-head">Actions</th>
                                         </tr>
 
@@ -1581,19 +1453,15 @@ td.action-buttons{
                                             <th colspan="2" class="stick-head">Reference For Obligations</th><!-- Date and Ref No -->
                                             <th rowspan="2" class="stick-head">Particulars</th> 
                                             <th rowspan="2" class="stick-head">Totals</th>
-                                            <th colspan="5" class="dynamic-stick-head">Capital Outlay</th>
+                                            <th colspan="5" class="dynamic-stick-head">BDRRMF</th>
 
                                         </tr>
                                         
                                         <tr id="dynamic-heads">
                                             <th class="stick-head">Date</th>
                                             <th class="stick-head">Reference No</th>
-                                            <th class="dynamic-head">Salaries & Wages</th>
-                                            <th class="dynamic-head">Cash Gift P.E.I</th>
-                                            <th class="dynamic-head">Year End Bonus</th>
-                                            <th class="dynamic-head">Mid Year Pay</th>
-                                            <th class="dynamic-head">S.R.I</th>
-                                            <th class="dynamic-head">Other Personnel Benefits</th>
+                                            <th class="dynamic-head">Pre Disaster Programs</th>
+                                            <th class="dynamic-head">Quick Response</th>
                                             <th rowspan="2" class="action-head">Actions</th>
                                         </tr>
                                     </thead>
@@ -1846,7 +1714,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let apTotalsInitialized = false;
     let obTotalsInitialized = false;
     const modal1 = document.getElementById('addUserModal');
-    
+    let addRowListenerInitialized = false;
 
     $('#addUserModal').on('show.bs.modal', function () {
         if (!modal1Initialized) {
@@ -1869,7 +1737,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const addObButton = document.querySelector('#addUserModal .modal-footer .add-row-ob');
 
 
-        const attributes = ['salary', 'cash_gift', 'year_end', 'mid_year', 'sri', 'others'];
+        const attributes = ['pre_disaster', 'quick_response'];
         console.log("Attributes: ",attributes);
         console.log("Period Covered:", periodCoveredInput);
         const task = "insert";
@@ -2098,12 +1966,8 @@ createTotalRows(attributes);
         createCell('input', '', { type: 'text', name: `${type}_reference_no[]`, required: false }),
         createCell('input', '', { type: 'text', name: `${type}_particulars[]`, required: false }),
         createCell('input', '', { type: 'number', name: `${type}_total[]`, step: 0.01 }, 'total-data'),
-        createCell('input', '', { type: 'number', name: `${type}_salary[]`, step: 0.01 }),
-        createCell('input', '', { type: 'number', name: `${type}_cash_gift[]`, step: 0.01 }),
-        createCell('input', '', { type: 'number', name: `${type}_year_end[]`, step: 0.01 }),
-        createCell('input', '', { type: 'number', name: `${type}_mid_year[]`, step: 0.01 }),
-        createCell('input', '', { type: 'number', name: `${type}_sri[]`, step: 0.01 }),
-        createCell('input', '', { type: 'number', name: `${type}_others[]`, step: 0.01 })
+        createCell('input', '', { type: 'number', name: `${type}_pre_disaster[]`, step: 0.01 }),
+        createCell('input', '', { type: 'number', name: `${type}_quick_response[]`, step: 0.01 })
     ];
 
     baseCells.forEach(cell => newRow.appendChild(cell));
@@ -2130,6 +1994,7 @@ createTotalRows(attributes);
     } else {
         container.appendChild(newRow);
     }
+    updateDateInputs();
 
     // Delete row functionality
     actionCell.querySelector('.delete').addEventListener('click', (e) => removeRow(e, type));
@@ -2147,17 +2012,21 @@ function removeRow(event, type) {
     }
 }
 
-        document.querySelector('#addUserModal').addEventListener('click', function (event) {
-        if (event.target.classList.contains('add-row-ap')) {
-            event.preventDefault();
-            const currentRow = event.target.closest('tr');
-            addRow('ap', currentRow);
-        } else if (event.target.classList.contains('add-row-ob')) {
-            event.preventDefault();
-            const currentRow = event.target.closest('tr');
-            addRow('ob', currentRow);
+       // Only add the event listener once for adding rows
+       if (!addRowListenerInitialized) {
+            document.querySelector('#addUserModal').addEventListener('click', function (event) {
+                if (event.target.classList.contains('add-row-ap')) {
+                    event.preventDefault();
+                    const currentRow = event.target.closest('tr');
+                    addRow('ap', currentRow);
+                } else if (event.target.classList.contains('add-row-ob')) {
+                    event.preventDefault();
+                    const currentRow = event.target.closest('tr');
+                    addRow('ob', currentRow);
+                }
+            });
+            addRowListenerInitialized = true; // Mark the listener as initialized
         }
-    });
 
     }
 
@@ -2186,6 +2055,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let apTotalsInitialized = false;
     let obTotalsInitialized = false;
     const modal1 = document.getElementById('exampleModal');
+    let addRowListenerInitialized = false;
     
 
     $('#exampleModal').on('show.bs.modal', function () {
@@ -2207,17 +2077,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const obDataRowContainer = document.querySelector('#exampleModal .inp-group-ob-data-row');
         const addApButton = document.querySelector('#exampleModal .modal-footer .add-row-ap');
         const addObButton = document.querySelector('#exampleModal .modal-footer .add-row-ob');
-        const raoPsId = document.querySelector('#exampleModal #rao_ps_id');
+        const raoBdId = document.querySelector('#exampleModal #rao_bd_id');
 
-        const attributes = ['salary', 'cash_gift', 'year_end', 'mid_year', 'sri', 'others'];
+        const attributes = ['pre_disaster', 'quick_response'];
         const task = "update";
         
         periodCoveredInput.addEventListener('change', function() {
             const selectedDate = this.value;
 
             console.log("Period Covered:", selectedDate);
-            console.log("raoPsId get monthly:", raoPsId.value);
-            fetch(`get_monthly.php?task=${task}&date=${selectedDate}&id=${raoPsId.value}`)
+            console.log("raoBdId get monthly:", raoBdId.value);
+            fetch(`get_monthly.php?task=${task}&date=${selectedDate}&id=${raoBdId.value}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'true') {
@@ -2437,12 +2307,8 @@ createTotalRows(attributes);
         createCell('input', '', { type: 'text', name: `${type}_reference_no[]`, required: false }),
         createCell('input', '', { type: 'text', name: `${type}_particulars[]`, required: false }),
         createCell('input', '', { type: 'number', name: `${type}_total[]`, step: 0.01 }, 'total-data'),
-        createCell('input', '', { type: 'number', name: `${type}_salary[]`, step: 0.01 }),
-        createCell('input', '', { type: 'number', name: `${type}_cash_gift[]`, step: 0.01 }),
-        createCell('input', '', { type: 'number', name: `${type}_year_end[]`, step: 0.01 }),
-        createCell('input', '', { type: 'number', name: `${type}_mid_year[]`, step: 0.01 }),
-        createCell('input', '', { type: 'number', name: `${type}_sri[]`, step: 0.01 }),
-        createCell('input', '', { type: 'number', name: `${type}_others[]`, step: 0.01 })
+        createCell('input', '', { type: 'number', name: `${type}_pre_disaster[]`, step: 0.01 }),
+        createCell('input', '', { type: 'number', name: `${type}_quick_response[]`, step: 0.01 })
     ];
 
     baseCells.forEach(cell => newRow.appendChild(cell));
@@ -2475,28 +2341,31 @@ createTotalRows(attributes);
 }
 
 
-function removeRow(event, type) {
-    event.preventDefault();
-    if (confirm("Are you sure you want to remove this row?")) {
-        const row = event.target.closest('tr');
-        if (row) {
-            row.remove();
-            updateCounters(type);
+    function removeRow(event, type) {
+        event.preventDefault();
+        if (confirm("Are you sure you want to remove this row?")) {
+            const row = event.target.closest('tr');
+            if (row) {
+                row.remove();
+                updateCounters(type);
+            }
         }
     }
-}
 
-        document.querySelector('#exampleModal').addEventListener('click', function (event) {
-        if (event.target.classList.contains('add-row-ap')) {
-            event.preventDefault();
-            const currentRow = event.target.closest('tr');
-            addRow('ap', currentRow);
-        } else if (event.target.classList.contains('add-row-ob')) {
-            event.preventDefault();
-            const currentRow = event.target.closest('tr');
-            addRow('ob', currentRow);
+    if (!addRowListenerInitialized) {
+            document.querySelector('#exampleModal').addEventListener('click', function (event) {
+                if (event.target.classList.contains('add-row-ap')) {
+                    event.preventDefault();
+                    const currentRow = event.target.closest('tr');
+                    addRow('ap', currentRow);
+                } else if (event.target.classList.contains('add-row-ob')) {
+                    event.preventDefault();
+                    const currentRow = event.target.closest('tr');
+                    addRow('ob', currentRow);
+                }
+            });
+            addRowListenerInitialized = true; // Mark the listener as initialized
         }
-    });
 
     }
 
@@ -2548,7 +2417,7 @@ function removeRow(event, type) {
             function calculateAttributeTotals(modalId) {
                 calculateTypeAttributeTotals('ap', {
                     rowSelector: `#${modalId} .ap-data-row`,
-                    inputPattern: /ap_(salary|cash_gift|year_end|mid_year|sri|others|total)/,  // Match the fields for 'ap'
+                    inputPattern: /ap_(pre_disaster|quick_response|total)/,  // Match the fields for 'ap'
                     totalSelectors: {
                         TA: 'ap_attr_TA_',
                         BF: 'ap_attr_BF_'
@@ -2557,7 +2426,7 @@ function removeRow(event, type) {
 
                 calculateTypeAttributeTotals('ob', {
                     rowSelector: `#${modalId} .ob-data-row`,
-                    inputPattern: /ob_(salary|cash_gift|year_end|mid_year|sri|others|total)/,  // Match the fields for 'ob'
+                    inputPattern: /ob_(pre_disaster|quick_response|total)/,  // Match the fields for 'ob'
                     totalSelectors: {
                         TO: 'ob_attr_TO_',
                         OB: 'ob_attr_OB_',
@@ -2580,7 +2449,7 @@ function removeRow(event, type) {
                     $(this).find('input[type="number"]').each(function() {
                         const match = this.name.match(config.inputPattern);
                         if (match) {
-                            const attrName = match[1];  // Field name like 'salary', 'cash_gift', etc.
+                            const attrName = match[1];  // Field name like
                             const value = parseFloat(this.value) || 0;
 
                             // Accumulate totals for each field
@@ -2601,7 +2470,7 @@ function removeRow(event, type) {
                 // Calculate Appropriations Balance (AB) for each "ob" row
                 $(`#${modalId} .inp-group-ob-totals`).find('.totals-row').each(function () {
                     $(this).find('input[type="number"]').each(function () {
-                        const match = this.name.match(/ob_attr_TO_(salary|cash_gift|year_end|mid_year|sri|others|total)/); 
+                        const match = this.name.match(/ob_attr_TO_(pre_disaster|quick_response|total)/); 
                         if (match) {
                             const attrId = match[1];
 
