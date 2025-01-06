@@ -8,6 +8,7 @@ $monthYear = date('Y-m', strtotime($date));
 $previousMonthYear = date('Y-m', strtotime('first day of previous month', strtotime($monthYear . '-01')));
 
 try {
+
     // Check if the selected month record already exists
     if($task == "update"){
         // $sql_fetch_date = "SELECT period_covered FROM tb_rao_cont WHERE isDisplayed = 1 AND rao_cont_id = ?";

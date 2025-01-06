@@ -635,16 +635,18 @@ td.action-buttons{
                                 dataType: 'json',
                                 success: function (response) {
                                     if (response.status === 'true') {
-                                        alert('Data saved successfully!');
+                                        mytable = $('#example').DataTable();
+                                        mytable.draw();
+                                        showAlert("Record Added successfully.", "alert-success");
                                         $('#addUserModal').modal('hide');
                                     } else {
-                                        alert('Error saving data: ' + response.error);
+                                        showAlert('Error saving data: ' + response.error,"alert-danger");
                                     }
                                 },
                                 error: function (jqXHR, textStatus, errorThrown) {
                                     console.error('AJAX Error: ' + textStatus, errorThrown);
                                     console.error('Response: ' + jqXHR.responseText);
-                                    alert('Error: ' + errorThrown);
+                                    showAlert('Error: ' + errorThrown,"alert-danger");
                                 }
                             });
                         });
@@ -767,9 +769,9 @@ td.action-buttons{
                                 success: function (response) {
                                     if (response.status === 'true') {
 
-                                        var period_covered = response.period_covered;
-                                        var chairman = response.chairman;
-                                        var brgy_captain = response.brgy_captain;
+                                        var period_covered = formData.period_covered;
+                                        var chairman = formData.chairman;
+                                        var brgy_captain = formData.brgy_captain;
                                         
                                         console.log("TRID:",trid );
 
@@ -778,7 +780,7 @@ td.action-buttons{
                                                 <td>
                                                     <div class="buttons">
                                                         <a href="javascript:void(0);" data-id="${rao_ps_id}" class="update-btn btn-sm editbtn">
-                                                            <i class="bx bx-sync"></i>
+                                                            <i class="bx bx-edit"></i>
                                                         </a>  
                                                         <a href="!#;" data-rao_id="${rao_ps_id}" class="delete-btn btn-sm deleteBtn">
                                                             <i class="bx bxs-trash"></i>
@@ -796,14 +798,16 @@ td.action-buttons{
 
                                             // Close the modal
                                             $('#exampleModal').modal('hide');
+                                            showAlert("Record Added successfully.", "alert-success");
+
                                     } else {
-                                        alert('Error saving data: ' + response.error);
+                                        showAlert('Error saving data: ' + response.error, "alert-danger");
                                     }
                                 },
                                 error: function (jqXHR, textStatus, errorThrown) {
                                     console.error('AJAX Error:', textStatus, errorThrown);
                                     console.error('Response:', jqXHR.responseText);
-                                    alert('Error: ' + errorThrown);
+                                    showAlert('Error: ' + errorThrown, "alert-danger");
                                 }
                             });
                         });
@@ -897,7 +901,7 @@ td.action-buttons{
                                 },
                                 error: function (xhr, status, error) {
                                     console.error("AJAX error:", status, error);
-                                    alert('Error fetching data. Please try again.');
+                                    showAlert('Error fetching data. Please try again.', "alert-danger");
                                 }
                             });
 
@@ -1060,7 +1064,7 @@ td.action-buttons{
                                 },
                                 error: function (xhr, status, error) {
                                     console.error("AJAX error:", status, error);
-                                    alert('Error fetching data. Please try again.');
+                                    showAlert('Error fetching data. Please try again.', "alert-danger");
                                 }
                             });
 
@@ -1091,7 +1095,7 @@ td.action-buttons{
                                     // Remove the row from DataTable
                                     table.row($(event.target).closest('tr')).remove().draw();
                                 } else {
-                                    alert('Deletion failed');
+                                    showAlert('Deletion failed', "alert-danger");
                                 }
                                 // Close the modal
                                 $('#deleteConfirmationModal').modal('hide');
@@ -1152,7 +1156,7 @@ td.action-buttons{
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Update Report of Appropriations and Obligations (RAO)</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Update Report of Appropriations and Obligations (RAO-PS)</h5>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -1313,7 +1317,7 @@ td.action-buttons{
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Update Report of Appropriations and Obligations (RAO)</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Update Report of Appropriations and Obligations (RAO-PS)</h5>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -1473,7 +1477,7 @@ td.action-buttons{
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add Report of Appropriations and Obligations (RAO)</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Add Report of Appropriations and Obligations (RAO-PS)</h5>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -1778,7 +1782,7 @@ function handleValidation(modal) {
 
     // Display the alert message if there are any missing inputs
     if (alertMessage) {
-        alert(alertMessage);
+        showAlert(alertMessage, "alert-danger");
         return true; // Indicate there are errors
     }
 
@@ -1865,17 +1869,17 @@ document.addEventListener('DOMContentLoaded', function () {
                         $('#addUserModal #periodcovered').val('');
                         if (data.error.includes("record already exists")) {
                             // Error for duplicate record
-                            alert("A record for this month already exists. Please choose a different month.");
+                            showAlert("A record for this month already exists. Please choose a different month.", "alert-danger");
                         } else {
                             // General error handling
-                            alert("An error occurred: " + data.error);
+                            showAlert("An error occurred: " + data.error, "alert-danger");
                         }
 
                     }
                 })
                 .catch(error => {
                     console.error('Fetch error:', error);
-                    alert("An unexpected error occurred. Please try again.");
+                    showAlert("An unexpected error occurred. Please try again.", "alert-danger");
                 });
         });
 
@@ -2204,17 +2208,17 @@ document.addEventListener('DOMContentLoaded', function () {
                         $('#exampleModal #period_covered').val('');
                         if (data.error.includes("record already exists")) {
                             // Error for duplicate record
-                            alert("A record for this month already exists. Please choose a different month.");
+                            showAlert("A record for this month already exists. Please choose a different month.", "alert-danger");
                         } else {
                             // General error handling
-                            alert("An error occurred: " + data.error);
+                            showAlert("An error occurred: " + data.error, "alert-danger");
                         }
 
                     }
                 })
                 .catch(error => {
                     console.error('Fetch error:', error);
-                    alert("An unexpected error occurred. Please try again.");
+                    showAlert("An unexpected error occurred. Please try again.", "alert-danger");
                 });
         });
 
