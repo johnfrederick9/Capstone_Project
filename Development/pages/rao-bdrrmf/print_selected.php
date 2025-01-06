@@ -531,26 +531,6 @@ console.log(json);
     $(' #brgy_captain').text(brgy_captain);
 
 
-//     function createDynamicRow(type, dataKey, dataContainerKey, dataPrefix) {
-//     if (json[dataKey] && Array.isArray(json[dataKey]) && json[dataKey].length > 0) {
-//         json[dataKey].forEach(function (item) {
-//             let row = `
-//             <tr class="${type}-data-row">
-//                 <td>${item[`${dataPrefix}_ref_date`] || ''}</td>
-//                 <td>${item[`${dataPrefix}_ref_no`] || ''}</td>
-//                 <td>${item[`${dataPrefix}_particulars`] || ''}</td>
-//                 <td class="total-data">${item[`${dataPrefix}_total`] !== 0 ? item[`${dataPrefix}_total`] || '' : ''}</td>
-//                 <td class="hidden">${item[`rao_bd_${type}_id`] || ''}</td>
-//                 <td>${item[`${dataPrefix}_pre_disaster`] !== 0 ? item[`${dataPrefix}_pre_disaster`] || '' : ''}</td>
-//                 <td>${item[`${dataPrefix}_quick_response`] !== 0 ? item[`${dataPrefix}_quick_response`] || '' : ''}</td>
-//             </tr>
-//             `;
-
-//             $(`.${dataContainerKey}`).append(row);
-//         });
-//     }
-// }
-
 function formatNumberWithCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -595,47 +575,6 @@ function createDynamicRow(type, dataKey, dataContainerKey, dataPrefix) {
     // Call the function for OB data
     createDynamicRow('ob', 'rao_bd_ob', 'inp-group-ob-data-row', 'ob');
 
-//     // Dynamically handle totals
-// function createTotalsRow(totalKey, containerSelector, prefix, labelMapping) {
-//     if (!json[totalKey] || !Array.isArray(json[totalKey]) || json[totalKey].length === 0) return;
-
-//     json[totalKey].forEach(total => {
-//         const totalRow = document.querySelector(`${containerSelector}.${total.total_type} .totals-row`);
-//         if (!totalRow) return;
-
-//         totalRow.innerHTML = ''; // Clear existing content
-
-//         // Create label cell with dynamic text from the labelMapping
-//         const labelCell = document.createElement('td');
-//         labelCell.setAttribute('colspan', '3');
-//         labelCell.classList.add('stick-body');
-//         labelCell.textContent = labelMapping[total.total_type] || `${total.total_type} Total`;
-//         totalRow.appendChild(labelCell);
-
-//         // Add total fields dynamically as text (not input fields)
-//         const fields = ['total','pre_disaster', 'quick_response'];
-
-//         fields.forEach(field => {
-//             const inputCell = document.createElement('td');
-//             let cellContent = total[field] || ''; // Use field value or empty string
-
-//             // If value is 0, display an empty string
-//             if (cellContent == 0) {
-//                 cellContent = '';
-//             }
-
-//             // If the field is 'total', add the 'total-data' class to the cell
-//             if (field == 'total') {
-//                 inputCell.classList.add('total-data');
-//             }
-
-//             // Set the content of the cell to be the value (text content)
-//             inputCell.textContent = cellContent;
-
-//             totalRow.appendChild(inputCell);
-//         });
-//     });
-// }
 function createTotalsRow(totalKey, containerSelector, prefix, labelMapping) {
     if (!json[totalKey] || !Array.isArray(json[totalKey]) || json[totalKey].length === 0) return;
 
