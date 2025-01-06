@@ -106,124 +106,130 @@ $confirmpassword = $_POST["confirmPassword"] ?? '';
 
                 <button type="submit" name="submit" class="btn log">Register</button>
                 <p>Already have an account? <a href="login.php">Sign in</a></p>
-             <?php
-             require 'database.php';
+                <?php
+                require 'database.php';
 
-             $lastname = $_POST["lastname"] ?? '';
-             $middlename = $_POST["middlename"] ?? '';
-             $firstname = $_POST["firstname"] ?? '';
-             $sex = $_POST["sex"] ?? '';
-             $suffix = $_POST["suffix"] ?? '';
-             $birthdate = $_POST["birthdate"] ?? '';
-             $barangayposition = $_POST["barangayposition"] ?? '';
-             $username = $_POST["username"] ?? '';
-             $password = $_POST["password"] ?? '';
-             $confirmpassword = $_POST["confirmPassword"] ?? '';
-             
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Form data handling and validation
-    $birthdate = $_POST["birthdate"] ?? '';
-    $username = $_POST["username"] ?? '';
-    $password = $_POST["password"] ?? '';
-    $confirmpassword = $_POST["confirmPassword"] ?? '';
-    $lastname = $_POST["lastname"] ?? '';
-    $middlename = $_POST["middlename"] ?? '';
-    $firstname = $_POST["firstname"] ?? '';
-    $sex = $_POST["sex"] ?? '';
-    $suffix = $_POST["suffix"] ?? '';
-    $barangayposition = $_POST["barangayposition"] ?? '';
+                $lastname = $_POST["lastname"] ?? '';
+                $middlename = $_POST["middlename"] ?? '';
+                $firstname = $_POST["firstname"] ?? '';
+                $sex = $_POST["sex"] ?? '';
+                $suffix = $_POST["suffix"] ?? '';
+                $birthdate = $_POST["birthdate"] ?? '';
+                $barangayposition = $_POST["barangayposition"] ?? '';
+                $username = $_POST["username"] ?? '';
+                $password = $_POST["password"] ?? '';
+                $confirmpassword = $_POST["confirmPassword"] ?? '';
 
-    // Validate birthdate
-    $year2005 = new DateTime('2005-12-31');
-    $enteredDate = new DateTime($birthdate);
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    $birthdate = $_POST["birthdate"] ?? '';
+                    $username = $_POST["username"] ?? '';
+                    $password = $_POST["password"] ?? '';
+                    $confirmpassword = $_POST["confirmPassword"] ?? '';
+                    $lastname = $_POST["lastname"] ?? '';
+                    $middlename = $_POST["middlename"] ?? '';
+                    $firstname = $_POST["firstname"] ?? '';
+                    $sex = $_POST["sex"] ?? '';
+                    $suffix = $_POST["suffix"] ?? '';
+                    $barangayposition = $_POST["barangayposition"] ?? '';
 
-    if ($enteredDate > $year2005) {
-        echo "<div class='alert alert-danger'>Please put the exact Birthdate.</div>";
-        echo "<script>
-            document.getElementsByName('birthdate')[0].value = '';
-        </script>";
-    } else {
-        if (!empty($lastname) && !empty($firstname) && !empty($sex) && !empty($birthdate) && !empty($barangayposition) && !empty($username) && !empty($password) && !empty($confirmpassword)) {
-            // Check if username already exists
-            $stmt = $conn->prepare("SELECT * FROM tb_user WHERE username = ? AND isApproved != 3 ");
-            $stmt->bind_param("s", $username);
-            $stmt->execute();
-            $result = $stmt->get_result();
+                    $year2005 = new DateTime('2005-12-31');
+                    $enteredDate = new DateTime($birthdate);
 
-            if ($result->num_rows > 0) {
-                echo "<div class='alert alert-danger'>Username already exists</div>";
-            } else {
-                // Check barangay position limits
-                $position_stmt = $conn->prepare("SELECT COUNT(*) as position_count FROM tb_user WHERE barangayposition = ?");
-                $position_stmt->bind_param("s", $barangayposition);
-                $position_stmt->execute();
-                $position_result = $position_stmt->get_result();
-                $row = $position_result->fetch_assoc();
-                $existing_positions = $row['position_count'];
-
-                if ($barangayposition == 'Barangay Captain' && $existing_positions >= 1) {
-                    echo "<div class='alert alert-danger'>There can only be one Barangay Captain.</div>";
-                } elseif ($barangayposition == 'Barangay Secretary' && $existing_positions >= 1) {
-                    echo "<div class='alert alert-danger'>There can only be one Barangay Secretary.</div>";
-                } elseif ($barangayposition == 'Barangay Treasurer' && $existing_positions >= 1) {
-                    echo "<div class='alert alert-danger'>There can only be one Barangay Treasurer.</div>";
-                } else {
-                    if ($password === $confirmpassword) {
-                        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-                        // Set approval status based on barangay position
-                        $isApproved = ($barangayposition === 'Barangay Captain') ? 1 : 0;
-
-                        $stmt = $conn->prepare("INSERT INTO tb_user (lastname, middlename, firstname, sex, suffix, birthdate, barangayposition, username, password, isApproved) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                        $stmt->bind_param("sssssssssi", $lastname, $middlename, $firstname, $sex, $suffix, $birthdate, $barangayposition, $username, $hashed_password, $isApproved);
-
-                        if ($stmt->execute()) {
-                            $toastMessage = ($barangayposition === 'Barangay Captain') 
-                                ? 'Registration Successful! As Barangay Captain' 
-                                : 'Registration Successful! Awaiting approval.';
-                            $redirectUrl = 'login.php';
-                            echo " 
-                                <div id='toast' class='toast'>   
-                                    <div class='toast-content'>
-                                        <i class='bx bxs-check-circle icon'></i>
-                                        <div class='message'>
-                                            <span class='text'>$toastMessage</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    const toast = document.getElementById('toast');
-                                    toast.classList.add('show');
-                                    setTimeout(() => {
-                                        toast.classList.remove('show');
-                                        window.location.href = '$redirectUrl';
-                                    }, 3000);
-                                </script>
-                            ";
-                            exit();
-                        } else {
-                            echo "<div class='alert alert-danger'>Registration Failed</div>";
-                        }
-                    } else {
-                        echo "<div class='alert alert-danger'>Passwords do not match</div>";
+                    if ($enteredDate > $year2005) {
+                        echo "<div class='alert alert-danger'>Please put the exact Birthdate.</div>";
                         echo "<script>
-                            document.getElementsByName('password')[0].value = '';
-                            document.getElementsByName('confirmPassword')[0].value = '';
+                            document.getElementsByName('birthdate')[0].value = '';
                         </script>";
+                    } else {
+                        if (!empty($lastname) && !empty($firstname) && !empty($sex) && !empty($birthdate) && !empty($barangayposition) && !empty($username) && !empty($password) && !empty($confirmpassword)) {
+                            // Check if username already exists
+                            $stmt = $conn->prepare("SELECT * FROM tb_user WHERE username = ? AND isApproved != 3 ");
+                            $stmt->bind_param("s", $username);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            if ($result->num_rows > 0) {
+                                echo "<div class='alert alert-danger'>Username already exists</div>";
+                            } else {
+                                // Check if full name already exists
+                                $name_stmt = $conn->prepare("SELECT * FROM tb_user WHERE lastname = ? AND middlename = ? AND firstname = ?");
+                                $name_stmt->bind_param("sss", $lastname, $middlename, $firstname);
+                                $name_stmt->execute();
+                                $name_result = $name_stmt->get_result();
+
+                                if ($name_result->num_rows > 0) {
+                                    echo "<div class='alert alert-danger'>A record with the same name already exists.</div>";
+                                } else {
+                                    // Check barangay position limits
+                                    $position_stmt = $conn->prepare("SELECT COUNT(*) as position_count FROM tb_user WHERE barangayposition = ?");
+                                    $position_stmt->bind_param("s", $barangayposition);
+                                    $position_stmt->execute();
+                                    $position_result = $position_stmt->get_result();
+                                    $row = $position_result->fetch_assoc();
+                                    $existing_positions = $row['position_count'];
+
+                                    if ($barangayposition == 'Barangay Captain' && $existing_positions >= 1) {
+                                        echo "<div class='alert alert-danger'>There can only be one Barangay Captain.</div>";
+                                    } elseif ($barangayposition == 'Barangay Secretary' && $existing_positions >= 1) {
+                                        echo "<div class='alert alert-danger'>There can only be one Barangay Secretary.</div>";
+                                    } elseif ($barangayposition == 'Barangay Treasurer' && $existing_positions >= 1) {
+                                        echo "<div class='alert alert-danger'>There can only be one Barangay Treasurer.</div>";
+                                    } else {
+                                        if ($password === $confirmpassword) {
+                                            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+                                            // Set approval status based on barangay position
+                                            $isApproved = ($barangayposition === 'Barangay Captain') ? 1 : 0;
+
+                                            $stmt = $conn->prepare("INSERT INTO tb_user (lastname, middlename, firstname, sex, suffix, birthdate, barangayposition, username, password, isApproved) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                                            $stmt->bind_param("sssssssssi", $lastname, $middlename, $firstname, $sex, $suffix, $birthdate, $barangayposition, $username, $hashed_password, $isApproved);
+
+                                            if ($stmt->execute()) {
+                                                $toastMessage = ($barangayposition === 'Barangay Captain') 
+                                                    ? 'Registration Successful! As Barangay Captain' 
+                                                    : 'Registration Successful! Awaiting approval.';
+                                                $redirectUrl = 'login.php';
+                                                echo " 
+                                                    <div id='toast' class='toast'>   
+                                                        <div class='toast-content'>
+                                                            <i class='bx bxs-check-circle icon'></i>
+                                                            <div class='message'>
+                                                                <span class='text'>$toastMessage</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <script>
+                                                        const toast = document.getElementById('toast');
+                                                        toast.classList.add('show');
+                                                        setTimeout(() => {
+                                                            toast.classList.remove('show');
+                                                            window.location.href = '$redirectUrl';
+                                                        }, 3000);
+                                                    </script>
+                                                ";
+                                                exit();
+                                            } else {
+                                                echo "<div class='alert alert-danger'>Registration Failed</div>";
+                                            }
+                                        } else {
+                                            echo "<div class='alert alert-danger'>Passwords do not match</div>";
+                                            echo "<script>
+                                                document.getElementsByName('password')[0].value = '';
+                                                document.getElementsByName('confirmPassword')[0].value = '';
+                                            </script>";
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            echo "<div class='alert alert-danger'>Please fill in all fields</div>";
+                        }
                     }
                 }
-            }
-        } else {
-            echo "<div class='alert alert-danger'>Please fill in all fields</div>";
-        }
-    }
-}
                 ?>
             </form>
         </div>
     </section>
     <!-- register end -->
-
-
 </body>
 </html>
