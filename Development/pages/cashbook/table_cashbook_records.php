@@ -639,13 +639,15 @@ button[data-group]:not(.active) {
                                             $('#addUserModal input').val('');
                                             $('.inp-group-view').empty();
 
+                                            showAlert("Record Added successfully.", "alert-success");
+
                                         } else {
-                                            alert(message||'Failed to submit data');
+                                            showAlert(message||'Failed to submit data',"alert-danger");
                                         }
                                     }
                                 });
                             } else {
-                                alert('Please fill all the required fields');
+                                showAlert('Please fill all the required fields',"alert-danger");
                             }
                         });
 
@@ -783,17 +785,18 @@ button[data-group]:not(.active) {
 
                                             // Close the modal
                                             $('#exampleModal').modal('hide');
+                                            showAlert("Record Updated successfully.", "alert-success");
                                         } else {
-                                            alert('Update failed: ' + (json.error || 'Unknown error'));
+                                            showAlert('Update failed: ' + (json.error || 'Unknown error'), "alert-danger");
                                         }
                                     },
                                     error: function(xhr, status, error) {
                                         console.error("AJAX Error: " + status + ": " + error);
-                                        alert("An error occurred while updating data.");
+                                        showAlert("An error occurred while updating data.", "alert-danger");
                                     }
                                 });
                             } else {
-                                alert('Please fill all the required fields');
+                                showAlert('Please fill all the required fields');
                             }
                         });
 
@@ -895,7 +898,7 @@ button[data-group]:not(.active) {
                                 },
                                 error: function(xhr, status, error) {
                                     console.error("AJAX Error: " + status + ": " + error);
-                                    alert("An error occurred while fetching data.");
+                                    showAlert("An error occurred while fetching data.", "alert-danger");
                                 }
                             });
                         });
@@ -972,7 +975,7 @@ button[data-group]:not(.active) {
                                                     cbBalanceInput.setAttribute('data-suggested-value', parseFloat(data.cb_start_balance).toFixed(2));
                                                 } else {
                                                     // General error handling
-                                                    alert("An error occurred: " + data.error);
+                                                    showAlert("An error occurred: " + data.error, "alert-danger");
                                                 }
                                             })
                                             .catch(error => {
@@ -1386,7 +1389,7 @@ button[data-group]:not(.active) {
                                                     //#cbinitbalance$(this).find('input[name="clt_balance_data[]"]').val(newBalance.toFixed(2));
                                                     // Alert if the balance is negative
                                                     if (newBalance < 0) {
-                                                        alert('Warning: A Cash in Local Treasury Balance is negative! Please check your inputs.');
+                                                        showAlert('Warning: A Cash in Local Treasury Balance is negative! Please check your inputs.', "alert-danger");
                                                     }
                                                 }
                                             });
@@ -1428,7 +1431,7 @@ button[data-group]:not(.active) {
                                                     //$(this).find('input[name="cb_balance_data[]"]').val(newBalance.toFixed(2));
                                                     // Alert if the balance is negative
                                                     if (newBalance < 0) {
-                                                        alert('Warning: A Cash in Bank Balance is negative! Please check your inputs.');
+                                                        showAlert('Warning: A Cash in Bank Balance is negative! Please check your inputs.', "alert-danger");
                                                     }
                                                 }
                                             });
@@ -1470,7 +1473,7 @@ button[data-group]:not(.active) {
                                                     //$(this).find('input[name="ca_balance_data[]"]').val(newBalance.toFixed(2));
                                                     // Alert if the balance is negative
                                                     if (newBalance < 0) {
-                                                        alert('Warning: A Cash Advance Balance is negative! Please check your inputs.');
+                                                        showAlert('Warning: A Cash Advance Balance is negative! Please check your inputs.', "alert-danger");
                                                     }
                                                 }
                                             });
@@ -1513,7 +1516,7 @@ button[data-group]:not(.active) {
 
                                                     // Alert if the balance is negative
                                                     if (newBalance < 0) {
-                                                        alert('Warning: A Petty Cash Balance is negative! Please check your inputs.');
+                                                        showAlert('Warning: A Petty Cash Balance is negative! Please check your inputs.', "alert-danger");
                                                     }
                                                 }
                                             });
@@ -1629,7 +1632,7 @@ button[data-group]:not(.active) {
                                                     
 
                                                     if (newBalance < 0) {
-                                                        alert(`Warning: A ${type.name.toUpperCase()} Balance is negative! Please check your inputs.`);
+                                                        showAlert(`Warning: A ${type.name.toUpperCase()} Balance is negative! Please check your inputs.`, "alert-danger");
                                                     }
                                                 }
                                             });
@@ -1668,28 +1671,31 @@ button[data-group]:not(.active) {
                             event.preventDefault();
                             var cashbook_id = $(this).data('cashbook_id');
                             console.log('Cashbook ID:', cashbook_id); 
-                            if (confirm("Are you sure want to delete this cashbook Record ? ")) {
-                                $.ajax({
-                                    url: "delete.php",
-                                    data: {
-                                        cashbook_id: cashbook_id,
-                                    },
-                                    type: "post",
-                                    success: function(data) {
-                                        var json = JSON.parse(data);
-                                        status = json.status;
-                                        if (status == 'success') {
-                                            $("#" + cashbook_id).closest('tr').remove();
-                                        } else {
-                                            alert('Failed');
-                                            return;
-                                        }
+                            // Open the modal
+                            $('#deleteConfirmationModal').modal('show');
+                             // Handle the confirmation
+                            $('#confirmDeleteBtn').off('click').on('click', function() {
+                            $.ajax({
+                                url: "delete.php",
+                                data: {
+                                    cashbook_id: cashbook_id,
+                                },
+                                type: "post",
+                                success: function(data) {
+                                    var json = JSON.parse(data);
+                                    status = json.status;
+                                    if (status == 'success') {
+                                        $("#" + cashbook_id).closest('tr').remove();
+                                    } else {
+                                        showAlert('Failed', "alert-danger");
+                                        return;
                                     }
-                                });
-                            } else {
-                                return null;
-                            }
-                        })
+                                    // Close the modal
+                                    $('#deleteConfirmationModal').modal('hide');
+                                }
+                            });
+                            })
+                        });
 
                         // Function to format the period covered
                         function formatPeriodCovered(dateString) {
@@ -1806,16 +1812,16 @@ button[data-group]:not(.active) {
 
                                     } else {
                                         console.error('Error in JSON response:', json.message);
-                                        alert("Error: " + json.message); // Alert user if there's an error message
+                                        showAlert("Error: " + json.message, "alert-danger"); // Alert user if there's an error message
                                     }
                                 } catch (e) {
                                     console.error("Failed to parse JSON:", e);
-                                    alert("An error occurred while processing the data.");
+                                    showAlert("An error occurred while processing the data.", "alert-danger");
                                 }
                             },
                             error: function(xhr, status, error) {
                                 console.error("AJAX Error: " + status + ": " + error);
-                                alert("An error occurred while fetching data.");
+                                showAlert("An error occurred while fetching data.", "alert-danger");
                             }
                         });
                     });
@@ -1869,12 +1875,12 @@ button[data-group]:not(.active) {
                                             mytable.draw();
                                             $('#initModal').modal('hide');
                                         } else {
-                                            alert('failed');
+                                            showAlert('failed', "alert-danger");
                                         }
                                     }
                                 });
                             } else {
-                                alert('Fill all the required fields');
+                                showAlert('Fill all the required fields', "alert-danger");
                             }
                         });
 
@@ -2304,6 +2310,21 @@ button[data-group]:not(.active) {
                 </div>
             </div>
             </section>
+            <section class="delete-modal">
+                <!-- Delete Confirmation Modal -->
+                <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Remove for you</h5>
+                        <p>This data will be removed, Would you like to remove it ?</p>
+                        <button type="button" class="btn btn-primary" id="confirmDeleteBtn">Remove</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     </body> 
 
     <!-- <script>
@@ -2566,12 +2587,12 @@ document.addEventListener('DOMContentLoaded', function () {
                                 } else {
                                     console.error('Error:', data.error);
                                     // General error handling
-                                    alert("An error occurred: " + data.error);
+                                    showAlert("An error occurred: " + data.error, "alert-danger");
                                 }
                             })
                             .catch(error => {
                                 console.error('Fetch error:', error);
-                                alert("An unexpected error occurred. Please try again.");
+                                showAlert("An unexpected error occurred. Please try again.", "alert-danger");
 
                                 // Reset balances to 0.00 if there is a fetch error
                                 cltBalanceInput.value = '0.00';
@@ -2794,7 +2815,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             previousBalance = newBalance; 
 
                             if (newBalance < 0) {
-                                alert('Warning: A Cash in Local Treasury Balance is negative! Please check your inputs.');
+                                showAlert('Warning: A Cash in Local Treasury Balance is negative! Please check your inputs.', "alert-danger");
                             }
                         });
                     }
@@ -2826,7 +2847,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             previousBalance = newBalance; 
 
                             if (newBalance < 0) {
-                                alert('Warning: A Cash in Bank Balance is negative! Please check your inputs.');
+                                showAlert('Warning: A Cash in Bank Balance is negative! Please check your inputs.', "alert-danger");
                             }
                         });
                     }
@@ -2854,7 +2875,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             previousBalance = newBalance; 
 
                             if (newBalance < 0) {
-                                alert('Warning: A Cash Advance Balance is negative! Please check your inputs.');
+                                showAlert('Warning: A Cash Advance Balance is negative! Please check your inputs.', "alert-danger");
                             }
                         });
                     }
@@ -2882,7 +2903,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             previousBalance = newBalance; 
 
                             if (newBalance < 0) {
-                                alert('Warning: A Petty Cash Balance is negative! Please check your inputs.');
+                                showAlert('Warning: A Petty Cash Balance is negative! Please check your inputs.', "alert-danger");
                             }
                         });
                     }
@@ -2989,6 +3010,34 @@ window.onclick = function(event) {
         }
     }
 }
+
+function showAlert(message, alertClass) {
+            var alertDiv = $('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' + message +
+                '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+            alertDiv.css({
+                "position": "fixed",
+                "top": "10px",
+                "right": "10px",
+                "z-index": "9999",
+                "background-color": alertClass === "alert-danger" ? "#f8d7da" : "#d4edda",
+                "border-color": alertClass === "alert-danger" ? "#f5c6cb" : "#c3e6cb"
+            });
+            $("body").append(alertDiv);
+            setTimeout(function() {
+                alertDiv.alert('close');
+            }, 900);
+        }
+
+</script>
+<script>
+    // Add event listener for the Enter key when the modal is open
+document.addEventListener('keydown', function(event) {
+    const modalOpen = document.getElementById('deleteConfirmationModal').classList.contains('show');
+    if (modalOpen && event.key === 'Enter') {
+        event.preventDefault();
+        document.getElementById('confirmDeleteBtn').click();
+    }
+});
 </script>
 
 </html>

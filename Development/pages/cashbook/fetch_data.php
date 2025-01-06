@@ -56,8 +56,9 @@ while ($row = mysqli_fetch_assoc($query)) {
     $sub_array = array();
     $sub_array[] = $row['cashbook_id'];
 
-    $formatted_date = date("F j, Y", strtotime($row['period_covered']));
+    $formatted_date = date("F Y", strtotime($row['period_covered']));
     $sub_array[] = $formatted_date;
+
     
     $sub_array[] = $row['treasurer_name'];
     $sub_array[] = '<div class="dropdown">
