@@ -496,7 +496,7 @@ include "../../sidebar_officials.php";
                             $('#example').DataTable({
                                 "fnCreatedRow": function(nRow, aData, iDataIndex) {
                                     $(nRow).attr('id', aData[0]);
-                                    $(nRow).find('.deleteBtn').attr('data-rao_id', aData[0]);
+                                    $(nRow).find('.deleteBtn').attr('data-rao_bd_id', aData[0]);
                                 },
                                 'serverSide': 'true',
                                 'processing': 'true',
@@ -521,8 +521,8 @@ include "../../sidebar_officials.php";
                             });
                         });
 
-                        // Function to format the period covered
-                        function formatPeriodCovered(dateString) {
+// Function to format the period covered
+function formatPeriodCovered(dateString) {
                             if (!dateString || dateString === "0000-00-00") {
                                 return "";
                             }
@@ -537,17 +537,17 @@ include "../../sidebar_officials.php";
                         $('#example').on('click', '.infoBtn', function (event) {
                             var table = $('#example').DataTable();
                             var trid = $(this).closest('tr').attr('id');
-                            var rao_ps_id = $(this).data('id');
+                            var rao_bd_id = $(this).data('id');
                             console.log(trid);
 
                             // Store data in modal for reference
-                            $('#updateUser').data('rao_ps_id', rao_ps_id);
+                            $('#updateUser').data('rao_bd_id', rao_bd_id);
                             $('#updateUser').data('trid', trid);
 
                             // Show modal and set rao_cont_id value
                             $('#viewDataModal').modal('show');
-                            console.log("Rao Cont ID:", rao_ps_id);
-                            $('#viewDataModal #rao_ps_id').val(rao_ps_id);
+                            console.log("Rao Cont ID:", rao_bd_id);
+                            $('#viewDataModal #rao_bd_id').val(rao_bd_id);
                             $('#viewDataModal #trid').val(trid);
 
                             $('#viewDataModal .inp-group-ap-data-row').empty(); 
@@ -556,7 +556,7 @@ include "../../sidebar_officials.php";
                             // AJAX request to fetch data
                             $.ajax({
                                 url: "get_single_data.php",
-                                data: { rao_ps_id: rao_ps_id },
+                                data: { rao_bd_id: rao_bd_id },
                                 type: 'post',
                                 success: function (data) {
                                     try {
@@ -589,13 +589,9 @@ include "../../sidebar_officials.php";
                                                         <td><input type="text" name="${type}_reference_no[]" value="${item[`${dataPrefix}_ref_no`] || ''}" disabled ></td>
                                                         <td><input type="text" name="${type}_particulars[]" value="${item[`${dataPrefix}_particulars`] || ''}" disabled ></td>
                                                         <td class="total-data"><input type="number" name="${type}_total[]" value="${item[`${dataPrefix}_total`] || ''}" disabled ></td>
-                                                        <td class="hidden"><input type="hidden" name="rao_ps_${type}_id" value="${item[`rao_ps_${type}_id`] || ''}" disabled ></td>
-                                                        <td><input type="number" name="${type}_salary[]" value="${item[`${dataPrefix}_salary`] || ''}" disabled ></td>
-                                                        <td><input type="number" name="${type}_cash_gift[]" value="${item[`${dataPrefix}_cash_gift`] || ''}" disabled ></td>
-                                                        <td><input type="number" name="${type}_year_end[]" value="${item[`${dataPrefix}_year_end`] || ''}" disabled ></td>
-                                                        <td><input type="number" name="${type}_mid_year[]" value="${item[`${dataPrefix}_mid_year`] || ''}" disabled ></td>
-                                                        <td><input type="number" name="${type}_sri[]" value="${item[`${dataPrefix}_sri`] || ''}" disabled ></td>
-                                                        <td><input type="number" name="${type}_others[]" value="${item[`${dataPrefix}_others`] || ''}" disabled ></td>
+                                                        <td class="hidden"><input type="hidden" name="rao_bd_${type}_id" value="${item[`rao_bd_${type}_id`] || ''}" disabled ></td>
+                                                        <td><input type="number" name="${type}_pre_disaster[]" value="${item[`${dataPrefix}_pre_disaster`] || ''}" disabled ></td>
+                                                        <td><input type="number" name="${type}_quick_response[]" value="${item[`${dataPrefix}_quick_response`] || ''}" disabled ></td>
                                                     </tr>
                                                     `;
 
@@ -605,10 +601,10 @@ include "../../sidebar_officials.php";
                                         
                                         }
                                          // Call the function for AP data
-                                         createDynamicRow('ap', 'rao_ps_ap', 'inp-group-ap-data-row', 'ap');
+                                         createDynamicRow('ap', 'rao_bd_ap', 'inp-group-ap-data-row', 'ap');
 
                                         // Call the function for OB data
-                                        createDynamicRow('ob', 'rao_ps_ob', 'inp-group-ob-data-row', 'ob');
+                                        createDynamicRow('ob', 'rao_bd_ob', 'inp-group-ob-data-row', 'ob');
 
                                         // Dynamically handle totals
                                         function createTotalsRow(totalKey, containerSelector, prefix, labelMapping) {
@@ -628,7 +624,7 @@ include "../../sidebar_officials.php";
                                                 totalRow.appendChild(labelCell);
 
                                             // Add total input fields dynamically
-                                                const fields = ['total', 'salary', 'cash_gift', 'year_end', 'mid_year', 'sri', 'others'];
+                                                const fields = ['total','pre_disaster', 'quick_response'];
 
                                                 fields.forEach(field => {
                                                     const inputCell = document.createElement('td');
@@ -658,11 +654,11 @@ include "../../sidebar_officials.php";
                                         };
 
                                         // Populate rows for appropriations and obligations
-                                        createTotalsRow('rao_ps_TA_totals', '#viewDataModal .inp-group-ap-totals', 'ap', labelMapping);
-                                        createTotalsRow('rao_ps_BF_totals', '#viewDataModal .inp-group-ap-totals', 'ap', labelMapping);
-                                        createTotalsRow('rao_ps_TO_totals', '#viewDataModal .inp-group-ob-totals', 'ob', labelMapping);
-                                        createTotalsRow('rao_ps_OB_totals', '#viewDataModal .inp-group-ob-totals', 'ob', labelMapping);
-                                        createTotalsRow('rao_ps_AB_totals', '#viewDataModal .inp-group-ob-totals', 'ob', labelMapping);
+                                        createTotalsRow('rao_bd_TA_totals', '#viewDataModal .inp-group-ap-totals', 'ap', labelMapping);
+                                        createTotalsRow('rao_bd_BF_totals', '#viewDataModal .inp-group-ap-totals', 'ap', labelMapping);
+                                        createTotalsRow('rao_bd_TO_totals', '#viewDataModal .inp-group-ob-totals', 'ob', labelMapping);
+                                        createTotalsRow('rao_bd_OB_totals', '#viewDataModal .inp-group-ob-totals', 'ob', labelMapping);
+                                        createTotalsRow('rao_bd_AB_totals', '#viewDataModal .inp-group-ob-totals', 'ob', labelMapping);
 
                                 
                                         } else {
@@ -674,7 +670,7 @@ include "../../sidebar_officials.php";
                                 },
                                 error: function (xhr, status, error) {
                                     console.error("AJAX error:", status, error);
-                                    showAlert('Error fetching data. Please try again.', "alert-danger");
+                                    showAlert('Error fetching data. Please try again.',"alert-danger");
                                 }
                             });
 
@@ -683,6 +679,7 @@ include "../../sidebar_officials.php";
                                 // Your reset logic here
                             });
                         });
+
 
                     </script>
                 </section><!-- .home-->
@@ -695,14 +692,14 @@ include "../../sidebar_officials.php";
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Report of Appropriations and Obligations (RAO-PS)</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Update Report of Appropriations and Obligations (RAO-BDRMMF)</h5>
                             <button type="button" class='bx bxs-x-circle icon' data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="rao-container">
                             <div class="rao-header">
-                                    <h1>Report of Appropriations and Obligations (RAO-PS)</h1>
-                                    <input type="hidden" id="rao_ps_id" name="rao_ps_id">
+                                    <h1>Report of Appropriations and Obligations (RAO-BDRRMF)</h1>
+                                    <input type="hidden" id="rao_bd_id" name="rao_bd_id">
                                     <p id="period_covered" style="text-align: center;"></p>
                                     <div class="details">
                                         <div class="info">
@@ -715,7 +712,7 @@ include "../../sidebar_officials.php";
                                             <label>Province:</label> <input type="text" value="CEBU" disabled />
                                         </div>
                                         <div class="info">
-                                            <label>Fund Source:</label> <input type="text" value="General Fund (Personal Services)"  disabled />
+                                            <label>Fund Source:</label> <input type="text" value="5% BDRRMF"  disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -731,18 +728,14 @@ include "../../sidebar_officials.php";
                                             <th colspan="2" class="stick-head">Reference For Appropriations</th><!-- Date and Ref No -->
                                             <th rowspan="2" class="stick-head">Particulars</th> 
                                             <th rowspan="2" class="stick-head">Totals</th>
-                                            <th colspan="5" class="dynamic-stick-head">Personal Services</th><!-- Dynamic Heads max 5 -->
+                                            <th colspan="5" class="dynamic-stick-head">BDRRMF</th><!-- Dynamic Heads max 5 -->
                                             
                                         </tr>
                                         <tr id="dynamic-heads">
                                             <th class="stick-head">Date</th>
                                             <th class="stick-head">Reference No</th>
-                                            <th class="dynamic-head">Salaries & Wages</th>
-                                            <th class="dynamic-head">Cash Gift P.E.I</th>
-                                            <th class="dynamic-head">Year End Bonus</th>
-                                            <th class="dynamic-head">Mid Year Pay</th>
-                                            <th class="dynamic-head">S.R.I</th>
-                                            <th class="dynamic-head">Other Personnel Benefits</th>
+                                            <th class="dynamic-head">Pre Disaster Programs</th>
+                                            <th class="dynamic-head">Quick Response</th>
                                         </tr>
 
                                     </thead>
@@ -776,19 +769,15 @@ include "../../sidebar_officials.php";
                                             <th colspan="2" class="stick-head">Reference For Obligations</th><!-- Date and Ref No -->
                                             <th rowspan="2" class="stick-head">Particulars</th> 
                                             <th rowspan="2" class="stick-head">Totals</th>
-                                            <th colspan="5" class="dynamic-stick-head">Capital Outlay</th>
+                                            <th colspan="5" class="dynamic-stick-head">BDRRMF</th>
 
                                         </tr>
                                         
                                         <tr id="dynamic-heads">
                                             <th class="stick-head">Date</th>
                                             <th class="stick-head">Reference No</th>
-                                            <th class="dynamic-head">Salaries & Wages</th>
-                                            <th class="dynamic-head">Cash Gift P.E.I</th>
-                                            <th class="dynamic-head">Year End Bonus</th>
-                                            <th class="dynamic-head">Mid Year Pay</th>
-                                            <th class="dynamic-head">S.R.I</th>
-                                            <th class="dynamic-head">Other Personnel Benefits</th>
+                                            <th class="dynamic-head">Pre Disaster Programs</th>
+                                            <th class="dynamic-head">Quick Response</th>
                                         </tr>
                                     </thead>
 
@@ -840,8 +829,11 @@ include "../../sidebar_officials.php";
                                         </div>
                                     </div>
                                 </div>
-                                
-                                </div>
+
+                                <div class="cashbook-actions">
+                                <button id="print-btn">Print</button>
+                            </div>
+
 
                             </div>
                         </div>
