@@ -7,6 +7,7 @@
           <p>
             This six-digit code is for your password verification.<br />
             Enter the code below to confirm and reset your password.
+            <strong></br>NOTE: DO NOT FORGET THIS VERIFICATION CODE</strong>
           </p>
           <div class="code-container">
             <input type="number" class="code" placeholder="0" min="0" max="9" required />

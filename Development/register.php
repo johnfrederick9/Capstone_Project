@@ -168,7 +168,7 @@ $confirmpassword = $_POST["confirmPassword"] ?? '';
                                     $row = $position_result->fetch_assoc();
                                     $existing_positions = $row['position_count'];
 
-                                    if ($barangayposition == 'Barangay Captain' && $existing_positions >= 1) {
+                                    if ($barangayposition == 'Barangay Captain' && $existing_positions >= 2) {
                                         echo "<div class='alert alert-danger'>There can only be one Barangay Captain.</div>";
                                     } elseif ($barangayposition == 'Barangay Secretary' && $existing_positions >= 1) {
                                         echo "<div class='alert alert-danger'>There can only be one Barangay Secretary.</div>";
