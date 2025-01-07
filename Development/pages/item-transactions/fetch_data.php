@@ -88,13 +88,19 @@ while ($row = mysqli_fetch_assoc($query)) {
     $sub_array = array();
     $sub_array[] = $row['transaction_id'];
     $sub_array[] = '<input type="checkbox" class="row-checkbox" value="'.$row['transaction_id'].'">';
+    $sub_array[] = $row['borrower_name'];
     $sub_array[] = $row['borrower_address'];
+    $sub_array[] = $row['borrowed_items'];
     $sub_array[] = $row['borrowed_quantities'];  // Use alias
-    $sub_array[] = $row['reserved_on'];
-    $sub_array[] = $row['date_borrowed'];
-    $sub_array[] = $row['return_date'];
-    $sub_array[] = $row['approved_by'];
-    $sub_array[] = $row['released_by'];
+
+    // Format date_borrowed
+    $formatted_date_borrowed = date("F j, Y", strtotime($row['date_borrowed']));
+    $sub_array[] = $formatted_date_borrowed;
+
+    // Format return_date if available
+    $formatted_return_date = !empty($row['return_date']) ? date("F j, Y", strtotime($row['return_date'])) : 'N/A'; // Default to 'N/A' if empty
+    $sub_array[] = $formatted_return_date;
+
     $sub_array[] = $row['returned_quantities'];
     $sub_array[] = $row['transaction_status'];
     $sub_array[] = '<div class="dropdown">
@@ -115,6 +121,7 @@ while ($row = mysqli_fetch_assoc($query)) {
                 </div>';
     $data[] = $sub_array;
 }
+
 
 // Output response
 $output = array(

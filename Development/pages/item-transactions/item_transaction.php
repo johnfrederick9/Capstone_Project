@@ -128,7 +128,7 @@ $borrowedItems_json = json_encode($borrowedItems);
     color: #fff;
     font-size: 1.5rem;
     font-weight: bold;
-    width: 30px;
+    width: 80px;
     height: 30px;
     color: #fff;
     margin-left: auto;
@@ -136,6 +136,10 @@ $borrowedItems_json = json_encode($borrowedItems);
     justify-content:center;
     align-items: center;
     cursor: pointer;
+}
+
+.hidden-btn{
+    display: none;
 }
 </style>
 <body>
@@ -158,13 +162,12 @@ $borrowedItems_json = json_encode($borrowedItems);
                                     <i class="bx bx-printer"></i>
                                 </button>
                             </th>
+                        <th>Name</th>
                         <th>Address</th>
-                        <th>Quantity</th>
-                        <th>Reserved Date</th>
+                        <th>Items</th>
+                        <th>Quantities</th>
                         <th>Borrowed Date</th>
                         <th>Return Date</th>
-                        <th>Approved By</th>
-                        <th>Released By</th>
                         <th>Return Quantity</th>
                         <th>Transaction Status</th>
                         <th>Buttons</th>
@@ -771,9 +774,6 @@ $borrowedItems_json = json_encode($borrowedItems);
                     // Check if all items are selected
                     return allItems.size === selectedItems.size;
                 }
-
-
-
 
 
                 document.querySelector('#exampleModal .add-update').addEventListener('click', function (event) {
