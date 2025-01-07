@@ -2167,6 +2167,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let apTotalsInitialized = false;
     let obTotalsInitialized = false;
     const modal1 = document.getElementById('exampleModal');
+    let modalFooterEventListenerAdded = false;
     
 
     $('#exampleModal').on('show.bs.modal', function () {
@@ -2466,7 +2467,8 @@ function removeRow(event, type) {
         }
     }
 }
-
+    console.log(modalFooterEventListenerAdded);
+        if (!modalFooterEventListenerAdded) {   
         document.querySelector('#exampleModal').addEventListener('click', function (event) {
         if (event.target.classList.contains('add-row-ap')) {
             event.preventDefault();
@@ -2478,8 +2480,10 @@ function removeRow(event, type) {
             addRow('ob', currentRow);
         }
     });
-
+    modalFooterEventListenerAdded = true; // Prevent reattaching event listener
     }
+}
+   
 
     function resetModal() {
     const apDataRowContainer = document.querySelector('#exampleModal .inp-group-ap-data-row');
@@ -2492,6 +2496,7 @@ function removeRow(event, type) {
     // Reset the totals flags
     apTotalsInitialized = false;
     obTotalsInitialized = false;
+    
 }
 });
 </script>
