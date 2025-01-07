@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2024 at 03:13 AM
+-- Generation Time: Jan 07, 2025 at 10:32 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -271,24 +271,7 @@ CREATE TABLE `tb_document` (
 --
 
 INSERT INTO `tb_document` (`document_id`, `document_name`, `document_date`, `document_info`, `document_type`, `isDisplayed`) VALUES
-(42, 'Capstone Picture', '2024-09-28', 'image for documentationssss', 'images', 1),
-(44, 'asdfa', '0000-00-00', 'asdfasdf', 'dsafsadf', 1),
-(45, 'asdfasdf', '2024-11-05', '12313', '123123', 1),
-(46, 'Capstone Pictured', '2024-11-05', 'dasdf', 'asdfasf', 1),
-(47, 'asdfasdf', '2024-11-05', 'dasdf', 'asdfasf', 0),
-(48, 'asdfasdf', '2024-11-05', 'dasdf', 'asdfasf', 1),
-(49, 'asdfasdfasdf', '2024-11-05', '123ddd', '123', 0),
-(50, 'asdfasdf', '2024-11-05', '123131231', '123123', 0),
-(51, 'asdfasd', '2024-11-05', 'asdfa', 'asdfasf', 0),
-(52, 'asdfasdf', '2024-11-05', 'asdf', 'asdfasf', 1),
-(53, 'dfdf', '2024-11-06', 'ADas', 'asdASD', 1),
-(54, 'adfasdf', '2024-11-06', 'ASDasdASDSA', 'asdASD', 1),
-(55, 'cAPSTONE PROJECT', '2023-12-31', '123', '123', 1),
-(56, 'Dashboard', '2024-11-22', 'asdfasdfas', 'asdfasdf', 1),
-(57, 'Sample', '2023-12-31', 'secret', 'tabang', 1),
-(58, 'Sample2', '2024-12-31', '123', '123', 1),
-(59, 'asdfasdf v', '2024-11-22', 'asdfasf', 'asdfsadfasf', 1),
-(60, 'DDDDD', '2024-11-23', 'dAS', 'AdAD', 1);
+(61, 'Capstone Documentation', '2024-12-05', 'This imges intended for capstone projects', 'image', 1);
 
 -- --------------------------------------------------------
 
@@ -307,33 +290,8 @@ CREATE TABLE `tb_document_files` (
 --
 
 INSERT INTO `tb_document_files` (`id`, `document_id`, `filepath`) VALUES
-(27, 42, 'file_uploads/438171552_827227515482368_602114975853314839_n.jpg'),
-(28, 42, 'file_uploads/442466857_849676080347474_737044034695990163_n.jpg'),
-(31, 44, 'file_uploads/Git.png'),
-(32, 45, 'file_uploads/business capstone project.png'),
-(33, 45, 'file_uploads/business capstone project.png'),
-(34, 46, 'file_uploads/business capstone project.png'),
-(35, 46, 'file_uploads/business capstone project.png'),
-(36, 47, 'file_uploads/business capstone project.png'),
-(37, 47, 'file_uploads/business capstone project.png'),
-(38, 48, 'file_uploads/DOTA.jpg'),
-(39, 48, 'file_uploads/DOTA.jpg'),
-(40, 49, 'file_uploads/metal-windows-10-on-grainy-gray-46597-1920x1080.jpg'),
-(41, 49, 'file_uploads/metal-windows-10-on-grainy-gray-46597-1920x1080.jpg'),
-(42, 50, 'file_uploads/Untitled.png'),
-(43, 50, 'file_uploads/Untitled.png'),
-(44, 51, 'file_uploads/White_Wallpaper.jpg'),
-(45, 51, 'file_uploads/White_Wallpaper.jpg'),
-(46, 52, 'file_uploads/metal-windows-10-on-grainy-gray-46597-1920x1080.jpg'),
-(47, 53, 'file_uploads/business capstone project.png'),
-(48, 54, 'file_uploads/download.jpg'),
-(49, 55, 'file_uploads/DOTA.jpg'),
-(50, 56, 'file_uploads/Untitled.png'),
-(51, 57, 'file_uploads/438171552_827227515482368_602114975853314839_n.jpg'),
-(52, 57, 'file_uploads/442466857_849676080347474_737044034695990163_n.jpg'),
-(53, 58, 'file_uploads/438158309_322098347656499_8012096737473386783_n.jpg'),
-(54, 59, 'file_uploads/62106d4e-4be7-4cd8-a4bb-0b335941c5b7.jpg'),
-(55, 60, '../../file_uploads/DOTA.jpg');
+(56, 61, '../../file_uploads/438171552_827227515482368_602114975853314839_n.jpg'),
+(57, 61, '../../file_uploads/442466857_849676080347474_737044034695990163_n.jpg');
 
 -- --------------------------------------------------------
 
@@ -408,7 +366,9 @@ CREATE TABLE `tb_event` (
 INSERT INTO `tb_event` (`event_id`, `event_name`, `event_location`, `event_type`, `event_start`, `event_end`, `isDisplayed`) VALUES
 (63, 'liga', 'liga', 'liga', '2024-11-25', '2024-11-26', 0),
 (64, 'Ligo', 'asdfa', 'asdf', '2024-11-30', '2024-12-01', 0),
-(65, '123', '123', '123', '2024-12-03', '2024-12-05', 0);
+(65, '123', '123', '123', '2024-12-03', '2024-12-05', 0),
+(66, 'Liga', 'Mantalongon', 'Sports', '2024-12-09', '2024-12-10', 0),
+(67, 'asdfas', 'asdf', 'asdf', '2024-12-30', '2024-12-31', 0);
 
 -- --------------------------------------------------------
 
@@ -455,10 +415,11 @@ CREATE TABLE `tb_household` (
 --
 
 INSERT INTO `tb_household` (`household_name`, `household_head`, `household_address`, `household_contact`, `id`, `household_id`, `isDisplayed`) VALUES
-('asdfasdf', 'asdfffdasfadf', 'sadfasdf', '+63 968 651 3790', 2, 122, 1),
+('Family', 'John Frederick Gelay', 'Sitio Lapa', '+63 968 651 3790', 2, 122, 1),
 ('', '', '', NULL, 6, 110920, 1),
 ('adf', 'adf', 'asdf', '+63 968 651 3790', 7, 112354, 1),
-('', '', '', NULL, 8, 12354, 0);
+('', '', '', NULL, 8, 12354, 0),
+('', '', '', NULL, 9, 12548, 1);
 
 -- --------------------------------------------------------
 
@@ -495,7 +456,9 @@ INSERT INTO `tb_indigency` (`indigency_id`, `indigency_cname`, `indigency_fname`
 (19, 'asdf', 'asdfasdf', 'asdfas', '2024-12-31', 0, 0, 0),
 (20, 'asdfasd', 'fasdfasdfas', 'fdsfas', '2024-11-06', 0, 0, 0),
 (21, 'gelay', 'asdfasf', 'hrlsu', '2024-12-31', 0, 0, 0),
-(22, 'John Frederick Gelay', 'Fernando A. Gelay', 'Maria D. Gelay', '2024-12-31', 1, 70, 30);
+(22, 'John Frederick Gelay', 'Fernando A. Gelay', 'Maria D. Gelay', '2024-12-31', 1, 70, 30),
+(23, 'John Frederick D. Gelay', 'Fernando A. Gelay', 'Maria D. Gelay', '2025-01-07', 0, 123, 123),
+(24, 'John Frederick D. Gelay', 'Fernando A. Gelay', 'Maria D. Gelay', '2025-01-07', 1, 123, 123);
 
 -- --------------------------------------------------------
 
@@ -647,37 +610,8 @@ CREATE TABLE `tb_project` (
 --
 
 INSERT INTO `tb_project` (`project_id`, `project_name`, `project_start`, `project_end`, `project_budget`, `project_source`, `project_status`, `project_description`, `project_location`, `project_managers`, `project_stakeholders`, `isDisplayed`) VALUES
-(3, 'asdfaf', '2024-04-01', '2024-01-01', 112313, '12313', 'Ongoing', '12313', '1231313', '12313', '12313', 0),
-(4, 'asdfasdf', '2024-12-31', '2024-12-31', 123123, '12321', 'New', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 0),
-(5, 'asdfasdf', '2024-12-31', '2024-12-31', 123123, '12321', 'Ongoing', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 0),
-(6, 'asdfasdf', '2024-12-31', '2024-12-31', 123123, '12321', 'New', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 0),
-(7, 'asdfasdff', '2024-12-31', '2024-12-31', 123123, '12321', 'Ongoing', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 0),
-(8, 'asdfasdf', '2024-12-31', '2024-12-31', 123123, '12321', 'New', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 0),
-(9, 'asdfasdfddd', '2024-12-31', '2024-12-31', 123123, '12321', 'Completed', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 1),
-(10, 'asdfasdf', '2024-12-31', '2024-12-31', 123123, '12321', 'New', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 1),
-(11, 'asdfasdf', '2024-12-31', '2024-12-31', 123123, '12321', 'New', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 1),
-(12, 'asdfasdf', '2024-12-31', '2024-12-31', 123123, '12321', 'New', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 1),
-(13, 'asdfasdf', '2024-12-31', '2024-12-31', 123123, '12321', 'New', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 1),
-(14, '', '2024-11-20', '2023-12-31', 123123, 'asdfasdf', 'Ongoing', 'asdfasdf', 'asdfasdf', 'asdfasdf', 'asdfasdf', 0),
-(15, '', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
-(16, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
-(17, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
-(18, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
-(19, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
-(20, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
-(21, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
-(22, 'asdfasdf saasdfsf', '2024-12-31', '2024-12-04', -2, 'asdfasd', 'New', 'asdfasf', 'asdfasdf', 'asdfas', 'fasdfasdf', 1),
-(23, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
-(24, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
-(25, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
-(26, 'secret', '0011-01-01', '0112-01-01', 0, 'asdfasdfasdf', 'New', 'eeeeeeeeeee', 'feeeeeeeeeeeeeee', 'asdfasdfsa', 'eeeeeeeeeeeeee', 0),
-(27, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
-(28, 'asdfasdfd', '2024-11-17', '2024-12-30', 2, 'fasfsf', 'New', 'sfsfsf', 'asdfsadfasfs', 'fsfsf', 'sfsfsf', 0),
-(29, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 1),
-(30, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 1),
-(31, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 1),
-(32, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 1),
-(33, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 1);
+(34, 'asdfasdf', '2025-01-07', '2025-01-08', 123123, 'asdfasdf', 'New', 'asdfsadf', 'asdfasdf', 'asdfasf', 'sadfasdf', 0),
+(35, 'asdfasdf', '2025-01-07', '2025-01-10', 123123, 'DFASDFA', '', 'ASDFASF', 'ASDFASD', 'FASDFADS', 'FASDFASDF', 1);
 
 -- --------------------------------------------------------
 
@@ -2844,8 +2778,13 @@ CREATE TABLE `tb_request` (
 --
 
 INSERT INTO `tb_request` (`request_id`, `requester_name`, `request_type`, `request_description`, `request_date`, `request_status`, `isDisplayed`) VALUES
-(12, 'asd', 'asdfaddddd', 'asdf', '2024-10-06 21:57:00', 'Completed', 1),
-(13, 'asdff', 'asdfsdf', 'asdfasdfasf', '2024-11-06 23:45:00', 'dfasdf', 0);
+(12, 'asd', 'asdfadddddasdfasdfa', 'asdf', '2024-10-06 21:57:00', 'Completed', 1),
+(13, 'asdff', 'asdfsdf', 'asdfasdfasf', '2024-11-06 23:45:00', 'dfasdf', 0),
+(14, 'asdfasdf', 'asdfasdf', 'asdfasf', '2024-12-31 12:46:00', 'New', 1),
+(15, 'asdf', 'asdfasd', 'fsadfsdaf', '2024-12-31 12:49:00', 'New', 1),
+(16, 'John Frederick', 'asdfa', 'asdfasdf', '2024-12-31 13:27:00', 'New', 1),
+(17, 'John Frederick D. Gelay', 'asdfasdf', 'asdfasdf', '2024-12-31 13:31:00', 'New', 1),
+(18, 'Joshua A. Belandres', 'asdfasdf', 'asfasdfasf', '2024-12-31 13:31:00', 'Completed', 1);
 
 -- --------------------------------------------------------
 
@@ -2904,6 +2843,8 @@ CREATE TABLE `tb_resident` (
   `resident_SY` varchar(225) NOT NULL,
   `resident_height` double DEFAULT NULL,
   `resident_weight` double DEFAULT NULL,
+  `resident_BMI` decimal(5,2) DEFAULT NULL,
+  `resident_BMIstatus` varchar(20) DEFAULT NULL,
   `resident_heightstat` varchar(225) NOT NULL,
   `resident_weightstat` varchar(225) NOT NULL,
   `resident_BMIstat` varchar(225) NOT NULL,
@@ -2915,13 +2856,14 @@ CREATE TABLE `tb_resident` (
 -- Dumping data for table `tb_resident`
 --
 
-INSERT INTO `tb_resident` (`resident_id`, `resident_firstname`, `resident_middlename`, `resident_lastname`, `resident_sex`, `resident_suffixes`, `resident_address`, `resident_educationalattainment`, `resident_birthdate`, `resident_age`, `resident_status`, `resident_householdrole`, `resident_maidenname`, `resident_contact`, `resident_occupation`, `resident_religion`, `resident_indigenous`, `isDisplayed`, `resident_pension`, `resident_beneficiaries`, `resident_lactating`, `resident_pregnant`, `resident_PWD`, `resident_SY`, `resident_height`, `resident_weight`, `resident_heightstat`, `resident_weightstat`, `resident_BMIstat`, `resident_medical`, `household_id`) VALUES
-(217, 'gsdfgdfg', 'fdsgsfdgd', 'sdfgsdf', 'Male', ' ', 'Sitio Sto. Nino', 'Elementary', '2001-11-09', 23, 'Single', 'daughter', 'gsdfgds', '', 'asdfasdf', 'asdfasdf', '0', 1, 'asdfasfd', 'asdfasdf', 'fasfa', 'sdfasdfasd', 'fdsafads', 'fasdfasf', 0, 0, 'sdfasdf', 'asdfas', 'Under Weight', 'asdfas', 122),
-(218, 'asfasdf', 'dasfdsafas', 'asdfasdf', 'Male', 'Jr', 'Sitio Sto. Nino', 'High School, Undergrad', '1984-11-09', 40, 'Single', '12', 'sadfasdf', '', 'asdfasd', 'asdfasdf', '0', 1, 'asdfasfd', 'asdfasdf', '', '', '', '', NULL, NULL, '', '', '', '', 122),
-(222, 'asdfasdf', 'dsafsaf', 'asdfasdf', 'Male', ' ', 'Sitio Suwa', 'Vocational', '2001-11-09', 23, 'Single', 'asdfasf', 'sdfasfadsf', '', 'asdfasdf', 'asdfasdf', 'asdfasf', 1, 'sdfasfa', 'sdfasf', '', '', '', '', NULL, NULL, '', '', '', '', 110920),
-(223, 'asdfadsf', 'asdfsafsaf', 'asdfasfasdfsaffd', 'Male', ' ', 'Sitio Sto. Nino', 'Bachelor Degree', '1960-11-09', 64, 'Single', 'son', 'asdfasf', '', 'asdfasd', 'asdfasdf', 'asdfasdfffasd', 1, 'asdfasfd', 'asdfas', '', '', '', '', NULL, NULL, '', '', '', '', 112354),
-(224, 'asdfadsf', 'asdfsafsaf', 'xxxxxc', 'Male', ' ', 'Sitio Sto. Nino', 'High School, Graduate', '2001-11-09', 23, 'Single', 'son', 'asdfasf', '', 'asdfasd', 'asdfasdf', 'asdfasdfffasd', 1, 'asdfasfd', 'asdfas', '', '', '', '', NULL, NULL, '', '', '', '', 112354),
-(293, 'dfasfas', 'fasfasf', 'asdfas', 'Male', ' ', 'Sitio Suwa', 'Elementary', '2001-11-09', 23, 'Single', 'asfsaf', 'adsfasdf', '', 'asdfa', 'asdfa', 'asfasf', 0, 'asdfasf', 'asfasf', '', '', '', '', NULL, NULL, '', '', '', '', 12354);
+INSERT INTO `tb_resident` (`resident_id`, `resident_firstname`, `resident_middlename`, `resident_lastname`, `resident_sex`, `resident_suffixes`, `resident_address`, `resident_educationalattainment`, `resident_birthdate`, `resident_age`, `resident_status`, `resident_householdrole`, `resident_maidenname`, `resident_contact`, `resident_occupation`, `resident_religion`, `resident_indigenous`, `isDisplayed`, `resident_pension`, `resident_beneficiaries`, `resident_lactating`, `resident_pregnant`, `resident_PWD`, `resident_SY`, `resident_height`, `resident_weight`, `resident_BMI`, `resident_BMIstatus`, `resident_heightstat`, `resident_weightstat`, `resident_BMIstat`, `resident_medical`, `household_id`) VALUES
+(217, 'John Frederick', 'Domecillo', 'Gelay', 'Male', ' ', 'Sitio Sto. Nino', 'Elementary', '2001-11-09', 23, 'Single', 'Son', 'gsdfgds', '', 'asdfasdf', 'asdfasdf', '0', 0, 'asdfasfd', 'asdfasdf', 'Yes', 'No', 'Yes', 'fasdfasf', 159, 41, 16.22, 'Underweight', '', '', '', 'No', 122),
+(218, 'Joshua', 'A', 'Belandres', 'Male', ' ', 'Sitio Sto. Nino', 'High School, Undergrad', '2002-12-24', 22, 'Single', 'Son', 'sadfasdf', '', 'asdfasd', 'asdfasdf', '0', 1, 'asdfasfd', 'asdfasdf', 'Yes', 'Yes', 'No', 'asdasd', 180, 65, 20.06, 'Normal', '', '', '', 'No', 122),
+(222, 'Angebon', 'C.', 'Reyes', 'Male', ' ', 'Sitio Sto. Nino', 'Vocational', '2002-11-01', 22, 'Single', 'daughter', 'sdfasfadsf', '', 'asdfasdf', 'asdfasdf', 'asdfasf', 1, 'sdfasfa', 'sdfasf', 'asd', 'asd', 'asd', 'asd', 180, 65, 20.06, 'Normal', 'asd', 'asd', '', 'No', 110920),
+(223, 'Zenaida', 'C', 'Belandres', 'Male', ' ', 'Sitio Sto. Nino', 'Bachelor Degree', '2000-12-29', 24, 'Single', 'daughter', 'asdfasf', '', 'asdfasd', 'asdfasdf', 'asdfasdfffasd', 1, 'asdfasfd', 'asdfas', 'asdfsadf', 'asdfsadf', 'sadfasdf', 'asdfsadf', 159, 50, 19.78, 'Normal', 'asdfasdfas', 'sadfsadf', '', 'No', 112354),
+(224, 'Clarissa', 'Amar', 'Herbias', 'Male', ' ', 'Sitio Sto. Nino', 'High School, Graduate', '2002-11-10', 22, 'Single', 'daughter', 'asdfasf', '', 'asdfasd', 'asdfasdf', 'asdfasdfffasd', 0, 'asdfasfd', 'asdfas', '', '', '', '', NULL, NULL, NULL, NULL, '', '', '', '', 112354),
+(293, 'dfasfas', 'fasfasf', 'asdfas', 'Male', ' ', 'Sitio Suwa', 'Elementary', '2001-11-09', 23, 'Single', 'asfsaf', 'adsfasdf', '', 'asdfa', 'asdfa', 'asfasf', 0, 'asdfasf', 'asfasf', '', '', '', '', NULL, NULL, NULL, NULL, '', '', '', '', 12354),
+(397, 'John Frederick', 'Domecillo', 'Gelay', 'Male', ' ', 'Sitio Mag-Alambac', 'Master Degree', '2001-11-09', 23, 'Single', 'SON', 'Domecillo', '', 'Student', 'Roman Catholick', 'N/A', 1, 'N/A', 'N/A', '', '', '', '', NULL, NULL, NULL, NULL, '', '', '', '', 12548);
 
 --
 -- Triggers `tb_resident`
@@ -3007,10 +2949,12 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`user_id`, `lastname`, `firstname`, `middlename`, `sex`, `birthdate`, `barangayposition`, `username`, `password`, `verification_code`, `theme`, `suffix`, `profile_picture`, `user_age`, `isApproved`, `disapprovalReason`, `approval_status`) VALUES
-(93, 'Nepomuceno', 'Josephine', 'Belarma', 'Female', '2001-11-09', 'Barangay Captain', 'john-bc', '$2y$10$xqitP33W6cx7wpxiiXaN1OBxGqgIfAX2L1StRbss1xcuuzbqYnXMq', '110921', 'dark', ' ', 'profile_default.png', NULL, 1, NULL, 'Approved'),
-(101, 'gelay', 'john', 'domecillo', 'Male', '2001-11-09', 'Barangay Secretary', 'john-bs', '$2y$10$OYxztQxQTDVNnkW3Y1hFsu1/0eu.wt.jfuVbeWrSB5Ytxgv.nxL2.', '111111', '\'light\'', ' ', 'profile_default.png', NULL, 1, NULL, 'Pending'),
-(102, 'gelay', 'john', 'frederick', 'Male', '2004-11-09', 'Barangay Treasurer', 'john-br', '$2y$10$fLtu3SJp/X2gewBpVTf7c.53BoqKWEueBXe..4BZD15k5FxLoNceq', NULL, '\'light\'', 'Jr.', 'profile_default.png', NULL, 1, NULL, 'Pending'),
-(103, 'gelay', 'john clarence', 'herbias', 'Male', '2001-11-11', 'Barangay Personnel', 'john-bp', '$2y$10$9xRYA192PNJk9xvtDFZbzuaULLNos.bRFxojGCI1tVsXs7.baQ7vG', '110901', '\'light\'', ' ', 'profile_default.png', NULL, 1, NULL, 'Pending');
+(93, 'Nepomuceno', 'Josephine', 'Belarma', 'Female', '2001-11-09', 'Barangay Captain', 'john-bc', '$2y$10$B5FTS/BrIq5BkjaZAZxbweOzAAFvsYubn9aZsb7fxEHM/Cw1/NOSy', '110921', 'dark', '', 'profile_default.png', NULL, 1, NULL, 'Approved'),
+(101, 'gelay', 'john', 'domecillo', 'Male', '2001-11-09', 'Barangay Secretary', 'john-bs', '$2y$10$dG3S/Z8JjqA3kURsNjJFye4opwlv56tsP/wyO/VfBv7UkyuQnbMu6', '110905', 'dark', ' ', 'profile_default.png', NULL, 1, NULL, 'Pending'),
+(102, 'gelay', 'john', 'frederick', 'Male', '2004-11-09', 'Barangay Treasurer', 'john-br', '$2y$10$fLtu3SJp/X2gewBpVTf7c.53BoqKWEueBXe..4BZD15k5FxLoNceq', '110902', '\'light\'', 'Jr.', 'profile_default.png', NULL, 1, NULL, 'Pending'),
+(103, 'gelay', 'john clarence', 'herbias', 'Male', '2001-11-11', 'Barangay Personnel', 'john-bp', '$2y$10$DZ.otRm6zjjktKHmvTWamOW2LVUYLQGZXfdSMv05HQvbZOx79GuYa', '110904', '\'light\'', ' ', 'profile_default.png', NULL, 1, NULL, 'Pending'),
+(104, 'Gelay', 'John Frederick', 'Domecillo', 'Male', '2001-11-09', 'Barangay Health Worker', 'john-bhw', '$2y$10$HopigO93ECpHUa8rdj6DDeGa..v2zbqob8jQrTxiy29KUJe1g6vqq', '110903', 'dark', ' ', 'profile_default.png', NULL, 1, NULL, 'Pending'),
+(105, 'gelay', 'john Frederick', 'herbias', 'Male', '2001-11-09', 'Barangay Health Worker', 'john-bp1', '$2y$10$p4ga9k54zITd/zTA1Kt5/ODeJUQn.ptcmz2kHHciCqykQk5IDAiky', '110901', 'light', ' ', 'profile_default.png', NULL, 1, NULL, 'Pending');
 
 --
 -- Indexes for dumped tables
@@ -3670,13 +3614,13 @@ ALTER TABLE `tb_certificate`
 -- AUTO_INCREMENT for table `tb_document`
 --
 ALTER TABLE `tb_document`
-  MODIFY `document_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `document_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `tb_document_files`
 --
 ALTER TABLE `tb_document_files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `tb_employee`
@@ -3688,7 +3632,7 @@ ALTER TABLE `tb_employee`
 -- AUTO_INCREMENT for table `tb_event`
 --
 ALTER TABLE `tb_event`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `tb_financial`
@@ -3700,13 +3644,13 @@ ALTER TABLE `tb_financial`
 -- AUTO_INCREMENT for table `tb_household`
 --
 ALTER TABLE `tb_household`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tb_indigency`
 --
 ALTER TABLE `tb_indigency`
-  MODIFY `indigency_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `indigency_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `tb_indigency_bir`
@@ -3736,7 +3680,7 @@ ALTER TABLE `tb_permit`
 -- AUTO_INCREMENT for table `tb_project`
 --
 ALTER TABLE `tb_project`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `tb_rao`
@@ -4144,7 +4088,7 @@ ALTER TABLE `tb_rao_sk_ob_totals`
 -- AUTO_INCREMENT for table `tb_request`
 --
 ALTER TABLE `tb_request`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `tb_residency`
@@ -4156,13 +4100,13 @@ ALTER TABLE `tb_residency`
 -- AUTO_INCREMENT for table `tb_resident`
 --
 ALTER TABLE `tb_resident`
-  MODIFY `resident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=343;
+  MODIFY `resident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=398;
 
 --
 -- AUTO_INCREMENT for table `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- Constraints for dumped tables
