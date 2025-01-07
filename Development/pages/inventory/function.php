@@ -23,7 +23,7 @@
                     },
                     {
                     "bSortable": false,
-                    "aTargets": [0,1,2,3,4,5,6,7,8,9,10]
+                    "aTargets": []
                 }],
                 // Event that triggers when the table is redrawn (pagination or search)
                 "drawCallback": function() {
@@ -243,7 +243,7 @@
                                 var checkbox = '<td><input type="checkbox" class="row-checkbox" value="'+item_id+'"></td>';
                                 var button = '<td><div class="dropdown"><button class="action-btn" onclick="toggleDropdown(this)">ACTIONS <i class="bx bx-chevron-down"></i></button><div class="dropdown-menu"><a href="javascript:void(0);" data-id="${employee_id}" class="dropdown-item update-btn editbtn"><i class="bx bx-edit"></i></a><a href="javascript:void(0);" data-id="${employee_id}" class="dropdown-item delete-btn deleteBtn"><i class="bx bx-trash"></i></a></div></div></td>';
                                 var row = table.row("[id='" + trid + "']");
-                                row.row("[id='" + trid + "']").data([item_id, checkbox, item_name, item_serialNo, item_custodian, item_count, item_price, item_amount, item_year, lendable_count, available_count , button]);
+                                row.row("[id='" + trid + "']").data([item_id, checkbox, item_name, item_custodian, item_count, item_price,item_year,item_status, lendable_count, available_count , button]);
                                 $('#exampleModal').modal('hide');
                                 showAlert("Item update successfully.", "alert-success");
                             } else {
@@ -337,7 +337,7 @@
         
         if (!item_id) {
             console.error("item ID is not defined.");
-            alert("item ID is missing. Please try again.");
+            showAlert("item ID is missing. Please try again.","alert-danger");
             return;
         }
 
@@ -364,12 +364,12 @@
                     $('#view_lendable').text(json.lendable_count || "N/A");
                 } catch (e) {
                     console.error("JSON parsing error:", e);
-                    alert("An error occurred while processing the data.");
+                    showAlert("An error occurred while processing the data.","alert-danger");
                 }
             },
             error: function(xhr, status, error) {
                 console.error("AJAX error:", error);
-                alert("Failed to fetch details: " + error);
+                showAlert("Failed to fetch details: " + error,"alert-danger");
             }
         });
     });

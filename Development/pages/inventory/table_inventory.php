@@ -25,14 +25,11 @@ require '../../database.php';
                                     <i class="bx bx-printer"></i>
                                 </button>
                             </th>
-                        
                         <th>Name</th>
-                        <th>Serial No:</th>
-                        <th>Property Custodian</th>
                         <th>Quantity</th>
-                        <th>Price</th>
                         <th>Amount</th>
                         <th>Year Acquired</th>
+                        <th>Item Status</th>
                         <th>Lendable Quantity</th>
                         <th>Available Quantity</th>
                         <th>Buttons</th>
