@@ -4,7 +4,7 @@ include('../../connection.php');
 $document_name = mysqli_real_escape_string($con, $_POST['document_name']);
 
 // Check for duplicate document
-$check_sql = "SELECT * FROM `tb_document` WHERE `document_name` = '$document_name'";
+$check_sql = "SELECT * FROM `tb_document` WHERE `document_name` = '$document_name' AND `isDisplayed` = 1";
 $check_query = mysqli_query($con, $check_sql);
 
 if (mysqli_num_rows($check_query) > 0) {

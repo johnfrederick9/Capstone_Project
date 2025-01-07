@@ -137,107 +137,134 @@ $(document).ready(function() {
         }
     });
     $(document).on('submit', '#addUser', function(e) {
-        e.preventDefault();
-        var project_name = $('#project_name').val();
-        var project_start = $('#project_start').val();
-        var project_end = $('#project_end').val();
-        var project_budget = $('#project_budget').val();
-        var project_source = $('#project_source').val();
-        var project_location = $('#project_location').val();
-        var project_managers = $('#project_managers').val();
-        var project_stakeholders = $('#project_stakeholders').val();
-        var project_status = $('#project_status').val();
-        var project_description = $('#project_description').val();
-        if (project_name != '' && project_start != '' && project_end != '' && project_budget != '' && project_source != '' && project_location != '' && project_managers != '' && project_stakeholders != '' && project_status != '' && project_description != '') {
-            $.ajax({
-                url: "add.php",
-                type: "post",
-                data: {
-                    project_name: project_name,
-                    project_start: project_start,
-                    project_end: project_end,
-                    project_budget: project_budget,
-                    project_source: project_source,
-                    project_location: project_location,
-                    project_managers: project_managers,
-                    project_stakeholders: project_stakeholders,
-                    project_status: project_status,
-                    project_description: project_description,
-                },
-                success: function(data) {
-                    var json = JSON.parse(data);
-                    var status = json.status;
-                    if (status === 'duplicate') {
+    e.preventDefault();
+    var project_name = $('#project_name').val();
+    var project_start = $('#project_start').val();
+    var project_end = $('#project_end').val();
+    var project_budget = $('#project_budget').val();
+    var project_source = $('#project_source').val();
+    var project_location = $('#project_location').val();
+    var project_managers = $('#project_managers').val();
+    var project_stakeholders = $('#project_stakeholders').val();
+    var project_status = $('#project_status').val();
+    var project_description = $('#project_description').val();
+
+    // Check if all fields are filled
+    if (project_name != '' && project_start != '' && project_end != '' && project_budget != '' &&
+        project_source != '' && project_location != '' && project_managers != '' &&
+        project_stakeholders != '' && project_status != '' && project_description != '') {
+
+        // Check if project_end is after project_start
+        if (new Date(project_end) <= new Date(project_start)) {
+            showAlert("Project End Date must be after Project Start Date.", "alert-danger");
+            return;
+        }
+
+        // AJAX Call
+        $.ajax({
+            url: "add.php",
+            type: "post",
+            data: {
+                project_name: project_name,
+                project_start: project_start,
+                project_end: project_end,
+                project_budget: project_budget,
+                project_source: project_source,
+                project_location: project_location,
+                project_managers: project_managers,
+                project_stakeholders: project_stakeholders,
+                project_status: project_status,
+                project_description: project_description,
+            },
+            success: function(data) {
+                var json = JSON.parse(data);
+                var status = json.status;
+
+                if (status === 'duplicate') {
                     showAlert("Project with the same name already exists.", "alert-danger");
-                    } else if (status == 'true') {
-                        $('#example').DataTable().draw();
-                        $('#addUserModal').modal('hide');
-                        showAlert("Project added successfully.", "alert-success");
-                        $('#addUser')[0].reset();  // Clear the form fields
+                } else if (status == 'true') {
+                    $('#example').DataTable().draw();
+                    $('#addUserModal').modal('hide');
+                    showAlert("Project added successfully.", "alert-success");
+                    $('#addUser')[0].reset();  // Clear the form fields
                 } else {
                     showAlert("Failed to add project.", "alert-danger");
                 }
+            },
+            error: function() {
+                showAlert("An error occurred while adding the project.", "alert-danger");
             }
         });
     } else {
         showAlert("Fill all the required fields", "alert-danger");
     }
-    });
+});
 
-    $(document).on('submit', '#updateUser', function(e) {
-        e.preventDefault();
-        //var tr = $(this).closest('tr');
-        var project_name = $('#nameField').val();
-        var project_start = $('#startField').val();
-        var project_end = $('#endField').val();
-        var project_budget = $('#budgetField').val();
-        var project_source = $('#sourceField').val();
-        var project_location = $('#locationField').val();
-        var project_managers = $('#managersField').val();
-        var project_stakeholders = $('#stakeholdersField').val();
-        var project_status = $('#statusField').val();
-        var project_description = $('#descriptionField').val();
-        var trid = $('#trid').val();
-        var project_id = $('#project_id').val();
-        if (project_name != '' && project_start != '' && project_end != '' && project_budget != '' && project_source != '' && project_location != '' && project_managers != '' && project_stakeholders != '' && project_status != '' && project_description != '') {
-            $.ajax({
-                url: "update.php",
-                type: "post",
-                data: {
-                    project_name: project_name,
-                    project_start: project_start,
-                    project_end: project_end,
-                    project_budget: project_budget,
-                    project_source: project_source,
-                    project_location: project_location,
-                    project_managers: project_managers,
-                    project_stakeholders: project_stakeholders,
-                    project_status: project_status,
-                    project_description: project_description,
-                    project_id: project_id
-                },
-                success: function(data) {
-                        var json = JSON.parse(data);
-                        var status = json.status;
+$(document).on('submit', '#updateUser', function(e) {
+    e.preventDefault();
+    var project_name = $('#nameField').val();
+    var project_start = $('#startField').val();
+    var project_end = $('#endField').val();
+    var project_budget = $('#budgetField').val();
+    var project_source = $('#sourceField').val();
+    var project_location = $('#locationField').val();
+    var project_managers = $('#managersField').val();
+    var project_stakeholders = $('#stakeholdersField').val();
+    var project_status = $('#statusField').val();
+    var project_description = $('#descriptionField').val();
+    var project_id = $('#project_id').val();
 
-                        if (status === 'duplicate') {
-                            showAlert("Project with the same name already exists.", "alert-danger");
-                        } else if (status === 'true') {
-                            $('#example').DataTable().draw();
-                            $('#exampleModal').modal('hide');
-                            showAlert("Project update successfully.", "alert-success");
-                        } else {
-                            showAlert("Failed to Update project.", "alert-danger");
-                        }
-                    },
-                    error: function() {
-                        showAlert("Error updating record.", "alert-danger");
-                    }
-                });
+    // Check if all fields are filled
+    if (project_name != '' && project_start != '' && project_end != '' && project_budget != '' &&
+        project_source != '' && project_location != '' && project_managers != '' &&
+        project_stakeholders != '' && project_status != '' && project_description != '') {
+
+        // Check if project_end is after project_start
+        if (new Date(project_end) <= new Date(project_start)) {
+            showAlert("Project End Date must be after Project Start Date.", "alert-danger");
+            return;
+        }
+
+        // AJAX Call
+        $.ajax({
+            url: "update.php",
+            type: "post",
+            data: {
+                project_name: project_name,
+                project_start: project_start,
+                project_end: project_end,
+                project_budget: project_budget,
+                project_source: project_source,
+                project_location: project_location,
+                project_managers: project_managers,
+                project_stakeholders: project_stakeholders,
+                project_status: project_status,
+                project_description: project_description,
+                project_id: project_id
+            },
+            success: function(data) {
+                var json = JSON.parse(data);
+                var status = json.status;
+
+                if (status === 'duplicate') {
+                    showAlert("Project with the same name already exists.", "alert-danger");
+                } else if (status === 'true') {
+                    $('#example').DataTable().draw();
+                    $('#exampleModal').modal('hide');
+                    showAlert("Project updated successfully.", "alert-success");
+                } else {
+                    showAlert("Failed to update project.", "alert-danger");
+                }
+            },
+            error: function() {
+                showAlert("Error updating record.", "alert-danger");
+            }
+        });
     } else {
         showAlert("All fields are required.", "alert-danger");
     }
 });
+
 $(document).on('click', '.deleteBtn', function(event) {
     event.preventDefault();
     var project_id = $(this).data('id'); // Get project ID from data attribute

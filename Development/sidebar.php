@@ -82,7 +82,7 @@ if (isset($conn) && $conn) {
           <li class="nav-link">
             <a href="../../pages/document/table_document.php" title="Document">
             <i class='bx bxs-folder icon'></i>
-              <span class="text nav-text">Document Library</span>
+              <span class="text nav-text">Documentation Library</span>
             </a>
           </li>
 
