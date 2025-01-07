@@ -7,6 +7,9 @@ $treasurer_name = mysqli_real_escape_string($con, $_POST["treasurer_name"] ?? ''
 $clt_init_balance = mysqli_real_escape_string($con, $_POST["clt_init_balance"] ?? '');
 $cb_init_balance = mysqli_real_escape_string($con, $_POST["cb_init_balance"] ?? '');
 
+$clt_suggested_balance = mysqli_real_escape_string($con, $_POST["clt_suggested_balance"] ?? '');
+$cb_suggested_balance = mysqli_real_escape_string($con, $_POST["cb_suggested_balance"] ?? '');
+
 // $add_counter= is_array($_POST["add_counter"] ?? null) ? $_POST["add_counter"] : [];
 // $date_data = is_array($_POST["date_data"] ?? null) ? $_POST["date_data"] : [];
 // $particulars_1 = is_array($_POST["particulars_1"] ?? null) ? $_POST["particulars_1"] : [];
@@ -41,7 +44,119 @@ $pcf_payments = json_decode($_POST['pcf_payments_data'] ?? '[]', true);
 
 mysqli_begin_transaction($con);
 try {
+
+    $currentDate = date('Y-m');
+    $monthYear = date('Y-m', strtotime($period_covered));
+
+     // Check if the passed date is in the future
+     if ($monthYear > $currentDate) {
+        $response = [
+            'status' => 'false',
+            'error' => 'The selected date is yet to come. Please choose a valid date.'
+        ];
+        echo json_encode($response);
+        exit;
+    }
     
+// Get the previous month in "YYYY-MM-DD" format (first day of the previous month)
+$previous_month = date("Y-m-01", strtotime("-1 month", strtotime($period_covered)));
+
+// Prepare the SQL query
+$sql_fetch_previous = "SELECT isDefaultClt, isDefaultCb 
+                       FROM tb_cashbook_monthly 
+                       WHERE date_data = ? AND isDisplayed = 1 
+                       LIMIT 1";
+$stmt_fetch_previous = mysqli_prepare($con, $sql_fetch_previous);
+
+if ($stmt_fetch_previous) {
+    mysqli_stmt_bind_param($stmt_fetch_previous, "s", $previous_month);
+
+    if (mysqli_stmt_execute($stmt_fetch_previous)) {
+        mysqli_stmt_bind_result($stmt_fetch_previous, $prev_isDefaultClt, $prev_isDefaultCb);
+
+        if (mysqli_stmt_fetch($stmt_fetch_previous)) {
+            $prev_isDefaultClt = (int)$prev_isDefaultClt;
+            $prev_isDefaultCb = (int)$prev_isDefaultCb;
+
+            // Handle isDefaultClt logic
+            if ($clt_init_balance == $clt_suggested_balance) {
+                if ($prev_isDefaultClt === 1) {
+                    $isDefaultClt = 1;
+                } else if ($prev_isDefaultClt === 0) {
+                    $isDefaultClt = 0;
+                } else {
+                    $isDefaultClt = 0; // Fallback for unexpected values
+                }
+            } else {
+                $isDefaultClt = 0;
+            }
+
+            // Handle isDefaultCb logic
+            if ($cb_init_balance == $cb_suggested_balance) {
+                if ($prev_isDefaultCb === 1) {
+                    $isDefaultCb = 1;
+                } else if ($prev_isDefaultCb === 0) {
+                    $isDefaultCb = 0;
+                } else {
+                    $isDefaultCb = 0; // Fallback for unexpected values
+                }
+            } else {
+                $isDefaultCb = 0;
+            }
+        } else {
+            // Handle no previous record
+            $isDefaultClt = ($clt_init_balance == $clt_suggested_balance) ? 1 : 0;
+            $isDefaultCb = ($cb_init_balance == $cb_suggested_balance) ? 1 : 0;
+        }
+    } else {
+        // Log query execution failure
+        error_log("Query execution failed: " . mysqli_error($con));
+        $isDefaultClt = 0;
+        $isDefaultCb = 0;
+    }
+
+    mysqli_stmt_close($stmt_fetch_previous);
+} else {
+    // Log statement preparation failure
+    error_log("Failed to prepare statement: " . mysqli_error($con));
+    $isDefaultClt = 0;
+    $isDefaultCb = 0;
+}
+
+
+    // $previous_month = date("Y-m", strtotime("-1 month", strtotime($period_covered)));
+    // //Check if the previous month balances is default or not
+    // $sql_fetch_previous = "SELECT isDefaultClt, isDefaultCb FROM tb_cashbook_monthly WHERE date_data = ? AND isDisplayed = 1 LIMIT 1";
+    // $stmt_fetch_previous = mysqli_prepare($con, $sql_fetch_previous);
+    // mysqli_stmt_bind_param($stmt_fetch_previous, "s", $previous_month);
+    // mysqli_stmt_execute($stmt_fetch_previous);
+    // mysqli_stmt_bind_result($stmt_fetch_previous, $prev_isDefaultClt, $prev_isDefaultCb);
+    // mysqli_stmt_fetch($stmt_fetch_previous);
+    // mysqli_stmt_close($stmt_fetch_previous);
+    
+    // // // Check if the previous record exists and determine the default status
+    // if ($prev_isDefaultClt == 1) {
+    //     $isDefaultClt = 1;
+    // } else if ($prev_isDefaultClt == 0) {
+    //     $isDefaultClt = 0; 
+    // } else {
+    //     $isDefaultClt = $clt_init_balance == $clt_suggested_balance ? 1 : 0;
+    // }
+
+   
+    // if ($prev_isDefaultCb == 1) {
+    //     $isDefaultCb = 1; 
+    // } else if ($prev_isDefaultCb == 0) {
+    //     $isDefaultCb = 0; 
+    // } else {
+    //     $isDefaultCb = $cb_init_balance == $cb_suggested_balance ? 1 : 0;
+    // }
+
+    // // Compare if the suggested balance is equal to the initial balance for CLT and CB
+    // $isDefaultClt = floatval($clt_init_balance) == floatval($clt_suggested_balance) ? 1 : 0;
+    // $isDefaultCb = floatval($cb_init_balance) == floatval($cb_suggested_balance) ? 1 : 0;
+
+
     // Extract the month and year from the input period_covered
     $input_month = date('m', strtotime($period_covered));
     $input_year = date('Y', strtotime($period_covered));
@@ -189,78 +304,90 @@ try {
     mysqli_stmt_close($stmt_cashbook_up);
     
     $sql_monthly = "INSERT INTO tb_cashbook_monthly (
-        date_data, 
+        cashbook_id, date_data, 
         clt_init_balance, clt_end_balance, 
         cb_init_balance, cb_end_balance,
+        isDefaultClt, isDefaultCb,
         isDisplayed
-    ) VALUES (?, ?, ?, ?, ?, 1)";
+    ) VALUES (?,?, ?, ?, ?, ?, ?, ?, 1)";
     $stmt_sql_monthly = mysqli_prepare($con, $sql_monthly);
-    mysqli_stmt_bind_param($stmt_sql_monthly, "sdddd", $period_covered, $clt_init_balance, $clt_end_balance ,$cb_init_balance, $cb_end_balance);
+    mysqli_stmt_bind_param($stmt_sql_monthly, "isddddii", $cashbook_id,$period_covered, $clt_init_balance, $clt_end_balance ,$cb_init_balance, $cb_end_balance, $isDefaultClt, $isDefaultCb);
     if (!mysqli_stmt_execute($stmt_sql_monthly)) {
         throw new Exception("Failed to insert into tb_cashbook_monthly: " . mysqli_stmt_error($stmt_sql_monthly));
     }
     mysqli_stmt_close($stmt_sql_monthly);
 
+//////////////////////////////////////////////////////////////////
 
+    // Query to get the earliest and latest dates
+    $sql_dates = "SELECT 
+        MIN(date_data) AS earliest_date,
+        MAX(date_data) AS latest_date 
+        FROM tb_cashbook_monthly
+        WHERE isDisplayed = 1";
 
-   // Query to get the earliest and latest dates
-   $sql_dates = "SELECT 
-    MIN(date_data) AS earliest_date,
-    MAX(date_data) AS latest_date 
-    FROM tb_cashbook_monthly
-    WHERE isDisplayed = 1";
+    $result_dates = mysqli_query($con, $sql_dates);
 
-   $result_dates = mysqli_query($con, $sql_dates);
+    // Check if the query was successful and returns data
+    if ($result_dates && mysqli_num_rows($result_dates) > 0) {
+        $dates = mysqli_fetch_assoc($result_dates);
 
-   // Check if the query was successful and returns data
-   if ($result_dates && mysqli_num_rows($result_dates) > 0) {
-   $dates = mysqli_fetch_assoc($result_dates);
+    // Standardize date formats for comparison
+    $earliest_date = !empty($dates['earliest_date']) ? date('Y-m-d', strtotime($dates['earliest_date'])) : null;
+    $latest_date = !empty($dates['latest_date']) ? date('Y-m-d', strtotime($dates['latest_date'])) : null;
+    $target_date = date('Y-m-d', strtotime($period_covered));
 
-   // Standardize date formats for comparison
-   $earliest_date = !empty($dates['earliest_date']) ? date('Y-m-d', strtotime($dates['earliest_date'])) : null;
-   $latest_date = !empty($dates['latest_date']) ? date('Y-m-d', strtotime($dates['latest_date'])) : null;
-   $target_date = date('Y-m-d', strtotime($period_covered));
+    // Retrieve the status of the target date
+    $sql_status = "SELECT isDefaultClt, isDefaultCb FROM tb_cashbook_monthly WHERE date_data = ? AND isDisplayed = 1";
+    $stmt_status = mysqli_prepare($con, $sql_status);
+    mysqli_stmt_bind_param($stmt_status, "s", $target_date);
+    mysqli_stmt_execute($stmt_status);
+    mysqli_stmt_bind_result($stmt_status, $CltStatus, $CbStatus);
+    mysqli_stmt_fetch($stmt_status);
+    mysqli_stmt_close($stmt_status);
 
-   // Enhanced date position handling using switch statement
-   switch(true) {
-       case ($target_date == $earliest_date):
-           // First date logic
-           $_GET['target_date'] = $target_date;
-           $_GET['date_status'] = 'First'; // Pass date_status via GET
-           //include('recalculate_data.php');
-           $message = "Recalculate from the first date";
-           break;
-               
-       case ($target_date == $latest_date):
-           // Latest date logic (do nothing)
-           $message = "Do nothing";
-           break;
-               
-       default:
-           // Middle date logic
-           $_GET['target_date'] = $target_date;
-           $_GET['date_status'] = 'In Between'; // Pass date_status via GET
-           //include('recalculate_data.php');
-           $message = "Recalculate from the starting date";
-           break;
-   }
+    // Enhanced date position handling using switch statement
+    switch (true) {
+        case ($target_date == $earliest_date):
+            // First date logic
+            $_GET['target_date'] = $target_date;
+            $_GET['date_status'] = 'Recalculate'; // Pass date_status via GET
+            $_GET['CltStatus'] = $CltStatus; // Pass record status (manual or default)
+            $_GET['CbStatus'] = $CbStatus;
+            $message = "Recalculate from the first date";
+            break;
 
-   // Close the result set
-   mysqli_free_result($result_dates);
-   }
+        case ($target_date == $latest_date):
+            // Latest date logic (do nothing)
+            $message = "Do nothing";
+            break;
+
+        default:
+            // Middle date logic
+            $_GET['target_date'] = $target_date;
+            $_GET['date_status'] = 'Recalculate'; // Pass date_status via GET
+            $_GET['CltStatus'] = $CltStatus; // Pass record status (manual or default)
+            $_GET['CbStatus'] = $CbStatus; // Pass record status (manual or default)
+            $message = "Recalculate from the starting date";
+            break;
+    }
+
+    // Close the result set
+    mysqli_free_result($result_dates);
+    }
 
     // Send success response
     $response = array(
         'status' => 'true',
         'cashbook_id' => $cashbook_id,
-        'message' => 'Cashbook Recored successfully!'
-        
+        'message' => 'Cashbook Record successfully!'
     );
     mysqli_commit($con);
 
     if (isset($_GET['target_date'])) {
         include('recalculate_data.php');
     }
+
 
 
 } catch (Exception $e) {
