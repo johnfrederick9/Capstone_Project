@@ -31,7 +31,7 @@ if (isset($_POST['order'])) {
     $order = $_POST['order'][0]['dir'];
     $sql .= " ORDER BY " . $column_name . " " . $order;
 } else {
-    $sql .= " ORDER BY cashbook_id DESC";
+    $sql .= " ORDER BY period_covered DESC";
 }
 
 // Pagination
@@ -55,10 +55,15 @@ $data = array();
 while ($row = mysqli_fetch_assoc($query)) {
     $sub_array = array();
     $sub_array[] = $row['cashbook_id'];
-    $sub_array[] = $row['period_covered'];
+
+    $formatted_date = date("F Y", strtotime($row['period_covered']));
+    $sub_array[] = $formatted_date;
+
+    
     $sub_array[] = $row['treasurer_name'];
+    
     $sub_array[] = '<div class="buttons">
-                        <a href="javascript:void(0);" data-item-id="' . $row['cashbook_id'] . '" class="view-btn btn-sm infoBtn" style="margin-left:150px;"><i class="bx bx-info-circle"></i></a>
+                        <a href="javascript:void(0);" data-item-id="' . $row['cashbook_id'] . '" class="view-btn btn-sm infoBtn"><i class="bx bx-info-circle"></i></a>
                     </div>';
     $data[] = $sub_array;
 }
