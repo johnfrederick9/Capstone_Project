@@ -47,6 +47,56 @@ if ($ageResult) {
     error_log("Error fetching age data: " . mysqli_error($conn));
 }
 
+// Employee Data Queries
+
+// Query to get the count of employees by educational attainment where isDisplayed = 1
+$employeeEducationalQuery = "
+    SELECT 
+        employee_educationalattainment, 
+        COUNT(*) as count 
+    FROM tb_employee 
+    WHERE isDisplayed = 1 
+    AND employee_educationalattainment IN ('Elementary', 'High School, Undergrad', 'High School, Graduate', 'College, Undergrad', 'Vocational', 'Bachelor Degree', 'Master Degree', 'Doctorate Degree')
+    GROUP BY employee_educationalattainment
+    ORDER BY FIELD(employee_educationalattainment, 'Elementary', 'High School, Undergrad', 'High School, Graduate', 'College, Undergrad', 'Vocational', 'Bachelor Degree', 'Master Degree', 'Doctorate Degree')
+";
+
+$employeeEducationalResult = mysqli_query($conn, $employeeEducationalQuery);
+$employee_educational_data = [];
+if ($employeeEducationalResult) {
+    while ($row = mysqli_fetch_assoc($employeeEducationalResult)) {
+        $employee_educational_data[] = $row;
+    }
+} else {
+    error_log("Error fetching employee educational attainment data: " . mysqli_error($conn));
+}
+
+// Query to get the count of employees by age range where isDisplayed = 1
+$employeeAgeQuery = "
+    SELECT 
+        CASE
+            WHEN employee_age BETWEEN 1 AND 15 THEN '1-15'
+            WHEN employee_age BETWEEN 16 AND 30 THEN '16-30'
+            WHEN employee_age BETWEEN 31 AND 59 THEN '31-59'
+            WHEN employee_age >= 60 THEN 'More than 60'
+        END as age_range,
+        COUNT(*) as count 
+    FROM tb_employee 
+    WHERE isDisplayed = 1 
+    GROUP BY age_range
+    ORDER BY FIELD(age_range, '1-15', '16-30', '31-59', 'More than 60')
+";
+
+$employeeAgeResult = mysqli_query($conn, $employeeAgeQuery);
+$employee_age_data = [];
+if ($employeeAgeResult) {
+    while ($row = mysqli_fetch_assoc($employeeAgeResult)) {
+        $employee_age_data[] = $row;
+    }
+} else {
+    error_log("Error fetching employee age data: " . mysqli_error($conn));
+}
+
 // Query to get the count of blotter statuses
 $blotterStatusQuery = "
     SELECT 
@@ -87,7 +137,6 @@ if ($projectResult) {
 } else {
     error_log("Error fetching project status data: " . mysqli_error($conn));
 }
-
 
 // Close the database connection
 mysqli_close($conn);

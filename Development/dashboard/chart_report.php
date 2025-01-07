@@ -1,7 +1,7 @@
 <div class="carousel-container">
     <!-- Carousel Wrapper -->
     <div class="carousel-slides">
-        <!-- Slide 1: Educational Attainment -->
+        <!-- Slide 1: Residents Educational Attainment -->
         <div class="carousel-item active">
             <div class="chart-wrapper">
                 <h5>Residents Educational Attainment Distribution</h5>
@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <!-- Slide 2: Age Distribution -->
+        <!-- Slide 2: Residents Age Distribution -->
         <div class="carousel-item">
             <div class="chart-wrapper">
                 <h5>Residents Age Distribution</h5>
@@ -17,7 +17,23 @@
             </div>
         </div>
 
-        <!-- Slide 3: Blotter Status -->
+        <!-- Slide 3: Employees Educational Attainment -->
+        <div class="carousel-item">
+            <div class="chart-wrapper">
+                <h5>Employees Educational Attainment Distribution</h5>
+                <canvas id="employeeEducationBarChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Slide 4: Employees Age Distribution -->
+        <div class="carousel-item">
+            <div class="chart-wrapper">
+                <h5>Employees Age Distribution</h5>
+                <canvas id="employeeAgeHistogramChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Slide 5: Blotter Status -->
         <div class="carousel-item">
             <div class="chart-wrapper">
                 <h5>Blotter Status Distribution</h5>
@@ -25,7 +41,7 @@
             </div>
         </div>
 
-        <!-- Slide 4: Project Status -->
+        <!-- Slide 6: Project Status -->
         <div class="carousel-item">
             <div class="chart-wrapper">
                 <h5>Project Status Distribution</h5>
@@ -40,11 +56,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // Fetch data from PHP
     var educationalData = <?php echo json_encode($educational_data ?? []); ?>;
     var ageData = <?php echo json_encode($age_data ?? []); ?>;
+    var employeeEducationalData = <?php echo json_encode($employee_educational_data ?? []); ?>;
+    var employeeAgeData = <?php echo json_encode($employee_age_data ?? []); ?>;
     var blotterStatusData = <?php echo json_encode($blotter_status ?? []); ?>;
     var projectStatusData = <?php echo json_encode($project_status ?? []); ?>;
 
-    // Chart 1: Educational Attainment Bar Chart
-    if (educationalData && educationalData.length > 0) {
+       // Chart 1: Educational Attainment Bar Chart
+       if (educationalData && educationalData.length > 0) {
         var eduLabels = educationalData.map(e => e.resident_educationalattainment);
         var eduData = educationalData.map(e => e.count);
 
@@ -95,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 datasets: [{
                     label: 'Number of Residents',
                     data: ageCounts,
-                    backgroundColor: 'rgba(73, 196, 91, 0.5)',
+                    backgroundColor: 'rgba(11, 236, 45, 0.5)',
                     borderColor: 'rgba(14, 230, 45)',
                     borderWidth: 1
                 }]
@@ -108,6 +126,83 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: {
                             display: true,
                             text: 'Number of Residents'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Age Range'
+                        }
+                    }
+                }
+            }
+        });
+    }
+    // Chart 3: Employees Educational Attainment Bar Chart
+    if (employeeEducationalData && employeeEducationalData.length > 0) {
+        var empEduLabels = employeeEducationalData.map(e => e.employee_educationalattainment);
+        var empEduData = employeeEducationalData.map(e => e.count);
+
+        var ctxEmpEdu = document.getElementById('employeeEducationBarChart').getContext('2d');
+        new Chart(ctxEmpEdu, {
+            type: 'bar',
+            data: {
+                labels: empEduLabels,
+                datasets: [{
+                    label: 'Number of Employees',
+                    data: empEduData,
+                    backgroundColor: 'rgba(117, 255, 99, 0.5)',
+                    borderColor: 'rgba(22, 187, 0, 0.5)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Employees'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Educational Attainment'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Chart 4: Employees Age Distribution Histogram
+    if (employeeAgeData && employeeAgeData.length > 0) {
+        var empAgeLabels = employeeAgeData.map(e => e.age_range);
+        var empAgeCounts = employeeAgeData.map(e => e.count);
+
+        var ctxEmpAge = document.getElementById('employeeAgeHistogramChart').getContext('2d');
+        new Chart(ctxEmpAge, {
+            type: 'bar',
+            data: {
+                labels: empAgeLabels,
+                datasets: [{
+                    label: 'Number of Employees',
+                    data: empAgeCounts,
+                    backgroundColor: 'rgba(89, 192, 75, 0.5)',
+                    borderColor: 'rgba(0, 255, 34, 0.5)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Employees'
                         }
                     },
                     x: {
@@ -134,8 +229,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 datasets: [{
                     label: 'Blotter Cases',
                     data: blotterCounts,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 235, 84, 0.2)',
+                    borderColor: 'rgb(54, 235, 136)',
                     borderWidth: 2,
                     tension: 0.4 // Makes the line smoother
                 }]
@@ -180,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 datasets: [{
                     label: 'Project Status',
                     data: projectCounts,
-                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    backgroundColor: 'rgba(115, 255, 102, 0.2)',
                     borderColor: 'rgba(153, 102, 255, 1)',
                     borderWidth: 2,
                     tension: 0.4 // Smoothens the line
