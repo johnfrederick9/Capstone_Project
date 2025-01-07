@@ -30,7 +30,7 @@
           <h2>Confirm Verification Code</h2>
           <p>Are you sure you want to submit the entered verification code?</p>
           <button class="btn btn-success" id="confirmSubmit">Yes</button>
-          <button class="btn btn-danger" id="cancelSubmit">No</button>
+          <button style="background-color:red" class="btn btn-danger" id="cancelSubmit">No</button>
         </div>
       </div>
     </div>
