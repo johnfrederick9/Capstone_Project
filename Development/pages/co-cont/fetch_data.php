@@ -48,7 +48,10 @@ $data = array();
 while ($row = mysqli_fetch_assoc($query)) {
     $sub_array = array();
     $sub_array[] = $row['rao_cocont_id'];
-    $sub_array[] = $row['period_covered'];
+
+    $formatted_date = date("F Y", strtotime($row['period_covered']));
+    $sub_array[] = $formatted_date;
+
     $sub_array[] = $row['chairman'];
     $sub_array[] = $row['brgy_captain'];
     $sub_array[] = '

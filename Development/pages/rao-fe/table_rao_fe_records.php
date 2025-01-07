@@ -812,7 +812,7 @@ td.action-buttons{
                                 },
                                 error: function (xhr, status, error) {
                                     console.error("AJAX error:", status, error);
-                                    alert('Error fetching data. Please try again.');
+                                    showAlert('Error fetching data. Please try again.',"alert-danger");
                                 }
                             });
 
@@ -1187,7 +1187,7 @@ td.action-buttons{
                                 },
                                 error: function (xhr, status, error) {
                                     console.error("AJAX error:", status, error);
-                                    alert('Error fetching data. Please try again.');
+                                    showAlert('Error fetching data. Please try again.',"alert-danger");
                                 }
                             });
 
@@ -1218,7 +1218,7 @@ td.action-buttons{
                                 // Remove the row from DataTable
                                 table.row($(event.target).closest('tr')).remove().draw();
                             } else {
-                                alert('Deletion failed');
+                                showAlert('Deletion failed',"alert-danger");
                             }
                             // Close the modal
                             $('#deleteConfirmationModal').modal('hide');
@@ -1267,7 +1267,7 @@ td.action-buttons{
 
                                         // Hide the AttributeModal
                                         $('#AttributeModal').modal('hide');
-                                        alert('Attributes added successfully!');
+                                        showAlert('Attributes added successfully!',"alert-success");
 
                                         // Set the rao_fe_id in the addUserModal's input field
                                         $('#addUserModal #rao_fe_id').val(rao_fe_id);
@@ -1295,16 +1295,16 @@ td.action-buttons{
                                         $('#addUserModal').modal('show');
 
                                         } else {
-                                            alert('Update failed: ' + json.error || 'Unknown error');
+                                            showAlert('Update failed: ' + json.error || 'Unknown error',"alert-danger");
                                         }
                                     },
                                     error: function(jqXHR, textStatus, errorThrown) {
                                         console.log("AJAX error:", textStatus, errorThrown);
-                                        alert('An error occurred while submitting the data.');
+                                        showAlert('An error occurred while submitting the data.',"alert-danger");
                                     }
                                 });
                             } else {
-                                alert('Please fill in all the required fields.');
+                                showAlert('Please fill in all the required fields.',"alert-danger");
                             }
                         });
 
@@ -1337,7 +1337,7 @@ td.action-buttons{
                             console.log("rao_fe_id:", rao_fe_id);
 
                             if (!rao_fe_id) {
-                                alert('Error: RAO fe ID is missing.');
+                                showAlert('Error: RAO fe ID is missing.',"alert-danger");
                                 return;
                             }
 
@@ -1351,7 +1351,7 @@ td.action-buttons{
                                 const column_name = row.find('input[name="column_name[]"]').val().trim();
                                 
                                 if (column_name === "") {
-                                    alert('Error: Please fill in all the required fields.');
+                                    showAlert('Error: Please fill in all the required fields.',"alert-danger");
                                     return false;
                                 }
 
@@ -1393,7 +1393,7 @@ td.action-buttons{
 
                                         if (json.status === 'true') {
                                             modal.modal('hide');
-                                            alert('Attributes updated successfully!');
+                                            showAlert('Attributes updated successfully!',"alert-success");
 
                                             // Target all elements with id dynamic-heads
                                             const dynamicHeadRows = $('[id="dynamic-heads"]');
@@ -1665,17 +1665,18 @@ td.action-buttons{
                                             
 
                                             $('#UpdateAttributeModal').modal('hide');
+                                            showAlert("Attribute Updated successfully.", "alert-success");
                                         } else {
-                                            alert('Update failed: ' + (json.error || 'Unknown error'));
+                                            showAlert('Update failed: ' + (json.error || 'Unknown error'),"alert-danger");
                                         }
                                     } catch (error) {
                                         console.error("Error parsing response:", error);
-                                        alert('An error occurred while updating the attributes.');
+                                        showAlert('An error occurred while updating the attributes.',"alert-danger");
                                     }
                                 },
                                 error: function (jqXHR, textStatus, errorThrown) {
                                     console.log("AJAX error:", textStatus, errorThrown);
-                                    alert('An error occurred while updating the attributes.');
+                                    showAlert('An error occurred while updating the attributes.',"alert-danger");
                                 }
                             });
                         });
@@ -1807,16 +1808,18 @@ td.action-buttons{
                                 dataType: 'json',
                                 success: function (response) {
                                     if (response.status === 'true') {
-                                        alert('Data saved successfully!');
+                                        mytable = $('#example').DataTable();
+                                        mytable.draw();
+                                        showAlert("Record Added successfully.", "alert-success");
                                         $('#addUserModal').modal('hide');
                                     } else {
-                                        alert('Error saving data: ' + response.error);
+                                        showAlert('Error saving data: ' + response.error,"alert-danger");
                                     }
                                 },
                                 error: function (jqXHR, textStatus, errorThrown) {
                                     console.error('AJAX Error: ' + textStatus, errorThrown);
                                     console.error('Response: ' + jqXHR.responseText);
-                                    alert('Error: ' + errorThrown);
+                                    showAlert('Error: ' + errorThrown,"alert-danger");
                                 }
                             });
                         });
@@ -1949,9 +1952,9 @@ td.action-buttons{
                                 success: function (response) {
                                     if (response.status === 'true') {
 
-                                        var period_covered = response.period_covered;
-                                        var chairman = response.chairman;
-                                        var brgy_captain = response.brgy_captain;
+                                        var period_covered = formData.period_covered;
+                                        var chairman = formData.chairman;
+                                        var brgy_captain = formData.brgy_captain;
                                         
                                         console.log("TRID:",trid );
 
@@ -1960,7 +1963,7 @@ td.action-buttons{
                                                 <td>
                                                     <div class="buttons">
                                                         <a href="javascript:void(0);" data-id="${rao_fe_id}" class="update-btn btn-sm editbtn">
-                                                            <i class="bx bx-sync"></i>
+                                                            <i class="bx bx-edit"></i>
                                                         </a>  
                                                         <a href="!#;" data-rao_id="${rao_fe_id}" class="delete-btn btn-sm deleteBtn">
                                                             <i class="bx bxs-trash"></i>
@@ -1978,14 +1981,15 @@ td.action-buttons{
 
                                             // Close the modal
                                             $('#exampleModal').modal('hide');
+                                            showAlert("Record Updated successfully.", "alert-success");
                                     } else {
-                                        alert('Error saving data: ' + response.error);
+                                        showAlert('Error saving data: ' + response.error,"alert-danger");
                                     }
                                 },
                                 error: function (jqXHR, textStatus, errorThrown) {
                                     console.error('AJAX Error:', textStatus, errorThrown);
                                     console.error('Response:', jqXHR.responseText);
-                                    alert('Error: ' + errorThrown);
+                                    showAlert('Error: ' + errorThrown,"alert-danger");
                                 }
                             });
                         });
@@ -2698,7 +2702,7 @@ function handleValidation(modal) {
 
     // Display the alert message if there are any missing inputs
     if (alertMessage) {
-        alert(alertMessage);
+        showAlert(alertMessage,"alert-danger");
         return true; // Indicate there are errors
     }
 
@@ -2812,7 +2816,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!raoFeId) {
             console.error('No active modal or rao_fe_id not found');
-            alert('Unable to fetch the ID. Please ensure the modal is active.');
+            showAlert('Unable to fetch the ID. Please ensure the modal is active.',"alert-danger");
             return;
         }
 
@@ -2845,7 +2849,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             error: function (xhr, status, error) {
                 console.error('Error fetching data:', error);
-                alert('Failed to fetch data. Please try again.');
+                showAlert('Failed to fetch data. Please try again.',"alert-danger");
             }
         });
     }
@@ -3556,17 +3560,17 @@ document.addEventListener('DOMContentLoaded', function () {
                         $('#addUserModal #periodcovered').val('');
                         if (data.error.includes("record already exists")) {
                             // Error for duplicate record
-                            alert("A record for this month already exists. Please choose a different month.");
+                            showAlert("A record for this month already exists. Please choose a different month.","alert-danger");
                         } else {
                             // General error handling
-                            alert("An error occurred: " + data.error);
+                            showAlert("An error occurred: " + data.error,"alert-danger");
                         }
 
                     }
                 })
                 .catch(error => {
                     console.error('Fetch error:', error);
-                    alert("An unexpected error occurred. Please try again.");
+                    showAlert("An unexpected error occurred. Please try again.","alert-danger");
                 });
         });
 
@@ -3916,17 +3920,17 @@ document.addEventListener('DOMContentLoaded', function () {
                         $('#exampleModal #period_covered').val('');
                         if (data.error.includes("record already exists")) {
                             // Error for duplicate record
-                            alert("A record for this month already exists. Please choose a different month.");
+                            showAlert("A record for this month already exists. Please choose a different month.","alert-danger");
                         } else {
                             // General error handling
-                            alert("An error occurred: " + data.error);
+                            showAlert("An error occurred: " + data.error,"alert-danger");
                         }
 
                     }
                 })
                 .catch(error => {
                     console.error('Fetch error:', error);
-                    alert("An unexpected error occurred. Please try again.");
+                    showAlert("An unexpected error occurred. Please try again.","alert-danger");
                 });
         });
 
@@ -4364,6 +4368,23 @@ window.onclick = function(event) {
         }
     }
 }
+
+function showAlert(message, alertClass) {
+            var alertDiv = $('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' + message +
+                '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+            alertDiv.css({
+                "position": "fixed",
+                "top": "10px",
+                "right": "10px",
+                "z-index": "9999",
+                "background-color": alertClass === "alert-danger" ? "#f8d7da" : "#d4edda",
+                "border-color": alertClass === "alert-danger" ? "#f5c6cb" : "#c3e6cb"
+            });
+            $("body").append(alertDiv);
+            setTimeout(function() {
+                alertDiv.alert('close');
+            }, 900);
+        }
 </script>
 <script>
     // Add event listener for the Enter key when the modal is open

@@ -7,6 +7,18 @@ try {
     $chairman = $_POST['chairman'];
     $brgy_captain = $_POST['brgy_captain'];
 
+    $currentDate = date('Y-m');
+    $monthYear = date('Y-m', strtotime($period_covered));
+
+     // Check if the passed date is in the future
+     if ($monthYear > $currentDate) {
+        $response = [
+            'status' => 'false',
+            'error' => 'The selected date is yet to come. Please choose a valid date.'
+        ];
+        echo json_encode($response);
+        exit;
+    }
     // First, insert into tb_rao_bd to get the rao_id
     $sql_rao_bd = "INSERT INTO tb_rao_bd (`chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) 
                 VALUES (?, ?, ?, 1)";

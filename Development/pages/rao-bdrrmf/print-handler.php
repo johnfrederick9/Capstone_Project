@@ -1,10 +1,12 @@
 <?php
 include('../../connection.php');
+header('Content-Type: text/html');
 
-mysqli_begin_transaction($con);  // Start transaction
+mysqli_begin_transaction($con);
+
 try {
     // Fetch rao_id from POST request
-    $rao_bd_id = isset($_POST['rao_bd_id']) ? intval($_POST['rao_bd_id']) : "";
+    $rao_bd_id = isset($_POST['rao_bd_id']) ? intval($_POST['rao_bd_id']) : '';
 
     // Validate rao_id
     if ($rao_bd_id <= 0) {
@@ -108,50 +110,26 @@ try {
         }
     }
 
-    // Close the statement
-    mysqli_stmt_close($stmt_fetch_rao_bd_totals);
+    // Function to format period covered
+    function formatPeriodCovered($dateString) {
+        if (!$dateString || $dateString === "0000-00-00") {
+            return "";
+        }
+        $date = new DateTime($dateString);
+        $month = strtoupper($date->format('F'));
+        $year = $date->format('Y');
+        $lastDay = $date->format('t');
+        return "{$month} 1-{$lastDay}, {$year}";
+    }
 
-     // Commit transaction
-     mysqli_commit($con);
-
-     // Prepare response
-    $response = [
-        'status' => 'true',
-        'rao_bd_id' => $rao_bd_id,
-        'chairman' => $chairman,
-        'period_covered' => $period_covered,
-        'brgy_captain' => $brgy_captain,
-        'rao_bd_ap' => $rao_bd_ap,
-        'rao_bd_BF_totals' =>  $rao_bd_BF_totals,
-        'rao_bd_TA_totals' =>  $rao_bd_TA_totals,
-        'rao_bd_ob' => $rao_bd_ob,
-        'rao_bd_TO_totals' => $rao_bd_TO_totals,
-        'rao_bd_OB_totals'  =>$rao_bd_OB_totals,
-        'rao_bd_AB_totals' => $rao_bd_AB_totals,
-
-        ];
-} catch (Exception $e) {
-
-    // Rollback transaction in case of error
-    mysqli_rollback($con);
-    
-    // Send error response
-    $response = ['status' => 'false', 'error' => $e->getMessage()];
-    error_log("Error processing data: " . $e->getMessage());
-}finally {
-    // Close the connection
-    mysqli_close($con);
-}
-// Send response to client
-$response_json = json_encode($response);
-?>
-
+    // Start HTML output
+    echo '<!DOCTYPE html>
 <html>
 <head>
-    <title>>Report of Appropriations and Obligations (RAO-BDRRMF)</title>
-   <style>
+    <title>Report of Appropriations and Obligations (RAO-BDRRMF)</title>
+      <style>
      @page {
-        size: 11in 8.5in; /* Explicitly define width and height in landscape */
+        size: 10in 8.5in; /* Explicitly define width and height in landscape */
         margin: 0.5cm; /* Set consistent margins */
     }
 
@@ -353,300 +331,177 @@ $response_json = json_encode($response);
         }
     </style>
 </head>
-
-<script src="../../assets/js/jquery-3.6.0.min.js"></script>
-
 <body>
-<div class="rao-container">
-<div class="rao-header">
-        <h1>Report of Appropriations and Obligations (RAO-BDRRMF)</h1>
-        <p id="period_covered" style="text-align: center;"></p>
-        <div class="details">
-            <div class="info">
-                <label>Barangay:</label> <input type="text" value="MANTALONGON" disabled/>
-            </div>
-            <div class="info">
-                <label>Municipality:</label> <input type="text" value="DALAGUETE" disabled />
-            </div>
-            <div class="info">
-                <label>Province:</label> <input type="text" value="CEBU" disabled />
-            </div>
-            <div class="info">
-                <label>Fund Source:</label> <input type="text" value="5% BDRRMF"  disabled />
+    <div class="rao-container">
+        <div class="rao-header">
+            <h1>Report of Appropriations and Obligations (RAO-BDRRMF)</h1>
+            <p style="text-align: center;">For ' . formatPeriodCovered($period_covered) . '</p>
+            <div class="details">
+                <div class="info">
+                    <label>Barangay:</label> <input type="text" value="MANTALONGON" disabled/>
+                </div>
+                <div class="info">
+                    <label>Municipality:</label> <input type="text" value="DALAGUETE" disabled />
+                </div>
+                <div class="info">
+                    <label>Province:</label> <input type="text" value="CEBU" disabled />
+                </div>
+                <div class="info">
+                    <label>Fund Source:</label> <input type="text" value="General Fund (Personal Services)" disabled />
+                </div>
             </div>
         </div>
-    </div>
 
+        <div class="rao-table-container">
+            <table id="viewDataTable" class="rao-table">
+                <!-- Appropriations Header -->
+                <thead class="appropriations-head">
+                    <tr>
+                        <th class="hidden">Counter</th>
+                        <th class="hidden">ID</th>
+                        <th colspan="2" class="stick-head">Reference For Appropriations</th>
+                        <th rowspan="2" class="stick-head">Particulars</th>
+                        <th rowspan="2" class="stick-head">Totals</th>
+                        <th colspan="2" class="dynamic-stick-head">Personal Services</th>
+                    </tr>
+                    <tr>
+                        <th class="stick-head">Date</th>
+                        <th class="stick-head">Reference No</th>
+                        <th class="dynamic-head">Pre Disaster</th>
+                        <th class="dynamic-head">Quick Response</th>
+                    </tr>
+                </thead>';
 
-<div class="rao-table-container">
-    <table id = "viewDataTable" class="rao-table">
-        <!--Appropriations--->
-        <thead  class="appropriations-head">
-            <tr>
-                <th class="hidden">Counter</th>
-                <th class="hidden">ID</th>
-                <th colspan="2" class="stick-head">Reference For Appropriations</th><!-- Date and Ref No -->
-                <th rowspan="2" class="stick-head">Particulars</th> 
-                <th rowspan="2" class="stick-head">Totals</th>
-                <th colspan="2" class="dynamic-stick-head">BDRRMF</th><!-- Dynamic Heads max 5 -->
-                
-            </tr>
-            <tr id="dynamic-heads">
-                <th class="stick-head">Date</th>
-                <th class="stick-head">Reference No</th>
-                <th class="dynamic-head">Pre-Disaster Programs</th>
-                <th class="dynamic-head">Quick Response</th>
-            </tr>
+    // Output Appropriations Data
+    echo '<tbody class="inp-group-ap-data-row">';
+    foreach ($rao_bd_ap as $ap) {
+        echo '<tr class="ap-data-row">
+                <td>' . htmlspecialchars($ap['ap_ref_date']) . '</td>
+                <td>' . htmlspecialchars($ap['ap_ref_no']) . '</td>
+                <td>' . htmlspecialchars($ap['ap_particulars']) . '</td>
+                <td class="total-data">' . ($ap['ap_total'] != 0 ? htmlspecialchars($ap['ap_total']) : '') . '</td>
+                <td>' . ($ap['ap_pre_disaster'] != 0 ? htmlspecialchars($ap['ap_pre_disaster']) : '') . '</td>
+                <td>' . ($ap['ap_quick_response'] != 0 ? htmlspecialchars($ap['ap_quick_response']) : '') . '</td>
+            </tr>';
+    }
+    echo '</tbody>';
 
-        </thead>
+    // Output Total Appropriations
+    foreach ($rao_bd_TA_totals as $total) {
+        echo '<tbody class="inp-group-ap-totals TA">
+                <tr class="totals-row">
+                    <td colspan="3" class="stick-body">Total Appropriations</td>
+                    <td class="total-data">' . ($total['total'] != 0 ? htmlspecialchars($total['total']) : '') . '</td>
+                    <td>' . ($total['pre_disaster'] != 0 ? htmlspecialchars($total['pre_disaster']) : '') . '</td>
+                    <td>' . ($total['quick_response'] != 0 ? htmlspecialchars($total['quick_response']) : '') . '</td>
+                </tr>
+            </tbody>';
+    }
 
-        <tbody class = "inp-group-ap-data-row">
-            <!-- Dynamic rows go here -->
+    // Output Balance Forwarded
+    foreach ($rao_bd_BF_totals as $total) {
+        echo '<tbody class="inp-group-ap-totals BF">
+                <tr class="totals-row">
+                    <td colspan="3" class="stick-body">Balance Forwarded</td>
+                    <td class="total-data">' . ($total['total'] != 0 ? htmlspecialchars($total['total']) : '') . '</td>
+                    <td>' . ($total['pre_disaster'] != 0 ? htmlspecialchars($total['pre_disaster']) : '') . '</td>
+                    <td>' . ($total['quick_response'] != 0 ? htmlspecialchars($total['quick_response']) : '') . '</td>
+                </tr>
+            </tbody>';
+    }
 
-        </tbody>
-
-        <tbody class = "inp-group-ap-totals TA">
-            <tr class="totals-row">
-                <td colspan="3"class="stick-body">Total Appropriations</td>
-                <!-- td for each attributes-->
-
-                </td>
-            </tr>
-        </tbody>
-
-        <tbody class = "inp-group-ap-totals BF">
-            <tr class="totals-row">
-                <td colspan="3"class="stick-body">Balance Forwarded</td>
-                <!-- td for each attributes-->
-
-            </tr>
-        </tbody>
-                <!--Obligations--->
-                <thead class="obligations-head">
+    // Output Obligations Header
+    echo '<thead class="obligations-head">
             <tr>
                 <th rowspan="2" class="hidden">Counter</th>
                 <th rowspan="2" class="hidden">ID</th>
-                <th colspan="2" class="stick-head">Reference For Obligations</th><!-- Date and Ref No -->
-                <th rowspan="2" class="stick-head">Particulars</th> 
+                <th colspan="2" class="stick-head">Reference For Obligations</th>
+                <th rowspan="2" class="stick-head">Particulars</th>
                 <th rowspan="2" class="stick-head">Totals</th>
-                <th colspan="2" class="dynamic-stick-head">BDRRMF</th>
-
+                <th colspan="2" class="dynamic-stick-head">Personal Services</th>
             </tr>
-            
-            <tr id="dynamic-heads">
+            <tr>
                 <th class="stick-head">Date</th>
                 <th class="stick-head">Reference No</th>
-                <th class="dynamic-head">Pre-Disaster Programs</th>
+                <th class="dynamic-head">Pre Disaster</th>
                 <th class="dynamic-head">Quick Response</th>
             </tr>
-        </thead>
+        </thead>';
 
-        <tbody class = "inp-group-ob-data-row">
-            <!-- Dynamic rows go here -->
-        </tbody>
+    // Output Obligations Data
+    echo '<tbody class="inp-group-ob-data-row">';
+    foreach ($rao_bd_ob as $ob) {
+        echo '<tr class="ob-data-row">
+                <td>' . htmlspecialchars($ob['ob_ref_date']) . '</td>
+                <td>' . htmlspecialchars($ob['ob_ref_no']) . '</td>
+                <td>' . htmlspecialchars($ob['ob_particulars']) . '</td>
+                <td class="total-data">' . ($ob['ob_total'] != 0 ? htmlspecialchars($ob['ob_total']) : '') . '</td>
+                <td>' . ($ob['ob_pre_disaster'] != 0 ? htmlspecialchars($ob['ob_pre_disaster']) : '') . '</td>
+                <td>' . ($ob['ob_quick_response'] != 0 ? htmlspecialchars($ob['ob_quick_response']) : '') . '</td>
+            </tr>';
+    }
+    echo '</tbody>';
 
-        <tbody class = "inp-group-ob-totals TO">
-                <!-- Row for the total obligations -->
+    // Total Obligations (TO)
+foreach ($rao_bd_TO_totals as $total) {
+    echo '<tbody class="inp-group-ob-totals TO">
             <tr class="totals-row">
-                <td colspan="3"class="stick-body">Total Obligations</td>
-
-                <!-- td for each dynamic-head-->
-
+                <td colspan="3" class="stick-body">Total Obligations</td>
+                <td class="total-data">' . ($total['total'] != 0 ? htmlspecialchars($total['total']) : '') . '</td>
+                <td>' . ($total['pre_disaster'] != 0 ? htmlspecialchars($total['pre_disaster']) : '') . '</td>
+                <td>' . ($total['quick_response'] != 0 ? htmlspecialchars($total['quick_response']) : '') . '</td>
             </tr>
-        </tbody>
+        </tbody>';
+}
 
-        <tbody class = "inp-group-ob-totals OB">
-            <!-- Row for the Obligations Balance To Date -->
+// Obligations Balance To Date (OB)
+foreach ($rao_bd_OB_totals as $total) {
+    echo '<tbody class="inp-group-ob-totals OB">
             <tr class="totals-row">
-                <td colspan="3"class="stick-body">Obligations Balance To Date</td>
-                <!-- td for each dynamic-head-->
+                <td colspan="3" class="stick-body">Obligations Balance To Date</td>
+                <td class="total-data">' . ($total['total'] != 0 ? htmlspecialchars($total['total']) : '') . '</td>
+                <td>' . ($total['pre_disaster'] != 0 ? htmlspecialchars($total['pre_disaster']) : '') . '</td>
+                <td>' . ($total['quick_response'] != 0 ? htmlspecialchars($total['quick_response']) : '') . '</td>
             </tr>
-        </tbody>
+        </tbody>';
+}
 
-        <tbody class = "inp-group-ob-totals AB">
-                    <!-- Row for the Appropriations Balance To Date -->
+// Appropriations Balance To Date (AB)
+foreach ($rao_bd_AB_totals as $total) {
+    echo '<tbody class="inp-group-ob-totals AB">
             <tr class="totals-row">
-                <td colspan="3"class="stick-body">Appropriations Balance To Date</td>
-
-                <!-- td for each dynamic-head-->
+                <td colspan="3" class="stick-body">Appropriations Balance To Date</td>
+                <td class="total-data">' . ($total['total'] != 0 ? htmlspecialchars($total['total']) : '') . '</td>
+                <td>' . ($total['pre_disaster'] != 0 ? htmlspecialchars($total['pre_disaster']) : '') . '</td>
+                <td>' . ($total['quick_response'] != 0 ? htmlspecialchars($total['quick_response']) : '') . '</td>
             </tr>
-        </tbody>
-    </table>
-    </div>
-    <div class="certification-section">
-        <div class="certified">
-            <p>Certified True & Correct:</p>
-            <div class="certified-info">
-                <p id="chairman_name"></p>
-                <p>Chairman, Committee on Appropriations</p>
+        </tbody>';
+}
+
+    // Output certification section
+    echo '</table>
+        </div>
+        <div class="certification-section">
+            <div class="certified">
+                <p>Certified True & Correct:</p>
+                <div class="certified-info">
+                    <p>' . htmlspecialchars($chairman) . '</p>
+                    <p>Chairman, Committee on Appropriations</p>
+                </div>
+            </div>
+            <div class="noted">
+                <p>Noted by:</p>
+                <div class="noted-info">
+                    <p>' . htmlspecialchars($brgy_captain) . '</p>
+                    <p>Punong Barangay</p>
+                </div>
             </div>
         </div>
-        <div class="noted">
-            <p>Noted by:</p>
-            <div class="noted-info">
-                <p id="brgy_captain"></p>
-                <p>Punong Barangay</p>
-            </div>
-        </div>
     </div>
-
-
-</div>
-
-</body>
-
-
-
-<script>
-// Function to format the period covered
-function formatPeriodCovered(dateString) {
-if (!dateString || dateString === "0000-00-00") {
-return "";
-}
-const date = new Date(dateString);
-const month = date.toLocaleString('default', { month: 'long' }).toUpperCase();
-const year = date.getFullYear();
-const lastDay = new Date(year, date.getMonth() + 1, 0).getDate();
-return `${month} 1-${lastDay}, ${year}`;
-}
-
-
-const json = <?php echo $response_json; ?>;
-console.log(json);
-    // Check if status is true
-    // Check if status is true
-    if (json.status === 'true') {
-
-    var chairman = json.chairman;
-    var period_covered = json.period_covered;
-    var brgy_captain = json.brgy_captain;
-
-    console.log(json);
-
-    let formattedPeriod = formatPeriodCovered(period_covered);
-
-
-    $(' #chairman_name').text(chairman);
-    $(' #period_covered').text('For '+formattedPeriod);
-    $(' #brgy_captain').text(brgy_captain);
-
-
-function formatNumberWithCommas(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
-function createDynamicRow(type, dataKey, dataContainerKey, dataPrefix) {
-    if (json[dataKey] && Array.isArray(json[dataKey]) && json[dataKey].length > 0) {
-        json[dataKey].forEach(function (item) {
-            // Format numeric values
-            const totalFormatted = item[`${dataPrefix}_total`] 
-                ? formatNumberWithCommas(item[`${dataPrefix}_total`]) 
-                : '';
-            const preDisasterFormatted = item[`${dataPrefix}_pre_disaster`] 
-                ? formatNumberWithCommas(item[`${dataPrefix}_pre_disaster`]) 
-                : '';
-            const quickResponseFormatted = item[`${dataPrefix}_quick_response`] 
-                ? formatNumberWithCommas(item[`${dataPrefix}_quick_response`]) 
-                : '';
-
-            let row = `
-            <tr class="${type}-data-row">
-                <td>${item[`${dataPrefix}_ref_date`] || ''}</td>
-                <td>${item[`${dataPrefix}_ref_no`] || ''}</td>
-                <td>${item[`${dataPrefix}_particulars`] || ''}</td>
-                <td class="total-data">${totalFormatted}</td>
-                <td class="hidden">${item[`rao_bd_${type}_id`] || ''}</td>
-                <td>${preDisasterFormatted}</td>
-                <td>${quickResponseFormatted}</td>
-            </tr>
-            `;
-
-            $(`.${dataContainerKey}`).append(row);
-        });
-    }
-}
-
-
-
-
-    // Call the function for AP data
-    createDynamicRow('ap', 'rao_bd_ap', 'inp-group-ap-data-row', 'ap');
-
-    // Call the function for OB data
-    createDynamicRow('ob', 'rao_bd_ob', 'inp-group-ob-data-row', 'ob');
-
-function createTotalsRow(totalKey, containerSelector, prefix, labelMapping) {
-    if (!json[totalKey] || !Array.isArray(json[totalKey]) || json[totalKey].length === 0) return;
-
-    json[totalKey].forEach(total => {
-        const totalRow = document.querySelector(`${containerSelector}.${total.total_type} .totals-row`);
-        if (!totalRow) return;
-
-        totalRow.innerHTML = ''; // Clear existing content
-
-        // Create label cell with dynamic text from the labelMapping
-        const labelCell = document.createElement('td');
-        labelCell.setAttribute('colspan', '3');
-        labelCell.classList.add('stick-body');
-        labelCell.textContent = labelMapping[total.total_type] || `${total.total_type} Total`;
-        totalRow.appendChild(labelCell);
-
-        // Add total fields dynamically as text (not input fields)
-        const fields = ['total', 'pre_disaster', 'quick_response'];
-
-        fields.forEach(field => {
-            const inputCell = document.createElement('td');
-            let cellContent = total[field] || ''; // Use field value or empty string
-
-            // If value is 0, display an empty string
-            if (cellContent == 0) {
-                cellContent = '';
-            }
-
-            // Format the number if it is not empty
-            if (cellContent) {
-                cellContent = formatNumberWithCommas(cellContent);
-            }
-
-            // If the field is 'total', add the 'total-data' class to the cell
-            if (field == 'total') {
-                inputCell.classList.add('total-data');
-            }
-
-            // Set the content of the cell to be the value (text content)
-            inputCell.textContent = cellContent;
-
-            totalRow.appendChild(inputCell);
-        });
-    });
-}
-
-
-
-    // Label mapping for total types
-    const labelMapping = {
-    TA: 'Total Appropriations',
-    BF: 'Balance Forwarded',
-    TO: 'Total Obligations',
-    OB: 'Obligations Balance To Date',
-    AB: 'Appropriations Balance To Date'
-    };
-
-    // Populate rows for appropriations and obligations
-    createTotalsRow('rao_bd_TA_totals', '.inp-group-ap-totals', 'ap', labelMapping);
-    createTotalsRow('rao_bd_BF_totals', '.inp-group-ap-totals', 'ap', labelMapping);
-    createTotalsRow('rao_bd_TO_totals', '.inp-group-ob-totals', 'ob', labelMapping);
-    createTotalsRow('rao_bd_OB_totals', '.inp-group-ob-totals', 'ob', labelMapping);
-    createTotalsRow('rao_bd_AB_totals', '.inp-group-ob-totals', 'ob', labelMapping);
-
-
-    } else {
-    console.error("Response status is false:", json.error);
-    }
-                
-    </script>
-
-    <script>
+   
+</body>';
+?>
+ <script>
     document.addEventListener("DOMContentLoaded", function () {
         const tableWidth = 1056; // Fixed table width in pixels
         const table = document.getElementById("viewDataTable");
@@ -712,16 +567,10 @@ function createTotalsRow(totalKey, containerSelector, prefix, labelMapping) {
     });
 </script>
 
-
-
-<script>
-    // Print only once and prevent multiple print dialogs
-    window.onload = function() {
-        window.print(); // Automatically open print dialog
-        window.onafterprint = function() {
-            window.close(); // Close the window after printing is done
-        };
-    };
-</script>
-
-</html>
+<?php
+} catch (Exception $e) {
+    echo 'Error: ' . htmlspecialchars($e->getMessage());
+} finally {
+    mysqli_close($con);
+}
+?>
