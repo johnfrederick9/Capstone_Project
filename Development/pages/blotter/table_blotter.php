@@ -91,7 +91,19 @@ if (mysqli_num_rows($result) > 0) {
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainant_add" class="input-label">Complainant's Address:</label>
-                                            <input type="text" id="blotter_complainant_addField" name="blotter_complainant_add" class="input-field"  >
+                                            <select id="blotter_complainant_addField" name="blotter_complainant_add" class="input-field" require>
+                                                <option value="" disabled selected>Address</option>
+                                                <option value="Sitio Sto. Nino">Sitio Sto. Nino</option>
+                                                <option value="Sitio Suwa">Sitio Suwa</option>
+                                                <option value="Sitio Private">Sitio Private</option>
+                                                <option value="Sitio Lahug">Sitio Lahug</option>
+                                                <option value="Sitio Lapa">Sitio Lapa</option>
+                                                <option value="Sitio Sampig">Sitio Sampig</option>
+                                                <option value="Sitio Alang-Alang">Sitio Alang-Alang</option>
+                                                <option value="Sitio Granchina">Sitio Granchina</option>
+                                                <option value="Sitio Catambisan">Sitio Catambisan</option>
+                                                <option value="Sitio Mag-Alambac">Sitio Mag-Alambac</option>
+                                            </select> 
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainee" class="input-label">Complainee's Name:</label>
@@ -104,7 +116,19 @@ if (mysqli_num_rows($result) > 0) {
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainee_add" class="input-label">Complainee's Address:</label>
-                                            <input type="text" id="blotter_complainee_addField" name="blotter_complainee_add" class="input-field"  >
+                                            <select id="blotter_complainee_addField" name="blotter_complainee_add" class="input-field" require>
+                                                <option value="" disabled selected>Address</option>
+                                                <option value="Sitio Sto. Nino">Sitio Sto. Nino</option>
+                                                <option value="Sitio Suwa">Sitio Suwa</option>
+                                                <option value="Sitio Private">Sitio Private</option>
+                                                <option value="Sitio Lahug">Sitio Lahug</option>
+                                                <option value="Sitio Lapa">Sitio Lapa</option>
+                                                <option value="Sitio Sampig">Sitio Sampig</option>
+                                                <option value="Sitio Alang-Alang">Sitio Alang-Alang</option>
+                                                <option value="Sitio Granchina">Sitio Granchina</option>
+                                                <option value="Sitio Catambisan">Sitio Catambisan</option>
+                                                <option value="Sitio Mag-Alambac">Sitio Mag-Alambac</option>
+                                            </select> 
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complaint" class="input-label">Complaint:</label>
@@ -180,7 +204,19 @@ if (mysqli_num_rows($result) > 0) {
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainant_add" class="input-label">Complainant's Address:</label>
-                                            <input type="text" id="blotter_complainant_add" name="blotter_complainant_add" class="input-field"  >
+                                            <select id="blotter_complainant_add" name="blotter_complainant_add" class="input-field" require>
+                                                <option value="" disabled selected>Address</option>
+                                                <option value="Sitio Sto. Nino">Sitio Sto. Nino</option>
+                                                <option value="Sitio Suwa">Sitio Suwa</option>
+                                                <option value="Sitio Private">Sitio Private</option>
+                                                <option value="Sitio Lahug">Sitio Lahug</option>
+                                                <option value="Sitio Lapa">Sitio Lapa</option>
+                                                <option value="Sitio Sampig">Sitio Sampig</option>
+                                                <option value="Sitio Alang-Alang">Sitio Alang-Alang</option>
+                                                <option value="Sitio Granchina">Sitio Granchina</option>
+                                                <option value="Sitio Catambisan">Sitio Catambisan</option>
+                                                <option value="Sitio Mag-Alambac">Sitio Mag-Alambac</option>
+                                            </select> 
                                         </div>
                                         <div class="input-wrapper">
                                         <label for="blotter_complainee" class="input-label">Complainee:</label>
@@ -197,7 +233,19 @@ if (mysqli_num_rows($result) > 0) {
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complainee_add" class="input-label">Complainee's Address:</label>
-                                            <input type="text" id="blotter_complainee_add" name="blotter_complainee_add" class="input-field"  >
+                                            <select id="blotter_complainee_add" name="blotter_complainee_add" class="input-field" require>
+                                                <option value="" disabled selected>Address</option>
+                                                <option value="Sitio Sto. Nino">Sitio Sto. Nino</option>
+                                                <option value="Sitio Suwa">Sitio Suwa</option>
+                                                <option value="Sitio Private">Sitio Private</option>
+                                                <option value="Sitio Lahug">Sitio Lahug</option>
+                                                <option value="Sitio Lapa">Sitio Lapa</option>
+                                                <option value="Sitio Sampig">Sitio Sampig</option>
+                                                <option value="Sitio Alang-Alang">Sitio Alang-Alang</option>
+                                                <option value="Sitio Granchina">Sitio Granchina</option>
+                                                <option value="Sitio Catambisan">Sitio Catambisan</option>
+                                                <option value="Sitio Mag-Alambac">Sitio Mag-Alambac</option>
+                                            </select> 
                                         </div>
                                         <div class="input-wrapper">
                                             <label for="blotter_complaint" class="input-label">Complaint:</label>
