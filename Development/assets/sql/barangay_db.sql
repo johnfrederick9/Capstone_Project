@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 07, 2025 at 10:32 AM
+-- Generation Time: Jan 09, 2025 at 03:19 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,20 @@ SET time_zone = "+00:00";
 --
 -- Database: `barangay_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rao_id_holder`
+--
+
+CREATE TABLE `rao_id_holder` (
+  `holder_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
+  `rao_type` varchar(255) NOT NULL,
+  `period_covered` date NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -139,7 +153,9 @@ INSERT INTO `tb_cashbook` (`cashbook_id`, `period_covered`, `treasurer_name`, `c
 (7, '2024-06-02', 'Joshua Belandres', 33202, 100, 0, 33302, 5981827.7, 0, 0, 5981827.7, 0, 0, 0, 0, 0, 0, 1),
 (8, '2024-05-01', 'Joshua Belandres', 33102, 100, 0, 33202, 5981727.7, 100, 0, 5981827.7, 0, 0, 0, 0, 0, 0, 1),
 (11, '2023-10-01', 'Joshua Belandres', 32125, 1100, 123, 33102, 5981836.7, 223, 332, 5981727.7, 323, 223, 100, 223, 173, 50, 1),
-(12, '2023-11-01', 'Joshua Belandres', 12345, 123, 123, 12345, 12345, 123, 123, 12345, 123, 123, 0, 123, 123, 0, 0);
+(12, '2023-11-01', 'Joshua Belandres', 12345, 123, 123, 12345, 12345, 123, 123, 12345, 123, 123, 0, 123, 123, 0, 0),
+(88, '2024-01-01', 'Joshua Belandres', 22150, 10000, 0, 32150, 65432142, 0, 0, 65432142, 0, 0, 0, 0, 0, 0, 0),
+(89, '2024-02-01', 'Joshua Belandres', 32150, 10000, 0, 42150, 65432142, 0, 0, 65432142, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -180,7 +196,9 @@ INSERT INTO `tb_cashbook_data` (`cashbook_id`, `cashbook_data_id`, `date_data`, 
 (8, 5, '2024-05-01', 'VARIOUS PAYORS', '', 'RDC NO', '', 100, 0, 33202, 100, 0, 5981827.7, 0, 0, 0, 0, 0, 0),
 (11, 9, '2023-10-02', 'VARIOUS PAYORS', 'COLLECTION AND DEPOSITS', 'RDC NO', '2024-09-3', 100, 0, 32225, 100, 200, 5981736.7, 200, 100, 100, 100, 50, 50),
 (11, 11, '2023-10-03', 'VARIOUS PAYORS', 'COLLECTION AND DEPOSITS', 'RDC NO', '2024-09-3', 1000, 123, 33102, 123, 132, 5981727.7, 123, 123, 100, 123, 123, 50),
-(12, 12, '2023-11-01', 'VARIOUS PAYORS', 'COLLECTION AND DEPOSITS', 'RDC NO', '2024-09-3', 123, 123, 12345, 123, 123, 12345, 123, 123, 0, 123, 123, 0);
+(12, 12, '2023-11-01', 'VARIOUS PAYORS', 'COLLECTION AND DEPOSITS', 'RDC NO', '2024-09-3', 123, 123, 12345, 123, 123, 12345, 123, 123, 0, 123, 123, 0),
+(88, 99, '2024-01-01', 'VARIOUS PAYORS', 'COLLECTION AND DEPOSITS', 'RDC NO', '2024-09-3', 10000, 0, 32150, 0, 0, 65432142, 0, 0, 0, 0, 0, 0),
+(89, 100, '2024-02-01', 'VARIOUS PAYORS', 'COLLECTION AND DEPOSITS', 'RDC NO', '2024-09-3', 10000, 0, 42150, 0, 0, 65432142, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -199,7 +217,8 @@ CREATE TABLE `tb_cashbook_init` (
 --
 
 INSERT INTO `tb_cashbook_init` (`init_id`, `clt_init_balance`, `cb_init_balance`) VALUES
-(1, 32125, 5981836.7);
+(1, 32125, 5981836.7),
+(2, 22150, 65432142);
 
 -- --------------------------------------------------------
 
@@ -208,12 +227,15 @@ INSERT INTO `tb_cashbook_init` (`init_id`, `clt_init_balance`, `cb_init_balance`
 --
 
 CREATE TABLE `tb_cashbook_monthly` (
+  `cashbook_id` int(11) NOT NULL,
   `monthly_id` int(11) NOT NULL,
   `date_data` date NOT NULL,
   `clt_init_balance` double NOT NULL,
   `clt_end_balance` double NOT NULL,
   `cb_init_balance` double NOT NULL,
   `cb_end_balance` double NOT NULL,
+  `isDefaultCb` tinyint(4) NOT NULL,
+  `isDefaultClt` tinyint(4) NOT NULL,
   `isDisplayed` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -221,15 +243,9 @@ CREATE TABLE `tb_cashbook_monthly` (
 -- Dumping data for table `tb_cashbook_monthly`
 --
 
-INSERT INTO `tb_cashbook_monthly` (`monthly_id`, `date_data`, `clt_init_balance`, `clt_end_balance`, `cb_init_balance`, `cb_end_balance`, `isDisplayed`) VALUES
-(5, '2019-05-01', 42125, 45350, 5981836.7, 6004388.21, 1),
-(6, '2019-06-01', 65965, 75965, 6033858.21, 6033858.21, 0),
-(7, '2019-07-01', 55350, 64130, 6004388.21, 6004388.21, 1),
-(9, '2019-04-01', 52125, 62125, 5981836.7, 5981836.7, 0),
-(10, '2019-03-01', 42125, 52125, 5981836.7, 5981836.7, 0),
-(14, '2019-06-01', 65965, 75965, 6033858.21, 6033858.21, 0),
-(15, '2019-06-01', 45350, 55350, 6004388.21, 6004388.21, 1),
-(16, '2019-04-01', 32125, 42125, 5981836.7, 5981836.7, 1);
+INSERT INTO `tb_cashbook_monthly` (`cashbook_id`, `monthly_id`, `date_data`, `clt_init_balance`, `clt_end_balance`, `cb_init_balance`, `cb_end_balance`, `isDefaultCb`, `isDefaultClt`, `isDisplayed`) VALUES
+(88, 70, '2024-01-01', 22150, 32150, 65432142, 65432142, 1, 1, 0),
+(89, 71, '2024-02-01', 32150, 42150, 65432142, 65432142, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -271,7 +287,8 @@ CREATE TABLE `tb_document` (
 --
 
 INSERT INTO `tb_document` (`document_id`, `document_name`, `document_date`, `document_info`, `document_type`, `isDisplayed`) VALUES
-(61, 'Capstone Documentation', '2024-12-05', 'This imges intended for capstone projects', 'image', 1);
+(42, 'Capstone Picture', '2024-09-28', 'image for documentations', 'images', 0),
+(44, 'Loan', '2025-01-08', 'adsaf', 'asdfad', 1);
 
 -- --------------------------------------------------------
 
@@ -290,8 +307,9 @@ CREATE TABLE `tb_document_files` (
 --
 
 INSERT INTO `tb_document_files` (`id`, `document_id`, `filepath`) VALUES
-(56, 61, '../../file_uploads/438171552_827227515482368_602114975853314839_n.jpg'),
-(57, 61, '../../file_uploads/442466857_849676080347474_737044034695990163_n.jpg');
+(27, 42, 'file_uploads/438171552_827227515482368_602114975853314839_n.jpg'),
+(28, 42, 'file_uploads/442466857_849676080347474_737044034695990163_n.jpg'),
+(31, 44, '../../file_uploads/loan_logo1.png');
 
 -- --------------------------------------------------------
 
@@ -366,9 +384,7 @@ CREATE TABLE `tb_event` (
 INSERT INTO `tb_event` (`event_id`, `event_name`, `event_location`, `event_type`, `event_start`, `event_end`, `isDisplayed`) VALUES
 (63, 'liga', 'liga', 'liga', '2024-11-25', '2024-11-26', 0),
 (64, 'Ligo', 'asdfa', 'asdf', '2024-11-30', '2024-12-01', 0),
-(65, '123', '123', '123', '2024-12-03', '2024-12-05', 0),
-(66, 'Liga', 'Mantalongon', 'Sports', '2024-12-09', '2024-12-10', 0),
-(67, 'asdfas', 'asdf', 'asdf', '2024-12-30', '2024-12-31', 0);
+(65, '123', '123', '123', '2024-12-03', '2024-12-05', 0);
 
 -- --------------------------------------------------------
 
@@ -415,11 +431,11 @@ CREATE TABLE `tb_household` (
 --
 
 INSERT INTO `tb_household` (`household_name`, `household_head`, `household_address`, `household_contact`, `id`, `household_id`, `isDisplayed`) VALUES
-('Family', 'John Frederick Gelay', 'Sitio Lapa', '+63 968 651 3790', 2, 122, 1),
+('asdfasdf', 'asdfffdasfadf', 'sadfasdf', '+63 968 651 3790', 2, 122, 1),
 ('', '', '', NULL, 6, 110920, 1),
 ('adf', 'adf', 'asdf', '+63 968 651 3790', 7, 112354, 1),
 ('', '', '', NULL, 8, 12354, 0),
-('', '', '', NULL, 9, 12548, 1);
+('', '', '', NULL, 9, 29310, 1);
 
 -- --------------------------------------------------------
 
@@ -456,9 +472,7 @@ INSERT INTO `tb_indigency` (`indigency_id`, `indigency_cname`, `indigency_fname`
 (19, 'asdf', 'asdfasdf', 'asdfas', '2024-12-31', 0, 0, 0),
 (20, 'asdfasd', 'fasdfasdfas', 'fdsfas', '2024-11-06', 0, 0, 0),
 (21, 'gelay', 'asdfasf', 'hrlsu', '2024-12-31', 0, 0, 0),
-(22, 'John Frederick Gelay', 'Fernando A. Gelay', 'Maria D. Gelay', '2024-12-31', 1, 70, 30),
-(23, 'John Frederick D. Gelay', 'Fernando A. Gelay', 'Maria D. Gelay', '2025-01-07', 0, 123, 123),
-(24, 'John Frederick D. Gelay', 'Fernando A. Gelay', 'Maria D. Gelay', '2025-01-07', 1, 123, 123);
+(22, 'John Frederick Gelay', 'Fernando A. Gelay', 'Maria D. Gelay', '2024-12-31', 1, 70, 30);
 
 -- --------------------------------------------------------
 
@@ -513,19 +527,12 @@ CREATE TABLE `tb_inventory` (
 --
 
 INSERT INTO `tb_inventory` (`item_id`, `item_name`, `item_description`, `item_brand`, `item_serialNo`, `item_custodian`, `item_count`, `item_price`, `item_amount`, `item_year`, `item_status`, `lendability`, `lendable_count`, `available_count`, `isDisplayed`) VALUES
-(105, 'STOOLS', 'Cream Color', 'MonoBlock', 'None', 'Joshua Belandres', 123, 321, 39483, '2019', 'Serviceable', 1, 53, 44, 0),
-(106, 'Tableeee', 'Ivory Color', 'MonoBlock', 'None', 'Barangay ', 35, 5260, 184100, '2019', 'Unserviceable', 1, 35, 35, 1),
+(105, 'STOOLS', 'Cream Color', 'MonoBlock', 'None', 'Joshua Belandres', 123, 321, 39483, '2019', 'Serviceable', 1, 53, 46, 0),
+(106, 'Table', 'Ivory Color', 'MonoBlock', 'None', 'Barangay ', 35, 520, 18200, '2019', 'Serviceable', 1, 35, 36, 1),
 (107, 'Monoblock Chair', 'with backrest', 'MonoBlock', 'None', 'Barangay ', 410, 650, 266500, '2020', 'Unserviceable', 1, 400, 400, 1),
 (108, 'cONCRETE MIXER', 'white orange', 'KOMATSU', 'SN: NVXPV00E202193.347600', 'Barangay ', 2, 75000, 150000, '2023', 'Serviceable', 1, 2, 2, 0),
-(114, 'table', 'secret', 'asdfddd', 'asdfa', 'asdf', 112, 12, 1344, '2012', 'Serviceable', 1, 12, 12, 0),
-(115, 'Tent ', 'asdf', 'fd', 'd', 'd', 123, 123, 15129, '0000', 'Serviceable', 1, 123, 123, 0),
-(116, 'asdfasf', 'asdfasff', 'asdfasf', 'asdfasf', 'asdfasf', 12313, 123123, 1516013499, '0000', 'Serviceable', 1, 12313, 12192, 0),
-(117, 'asdfasdf', 'adsfasfas', 'sfasdfasf', 'oiasudfouasf', 'asodifuasouf', 1231, 123, 151413, '2019', 'Serviceable', 1, 123, 123, 0),
-(118, 'asdfasf', 'dsfasf', 'asdfasf', 'asdfasf', 'asdfasf', 12313, 12313, 151609969, '0000', 'Serviceable', 1, 123, 123, 0),
-(119, 'asdfasdf', 'asdfasf', 'asdfasf', 'asdfasdf', 'adfasf', 123, 123, 15129, '0000', 'Serviceable', 1, 123, 123, 0),
-(120, 'asdfa', 'sdfasdf', 'safsafsd', 'fasfas', 'fasfs', 123, 2002, 246246, '2002', 'Serviceable', 1, 22, 22, 0),
-(121, 'asdfasdf', 'asdfadsfasd', 'fasdfsadf', 'dsafasdfsadf', 'asdfsafads', 12313, 12313, 151609969, '0000', 'Serviceable', 1, 123, 123, 0),
-(122, 'Tableeee', 'saasdfasf', 'asdfasf', 'adsfasf', 'asdfasf', 123123, 12313, 1516013499, '0000', 'Serviceable', 1, 12313, 12313, 0);
+(114, 'LAPTOP', 'Cream Color', 'MonoBlock', 'KALAHI PROJECT', 'Barangay ', 2, 29300, 58600, '2019', 'Serviceable', 0, 1, 1, 1),
+(115, 'Table Knitted', 'Knitted', 'Balo', 'Skadosh', 'Barangay', 15, 450, 6750, '2025', 'Serviceable', 1, 15, 15, 1);
 
 -- --------------------------------------------------------
 
@@ -553,11 +560,13 @@ CREATE TABLE `tb_item_transaction` (
 --
 
 INSERT INTO `tb_item_transaction` (`transaction_id`, `borrower_name`, `borrower_address`, `reserved_on`, `date_borrowed`, `return_date`, `approved_by`, `released_by`, `returned_by`, `date_returned`, `transaction_status`, `isDisplayed`) VALUES
-(12, 'Joshua Belandres', 'Mantalongon ', '2024-09-23', '2024-09-23', '2024-09-23', 'Zenaida Belandres', 'Angebon Reyes', 'John Frederick Gelay', '2024-09-25', 'Partially', 1),
-(21, 'fasdfasd', 'fsafsfasda', '2024-09-26', '2024-09-26', '2024-09-27', 'sfasdf', 'asdf', '12', '0000-00-00', 'Ongoing', 1),
-(22, 'asdfa', 'sdfasdf', '2024-10-06', '2024-10-06', '2024-10-06', 'dasd', 'ASD', NULL, NULL, 'Ongoing', 0),
-(23, 'sdfasf', 'asfasf', '2024-12-30', '2024-12-30', '2024-12-31', 'sdzv', 'safasfas', NULL, NULL, 'Ongoing', 0),
-(24, 'asdfasf', 'asdfasf', '2023-12-31', '2024-12-31', '2024-12-31', 'sfasdf', 'asdfasf', NULL, NULL, 'Ongoing', 0);
+(12, 'Joshua Belandres', 'Mantalongon ', '2024-09-23', '2024-09-23', '2024-09-23', 'Zenaida Belandres', 'Angebon Reyes', 'John Frederick Gelay', '2024-09-25', 'Completed', 0),
+(21, 'fasdfasd', 'fsafsf', '2024-09-26', '2024-09-26', '2024-09-27', 'sfasdf', 'asdf', '12', '0000-00-00', 'Ongoing', 0),
+(22, 'Angebon Reyes', 'Mantalongon ', '2024-10-03', '2024-10-03', '2024-10-03', 'Zenaida Belandres', 'Angebon Reyes', NULL, NULL, 'Ongoing', 0),
+(23, 'Joshua Belandres', 'Mantalongon ', '2024-10-03', '2024-10-03', '2024-10-03', 'Zenaida Belandres', 'Angebon Reyes', NULL, NULL, 'Ongoing', 0),
+(24, 'John Frederick Gelay', 'Mantalongon ', '2025-01-08', '2025-01-08', '2025-01-08', 'Zenaida Belandres', 'Angebon Reyes', 'Me', '2025-01-08', 'Completed', 1),
+(25, 'Joshua Belandres', 'Mantalongon ', '2025-01-08', '2025-01-08', '2025-01-08', 'Zenaida Belandres', 'Angebon Reyes', 'Me', '2025-01-08', 'Partially', 1),
+(26, 'Zenaida Belandres', 'Mantalongon ', '2025-01-08', '2025-01-08', '2025-01-09', 'Zenaida Belandres', 'Angebon Reyes', '', '0000-00-00', 'Ongoing', 1);
 
 -- --------------------------------------------------------
 
@@ -610,8 +619,37 @@ CREATE TABLE `tb_project` (
 --
 
 INSERT INTO `tb_project` (`project_id`, `project_name`, `project_start`, `project_end`, `project_budget`, `project_source`, `project_status`, `project_description`, `project_location`, `project_managers`, `project_stakeholders`, `isDisplayed`) VALUES
-(34, 'asdfasdf', '2025-01-07', '2025-01-08', 123123, 'asdfasdf', 'New', 'asdfsadf', 'asdfasdf', 'asdfasf', 'sadfasdf', 0),
-(35, 'asdfasdf', '2025-01-07', '2025-01-10', 123123, 'DFASDFA', '', 'ASDFASF', 'ASDFASD', 'FASDFADS', 'FASDFASDF', 1);
+(3, 'asdfaf', '2024-04-01', '2024-01-01', 112313, '12313', 'Ongoing', '12313', '1231313', '12313', '12313', 0),
+(4, 'asdfasdf', '2024-12-31', '2024-12-31', 123123, '12321', 'New', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 0),
+(5, 'asdfasdf', '2024-12-31', '2024-12-31', 123123, '12321', 'Ongoing', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 0),
+(6, 'asdfasdf', '2024-12-31', '2024-12-31', 123123, '12321', 'New', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 0),
+(7, 'asdfasdff', '2024-12-31', '2024-12-31', 123123, '12321', 'Ongoing', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 0),
+(8, 'asdfasdf', '2024-12-31', '2024-12-31', 123123, '12321', 'New', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 0),
+(9, 'asdfasdfddd', '2024-12-31', '2024-12-31', 123123, '12321', 'Completed', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 1),
+(10, 'asdfasdf', '2024-12-31', '2024-12-31', 123123, '12321', 'New', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 1),
+(11, 'asdfasdf', '2024-12-31', '2024-12-31', 123123, '12321', 'New', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 1),
+(12, 'asdfasdf', '2024-12-31', '2024-12-31', 123123, '12321', 'New', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 1),
+(13, 'asdfasdf', '2024-12-31', '2024-12-31', 123123, '12321', 'New', 'dfasdfsadf', '12313', 'asdfas', 'dfasfasfasfas', 1),
+(14, '', '2024-11-20', '2023-12-31', 123123, 'asdfasdf', 'Ongoing', 'asdfasdf', 'asdfasdf', 'asdfasdf', 'asdfasdf', 0),
+(15, '', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
+(16, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
+(17, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
+(18, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
+(19, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
+(20, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
+(21, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
+(22, 'asdfasdf saasdfsf', '2024-12-31', '2024-12-04', -2, 'asdfasd', 'New', 'asdfasf', 'asdfasdf', 'asdfas', 'fasdfasdf', 1),
+(23, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
+(24, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
+(25, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
+(26, 'secret', '0011-01-01', '0112-01-01', 0, 'asdfasdfasdf', 'New', 'eeeeeeeeeee', 'feeeeeeeeeeeeeee', 'asdfasdfsa', 'eeeeeeeeeeeeee', 0),
+(27, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 0),
+(28, 'asdfasdfd', '2024-11-17', '2024-12-30', 2, 'fasfsf', 'New', 'sfsfsf', 'asdfsadfasfs', 'fsfsf', 'sfsfsf', 0),
+(29, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 1),
+(30, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 1),
+(31, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 1),
+(32, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 1),
+(33, 'asdfasdf', '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -702,7 +740,7 @@ CREATE TABLE `tb_rao_bd` (
 --
 
 INSERT INTO `tb_rao_bd` (`rao_bd_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
-(7, 'Zenaida Belandres', '2024-12-01', 'John Frederick Gelay', 1);
+(9, 'Zenaida Belandres', '2024-12-01', 'Joshua Belandres', 1);
 
 -- --------------------------------------------------------
 
@@ -722,13 +760,6 @@ CREATE TABLE `tb_rao_bd_ap` (
   `isDisplayed` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tb_rao_bd_ap`
---
-
-INSERT INTO `tb_rao_bd_ap` (`rao_bd_id`, `rao_bd_ap_id`, `ap_ref_date`, `ap_ref_no`, `ap_particulars`, `ap_total`, `ap_pre_disaster`, `ap_quick_response`, `isDisplayed`) VALUES
-(7, 15, '2024-12-01', 'Appropriations', 'Annual Budget', 572528.87, 400770.21, 171758.66, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -743,7 +774,7 @@ CREATE TABLE `tb_rao_bd_ob` (
   `ob_particulars` varchar(255) NOT NULL,
   `ob_total` double NOT NULL,
   `ob_pre_disaster` double NOT NULL,
-  `ap_quick_response` double NOT NULL,
+  `ob_quick_response` double NOT NULL,
   `isDisplayed` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -762,17 +793,6 @@ CREATE TABLE `tb_rao_bd_totals` (
   `quick_response` double NOT NULL,
   `isDisplayed` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tb_rao_bd_totals`
---
-
-INSERT INTO `tb_rao_bd_totals` (`rao_bd_total_id`, `rao_bd_id`, `total_type`, `total`, `pre_disaster`, `quick_response`, `isDisplayed`) VALUES
-(21, 7, 'TA', 572528.87, 400770.21, 171758.66, 1),
-(22, 7, 'BF', 572528.87, 400770.21, 171758.66, 1),
-(23, 7, 'TO', 0, 0, 0, 1),
-(24, 7, 'OB', 0, 0, 0, 1),
-(25, 7, 'AB', 572528.87, 400770.21, 171758.66, 1);
 
 -- --------------------------------------------------------
 
@@ -794,7 +814,7 @@ CREATE TABLE `tb_rao_co` (
 
 INSERT INTO `tb_rao_co` (`rao_co_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
 (1, 'Pending...', '0000-00-00', 'Pending...', 0),
-(2, 'John Frederick Gelay', '2024-12-01', 'Joshua Belandres', 1);
+(2, 'John Frederick Gelay', '2024-11-01', 'Joshua Belandres', 1);
 
 -- --------------------------------------------------------
 
@@ -815,7 +835,13 @@ CREATE TABLE `tb_rao_cocont` (
 --
 
 INSERT INTO `tb_rao_cocont` (`rao_cocont_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
-(1, 'Angebon Reyes', '2024-11-01', 'Joshua Belandres', 1);
+(1, 'Angebon Reyes', '2024-11-01', 'Joshua Belandres', 0),
+(2, 'John Frederick Gelay', '2025-02-01', 'Zenaida Belandres', 0),
+(3, 'Pending...', '0000-00-00', 'Pending...', 1),
+(4, 'Pending...', '0000-00-00', 'Pending...', 1),
+(5, 'Pending...', '0000-00-00', 'Pending...', 0),
+(6, 'John Frederick Gelay', '2025-01-01', 'Joshua Belandres', 1),
+(7, 'John Frederick Gelay', '2024-12-01', 'Joshua Belandres', 1);
 
 -- --------------------------------------------------------
 
@@ -859,7 +885,7 @@ CREATE TABLE `tb_rao_cocont_ap_data` (
 --
 
 INSERT INTO `tb_rao_cocont_ap_data` (`rao_cocont_ap_data_id`, `rao_cocont_ap_id`, `rao_cocont_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
-(1, 1, 1, 'Data 1', 4247573.23, 1);
+(1, 1, 1, 'Data 1', 4247573.23, 0);
 
 -- --------------------------------------------------------
 
@@ -882,10 +908,18 @@ CREATE TABLE `tb_rao_cocont_ap_totals` (
 --
 
 INSERT INTO `tb_rao_cocont_ap_totals` (`rao_cocont_id`, `rao_cocont_ap_total_id`, `total_type`, `rao_cocont_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
-(1, 1, 'ap_total_TA', 0, '', 4247573.23, 1),
-(1, 2, 'TA', 1, 'Data 1', 4247573.23, 1),
-(1, 3, 'ap_total_BF', 0, '', 4247573.23, 1),
-(1, 4, 'BF', 1, 'Data 1', 4247573.23, 1);
+(1, 1, 'ap_total_TA', 0, '', 4247573.23, 0),
+(1, 2, 'TA', 1, 'Data 1', 4247573.23, 0),
+(1, 3, 'ap_total_BF', 0, '', 4247573.23, 0),
+(1, 4, 'BF', 1, 'Data 1', 4247573.23, 0),
+(2, 5, 'ap_total_TA', 0, '', 0, 0),
+(2, 6, 'TA', 2, 'Data 1', 0, 0),
+(2, 7, 'ap_total_BF', 0, '', 0, 0),
+(2, 8, 'BF', 2, 'Data 1', 0, 0),
+(6, 9, 'ap_total_TA', 0, '', 0, 1),
+(6, 10, 'TA', 6, 'Data 1', 0, 1),
+(6, 11, 'ap_total_BF', 0, '', 0, 1),
+(6, 12, 'BF', 6, 'Data 1', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -905,7 +939,13 @@ CREATE TABLE `tb_rao_cocont_attributes` (
 --
 
 INSERT INTO `tb_rao_cocont_attributes` (`rao_cocont_id`, `rao_cocont_att_id`, `attribute_name`, `isDisplayed`) VALUES
-(1, 1, 'Data 1', 1);
+(1, 1, 'Data 1', 0),
+(2, 2, 'Data 1', 0),
+(3, 3, 'Data 1', 1),
+(4, 4, 'Data 1', 1),
+(5, 5, 'Data 1', 0),
+(6, 6, 'Data 1', 1),
+(7, 7, 'Data 1', 1);
 
 -- --------------------------------------------------------
 
@@ -958,12 +998,24 @@ CREATE TABLE `tb_rao_cocont_ob_totals` (
 --
 
 INSERT INTO `tb_rao_cocont_ob_totals` (`rao_cocont_id`, `rao_cocont_ob_total_id`, `total_type`, `rao_cocont_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
-(1, 1, 'ob_total_TO', 0, '', 0, 1),
-(1, 2, 'TO', 1, 'Data 1', 0, 1),
-(1, 3, 'ob_total_OB', 0, '', 0, 1),
-(1, 4, 'OB', 1, 'Data 1', 0, 1),
-(1, 5, 'ob_total_AB', 0, '', 4247573.23, 1),
-(1, 6, 'AB', 1, 'Data 1', 4247573.23, 1);
+(1, 1, 'ob_total_TO', 0, '', 0, 0),
+(1, 2, 'TO', 1, 'Data 1', 0, 0),
+(1, 3, 'ob_total_OB', 0, '', 0, 0),
+(1, 4, 'OB', 1, 'Data 1', 0, 0),
+(1, 5, 'ob_total_AB', 0, '', 4247573.23, 0),
+(1, 6, 'AB', 1, 'Data 1', 4247573.23, 0),
+(2, 7, 'ob_total_TO', 0, '', 0, 0),
+(2, 8, 'TO', 2, 'Data 1', 0, 0),
+(2, 9, 'ob_total_OB', 0, '', 0, 0),
+(2, 10, 'OB', 2, 'Data 1', 0, 0),
+(2, 11, 'ob_total_AB', 0, '', 0, 0),
+(2, 12, 'AB', 2, 'Data 1', 0, 0),
+(6, 13, 'ob_total_TO', 0, '', 0, 1),
+(6, 14, 'TO', 6, 'Data 1', 0, 1),
+(6, 15, 'ob_total_OB', 0, '', 0, 1),
+(6, 16, 'OB', 6, 'Data 1', 0, 1),
+(6, 17, 'ob_total_AB', 0, '', 0, 1),
+(6, 18, 'AB', 6, 'Data 1', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -985,10 +1037,10 @@ CREATE TABLE `tb_rao_cont` (
 
 INSERT INTO `tb_rao_cont` (`rao_cont_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
 (83, 'John Frederick Gelay', '2024-11-01', 'Joshua Belandres', 0),
-(84, 'John Frederick Gelay', '2024-10-01', 'Joshua Belandres', 0),
+(84, 'John Frederick Gelay', '2024-10-01', 'Joshua Belandres', 1),
 (85, 'Zen', '2024-11-01', 'Joshua Belandres', 0),
-(86, '1asdad', '2332-12-31', 'asdf', 0),
-(87, 'asd', '2001-11-09', 'asdf', 0);
+(86, 'Angebon Reyes', '2024-09-01', 'Joshua Belandres', 1),
+(89, 'Pending...', '0000-00-00', 'Pending...', 1);
 
 -- --------------------------------------------------------
 
@@ -1012,7 +1064,8 @@ CREATE TABLE `tb_rao_cont_ap` (
 INSERT INTO `tb_rao_cont_ap` (`rao_cont_id`, `rao_cont_ap_id`, `ap_ref_date`, `ap_ref_no`, `ap_particulars`, `ap_totals`) VALUES
 (83, 63, '2024-11-01', 'Appropriations', 'Annual Budget', 100),
 (83, 64, '2024-11-02', 'Appropriations', 'Additional', 100),
-(84, 65, '2024-10-01', 'Appropriations', 'Annual Budget', 4500);
+(84, 65, '2024-10-01', 'Appropriations', 'Annual Budget', 4500),
+(86, 66, '2024-09-01', 'Appropriations', 'Annual Budget', 15655);
 
 -- --------------------------------------------------------
 
@@ -1036,16 +1089,37 @@ CREATE TABLE `tb_rao_cont_ap_data` (
 INSERT INTO `tb_rao_cont_ap_data` (`rao_cont_ap_data_id`, `rao_cont_ap_id`, `rao_cont_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
 (548, 63, 256, 'Data 1', 100, 0),
 (549, 64, 256, 'Data 1', 100, 0),
-(550, 65, 257, 'Electrification', 100, 0),
-(551, 65, 258, 'Road Rehabilitation', 200, 0),
-(552, 65, 259, 'Daycare Center', 300, 0),
-(553, 65, 260, 'Road Concreting', 400, 0),
-(554, 65, 261, 'MES', 500, 0),
-(555, 65, 262, 'Foodbridge Lower Lahug', 600, 0),
-(556, 65, 263, 'MNHS', 700, 0),
-(557, 65, 264, 'SAMPIG ELEM. SCHOOL', 800, 0),
-(558, 65, 265, 'SUMAFA WOMENS', 900, 0),
-(559, 65, 266, 'WATER RESERVOIR', 0, 0);
+(550, 65, 257, 'Electrification', 100, 1),
+(551, 65, 258, 'Road Rehabilitation', 200, 1),
+(552, 65, 259, 'Daycare Center', 300, 1),
+(553, 65, 260, 'Road Concreting', 400, 1),
+(554, 65, 261, 'MES', 500, 1),
+(555, 65, 262, 'Foodbridge Lower Lahug', 600, 1),
+(556, 65, 263, 'MNHS', 700, 1),
+(557, 65, 264, 'SAMPIG ELEM. SCHOOL', 800, 1),
+(558, 65, 265, 'SUMAFA WOMENS', 900, 1),
+(559, 65, 266, 'WATER RESERVOIR', 0, 1),
+(560, 66, 278, 'Data 1', 0, 0),
+(561, 66, 279, 'Electrification', 1111, 1),
+(562, 66, 280, 'Road Rehabilitation', 1212, 1),
+(563, 66, 281, 'Daycare Center', 1313, 1),
+(564, 66, 282, 'Road Concreting', 1414, 1),
+(565, 66, 283, 'MES', 1515, 1),
+(566, 66, 284, 'Foodbridge Lower Lahug', 1616, 1),
+(567, 66, 285, 'MNHS', 1717, 1),
+(568, 66, 286, 'SAMPIG ELEM. SCHOOL', 1818, 1),
+(569, 66, 287, 'SUMAFA WOMENS', 1919, 1),
+(570, 66, 288, 'WATER RESERVOIR', 2020, 1),
+(571, 66, 289, 'Data 2', 0, 0),
+(572, 66, 290, 'Data 3', 0, 0),
+(573, 66, 291, 'Data 4', 0, 0),
+(574, 66, 292, 'Data 5', 0, 0),
+(575, 66, 293, 'Data 6', 0, 0),
+(576, 66, 294, 'Data 7', 0, 0),
+(577, 66, 295, 'Data 8', 0, 0),
+(578, 66, 296, 'Data 9', 0, 0),
+(579, 66, 297, 'Data 10', 0, 0),
+(580, 66, 298, 'Data 11', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1072,28 +1146,28 @@ INSERT INTO `tb_rao_cont_ap_totals` (`rao_cont_id`, `rao_cont_ap_total_id`, `tot
 (83, 470, 'TA', 256, 'Data 1', 200, 0),
 (83, 471, 'ap_total_BF', 0, '', 200, 0),
 (83, 472, 'BF', 256, 'Data 1', 200, 0),
-(84, 473, 'ap_total_TA', 0, '', 4500, 0),
-(84, 474, 'TA', 257, 'Electrification', 100, 0),
-(84, 475, 'TA', 258, 'Road Rehabilitation', 200, 0),
-(84, 476, 'TA', 259, 'Daycare Center', 300, 0),
-(84, 477, 'TA', 260, 'Road Concreting', 400, 0),
-(84, 478, 'TA', 261, 'MES', 500, 0),
-(84, 479, 'TA', 262, 'Foodbridge Lower Lahug', 600, 0),
-(84, 480, 'TA', 263, 'MNHS', 700, 0),
-(84, 481, 'TA', 264, 'SAMPIG ELEM. SCHOOL', 800, 0),
-(84, 482, 'TA', 265, 'SUMAFA WOMENS', 900, 0),
-(84, 483, 'ap_total_BF', 0, '', 4500, 0),
-(84, 484, 'BF', 257, 'Electrification', 100, 0),
-(84, 485, 'BF', 258, 'Road Rehabilitation', 200, 0),
-(84, 486, 'BF', 259, 'Daycare Center', 300, 0),
-(84, 487, 'BF', 260, 'Road Concreting', 400, 0),
-(84, 488, 'BF', 261, 'MES', 500, 0),
-(84, 489, 'BF', 262, 'Foodbridge Lower Lahug', 600, 0),
-(84, 490, 'BF', 263, 'MNHS', 700, 0),
-(84, 491, 'BF', 264, 'SAMPIG ELEM. SCHOOL', 800, 0),
-(84, 492, 'BF', 265, 'SUMAFA WOMENS', 900, 0),
-(84, 493, 'TA', 266, 'WATER RESERVOIR', 0, 0),
-(84, 494, 'BF', 266, 'WATER RESERVOIR', 0, 0),
+(84, 473, 'ap_total_TA', 0, '', 4500, 1),
+(84, 474, 'TA', 257, 'Electrification', 100, 1),
+(84, 475, 'TA', 258, 'Road Rehabilitation', 200, 1),
+(84, 476, 'TA', 259, 'Daycare Center', 300, 1),
+(84, 477, 'TA', 260, 'Road Concreting', 400, 1),
+(84, 478, 'TA', 261, 'MES', 500, 1),
+(84, 479, 'TA', 262, 'Foodbridge Lower Lahug', 600, 1),
+(84, 480, 'TA', 263, 'MNHS', 700, 1),
+(84, 481, 'TA', 264, 'SAMPIG ELEM. SCHOOL', 800, 1),
+(84, 482, 'TA', 265, 'SUMAFA WOMENS', 900, 1),
+(84, 483, 'ap_total_BF', 0, '', 4500, 1),
+(84, 484, 'BF', 257, 'Electrification', 100, 1),
+(84, 485, 'BF', 258, 'Road Rehabilitation', 200, 1),
+(84, 486, 'BF', 259, 'Daycare Center', 300, 1),
+(84, 487, 'BF', 260, 'Road Concreting', 400, 1),
+(84, 488, 'BF', 261, 'MES', 500, 1),
+(84, 489, 'BF', 262, 'Foodbridge Lower Lahug', 600, 1),
+(84, 490, 'BF', 263, 'MNHS', 700, 1),
+(84, 491, 'BF', 264, 'SAMPIG ELEM. SCHOOL', 800, 1),
+(84, 492, 'BF', 265, 'SUMAFA WOMENS', 900, 1),
+(84, 493, 'TA', 266, 'WATER RESERVOIR', 0, 1),
+(84, 494, 'BF', 266, 'WATER RESERVOIR', 0, 1),
 (85, 495, 'ap_total_TA', 0, '', 0, 0),
 (85, 496, 'TA', 267, 'Data 1', 0, 0),
 (85, 497, 'TA', 268, 'Electrification', 0, 0),
@@ -1118,36 +1192,50 @@ INSERT INTO `tb_rao_cont_ap_totals` (`rao_cont_id`, `rao_cont_ap_total_id`, `tot
 (85, 516, 'BF', 275, 'SAMPIG ELEM. SCHOOL', 0, 0),
 (85, 517, 'BF', 276, 'SUMAFA WOMENS', 0, 0),
 (85, 518, 'BF', 277, 'WATER RESERVOIR', 0, 0),
-(86, 519, 'ap_total_TA', 0, '', 0, 0),
+(86, 519, 'ap_total_TA', 0, '', 15655, 1),
 (86, 520, 'TA', 278, 'Data 1', 0, 0),
-(86, 521, 'TA', 279, 'Electrification', 0, 0),
-(86, 522, 'TA', 280, 'Road Rehabilitation', 0, 0),
-(86, 523, 'TA', 281, 'Daycare Center', 0, 0),
-(86, 524, 'TA', 282, 'Foodbridge Lower Lahug', 0, 0),
-(86, 525, 'TA', 283, 'MES', 0, 0),
-(86, 526, 'TA', 284, 'Road Concreting', 0, 0),
-(86, 527, 'TA', 285, 'asdf', 0, 0),
-(86, 528, 'ap_total_BF', 0, '', 0, 0),
-(86, 529, 'BF', 278, 'Data 1', 0, 0),
-(86, 530, 'BF', 279, 'Electrification', 0, 0),
-(86, 531, 'BF', 280, 'Road Rehabilitation', 0, 0),
-(86, 532, 'BF', 281, 'Daycare Center', 0, 0),
-(86, 533, 'BF', 282, 'Foodbridge Lower Lahug', 0, 0),
-(86, 534, 'BF', 283, 'MES', 0, 0),
-(86, 535, 'BF', 284, 'Road Concreting', 0, 0),
-(86, 536, 'BF', 285, 'asdf', 0, 0),
-(87, 537, 'ap_total_TA', 0, '', 0, 0),
-(87, 538, 'TA', 286, 'Data 1', 0, 0),
-(87, 539, 'TA', 287, 'Electrification', 0, 0),
-(87, 540, 'ap_total_BF', 0, '', 0, 0),
-(87, 541, 'BF', 286, 'Data 1', 0, 0),
-(87, 542, 'BF', 287, 'Electrification', 0, 0),
-(87, 543, 'ap_total_TA', 0, '', 0, 0),
-(87, 544, 'TA', 286, 'Data 1', 0, 0),
-(87, 545, 'TA', 287, 'Electrification', 0, 0),
-(87, 546, 'ap_total_BF', 0, '', 0, 0),
-(87, 547, 'BF', 286, 'Data 1', 0, 0),
-(87, 548, 'BF', 287, 'Electrification', 0, 0);
+(86, 521, 'TA', 279, 'Electrification', 1111, 1),
+(86, 522, 'TA', 280, 'Road Rehabilitation', 1212, 1),
+(86, 523, 'ap_total_BF', 0, '', 15655, 1),
+(86, 524, 'BF', 278, 'Data 1', 0, 0),
+(86, 525, 'BF', 279, 'Electrification', 1111, 1),
+(86, 526, 'BF', 280, 'Road Rehabilitation', 1212, 1),
+(86, 527, 'TA', 281, 'Daycare Center', 1313, 1),
+(86, 528, 'BF', 281, 'Daycare Center', 1313, 1),
+(86, 529, 'TA', 282, 'Road Concreting', 1414, 1),
+(86, 530, 'BF', 282, 'Road Concreting', 1414, 1),
+(86, 531, 'TA', 283, 'MES', 1515, 1),
+(86, 532, 'BF', 283, 'MES', 1515, 1),
+(86, 533, 'TA', 284, 'Foodbridge Lower Lahug', 1616, 1),
+(86, 534, 'BF', 284, 'Foodbridge Lower Lahug', 1616, 1),
+(86, 535, 'TA', 285, 'MNHS', 1717, 1),
+(86, 536, 'BF', 285, 'MNHS', 1717, 1),
+(86, 537, 'TA', 286, 'SAMPIG ELEM. SCHOOL', 1818, 1),
+(86, 538, 'BF', 286, 'SAMPIG ELEM. SCHOOL', 1818, 1),
+(86, 539, 'TA', 287, 'SUMAFA WOMENS', 1919, 1),
+(86, 540, 'BF', 287, 'SUMAFA WOMENS', 1919, 1),
+(86, 541, 'TA', 288, 'WATER RESERVOIR', 2020, 1),
+(86, 542, 'BF', 288, 'WATER RESERVOIR', 2020, 1),
+(86, 543, 'TA', 289, 'Data 2', 0, 0),
+(86, 544, 'BF', 289, 'Data 2', 0, 0),
+(86, 545, 'TA', 290, 'Data 3', 0, 0),
+(86, 546, 'BF', 290, 'Data 3', 0, 0),
+(86, 547, 'TA', 291, 'Data 4', 0, 0),
+(86, 548, 'BF', 291, 'Data 4', 0, 0),
+(86, 549, 'TA', 292, 'Data 5', 0, 0),
+(86, 550, 'BF', 292, 'Data 5', 0, 0),
+(86, 551, 'TA', 293, 'Data 6', 0, 0),
+(86, 552, 'BF', 293, 'Data 6', 0, 0),
+(86, 553, 'TA', 294, 'Data 7', 0, 0),
+(86, 554, 'BF', 294, 'Data 7', 0, 0),
+(86, 555, 'TA', 295, 'Data 8', 0, 0),
+(86, 556, 'BF', 295, 'Data 8', 0, 0),
+(86, 557, 'TA', 296, 'Data 9', 0, 0),
+(86, 558, 'BF', 296, 'Data 9', 0, 0),
+(86, 559, 'TA', 297, 'Data 10', 0, 0),
+(86, 560, 'BF', 297, 'Data 10', 0, 0),
+(86, 561, 'TA', 298, 'Data 11', 0, 0),
+(86, 562, 'BF', 298, 'Data 11', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1168,16 +1256,16 @@ CREATE TABLE `tb_rao_cont_attributes` (
 
 INSERT INTO `tb_rao_cont_attributes` (`rao_cont_id`, `rao_cont_att_id`, `attribute_name`, `isDisplayed`) VALUES
 (83, 256, 'Data 1', 0),
-(84, 257, 'Electrification', 0),
-(84, 258, 'Road Rehabilitation', 0),
-(84, 259, 'Daycare Center', 0),
-(84, 260, 'Road Concreting', 0),
-(84, 261, 'MES', 0),
-(84, 262, 'Foodbridge Lower Lahug', 0),
-(84, 263, 'MNHS', 0),
-(84, 264, 'SAMPIG ELEM. SCHOOL', 0),
-(84, 265, 'SUMAFA WOMENS', 0),
-(84, 266, 'WATER RESERVOIR', 0),
+(84, 257, 'Electrification', 1),
+(84, 258, 'Road Rehabilitation', 1),
+(84, 259, 'Daycare Center', 1),
+(84, 260, 'Road Concreting', 1),
+(84, 261, 'MES', 1),
+(84, 262, 'Foodbridge Lower Lahug', 1),
+(84, 263, 'MNHS', 1),
+(84, 264, 'SAMPIG ELEM. SCHOOL', 1),
+(84, 265, 'SUMAFA WOMENS', 1),
+(84, 266, 'WATER RESERVOIR', 1),
 (85, 267, 'Data 1', 0),
 (85, 268, 'Electrification', 0),
 (85, 269, 'Road Rehabilitation', 0),
@@ -1190,15 +1278,27 @@ INSERT INTO `tb_rao_cont_attributes` (`rao_cont_id`, `rao_cont_att_id`, `attribu
 (85, 276, 'SUMAFA WOMENS', 0),
 (85, 277, 'WATER RESERVOIR', 0),
 (86, 278, 'Data 1', 0),
-(86, 279, 'Electrification', 0),
-(86, 280, 'Road Rehabilitation', 0),
-(86, 281, 'Daycare Center', 0),
-(86, 282, 'Foodbridge Lower Lahug', 0),
-(86, 283, 'MES', 0),
-(86, 284, 'Road Concreting', 0),
-(86, 285, 'asdf', 0),
-(87, 286, 'Data 1', 0),
-(87, 287, 'Electrification', 0);
+(86, 279, 'Electrification', 1),
+(86, 280, 'Road Rehabilitation', 1),
+(86, 281, 'Daycare Center', 1),
+(86, 282, 'Road Concreting', 1),
+(86, 283, 'MES', 1),
+(86, 284, 'Foodbridge Lower Lahug', 1),
+(86, 285, 'MNHS', 1),
+(86, 286, 'SAMPIG ELEM. SCHOOL', 1),
+(86, 287, 'SUMAFA WOMENS', 1),
+(86, 288, 'WATER RESERVOIR', 1),
+(86, 289, 'Data 2', 0),
+(86, 290, 'Data 3', 0),
+(86, 291, 'Data 4', 0),
+(86, 292, 'Data 5', 0),
+(86, 293, 'Data 6', 0),
+(86, 294, 'Data 7', 0),
+(86, 295, 'Data 8', 0),
+(86, 296, 'Data 9', 0),
+(86, 297, 'Data 10', 0),
+(86, 298, 'Data 11', 0),
+(89, 302, 'Electrification', 1);
 
 -- --------------------------------------------------------
 
@@ -1221,8 +1321,7 @@ CREATE TABLE `tb_rao_cont_ob` (
 
 INSERT INTO `tb_rao_cont_ob` (`rao_cont_id`, `rao_cont_ob_id`, `ob_ref_date`, `ob_ref_no`, `ob_particulars`, `ob_totals`) VALUES
 (83, 63, '2024-11-01', 'Obligations', 'Salary and Wages: Tanod', 10),
-(87, 64, '2001-11-01', 'aasdf', 'adsf', 0),
-(87, 65, '2001-11-01', 'aasdf', 'adsf', 0);
+(86, 64, '2024-09-01', 'Obligations', 'Salary and Wages: Tanod', 6500);
 
 -- --------------------------------------------------------
 
@@ -1245,10 +1344,27 @@ CREATE TABLE `tb_rao_cont_ob_data` (
 
 INSERT INTO `tb_rao_cont_ob_data` (`rao_cont_ob_data_id`, `rao_cont_ob_id`, `rao_cont_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
 (522, 63, 256, 'Data 1', 10, 0),
-(523, 64, 286, 'Data 1', 0, 0),
-(524, 64, 287, 'Electrification', 0, 0),
-(525, 65, 286, 'Data 1', 0, 0),
-(526, 65, 287, 'Electrification', 0, 0);
+(523, 64, 278, 'Data 1', 0, 0),
+(524, 64, 279, 'Electrification', 200, 1),
+(525, 64, 280, 'Road Rehabilitation', 300, 1),
+(526, 64, 281, 'Daycare Center', 400, 1),
+(527, 64, 282, 'Road Concreting', 500, 1),
+(528, 64, 283, 'MES', 600, 1),
+(529, 64, 284, 'Foodbridge Lower Lahug', 700, 1),
+(530, 64, 285, 'MNHS', 800, 1),
+(531, 64, 286, 'SAMPIG ELEM. SCHOOL', 900, 1),
+(532, 64, 287, 'SUMAFA WOMENS', 1000, 1),
+(533, 64, 288, 'WATER RESERVOIR', 1100, 1),
+(534, 64, 289, 'Data 2', 0, 0),
+(535, 64, 290, 'Data 3', 0, 0),
+(536, 64, 291, 'Data 4', 0, 0),
+(537, 64, 292, 'Data 5', 0, 0),
+(538, 64, 293, 'Data 6', 0, 0),
+(539, 64, 294, 'Data 7', 0, 0),
+(540, 64, 295, 'Data 8', 0, 0),
+(541, 64, 296, 'Data 9', 0, 0),
+(542, 64, 297, 'Data 10', 0, 0),
+(543, 64, 298, 'Data 11', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1277,39 +1393,39 @@ INSERT INTO `tb_rao_cont_ob_totals` (`rao_cont_id`, `rao_cont_ob_total_id`, `tot
 (83, 706, 'OB', 256, 'Data 1', 10, 0),
 (83, 707, 'ob_total_AB', 0, '', 190, 0),
 (83, 708, 'AB', 256, 'Data 1', 190, 0),
-(84, 709, 'ob_total_TO', 0, '', 0, 0),
-(84, 710, 'TO', 257, 'Electrification', 0, 0),
-(84, 711, 'TO', 258, 'Road Rehabilitation', 0, 0),
-(84, 712, 'TO', 259, 'Daycare Center', 0, 0),
-(84, 713, 'TO', 260, 'Road Concreting', 0, 0),
-(84, 714, 'TO', 261, 'MES', 0, 0),
-(84, 715, 'TO', 262, 'Foodbridge Lower Lahug', 0, 0),
-(84, 716, 'TO', 263, 'MNHS', 0, 0),
-(84, 717, 'TO', 264, 'SAMPIG ELEM. SCHOOL', 0, 0),
-(84, 718, 'TO', 265, 'SUMAFA WOMENS', 0, 0),
-(84, 719, 'ob_total_OB', 0, '', 0, 0),
-(84, 720, 'OB', 257, 'Electrification', 0, 0),
-(84, 721, 'OB', 258, 'Road Rehabilitation', 0, 0),
-(84, 722, 'OB', 259, 'Daycare Center', 0, 0),
-(84, 723, 'OB', 260, 'Road Concreting', 0, 0),
-(84, 724, 'OB', 261, 'MES', 0, 0),
-(84, 725, 'OB', 262, 'Foodbridge Lower Lahug', 0, 0),
-(84, 726, 'OB', 263, 'MNHS', 0, 0),
-(84, 727, 'OB', 264, 'SAMPIG ELEM. SCHOOL', 0, 0),
-(84, 728, 'OB', 265, 'SUMAFA WOMENS', 0, 0),
-(84, 729, 'ob_total_AB', 0, '', 4500, 0),
-(84, 730, 'AB', 257, 'Electrification', 100, 0),
-(84, 731, 'AB', 258, 'Road Rehabilitation', 200, 0),
-(84, 732, 'AB', 259, 'Daycare Center', 300, 0),
-(84, 733, 'AB', 260, 'Road Concreting', 400, 0),
-(84, 734, 'AB', 261, 'MES', 500, 0),
-(84, 735, 'AB', 262, 'Foodbridge Lower Lahug', 600, 0),
-(84, 736, 'AB', 263, 'MNHS', 700, 0),
-(84, 737, 'AB', 264, 'SAMPIG ELEM. SCHOOL', 800, 0),
-(84, 738, 'AB', 265, 'SUMAFA WOMENS', 900, 0),
-(84, 739, 'TO', 266, 'WATER RESERVOIR', 0, 0),
-(84, 740, 'OB', 266, 'WATER RESERVOIR', 0, 0),
-(84, 741, 'AB', 266, 'WATER RESERVOIR', 0, 0),
+(84, 709, 'ob_total_TO', 0, '', 0, 1),
+(84, 710, 'TO', 257, 'Electrification', 0, 1),
+(84, 711, 'TO', 258, 'Road Rehabilitation', 0, 1),
+(84, 712, 'TO', 259, 'Daycare Center', 0, 1),
+(84, 713, 'TO', 260, 'Road Concreting', 0, 1),
+(84, 714, 'TO', 261, 'MES', 0, 1),
+(84, 715, 'TO', 262, 'Foodbridge Lower Lahug', 0, 1),
+(84, 716, 'TO', 263, 'MNHS', 0, 1),
+(84, 717, 'TO', 264, 'SAMPIG ELEM. SCHOOL', 0, 1),
+(84, 718, 'TO', 265, 'SUMAFA WOMENS', 0, 1),
+(84, 719, 'ob_total_OB', 0, '', 0, 1),
+(84, 720, 'OB', 257, 'Electrification', 0, 1),
+(84, 721, 'OB', 258, 'Road Rehabilitation', 0, 1),
+(84, 722, 'OB', 259, 'Daycare Center', 0, 1),
+(84, 723, 'OB', 260, 'Road Concreting', 0, 1),
+(84, 724, 'OB', 261, 'MES', 0, 1),
+(84, 725, 'OB', 262, 'Foodbridge Lower Lahug', 0, 1),
+(84, 726, 'OB', 263, 'MNHS', 0, 1),
+(84, 727, 'OB', 264, 'SAMPIG ELEM. SCHOOL', 0, 1),
+(84, 728, 'OB', 265, 'SUMAFA WOMENS', 0, 1),
+(84, 729, 'ob_total_AB', 0, '', 4500, 1),
+(84, 730, 'AB', 257, 'Electrification', 100, 1),
+(84, 731, 'AB', 258, 'Road Rehabilitation', 200, 1),
+(84, 732, 'AB', 259, 'Daycare Center', 300, 1),
+(84, 733, 'AB', 260, 'Road Concreting', 400, 1),
+(84, 734, 'AB', 261, 'MES', 500, 1),
+(84, 735, 'AB', 262, 'Foodbridge Lower Lahug', 600, 1),
+(84, 736, 'AB', 263, 'MNHS', 700, 1),
+(84, 737, 'AB', 264, 'SAMPIG ELEM. SCHOOL', 800, 1),
+(84, 738, 'AB', 265, 'SUMAFA WOMENS', 900, 1),
+(84, 739, 'TO', 266, 'WATER RESERVOIR', 0, 1),
+(84, 740, 'OB', 266, 'WATER RESERVOIR', 0, 1),
+(84, 741, 'AB', 266, 'WATER RESERVOIR', 0, 1),
 (85, 742, 'ob_total_TO', 0, '', 0, 0),
 (85, 743, 'TO', 267, 'Data 1', 0, 0),
 (85, 744, 'TO', 268, 'Electrification', 0, 0),
@@ -1346,51 +1462,72 @@ INSERT INTO `tb_rao_cont_ob_totals` (`rao_cont_id`, `rao_cont_ob_total_id`, `tot
 (85, 775, 'AB', 275, 'SAMPIG ELEM. SCHOOL', 0, 0),
 (85, 776, 'AB', 276, 'SUMAFA WOMENS', 0, 0),
 (85, 777, 'AB', 277, 'WATER RESERVOIR', 0, 0),
-(86, 778, 'ob_total_TO', 0, '', 0, 0),
+(86, 778, 'ob_total_TO', 0, '', 6500, 1),
 (86, 779, 'TO', 278, 'Data 1', 0, 0),
-(86, 780, 'TO', 279, 'Electrification', 0, 0),
-(86, 781, 'TO', 280, 'Road Rehabilitation', 0, 0),
-(86, 782, 'TO', 281, 'Daycare Center', 0, 0),
-(86, 783, 'TO', 282, 'Foodbridge Lower Lahug', 0, 0),
-(86, 784, 'TO', 283, 'MES', 0, 0),
-(86, 785, 'TO', 284, 'Road Concreting', 0, 0),
-(86, 786, 'TO', 285, 'asdf', 0, 0),
-(86, 787, 'ob_total_OB', 0, '', 0, 0),
-(86, 788, 'OB', 278, 'Data 1', 0, 0),
-(86, 789, 'OB', 279, 'Electrification', 0, 0),
-(86, 790, 'OB', 280, 'Road Rehabilitation', 0, 0),
-(86, 791, 'OB', 281, 'Daycare Center', 0, 0),
-(86, 792, 'OB', 282, 'Foodbridge Lower Lahug', 0, 0),
-(86, 793, 'OB', 283, 'MES', 0, 0),
-(86, 794, 'OB', 284, 'Road Concreting', 0, 0),
-(86, 795, 'OB', 285, 'asdf', 0, 0),
-(86, 796, 'ob_total_AB', 0, '', 0, 0),
-(86, 797, 'AB', 278, 'Data 1', 0, 0),
-(86, 798, 'AB', 279, 'Electrification', 0, 0),
-(86, 799, 'AB', 280, 'Road Rehabilitation', 0, 0),
-(86, 800, 'AB', 281, 'Daycare Center', 0, 0),
-(86, 801, 'AB', 282, 'Foodbridge Lower Lahug', 0, 0),
-(86, 802, 'AB', 283, 'MES', 0, 0),
-(86, 803, 'AB', 284, 'Road Concreting', 0, 0),
-(86, 804, 'AB', 285, 'asdf', 0, 0),
-(87, 805, 'ob_total_TO', 0, '', 0, 0),
-(87, 806, 'TO', 286, 'Data 1', 0, 0),
-(87, 807, 'TO', 287, 'Electrification', 0, 0),
-(87, 808, 'ob_total_OB', 0, '', 0, 0),
-(87, 809, 'OB', 286, 'Data 1', 0, 0),
-(87, 810, 'OB', 287, 'Electrification', 0, 0),
-(87, 811, 'ob_total_AB', 0, '', 0, 0),
-(87, 812, 'AB', 286, 'Data 1', 0, 0),
-(87, 813, 'AB', 287, 'Electrification', 0, 0),
-(87, 814, 'ob_total_TO', 0, '', 0, 0),
-(87, 815, 'TO', 286, 'Data 1', 0, 0),
-(87, 816, 'TO', 287, 'Electrification', 0, 0),
-(87, 817, 'ob_total_OB', 0, '', 0, 0),
-(87, 818, 'OB', 286, 'Data 1', 0, 0),
-(87, 819, 'OB', 287, 'Electrification', 0, 0),
-(87, 820, 'ob_total_AB', 0, '', 0, 0),
-(87, 821, 'AB', 286, 'Data 1', 0, 0),
-(87, 822, 'AB', 287, 'Electrification', 0, 0);
+(86, 780, 'TO', 279, 'Electrification', 200, 1),
+(86, 781, 'TO', 280, 'Road Rehabilitation', 300, 1),
+(86, 782, 'ob_total_OB', 0, '', 6500, 1),
+(86, 783, 'OB', 278, 'Data 1', 0, 0),
+(86, 784, 'OB', 279, 'Electrification', 200, 1),
+(86, 785, 'OB', 280, 'Road Rehabilitation', 300, 1),
+(86, 786, 'ob_total_AB', 0, '', 9155, 1),
+(86, 787, 'AB', 278, 'Data 1', 0, 0),
+(86, 788, 'AB', 279, 'Electrification', 911, 1),
+(86, 789, 'AB', 280, 'Road Rehabilitation', 912, 1),
+(86, 790, 'TO', 281, 'Daycare Center', 400, 1),
+(86, 791, 'OB', 281, 'Daycare Center', 400, 1),
+(86, 792, 'AB', 281, 'Daycare Center', 913, 1),
+(86, 793, 'TO', 282, 'Road Concreting', 500, 1),
+(86, 794, 'OB', 282, 'Road Concreting', 500, 1),
+(86, 795, 'AB', 282, 'Road Concreting', 914, 1),
+(86, 796, 'TO', 283, 'MES', 600, 1),
+(86, 797, 'OB', 283, 'MES', 600, 1),
+(86, 798, 'AB', 283, 'MES', 915, 1),
+(86, 799, 'TO', 284, 'Foodbridge Lower Lahug', 700, 1),
+(86, 800, 'OB', 284, 'Foodbridge Lower Lahug', 700, 1),
+(86, 801, 'AB', 284, 'Foodbridge Lower Lahug', 916, 1),
+(86, 802, 'TO', 285, 'MNHS', 800, 1),
+(86, 803, 'OB', 285, 'MNHS', 800, 1),
+(86, 804, 'AB', 285, 'MNHS', 917, 1),
+(86, 805, 'TO', 286, 'SAMPIG ELEM. SCHOOL', 900, 1),
+(86, 806, 'OB', 286, 'SAMPIG ELEM. SCHOOL', 900, 1),
+(86, 807, 'AB', 286, 'SAMPIG ELEM. SCHOOL', 918, 1),
+(86, 808, 'TO', 287, 'SUMAFA WOMENS', 1000, 1),
+(86, 809, 'OB', 287, 'SUMAFA WOMENS', 1000, 1),
+(86, 810, 'AB', 287, 'SUMAFA WOMENS', 919, 1),
+(86, 811, 'TO', 288, 'WATER RESERVOIR', 1100, 1),
+(86, 812, 'OB', 288, 'WATER RESERVOIR', 1100, 1),
+(86, 813, 'AB', 288, 'WATER RESERVOIR', 920, 1),
+(86, 814, 'TO', 289, 'Data 2', 0, 0),
+(86, 815, 'OB', 289, 'Data 2', 0, 0),
+(86, 816, 'AB', 289, 'Data 2', 0, 0),
+(86, 817, 'TO', 290, 'Data 3', 0, 0),
+(86, 818, 'OB', 290, 'Data 3', 0, 0),
+(86, 819, 'AB', 290, 'Data 3', 0, 0),
+(86, 820, 'TO', 291, 'Data 4', 0, 0),
+(86, 821, 'OB', 291, 'Data 4', 0, 0),
+(86, 822, 'AB', 291, 'Data 4', 0, 0),
+(86, 823, 'TO', 292, 'Data 5', 0, 0),
+(86, 824, 'OB', 292, 'Data 5', 0, 0),
+(86, 825, 'AB', 292, 'Data 5', 0, 0),
+(86, 826, 'TO', 293, 'Data 6', 0, 0),
+(86, 827, 'OB', 293, 'Data 6', 0, 0),
+(86, 828, 'AB', 293, 'Data 6', 0, 0),
+(86, 829, 'TO', 294, 'Data 7', 0, 0),
+(86, 830, 'OB', 294, 'Data 7', 0, 0),
+(86, 831, 'AB', 294, 'Data 7', 0, 0),
+(86, 832, 'TO', 295, 'Data 8', 0, 0),
+(86, 833, 'OB', 295, 'Data 8', 0, 0),
+(86, 834, 'AB', 295, 'Data 8', 0, 0),
+(86, 835, 'TO', 296, 'Data 9', 0, 0),
+(86, 836, 'OB', 296, 'Data 9', 0, 0),
+(86, 837, 'AB', 296, 'Data 9', 0, 0),
+(86, 838, 'TO', 297, 'Data 10', 0, 0),
+(86, 839, 'OB', 297, 'Data 10', 0, 0),
+(86, 840, 'AB', 297, 'Data 10', 0, 0),
+(86, 841, 'TO', 298, 'Data 11', 0, 0),
+(86, 842, 'OB', 298, 'Data 11', 0, 0),
+(86, 843, 'AB', 298, 'Data 11', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1407,6 +1544,13 @@ CREATE TABLE `tb_rao_co_ap` (
   `ap_totals` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tb_rao_co_ap`
+--
+
+INSERT INTO `tb_rao_co_ap` (`rao_co_id`, `rao_co_ap_id`, `ap_ref_date`, `ap_ref_no`, `ap_particulars`, `ap_totals`) VALUES
+(2, 1, '2024-11-01', 'Appropriations', 'Annual Budget', 45676.12);
+
 -- --------------------------------------------------------
 
 --
@@ -1421,6 +1565,17 @@ CREATE TABLE `tb_rao_co_ap_data` (
   `attribute_value` double NOT NULL,
   `isDisplayed` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_co_ap_data`
+--
+
+INSERT INTO `tb_rao_co_ap_data` (`rao_co_ap_data_id`, `rao_co_ap_id`, `rao_co_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, '4', 'Electrification', 45676.12, 1),
+(2, 1, '5', 'Travel Training Expenses', 0, 1),
+(3, 1, '8', 'Data 1', 0, 0),
+(4, 1, '9', 'Data 2', 0, 0),
+(5, 1, '10', 'Data 3', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1443,22 +1598,22 @@ CREATE TABLE `tb_rao_co_ap_totals` (
 --
 
 INSERT INTO `tb_rao_co_ap_totals` (`rao_co_id`, `rao_co_ap_total_id`, `total_type`, `rao_co_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
-(2, 1, 'ap_total_TA', 0, '', 0, 1),
-(2, 2, 'TA', 4, 'Electrification', 0, 1),
+(2, 1, 'ap_total_TA', 0, '', 45676.12, 1),
+(2, 2, 'TA', 4, 'Electrification', 45676.12, 1),
 (2, 3, 'TA', 5, 'Travel Training Expenses', 0, 1),
-(2, 4, 'ap_total_BF', 0, '', 0, 1),
-(2, 5, 'BF', 4, 'Electrification', 0, 1),
+(2, 4, 'ap_total_BF', 0, '', 45676.12, 1),
+(2, 5, 'BF', 4, 'Electrification', 45676.12, 1),
 (2, 6, 'BF', 5, 'Travel Training Expenses', 0, 1),
 (1, 7, 'TA', 6, 'Electrification', 0, 0),
 (1, 8, 'BF', 6, 'Electrification', 0, 0),
 (1, 9, 'TA', 7, 'Travel Training Expenses', 0, 0),
 (1, 10, 'BF', 7, 'Travel Training Expenses', 0, 0),
-(2, 11, 'TA', 8, 'Data 1', 0, 1),
-(2, 12, 'BF', 8, 'Data 1', 0, 1),
-(2, 13, 'TA', 9, 'Data 2', 0, 1),
-(2, 14, 'BF', 9, 'Data 2', 0, 1),
-(2, 15, 'TA', 10, 'Data 3', 0, 1),
-(2, 16, 'BF', 10, 'Data 3', 0, 1);
+(2, 11, 'TA', 8, 'Data 1', 0, 0),
+(2, 12, 'BF', 8, 'Data 1', 0, 0),
+(2, 13, 'TA', 9, 'Data 2', 0, 0),
+(2, 14, 'BF', 9, 'Data 2', 0, 0),
+(2, 15, 'TA', 10, 'Data 3', 0, 0),
+(2, 16, 'BF', 10, 'Data 3', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1485,9 +1640,9 @@ INSERT INTO `tb_rao_co_attributes` (`rao_co_id`, `rao_co_att_id`, `attribute_nam
 (2, 5, 'Travel Training Expenses', 1),
 (1, 6, 'Electrification', 0),
 (1, 7, 'Travel Training Expenses', 0),
-(2, 8, 'Data 1', 1),
-(2, 9, 'Data 2', 1),
-(2, 10, 'Data 3', 1);
+(2, 8, 'Data 1', 0),
+(2, 9, 'Data 2', 0),
+(2, 10, 'Data 3', 0);
 
 -- --------------------------------------------------------
 
@@ -1546,8 +1701,8 @@ INSERT INTO `tb_rao_co_ob_totals` (`rao_co_id`, `rao_co_ob_total_id`, `total_typ
 (2, 4, 'ob_total_OB', 0, '', 0, 1),
 (2, 5, 'OB', 4, 'Electrification', 0, 1),
 (2, 6, 'OB', 5, 'Travel Training Expenses', 0, 1),
-(2, 7, 'ob_total_AB', 0, '', 0, 1),
-(2, 8, 'AB', 4, 'Electrification', 0, 1),
+(2, 7, 'ob_total_AB', 0, '', 45676.12, 1),
+(2, 8, 'AB', 4, 'Electrification', 45676.12, 1),
 (2, 9, 'AB', 5, 'Travel Training Expenses', 0, 1),
 (1, 10, 'TO', 6, 'Electrification', 0, 0),
 (1, 11, 'OB', 6, 'Electrification', 0, 0),
@@ -1555,15 +1710,15 @@ INSERT INTO `tb_rao_co_ob_totals` (`rao_co_id`, `rao_co_ob_total_id`, `total_typ
 (1, 13, 'TO', 7, 'Travel Training Expenses', 0, 0),
 (1, 14, 'OB', 7, 'Travel Training Expenses', 0, 0),
 (1, 15, 'AB', 7, 'Travel Training Expenses', 0, 0),
-(2, 16, 'TO', 8, 'Data 1', 0, 1),
-(2, 17, 'OB', 8, 'Data 1', 0, 1),
-(2, 18, 'AB', 8, 'Data 1', 0, 1),
-(2, 19, 'TO', 9, 'Data 2', 0, 1),
-(2, 20, 'OB', 9, 'Data 2', 0, 1),
-(2, 21, 'AB', 9, 'Data 2', 0, 1),
-(2, 22, 'TO', 10, 'Data 3', 0, 1),
-(2, 23, 'OB', 10, 'Data 3', 0, 1),
-(2, 24, 'AB', 10, 'Data 3', 0, 1);
+(2, 16, 'TO', 8, 'Data 1', 0, 0),
+(2, 17, 'OB', 8, 'Data 1', 0, 0),
+(2, 18, 'AB', 8, 'Data 1', 0, 0),
+(2, 19, 'TO', 9, 'Data 2', 0, 0),
+(2, 20, 'OB', 9, 'Data 2', 0, 0),
+(2, 21, 'AB', 9, 'Data 2', 0, 0),
+(2, 22, 'TO', 10, 'Data 3', 0, 0),
+(2, 23, 'OB', 10, 'Data 3', 0, 0),
+(2, 24, 'AB', 10, 'Data 3', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1584,7 +1739,176 @@ CREATE TABLE `tb_rao_dev` (
 --
 
 INSERT INTO `tb_rao_dev` (`rao_dev_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
-(1, 'Joshua Belandres', '2024-12-01', 'Zenaida Belandres', 1);
+(1, 'Joshua Belandres', '2024-11-01', 'Zenaida Belandres', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_devcont`
+--
+
+CREATE TABLE `tb_rao_devcont` (
+  `rao_devcont_id` int(11) NOT NULL,
+  `chairman` varchar(255) NOT NULL,
+  `period_covered` date NOT NULL,
+  `brgy_captain` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_devcont`
+--
+
+INSERT INTO `tb_rao_devcont` (`rao_devcont_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
+(1, 'Angebon Reyes', '2024-11-01', 'John Frederick Gelay', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_devcont_ap`
+--
+
+CREATE TABLE `tb_rao_devcont_ap` (
+  `rao_devcont_id` int(11) NOT NULL,
+  `rao_devcont_ap_id` int(11) NOT NULL,
+  `ap_ref_date` date NOT NULL,
+  `ap_ref_no` varchar(255) NOT NULL,
+  `ap_particulars` varchar(255) NOT NULL,
+  `ap_totals` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_devcont_ap`
+--
+
+INSERT INTO `tb_rao_devcont_ap` (`rao_devcont_id`, `rao_devcont_ap_id`, `ap_ref_date`, `ap_ref_no`, `ap_particulars`, `ap_totals`) VALUES
+(1, 1, '2024-11-01', 'Appropriations', 'Annual Budget', 153647);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_devcont_ap_data`
+--
+
+CREATE TABLE `tb_rao_devcont_ap_data` (
+  `rao_devcont_ap_data_id` int(11) NOT NULL,
+  `rao_devcont_ap_id` int(11) NOT NULL,
+  `rao_devcont_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_devcont_ap_data`
+--
+
+INSERT INTO `tb_rao_devcont_ap_data` (`rao_devcont_ap_data_id`, `rao_devcont_ap_id`, `rao_devcont_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, 1, 'Data 1', 153647, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_devcont_ap_totals`
+--
+
+CREATE TABLE `tb_rao_devcont_ap_totals` (
+  `rao_devcont_id` int(11) NOT NULL,
+  `rao_devcont_ap_total_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `rao_devcont_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_devcont_ap_totals`
+--
+
+INSERT INTO `tb_rao_devcont_ap_totals` (`rao_devcont_id`, `rao_devcont_ap_total_id`, `total_type`, `rao_devcont_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, 'ap_total_TA', 0, '', 153647, 1),
+(1, 2, 'TA', 1, 'Data 1', 153647, 1),
+(1, 3, 'ap_total_BF', 0, '', 153647, 1),
+(1, 4, 'BF', 1, 'Data 1', 153647, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_devcont_attributes`
+--
+
+CREATE TABLE `tb_rao_devcont_attributes` (
+  `rao_devcont_id` int(11) NOT NULL,
+  `rao_devcont_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_devcont_attributes`
+--
+
+INSERT INTO `tb_rao_devcont_attributes` (`rao_devcont_id`, `rao_devcont_att_id`, `attribute_name`, `isDisplayed`) VALUES
+(1, 1, 'Data 1', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_devcont_ob`
+--
+
+CREATE TABLE `tb_rao_devcont_ob` (
+  `rao_devcont_id` int(11) NOT NULL,
+  `rao_devcont_ob_id` int(11) NOT NULL,
+  `ob_ref_date` date NOT NULL,
+  `ob_ref_no` varchar(255) NOT NULL,
+  `ob_particulars` varchar(255) NOT NULL,
+  `ob_totals` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_devcont_ob_data`
+--
+
+CREATE TABLE `tb_rao_devcont_ob_data` (
+  `rao_devcont_ob_data_id` int(11) NOT NULL,
+  `rao_devcont_ob_id` int(11) NOT NULL,
+  `rao_devcont_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_rao_devcont_ob_totals`
+--
+
+CREATE TABLE `tb_rao_devcont_ob_totals` (
+  `rao_devcont_id` int(11) NOT NULL,
+  `rao_devcont_ob_total_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `rao_devcont_att_id` int(11) NOT NULL,
+  `attribute_name` varchar(255) NOT NULL,
+  `attribute_value` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_rao_devcont_ob_totals`
+--
+
+INSERT INTO `tb_rao_devcont_ob_totals` (`rao_devcont_id`, `rao_devcont_ob_total_id`, `total_type`, `rao_devcont_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
+(1, 1, 'ob_total_TO', 0, '', 0, 1),
+(1, 2, 'TO', 1, 'Data 1', 0, 1),
+(1, 3, 'ob_total_OB', 0, '', 0, 1),
+(1, 4, 'OB', 1, 'Data 1', 0, 1),
+(1, 5, 'ob_total_AB', 0, '', 153647, 1),
+(1, 6, 'AB', 1, 'Data 1', 153647, 1);
 
 -- --------------------------------------------------------
 
@@ -1606,7 +1930,7 @@ CREATE TABLE `tb_rao_dev_ap` (
 --
 
 INSERT INTO `tb_rao_dev_ap` (`rao_dev_id`, `rao_dev_ap_id`, `ap_ref_date`, `ap_ref_no`, `ap_particulars`, `ap_totals`) VALUES
-(1, 1, '2024-12-01', 'Appropriations', 'Annual Budget', 1709481);
+(1, 1, '2024-11-01', 'Appropriations', 'Annual Budget', 1709481);
 
 -- --------------------------------------------------------
 
@@ -1809,10 +2133,11 @@ CREATE TABLE `tb_rao_fe` (
 --
 
 INSERT INTO `tb_rao_fe` (`rao_fe_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
-(1, 'Angebon Reyes', '2024-12-01', 'Joshua Belandres', 0),
-(2, 'Pending...', '0000-00-00', 'Pending...', 1),
-(3, 'Pending...', '0000-00-00', 'Pending...', 1),
-(4, 'Zenaida Belandres', '2024-09-01', 'John Frederick Gelay', 1);
+(1, 'Angebon Reyes', '2024-12-01', 'Joshua Belandres', 1),
+(2, 'Pending...', '0000-00-00', 'Pending...', 0),
+(3, 'Pending...', '0000-00-00', 'Pending...', 0),
+(4, 'Zenaida Belandres', '2024-09-01', 'John Frederick Gelay', 1),
+(5, 'John Frederick Gelay', '2024-11-01', 'John Frederick Gelay', 1);
 
 -- --------------------------------------------------------
 
@@ -1836,7 +2161,8 @@ CREATE TABLE `tb_rao_fe_ap` (
 INSERT INTO `tb_rao_fe_ap` (`rao_fe_id`, `rao_fe_ap_id`, `ap_ref_date`, `ap_ref_no`, `ap_particulars`, `ap_totals`) VALUES
 (1, 1, '2024-12-01', 'Appropriations', 'Annual Budget', 453.58),
 (4, 2, '2024-09-01', 'Appropriations', 'Annual Budget', 601.65),
-(4, 3, '2024-09-01', 'Appropriations', 'Additional', 60);
+(4, 3, '2024-09-01', 'Appropriations', 'Additional', 60),
+(5, 4, '2024-11-01', 'Appropriations', 'Annual Budget', 12345);
 
 -- --------------------------------------------------------
 
@@ -1858,14 +2184,17 @@ CREATE TABLE `tb_rao_fe_ap_data` (
 --
 
 INSERT INTO `tb_rao_fe_ap_data` (`rao_fe_ap_data_id`, `rao_fe_ap_id`, `rao_fe_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
-(1, 1, '1', 'Data 1', 453.58, 0),
-(2, 1, '2', 'Data 2', 0, 0),
+(1, 1, '1', 'Data 1', 453.58, 1),
+(2, 1, '2', 'Data 2', 0, 1),
 (3, 2, '9', 'Data 1', 100.45, 1),
 (4, 2, '10', 'Data 2', 200.55, 1),
 (5, 2, '11', 'Data 3', 300.65, 1),
 (6, 3, '9', 'Data 1', 10, 1),
 (7, 3, '10', 'Data 2', 20, 1),
-(8, 3, '11', 'Data 3', 30, 1);
+(8, 3, '11', 'Data 3', 30, 1),
+(9, 4, '12', 'Data 1', 12345, 1),
+(10, 4, '13', 'Data 2', 0, 1),
+(11, 4, '14', 'Data 3', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1888,12 +2217,12 @@ CREATE TABLE `tb_rao_fe_ap_totals` (
 --
 
 INSERT INTO `tb_rao_fe_ap_totals` (`rao_fe_id`, `rao_fe_ap_total_id`, `total_type`, `rao_fe_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
-(1, 1, 'ap_total_TA', 0, '', 453.58, 0),
-(1, 2, 'TA', 1, 'Data 1', 453.58, 0),
-(1, 3, 'TA', 2, 'Data 2', 0, 0),
-(1, 4, 'ap_total_BF', 0, '', 453.58, 0),
-(1, 5, 'BF', 1, 'Data 1', 453.58, 0),
-(1, 6, 'BF', 2, 'Data 2', 0, 0),
+(1, 1, 'ap_total_TA', 0, '', 453.58, 1),
+(1, 2, 'TA', 1, 'Data 1', 453.58, 1),
+(1, 3, 'TA', 2, 'Data 2', 0, 1),
+(1, 4, 'ap_total_BF', 0, '', 453.58, 1),
+(1, 5, 'BF', 1, 'Data 1', 453.58, 1),
+(1, 6, 'BF', 2, 'Data 2', 0, 1),
 (4, 7, 'ap_total_TA', 0, '', 661.65, 1),
 (4, 8, 'TA', 9, 'Data 1', 110.45, 1),
 (4, 9, 'TA', 10, 'Data 2', 220.55, 1),
@@ -1901,7 +2230,15 @@ INSERT INTO `tb_rao_fe_ap_totals` (`rao_fe_id`, `rao_fe_ap_total_id`, `total_typ
 (4, 11, 'ap_total_BF', 0, '', 661.65, 1),
 (4, 12, 'BF', 9, 'Data 1', 110.45, 1),
 (4, 13, 'BF', 10, 'Data 2', 220.55, 1),
-(4, 14, 'BF', 11, 'Data 3', 330.65, 1);
+(4, 14, 'BF', 11, 'Data 3', 330.65, 1),
+(5, 15, 'ap_total_TA', 0, '', 12345, 1),
+(5, 16, 'TA', 12, 'Data 1', 12345, 1),
+(5, 17, 'TA', 13, 'Data 2', 0, 1),
+(5, 18, 'TA', 14, 'Data 3', 0, 1),
+(5, 19, 'ap_total_BF', 0, '', 12345, 1),
+(5, 20, 'BF', 12, 'Data 1', 12345, 1),
+(5, 21, 'BF', 13, 'Data 2', 0, 1),
+(5, 22, 'BF', 14, 'Data 3', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1921,17 +2258,20 @@ CREATE TABLE `tb_rao_fe_attributes` (
 --
 
 INSERT INTO `tb_rao_fe_attributes` (`rao_fe_id`, `rao_fe_att_id`, `attribute_name`, `isDisplayed`) VALUES
-(1, 1, 'Data 1', 0),
-(1, 2, 'Data 2', 0),
-(2, 3, 'Data 1', 1),
-(2, 4, 'Data 2', 1),
-(2, 5, 'Data 3', 1),
-(3, 6, 'Data 1', 1),
-(3, 7, 'Data 2', 1),
-(3, 8, 'Data 3', 1),
+(1, 1, 'Data 1', 1),
+(1, 2, 'Data 2', 1),
+(2, 3, 'Data 1', 0),
+(2, 4, 'Data 2', 0),
+(2, 5, 'Data 3', 0),
+(3, 6, 'Data 1', 0),
+(3, 7, 'Data 2', 0),
+(3, 8, 'Data 3', 0),
 (4, 9, 'Data 1', 1),
 (4, 10, 'Data 2', 1),
-(4, 11, 'Data 3', 1);
+(4, 11, 'Data 3', 1),
+(5, 12, 'Data 1', 1),
+(5, 13, 'Data 2', 1),
+(5, 14, 'Data 3', 1);
 
 -- --------------------------------------------------------
 
@@ -2000,15 +2340,15 @@ CREATE TABLE `tb_rao_fe_ob_totals` (
 --
 
 INSERT INTO `tb_rao_fe_ob_totals` (`rao_fe_id`, `rao_fe_ob_total_id`, `total_type`, `rao_fe_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
-(1, 1, 'ob_total_TO', 0, '', 0, 0),
-(1, 2, 'TO', 1, 'Data 1', 0, 0),
-(1, 3, 'TO', 2, 'Data 2', 0, 0),
-(1, 4, 'ob_total_OB', 0, '', 0, 0),
-(1, 5, 'OB', 1, 'Data 1', 0, 0),
-(1, 6, 'OB', 2, 'Data 2', 0, 0),
-(1, 7, 'ob_total_AB', 0, '', 453.58, 0),
-(1, 8, 'AB', 1, 'Data 1', 453.58, 0),
-(1, 9, 'AB', 2, 'Data 2', 0, 0),
+(1, 1, 'ob_total_TO', 0, '', 0, 1),
+(1, 2, 'TO', 1, 'Data 1', 0, 1),
+(1, 3, 'TO', 2, 'Data 2', 0, 1),
+(1, 4, 'ob_total_OB', 0, '', 0, 1),
+(1, 5, 'OB', 1, 'Data 1', 0, 1),
+(1, 6, 'OB', 2, 'Data 2', 0, 1),
+(1, 7, 'ob_total_AB', 0, '', 453.58, 1),
+(1, 8, 'AB', 1, 'Data 1', 453.58, 1),
+(1, 9, 'AB', 2, 'Data 2', 0, 1),
 (4, 10, 'ob_total_TO', 0, '', 62.55, 1),
 (4, 11, 'TO', 9, 'Data 1', 10.75, 1),
 (4, 12, 'TO', 10, 'Data 2', 20.85, 1),
@@ -2020,7 +2360,19 @@ INSERT INTO `tb_rao_fe_ob_totals` (`rao_fe_id`, `rao_fe_ob_total_id`, `total_typ
 (4, 18, 'ob_total_AB', 0, '', 599.1, 1),
 (4, 19, 'AB', 9, 'Data 1', 99.7, 1),
 (4, 20, 'AB', 10, 'Data 2', 199.7, 1),
-(4, 21, 'AB', 11, 'Data 3', 299.7, 1);
+(4, 21, 'AB', 11, 'Data 3', 299.7, 1),
+(5, 22, 'ob_total_TO', 0, '', 0, 1),
+(5, 23, 'TO', 12, 'Data 1', 0, 1),
+(5, 24, 'TO', 13, 'Data 2', 0, 1),
+(5, 25, 'TO', 14, 'Data 3', 0, 1),
+(5, 26, 'ob_total_OB', 0, '', 0, 1),
+(5, 27, 'OB', 12, 'Data 1', 0, 1),
+(5, 28, 'OB', 13, 'Data 2', 0, 1),
+(5, 29, 'OB', 14, 'Data 3', 0, 1),
+(5, 30, 'ob_total_AB', 0, '', 12345, 1),
+(5, 31, 'AB', 12, 'Data 1', 12345, 1),
+(5, 32, 'AB', 13, 'Data 2', 0, 1),
+(5, 33, 'AB', 14, 'Data 3', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -2041,8 +2393,8 @@ CREATE TABLE `tb_rao_mooe` (
 --
 
 INSERT INTO `tb_rao_mooe` (`rao_mooe_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
-(7, 'Angebon Reyes', '2024-12-01', 'Joshua Belandres', 0),
-(8, 'Pending...', '0000-00-00', 'Pending...', 0),
+(7, 'Angebon Reyes', '2024-12-01', 'Joshua Belandres', 1),
+(8, 'Pending...', '0000-00-00', 'Pending...', 1),
 (9, 'Angebon Reyes', '2024-10-01', 'Joshua Belandres', 1),
 (10, 'John Frederick Gelay', '2024-11-01', 'Joshua Belandres', 1);
 
@@ -2090,14 +2442,14 @@ CREATE TABLE `tb_rao_mooe_ap_data` (
 --
 
 INSERT INTO `tb_rao_mooe_ap_data` (`rao_mooe_ap_data_id`, `rao_mooe_ap_id`, `rao_mooe_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
-(41, 7, '35', 'Data 1', 4356.45, 0),
-(42, 7, '36', 'Data 2', 42757.12, 0),
-(43, 7, '37', 'Data 3', 475714.4, 0),
-(44, 7, '38', 'Data 4', 0, 0),
-(45, 7, '39', 'Data 5', 0, 0),
-(46, 7, '40', 'Data 6', 0, 0),
-(47, 7, '41', 'Data 7', 0, 0),
-(48, 7, '42', 'Data 8', 0, 0),
+(41, 7, '35', 'Data 1', 4356.45, 1),
+(42, 7, '36', 'Data 2', 42757.12, 1),
+(43, 7, '37', 'Data 3', 475714.4, 1),
+(44, 7, '38', 'Data 4', 0, 1),
+(45, 7, '39', 'Data 5', 0, 1),
+(46, 7, '40', 'Data 6', 0, 1),
+(47, 7, '41', 'Data 7', 0, 1),
+(48, 7, '42', 'Data 8', 0, 1),
 (49, 8, '51', 'Data 1', 1245.25, 1),
 (50, 8, '52', 'Data 2', 11541, 1),
 (51, 8, '53', 'Data 3', 0, 1),
@@ -2136,24 +2488,24 @@ CREATE TABLE `tb_rao_mooe_ap_totals` (
 --
 
 INSERT INTO `tb_rao_mooe_ap_totals` (`rao_mooe_id`, `rao_mooe_ap_total_id`, `total_type`, `rao_mooe_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
-(7, 81, 'ap_total_TA', 0, '', 522827.97, 0),
-(7, 82, 'TA', 35, 'Data 1', 4356.45, 0),
-(7, 83, 'TA', 36, 'Data 2', 42757.12, 0),
-(7, 84, 'TA', 37, 'Data 3', 475714.4, 0),
-(7, 85, 'TA', 38, 'Data 4', 0, 0),
-(7, 86, 'TA', 39, 'Data 5', 0, 0),
-(7, 87, 'TA', 40, 'Data 6', 0, 0),
-(7, 88, 'TA', 41, 'Data 7', 0, 0),
-(7, 89, 'TA', 42, 'Data 8', 0, 0),
-(7, 90, 'ap_total_BF', 0, '', 522827.97, 0),
-(7, 91, 'BF', 35, 'Data 1', 4356.45, 0),
-(7, 92, 'BF', 36, 'Data 2', 42757.12, 0),
-(7, 93, 'BF', 37, 'Data 3', 475714.4, 0),
-(7, 94, 'BF', 38, 'Data 4', 0, 0),
-(7, 95, 'BF', 39, 'Data 5', 0, 0),
-(7, 96, 'BF', 40, 'Data 6', 0, 0),
-(7, 97, 'BF', 41, 'Data 7', 0, 0),
-(7, 98, 'BF', 42, 'Data 8', 0, 0),
+(7, 81, 'ap_total_TA', 0, '', 522827.97, 1),
+(7, 82, 'TA', 35, 'Data 1', 4356.45, 1),
+(7, 83, 'TA', 36, 'Data 2', 42757.12, 1),
+(7, 84, 'TA', 37, 'Data 3', 475714.4, 1),
+(7, 85, 'TA', 38, 'Data 4', 0, 1),
+(7, 86, 'TA', 39, 'Data 5', 0, 1),
+(7, 87, 'TA', 40, 'Data 6', 0, 1),
+(7, 88, 'TA', 41, 'Data 7', 0, 1),
+(7, 89, 'TA', 42, 'Data 8', 0, 1),
+(7, 90, 'ap_total_BF', 0, '', 522827.97, 1),
+(7, 91, 'BF', 35, 'Data 1', 4356.45, 1),
+(7, 92, 'BF', 36, 'Data 2', 42757.12, 1),
+(7, 93, 'BF', 37, 'Data 3', 475714.4, 1),
+(7, 94, 'BF', 38, 'Data 4', 0, 1),
+(7, 95, 'BF', 39, 'Data 5', 0, 1),
+(7, 96, 'BF', 40, 'Data 6', 0, 1),
+(7, 97, 'BF', 41, 'Data 7', 0, 1),
+(7, 98, 'BF', 42, 'Data 8', 0, 1),
 (9, 99, 'ap_total_TA', 0, '', 12786.25, 1),
 (9, 100, 'TA', 51, 'Data 1', 1245.25, 1),
 (9, 101, 'TA', 52, 'Data 2', 11541, 1),
@@ -2209,22 +2561,22 @@ CREATE TABLE `tb_rao_mooe_attributes` (
 --
 
 INSERT INTO `tb_rao_mooe_attributes` (`rao_mooe_id`, `rao_mooe_att_id`, `attribute_name`, `isDisplayed`) VALUES
-(7, 35, 'Data 1', 0),
-(7, 36, 'Data 2', 0),
-(7, 37, 'Data 3', 0),
-(7, 38, 'Data 4', 0),
-(7, 39, 'Data 5', 0),
-(7, 40, 'Data 6', 0),
-(7, 41, 'Data 7', 0),
-(7, 42, 'Data 8', 0),
-(8, 43, 'Data 1', 0),
-(8, 44, 'Data 2', 0),
-(8, 45, 'Data 3', 0),
-(8, 46, 'Data 4', 0),
-(8, 47, 'Data 5', 0),
-(8, 48, 'Data 6', 0),
-(8, 49, 'Data 7', 0),
-(8, 50, 'Data 8', 0),
+(7, 35, 'Data 1', 1),
+(7, 36, 'Data 2', 1),
+(7, 37, 'Data 3', 1),
+(7, 38, 'Data 4', 1),
+(7, 39, 'Data 5', 1),
+(7, 40, 'Data 6', 1),
+(7, 41, 'Data 7', 1),
+(7, 42, 'Data 8', 1),
+(8, 43, 'Data 1', 1),
+(8, 44, 'Data 2', 1),
+(8, 45, 'Data 3', 1),
+(8, 46, 'Data 4', 1),
+(8, 47, 'Data 5', 1),
+(8, 48, 'Data 6', 1),
+(8, 49, 'Data 7', 1),
+(8, 50, 'Data 8', 1),
 (9, 51, 'Data 1', 1),
 (9, 52, 'Data 2', 1),
 (9, 53, 'Data 3', 1),
@@ -2284,14 +2636,14 @@ CREATE TABLE `tb_rao_mooe_ob_data` (
 --
 
 INSERT INTO `tb_rao_mooe_ob_data` (`rao_mooe_ob_data_id`, `rao_mooe_ob_id`, `rao_mooe_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
-(13, 3, 35, 'Data 1', 2435.4, 0),
-(14, 3, 36, 'Data 2', 7542.52, 0),
-(15, 3, 37, 'Data 3', 421422.4, 0),
-(16, 3, 38, 'Data 4', 0, 0),
-(17, 3, 39, 'Data 5', 0, 0),
-(18, 3, 40, 'Data 6', 0, 0),
-(19, 3, 41, 'Data 7', 0, 0),
-(20, 3, 42, 'Data 8', 0, 0);
+(13, 3, 35, 'Data 1', 2435.4, 1),
+(14, 3, 36, 'Data 2', 7542.52, 1),
+(15, 3, 37, 'Data 3', 421422.4, 1),
+(16, 3, 38, 'Data 4', 0, 1),
+(17, 3, 39, 'Data 5', 0, 1),
+(18, 3, 40, 'Data 6', 0, 1),
+(19, 3, 41, 'Data 7', 0, 1),
+(20, 3, 42, 'Data 8', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -2314,33 +2666,33 @@ CREATE TABLE `tb_rao_mooe_ob_totals` (
 --
 
 INSERT INTO `tb_rao_mooe_ob_totals` (`rao_mooe_id`, `rao_mooe_ob_total_id`, `total_type`, `rao_mooe_att_id`, `attribute_name`, `attribute_value`, `isDisplayed`) VALUES
-(7, 121, 'ob_total_TO', 0, '', 431400.32, 0),
-(7, 122, 'TO', 35, 'Data 1', 2435.4, 0),
-(7, 123, 'TO', 36, 'Data 2', 7542.52, 0),
-(7, 124, 'TO', 37, 'Data 3', 421422.4, 0),
-(7, 125, 'TO', 38, 'Data 4', 0, 0),
-(7, 126, 'TO', 39, 'Data 5', 0, 0),
-(7, 127, 'TO', 40, 'Data 6', 0, 0),
-(7, 128, 'TO', 41, 'Data 7', 0, 0),
-(7, 129, 'TO', 42, 'Data 8', 0, 0),
-(7, 130, 'ob_total_OB', 0, '', 431400.32, 0),
-(7, 131, 'OB', 35, 'Data 1', 2435.4, 0),
-(7, 132, 'OB', 36, 'Data 2', 7542.52, 0),
-(7, 133, 'OB', 37, 'Data 3', 421422.4, 0),
-(7, 134, 'OB', 38, 'Data 4', 0, 0),
-(7, 135, 'OB', 39, 'Data 5', 0, 0),
-(7, 136, 'OB', 40, 'Data 6', 0, 0),
-(7, 137, 'OB', 41, 'Data 7', 0, 0),
-(7, 138, 'OB', 42, 'Data 8', 0, 0),
-(7, 139, 'ob_total_AB', 0, '', 91427.65, 0),
-(7, 140, 'AB', 35, 'Data 1', 1921.05, 0),
-(7, 141, 'AB', 36, 'Data 2', 35214.6, 0),
-(7, 142, 'AB', 37, 'Data 3', 54292, 0),
-(7, 143, 'AB', 38, 'Data 4', 0, 0),
-(7, 144, 'AB', 39, 'Data 5', 0, 0),
-(7, 145, 'AB', 40, 'Data 6', 0, 0),
-(7, 146, 'AB', 41, 'Data 7', 0, 0),
-(7, 147, 'AB', 42, 'Data 8', 0, 0),
+(7, 121, 'ob_total_TO', 0, '', 431400.32, 1),
+(7, 122, 'TO', 35, 'Data 1', 2435.4, 1),
+(7, 123, 'TO', 36, 'Data 2', 7542.52, 1),
+(7, 124, 'TO', 37, 'Data 3', 421422.4, 1),
+(7, 125, 'TO', 38, 'Data 4', 0, 1),
+(7, 126, 'TO', 39, 'Data 5', 0, 1),
+(7, 127, 'TO', 40, 'Data 6', 0, 1),
+(7, 128, 'TO', 41, 'Data 7', 0, 1),
+(7, 129, 'TO', 42, 'Data 8', 0, 1),
+(7, 130, 'ob_total_OB', 0, '', 431400.32, 1),
+(7, 131, 'OB', 35, 'Data 1', 2435.4, 1),
+(7, 132, 'OB', 36, 'Data 2', 7542.52, 1),
+(7, 133, 'OB', 37, 'Data 3', 421422.4, 1),
+(7, 134, 'OB', 38, 'Data 4', 0, 1),
+(7, 135, 'OB', 39, 'Data 5', 0, 1),
+(7, 136, 'OB', 40, 'Data 6', 0, 1),
+(7, 137, 'OB', 41, 'Data 7', 0, 1),
+(7, 138, 'OB', 42, 'Data 8', 0, 1),
+(7, 139, 'ob_total_AB', 0, '', 91427.65, 1),
+(7, 140, 'AB', 35, 'Data 1', 1921.05, 1),
+(7, 141, 'AB', 36, 'Data 2', 35214.6, 1),
+(7, 142, 'AB', 37, 'Data 3', 54292, 1),
+(7, 143, 'AB', 38, 'Data 4', 0, 1),
+(7, 144, 'AB', 39, 'Data 5', 0, 1),
+(7, 145, 'AB', 40, 'Data 6', 0, 1),
+(7, 146, 'AB', 41, 'Data 7', 0, 1),
+(7, 147, 'AB', 42, 'Data 8', 0, 1),
 (9, 148, 'ob_total_TO', 0, '', 0, 1),
 (9, 149, 'TO', 51, 'Data 1', 0, 1),
 (9, 150, 'TO', 52, 'Data 2', 0, 1),
@@ -2417,13 +2769,6 @@ CREATE TABLE `tb_rao_ob_data` (
   `ob_others` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tb_rao_ob_data`
---
-
-INSERT INTO `tb_rao_ob_data` (`rao_id`, `rao_ob_data_id`, `ob_ref_date`, `ob_ref_no`, `ob_particulars`, `ob_total`, `ob_salary`, `ob_cash_gift`, `ob_year_end`, `ob_mid_year`, `ob_sri`, `ob_others`) VALUES
-(77, 42, '0000-00-00', '', '', 0, 0, 0, 0, 0, 0, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -2444,7 +2789,13 @@ CREATE TABLE `tb_rao_ps` (
 
 INSERT INTO `tb_rao_ps` (`rao_ps_id`, `chairman`, `period_covered`, `brgy_captain`, `isDisplayed`) VALUES
 (7, 'John Frederick ', '2024-12-02', 'Joshua ', 0),
-(8, 'Zenaida Belandres', '2024-11-01', 'Joshua Belandres', 1);
+(8, 'Zenaida Belandres', '2024-11-01', 'Joshua Belandres', 0),
+(9, 'John Frederick Gelay', '2025-02-01', 'Joshua Belandres', 0),
+(10, 'John Frederick Gelay', '2025-01-01', 'Joshua Belandres', 0),
+(11, 'John Frederick Gelay', '2024-10-01', 'Joshua Belandres', 0),
+(12, 'John Frederick Gelay', '2024-12-01', 'Joshua Belandres', 0),
+(13, 'John Frederick Gelay', '2024-08-01', 'Joshua Belandres', 0),
+(14, 'John Frederick Gelay', '2025-01-01', 'Joshua Belandres', 1);
 
 -- --------------------------------------------------------
 
@@ -2476,7 +2827,8 @@ INSERT INTO `tb_rao_ps_ap` (`rao_ps_id`, `rao_ps_ap_id`, `ap_ref_date`, `ap_ref_
 (7, 1, '2024-12-01', 'Appropriations', 'Annual Budget', 5134533.86, 4242000, 110000, 178000, 178000, 220000, 206533.86, 0),
 (7, 2, '2024-12-01', 'Appropriations', 'Additional', 100000, 100000, 0, 0, 0, 0, 0, 0),
 (7, 3, '2024-12-01', 'Appropriations', 'Additional', 100000, 100000, 0, 0, 0, 0, 0, 0),
-(8, 4, '2024-11-01', 'Appropriations', 'Annual Budget', 26000, 12000, 14000, 0, 0, 0, 0, 1);
+(8, 4, '2024-11-01', 'Appropriations', 'Annual Budget', 26000, 12000, 14000, 0, 0, 0, 0, 0),
+(14, 5, '2025-01-01', 'Appropriations', 'Annual Budget', 24427, 21450, 2452, 100, 425, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -2540,11 +2892,41 @@ INSERT INTO `tb_rao_ps_totals` (`rao_ps_total_id`, `rao_ps_id`, `total_type`, `t
 (3, 7, 'TO', 0, 0, 0, 0, 0, 0, 0, 0),
 (4, 7, 'OB', 0, 0, 0, 0, 0, 0, 0, 0),
 (5, 7, 'AB', 26000, 12000, 14000, 0, 0, 0, 0, 0),
-(6, 8, 'TA', 26000, 12000, 14000, 0, 0, 0, 0, 1),
-(7, 8, 'BF', 26000, 12000, 14000, 0, 0, 0, 0, 1),
-(8, 8, 'TO', 0, 0, 0, 0, 0, 0, 0, 1),
-(9, 8, 'OB', 0, 0, 0, 0, 0, 0, 0, 1),
-(10, 8, 'AB', 26000, 12000, 14000, 0, 0, 0, 0, 1);
+(6, 8, 'TA', 26000, 12000, 14000, 0, 0, 0, 0, 0),
+(7, 8, 'BF', 26000, 12000, 14000, 0, 0, 0, 0, 0),
+(8, 8, 'TO', 0, 0, 0, 0, 0, 0, 0, 0),
+(9, 8, 'OB', 0, 0, 0, 0, 0, 0, 0, 0),
+(10, 8, 'AB', 26000, 12000, 14000, 0, 0, 0, 0, 0),
+(11, 9, 'TA', 0, 0, 0, 0, 0, 0, 0, 0),
+(12, 9, 'BF', 0, 0, 0, 0, 0, 0, 0, 0),
+(13, 9, 'TO', 0, 0, 0, 0, 0, 0, 0, 0),
+(14, 9, 'OB', 0, 0, 0, 0, 0, 0, 0, 0),
+(15, 9, 'AB', 0, 0, 0, 0, 0, 0, 0, 0),
+(16, 10, 'TA', 0, 0, 0, 0, 0, 0, 0, 0),
+(17, 10, 'BF', 0, 0, 0, 0, 0, 0, 0, 0),
+(18, 10, 'TO', 0, 0, 0, 0, 0, 0, 0, 0),
+(19, 10, 'OB', 0, 0, 0, 0, 0, 0, 0, 0),
+(20, 10, 'AB', 0, 0, 0, 0, 0, 0, 0, 0),
+(21, 11, 'TA', 0, 0, 0, 0, 0, 0, 0, 0),
+(22, 11, 'BF', 0, 0, 0, 0, 0, 0, 0, 0),
+(23, 11, 'TO', 0, 0, 0, 0, 0, 0, 0, 0),
+(24, 11, 'OB', 0, 0, 0, 0, 0, 0, 0, 0),
+(25, 11, 'AB', 0, 0, 0, 0, 0, 0, 0, 0),
+(26, 12, 'TA', 0, 0, 0, 0, 0, 0, 0, 0),
+(27, 12, 'BF', 0, 0, 0, 0, 0, 0, 0, 0),
+(28, 12, 'TO', 0, 0, 0, 0, 0, 0, 0, 0),
+(29, 12, 'OB', 0, 0, 0, 0, 0, 0, 0, 0),
+(30, 12, 'AB', 0, 0, 0, 0, 0, 0, 0, 0),
+(31, 13, 'TA', 0, 0, 0, 0, 0, 0, 0, 0),
+(32, 13, 'BF', 0, 0, 0, 0, 0, 0, 0, 0),
+(33, 13, 'TO', 0, 0, 0, 0, 0, 0, 0, 0),
+(34, 13, 'OB', 0, 0, 0, 0, 0, 0, 0, 0),
+(35, 13, 'AB', 0, 0, 0, 0, 0, 0, 0, 0),
+(36, 14, 'TA', 24427, 21450, 2452, 100, 425, 0, 0, 1),
+(37, 14, 'BF', 24427, 21450, 2452, 100, 425, 0, 0, 1),
+(38, 14, 'TO', 0, 0, 0, 0, 0, 0, 0, 1),
+(39, 14, 'OB', 0, 0, 0, 0, 0, 0, 0, 1),
+(40, 14, 'AB', 24427, 21450, 2452, 100, 425, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -2588,7 +2970,7 @@ CREATE TABLE `tb_rao_sk_ap` (
 --
 
 INSERT INTO `tb_rao_sk_ap` (`rao_sk_id`, `rao_sk_ap_id`, `ap_ref_date`, `ap_ref_no`, `ap_particulars`, `ap_totals`) VALUES
-(1, 1, '2024-12-01', 'Appropriations', 'Particulars', 3232.09),
+(1, 1, '2024-12-01', 'Appropriations', 'Annual Budget', 3232.09),
 (2, 2, '2024-11-01', 'Appropriations', 'SK FUNDS', 601.43);
 
 -- --------------------------------------------------------
@@ -2760,6 +3142,93 @@ INSERT INTO `tb_rao_sk_ob_totals` (`rao_sk_id`, `rao_sk_ob_total_id`, `total_typ
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tb_reai`
+--
+
+CREATE TABLE `tb_reai` (
+  `reai_id` int(11) NOT NULL,
+  `treasurer_name` int(11) NOT NULL,
+  `period_covered` date NOT NULL,
+  `brgy_captain` varchar(255) NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_reai_ac`
+--
+
+CREATE TABLE `tb_reai_ac` (
+  `reai_id` int(11) NOT NULL,
+  `reai_ac_id` int(11) NOT NULL,
+  `ac_ref_date` date NOT NULL,
+  `ac_ref_no` varchar(255) NOT NULL,
+  `ac_particulars` varchar(255) NOT NULL,
+  `ac_total` double NOT NULL,
+  `ac_ira` double NOT NULL,
+  `ac_rps` double NOT NULL,
+  `ac_ccf` double NOT NULL,
+  `ac_ri` double NOT NULL,
+  `ac_misc` double NOT NULL,
+  `ac_snw` double NOT NULL,
+  `ac_pf` double NOT NULL,
+  `ac_ctc` double NOT NULL,
+  `ac_ti` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_reai_es`
+--
+
+CREATE TABLE `tb_reai_es` (
+  `reai_id` int(11) NOT NULL,
+  `reai_es_id` int(11) NOT NULL,
+  `es_ref_date` date NOT NULL,
+  `es_ref_no` varchar(255) NOT NULL,
+  `es_particulars` varchar(255) NOT NULL,
+  `es_total` double NOT NULL,
+  `es_ira` double NOT NULL,
+  `es_rps` double NOT NULL,
+  `es_ccf` double NOT NULL,
+  `es_ri` double NOT NULL,
+  `es_misc` double NOT NULL,
+  `es_snw` double NOT NULL,
+  `es_pf` double NOT NULL,
+  `es_ctc` double NOT NULL,
+  `es_ti` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_reai_total`
+--
+
+CREATE TABLE `tb_reai_total` (
+  `reai_total_id` int(11) NOT NULL,
+  `reai_id` int(11) NOT NULL,
+  `total_type` varchar(255) NOT NULL,
+  `total` double NOT NULL,
+  `ira` double NOT NULL,
+  `rps` double NOT NULL,
+  `ccf` double NOT NULL,
+  `ri` double NOT NULL,
+  `misc` double NOT NULL,
+  `snw` double NOT NULL,
+  `pf` double NOT NULL,
+  `ctc` double NOT NULL,
+  `ti` double NOT NULL,
+  `isDisplayed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tb_request`
 --
 
@@ -2778,13 +3247,8 @@ CREATE TABLE `tb_request` (
 --
 
 INSERT INTO `tb_request` (`request_id`, `requester_name`, `request_type`, `request_description`, `request_date`, `request_status`, `isDisplayed`) VALUES
-(12, 'asd', 'asdfadddddasdfasdfa', 'asdf', '2024-10-06 21:57:00', 'Completed', 1),
-(13, 'asdff', 'asdfsdf', 'asdfasdfasf', '2024-11-06 23:45:00', 'dfasdf', 0),
-(14, 'asdfasdf', 'asdfasdf', 'asdfasf', '2024-12-31 12:46:00', 'New', 1),
-(15, 'asdf', 'asdfasd', 'fsadfsdaf', '2024-12-31 12:49:00', 'New', 1),
-(16, 'John Frederick', 'asdfa', 'asdfasdf', '2024-12-31 13:27:00', 'New', 1),
-(17, 'John Frederick D. Gelay', 'asdfasdf', 'asdfasdf', '2024-12-31 13:31:00', 'New', 1),
-(18, 'Joshua A. Belandres', 'asdfasdf', 'asfasdfasf', '2024-12-31 13:31:00', 'Completed', 1);
+(12, 'asd', 'asdfaddddd', 'asdf', '2024-10-06 21:57:00', 'Completed', 1),
+(13, 'asdff', 'asdfsdf', 'asdfasdfasf', '2024-11-06 23:45:00', 'dfasdf', 0);
 
 -- --------------------------------------------------------
 
@@ -2843,8 +3307,6 @@ CREATE TABLE `tb_resident` (
   `resident_SY` varchar(225) NOT NULL,
   `resident_height` double DEFAULT NULL,
   `resident_weight` double DEFAULT NULL,
-  `resident_BMI` decimal(5,2) DEFAULT NULL,
-  `resident_BMIstatus` varchar(20) DEFAULT NULL,
   `resident_heightstat` varchar(225) NOT NULL,
   `resident_weightstat` varchar(225) NOT NULL,
   `resident_BMIstat` varchar(225) NOT NULL,
@@ -2856,14 +3318,15 @@ CREATE TABLE `tb_resident` (
 -- Dumping data for table `tb_resident`
 --
 
-INSERT INTO `tb_resident` (`resident_id`, `resident_firstname`, `resident_middlename`, `resident_lastname`, `resident_sex`, `resident_suffixes`, `resident_address`, `resident_educationalattainment`, `resident_birthdate`, `resident_age`, `resident_status`, `resident_householdrole`, `resident_maidenname`, `resident_contact`, `resident_occupation`, `resident_religion`, `resident_indigenous`, `isDisplayed`, `resident_pension`, `resident_beneficiaries`, `resident_lactating`, `resident_pregnant`, `resident_PWD`, `resident_SY`, `resident_height`, `resident_weight`, `resident_BMI`, `resident_BMIstatus`, `resident_heightstat`, `resident_weightstat`, `resident_BMIstat`, `resident_medical`, `household_id`) VALUES
-(217, 'John Frederick', 'Domecillo', 'Gelay', 'Male', ' ', 'Sitio Sto. Nino', 'Elementary', '2001-11-09', 23, 'Single', 'Son', 'gsdfgds', '', 'asdfasdf', 'asdfasdf', '0', 0, 'asdfasfd', 'asdfasdf', 'Yes', 'No', 'Yes', 'fasdfasf', 159, 41, 16.22, 'Underweight', '', '', '', 'No', 122),
-(218, 'Joshua', 'A', 'Belandres', 'Male', ' ', 'Sitio Sto. Nino', 'High School, Undergrad', '2002-12-24', 22, 'Single', 'Son', 'sadfasdf', '', 'asdfasd', 'asdfasdf', '0', 1, 'asdfasfd', 'asdfasdf', 'Yes', 'Yes', 'No', 'asdasd', 180, 65, 20.06, 'Normal', '', '', '', 'No', 122),
-(222, 'Angebon', 'C.', 'Reyes', 'Male', ' ', 'Sitio Sto. Nino', 'Vocational', '2002-11-01', 22, 'Single', 'daughter', 'sdfasfadsf', '', 'asdfasdf', 'asdfasdf', 'asdfasf', 1, 'sdfasfa', 'sdfasf', 'asd', 'asd', 'asd', 'asd', 180, 65, 20.06, 'Normal', 'asd', 'asd', '', 'No', 110920),
-(223, 'Zenaida', 'C', 'Belandres', 'Male', ' ', 'Sitio Sto. Nino', 'Bachelor Degree', '2000-12-29', 24, 'Single', 'daughter', 'asdfasf', '', 'asdfasd', 'asdfasdf', 'asdfasdfffasd', 1, 'asdfasfd', 'asdfas', 'asdfsadf', 'asdfsadf', 'sadfasdf', 'asdfsadf', 159, 50, 19.78, 'Normal', 'asdfasdfas', 'sadfsadf', '', 'No', 112354),
-(224, 'Clarissa', 'Amar', 'Herbias', 'Male', ' ', 'Sitio Sto. Nino', 'High School, Graduate', '2002-11-10', 22, 'Single', 'daughter', 'asdfasf', '', 'asdfasd', 'asdfasdf', 'asdfasdfffasd', 0, 'asdfasfd', 'asdfas', '', '', '', '', NULL, NULL, NULL, NULL, '', '', '', '', 112354),
-(293, 'dfasfas', 'fasfasf', 'asdfas', 'Male', ' ', 'Sitio Suwa', 'Elementary', '2001-11-09', 23, 'Single', 'asfsaf', 'adsfasdf', '', 'asdfa', 'asdfa', 'asfasf', 0, 'asdfasf', 'asfasf', '', '', '', '', NULL, NULL, NULL, NULL, '', '', '', '', 12354),
-(397, 'John Frederick', 'Domecillo', 'Gelay', 'Male', ' ', 'Sitio Mag-Alambac', 'Master Degree', '2001-11-09', 23, 'Single', 'SON', 'Domecillo', '', 'Student', 'Roman Catholick', 'N/A', 1, 'N/A', 'N/A', '', '', '', '', NULL, NULL, NULL, NULL, '', '', '', '', 12548);
+INSERT INTO `tb_resident` (`resident_id`, `resident_firstname`, `resident_middlename`, `resident_lastname`, `resident_sex`, `resident_suffixes`, `resident_address`, `resident_educationalattainment`, `resident_birthdate`, `resident_age`, `resident_status`, `resident_householdrole`, `resident_maidenname`, `resident_contact`, `resident_occupation`, `resident_religion`, `resident_indigenous`, `isDisplayed`, `resident_pension`, `resident_beneficiaries`, `resident_lactating`, `resident_pregnant`, `resident_PWD`, `resident_SY`, `resident_height`, `resident_weight`, `resident_heightstat`, `resident_weightstat`, `resident_BMIstat`, `resident_medical`, `household_id`) VALUES
+(217, 'Joshua', 'Antona', 'Belandres', 'Male', ' ', 'Sitio Private', 'College, Undergrad', '2002-12-24', 22, 'Single', 'daughter', 'N/A', '+63 912 345 6789', 'STUDENT', 'asdfasdf', 'N/A', 1, 'N/A', 'N/A', 'fasfa', 'sdfasdfasd', 'fdsafads', 'fasdfasf', 0, 0, 'sdfasdf', 'asdfas', 'Under Weight', 'asdfas', 122),
+(218, 'John Frederick', 'Domecillo', 'Gelay', 'Male', ' ', 'Sitio Sto. Nino', 'Elementary', '2001-11-09', 23, 'Single', '12', 'Domecillo', '', 'asdfasd', 'asdfasdf', '0', 1, 'asdfasfd', 'asdfasdf', '', '', '', '', NULL, NULL, '', '', '', '', 122),
+(222, 'asdfasdf', 'dsafsaf', 'asdfasdf', 'Male', ' ', 'Sitio Suwa', 'Vocational', '2001-11-09', 23, 'Single', 'asdfasf', 'sdfasfadsf', '', 'asdfasdf', 'asdfasdf', 'asdfasf', 1, 'sdfasfa', 'sdfasf', '', '', '', '', NULL, NULL, '', '', '', '', 110920),
+(223, 'asdfadsf', 'asdfsafsaf', 'asdfasfasdfsaffd', 'Male', ' ', 'Sitio Sto. Nino', 'Bachelor Degree', '1960-11-09', 64, 'Single', 'son', 'asdfasf', '', 'asdfasd', 'asdfasdf', 'asdfasdfffasd', 1, 'asdfasfd', 'asdfas', '', '', '', '', NULL, NULL, '', '', '', '', 112354),
+(224, 'asdfadsf', 'asdfsafsaf', 'xxxxxc', 'Male', ' ', 'Sitio Sto. Nino', 'High School, Graduate', '2001-11-09', 23, 'Single', 'son', 'asdfasf', '', 'asdfasd', 'asdfasdf', 'asdfasdfffasd', 1, 'asdfasfd', 'asdfas', '', '', '', '', NULL, NULL, '', '', '', '', 112354),
+(293, 'dfasfas', 'fasfasf', 'asdfas', 'Male', ' ', 'Sitio Suwa', 'Elementary', '2001-11-09', 23, 'Single', 'asfsaf', 'adsfasdf', '', 'asdfa', 'asdfa', 'asfasf', 0, 'asdfasf', 'asfasf', '', '', '', '', NULL, NULL, '', '', '', '', 12354),
+(343, 'John Joshua', 'Belandres', 'Gelay', 'Male', 'Jr', 'Sitio Sto. Nino', 'College, Undergrad', '2001-11-09', 23, 'Single', 'daughter', 'Belandres', '1', 'STUDENT', 'Roman Catholic', 'N/A', 1, 'N/A', 'N/A', '', '', '', '', NULL, NULL, '', '', '', '', 29310),
+(344, 'John Joshua john', 'Belandres', 'Gelay', 'Male', 'Jr', 'Sitio Sto. Nino', 'College, Undergrad', '2001-11-09', 23, 'Single', 'daughter', 'Belandres', '+63 966 174 8034', 'STUDENT', 'Roman Catholic', 'N/A', 1, 'N/A', 'N/A', '', '', '', '', NULL, NULL, '', '', '', '', 29310);
 
 --
 -- Triggers `tb_resident`
@@ -2903,6 +3366,8 @@ CREATE TABLE `tb_transaction_items` (
 --
 
 INSERT INTO `tb_transaction_items` (`transaction_id`, `item_id`, `item_name`, `borrow_quantity`, `return_quantity`, `item_status`) VALUES
+(12, 105, 'STOOLS', 1, 1, 'Returned'),
+(12, 106, 'Table', 1, 1, 'Returned'),
 (14, 105, 'STOOLS', 1, 0, 'Borrowed'),
 (15, 105, 'STOOLS', 1, 1, 'Borrowed'),
 (16, 105, 'STOOLS', 1, 1, 'Borrowed'),
@@ -2910,13 +3375,26 @@ INSERT INTO `tb_transaction_items` (`transaction_id`, `item_id`, `item_name`, `b
 (18, 105, 'STOOLS', 1, 1, 'Returned'),
 (19, 105, 'STOOLS', 1, 1, 'Returned'),
 (20, 105, 'STOOLS', 1, 1, 'Returned'),
+(21, 105, 'STOOLS', 1, 1, 'Returned'),
+(12, 105, 'STOOLS', 1, 1, 'Returned'),
+(12, 106, 'Table', 1, 1, 'Returned'),
+(14, 105, 'STOOLS', 1, 0, 'Borrowed'),
+(15, 105, 'STOOLS', 1, 1, 'Borrowed'),
+(16, 105, 'STOOLS', 1, 1, 'Borrowed'),
+(17, 105, 'STOOLS', 1, 1, 'Returned'),
+(18, 105, 'STOOLS', 1, 1, 'Returned'),
+(19, 105, 'STOOLS', 1, 1, 'Returned'),
+(20, 105, 'STOOLS', 1, 1, 'Returned'),
+(21, 105, 'STOOLS', 1, 1, 'Returned'),
+(22, 105, 'STOOLS', 1, 1, 'Returned'),
+(22, 105, 'STOOLS', 1, 1, 'Returned'),
+(22, 105, 'STOOLS', 1, 1, 'Returned'),
 (22, 106, 'Table', 1, 1, 'Returned'),
-(23, 106, 'Tableeee', 1, 1, 'Returned'),
-(23, 106, 'Tableeee', 1, 1, 'Returned'),
-(24, 106, 'Tableeee', 12, 12, 'Returned'),
-(21, 105, 'STOOLS', 1, 0, 'Borrowed'),
-(12, 116, 'asdfasf', 123, 2, 'Borrowed'),
-(12, 106, 'Tableeee', 1, 0, 'Borrowed');
+(23, 105, 'STOOLS', 1, 1, 'Returned'),
+(25, 105, 'STOOLS', 2, 1, 'Borrowed'),
+(26, 106, 'Table', 2, 0, 'Borrowed'),
+(24, 105, 'STOOLS', 1, 1, 'Returned'),
+(24, 106, 'Table', 1, 1, 'Returned');
 
 -- --------------------------------------------------------
 
@@ -2949,28 +3427,28 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`user_id`, `lastname`, `firstname`, `middlename`, `sex`, `birthdate`, `barangayposition`, `username`, `password`, `verification_code`, `theme`, `suffix`, `profile_picture`, `user_age`, `isApproved`, `disapprovalReason`, `approval_status`) VALUES
-(93, 'Nepomuceno', 'Josephine', 'Belarma', 'Female', '2001-11-09', 'Barangay Captain', 'john-bc', '$2y$10$B5FTS/BrIq5BkjaZAZxbweOzAAFvsYubn9aZsb7fxEHM/Cw1/NOSy', '110921', 'dark', '', 'profile_default.png', NULL, 1, NULL, 'Approved'),
-(101, 'gelay', 'john', 'domecillo', 'Male', '2001-11-09', 'Barangay Secretary', 'john-bs', '$2y$10$dG3S/Z8JjqA3kURsNjJFye4opwlv56tsP/wyO/VfBv7UkyuQnbMu6', '110905', 'dark', ' ', 'profile_default.png', NULL, 1, NULL, 'Pending'),
-(102, 'gelay', 'john', 'frederick', 'Male', '2004-11-09', 'Barangay Treasurer', 'john-br', '$2y$10$fLtu3SJp/X2gewBpVTf7c.53BoqKWEueBXe..4BZD15k5FxLoNceq', '110902', '\'light\'', 'Jr.', 'profile_default.png', NULL, 1, NULL, 'Pending'),
-(103, 'gelay', 'john clarence', 'herbias', 'Male', '2001-11-11', 'Barangay Personnel', 'john-bp', '$2y$10$DZ.otRm6zjjktKHmvTWamOW2LVUYLQGZXfdSMv05HQvbZOx79GuYa', '110904', '\'light\'', ' ', 'profile_default.png', NULL, 1, NULL, 'Pending'),
-(104, 'Gelay', 'John Frederick', 'Domecillo', 'Male', '2001-11-09', 'Barangay Health Worker', 'john-bhw', '$2y$10$HopigO93ECpHUa8rdj6DDeGa..v2zbqob8jQrTxiy29KUJe1g6vqq', '110903', 'dark', ' ', 'profile_default.png', NULL, 1, NULL, 'Pending'),
-(105, 'gelay', 'john Frederick', 'herbias', 'Male', '2001-11-09', 'Barangay Health Worker', 'john-bp1', '$2y$10$p4ga9k54zITd/zTA1Kt5/ODeJUQn.ptcmz2kHHciCqykQk5IDAiky', '110901', 'light', ' ', 'profile_default.png', NULL, 1, NULL, 'Pending');
+(93, 'Nepomuceno', 'Josephine', 'Belarma', 'Female', '2001-11-09', 'Barangay Captain', 'john-bc', '$2y$10$xqitP33W6cx7wpxiiXaN1OBxGqgIfAX2L1StRbss1xcuuzbqYnXMq', '110921', 'dark', '', 'profile_default.png', NULL, 1, NULL, 'Approved'),
+(101, 'gelay', 'john', 'domecillo', 'Male', '2001-11-09', 'Barangay Secretary', 'john-bs', '$2y$10$2SrhF9HkFc5ZMOGBfn1LneuQPy4uzohNvY4FBMnvz/quDaKZZt/1e', '111111', '\'light\'', ' ', 'profile_default.png', NULL, 1, NULL, 'Pending'),
+(102, 'gelay', 'john', 'frederick', 'Male', '2004-11-09', 'Barangay Treasurer', 'john-br', '$2y$10$fLtu3SJp/X2gewBpVTf7c.53BoqKWEueBXe..4BZD15k5FxLoNceq', NULL, '\'light\'', 'Jr.', 'profile_default.png', NULL, 1, NULL, 'Pending'),
+(103, 'gelay', 'john clarence', 'herbias', 'Male', '2001-11-11', 'Barangay Personnel', 'john-bp', '$2y$10$RH9vPhQGm1kAYACWcExNAedAs38pecj1LO1tdT8sAFaDf4fxE6Tf.', '110901', '\'light\'', ' ', 'profile_default.png', NULL, 1, NULL, 'Pending'),
+(104, 'Belandres', 'Xuang', 'Antona', 'Male', '2002-12-24', 'Barangay Personnel', 'xuang_b', '$2y$10$MFvORo6zbiV9UKoQ/eQoROBqxhlDUpowjSe8hVmenYt.bHUhoGIEW', NULL, '\'light\'', ' ', 'profile_default.png', NULL, 0, NULL, 'Pending'),
+(105, 'Belandres', 'John Joshua', 'Antona', 'Male', '2002-12-24', 'Barangay Captain', 'xuangbelandres', '$2y$10$19iE4rqeomwea3KUykYZb.nkn7IEBhdx6FECBj2Uv6bZWh/sLgIfO', '122402', 'light', ' ', 'profile_default.png', NULL, 1, NULL, 'Pending');
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `rao_id_holder`
+--
+ALTER TABLE `rao_id_holder`
+  ADD PRIMARY KEY (`holder_id`);
+
+--
 -- Indexes for table `tb_blotter`
 --
 ALTER TABLE `tb_blotter`
   ADD PRIMARY KEY (`blotter_id`);
-
---
--- Indexes for table `tb_business_m`
---
-ALTER TABLE `tb_business_m`
-  ADD PRIMARY KEY (`bemp_id`);
 
 --
 -- Indexes for table `tb_cashbook`
@@ -2995,7 +3473,8 @@ ALTER TABLE `tb_cashbook_init`
 -- Indexes for table `tb_cashbook_monthly`
 --
 ALTER TABLE `tb_cashbook_monthly`
-  ADD PRIMARY KEY (`monthly_id`);
+  ADD PRIMARY KEY (`monthly_id`),
+  ADD KEY `cashbook_id` (`cashbook_id`);
 
 --
 -- Indexes for table `tb_certificate`
@@ -3215,13 +3694,15 @@ ALTER TABLE `tb_rao_cont_attributes`
 -- Indexes for table `tb_rao_cont_ob`
 --
 ALTER TABLE `tb_rao_cont_ob`
-  ADD PRIMARY KEY (`rao_cont_ob_id`);
+  ADD PRIMARY KEY (`rao_cont_ob_id`),
+  ADD KEY `rao_cont_id` (`rao_cont_id`);
 
 --
 -- Indexes for table `tb_rao_cont_ob_data`
 --
 ALTER TABLE `tb_rao_cont_ob_data`
-  ADD PRIMARY KEY (`rao_cont_ob_data_id`);
+  ADD PRIMARY KEY (`rao_cont_ob_data_id`),
+  ADD KEY `rao_cont_ob_id` (`rao_cont_ob_id`);
 
 --
 -- Indexes for table `tb_rao_cont_ob_totals`
@@ -3284,6 +3765,61 @@ ALTER TABLE `tb_rao_co_ob_totals`
 --
 ALTER TABLE `tb_rao_dev`
   ADD PRIMARY KEY (`rao_dev_id`);
+
+--
+-- Indexes for table `tb_rao_devcont`
+--
+ALTER TABLE `tb_rao_devcont`
+  ADD PRIMARY KEY (`rao_devcont_id`);
+
+--
+-- Indexes for table `tb_rao_devcont_ap`
+--
+ALTER TABLE `tb_rao_devcont_ap`
+  ADD PRIMARY KEY (`rao_devcont_ap_id`),
+  ADD KEY `rao_devcont_id` (`rao_devcont_id`);
+
+--
+-- Indexes for table `tb_rao_devcont_ap_data`
+--
+ALTER TABLE `tb_rao_devcont_ap_data`
+  ADD PRIMARY KEY (`rao_devcont_ap_data_id`),
+  ADD KEY `rao_devcont_ap_id` (`rao_devcont_ap_id`);
+
+--
+-- Indexes for table `tb_rao_devcont_ap_totals`
+--
+ALTER TABLE `tb_rao_devcont_ap_totals`
+  ADD PRIMARY KEY (`rao_devcont_ap_total_id`),
+  ADD KEY `rao_devcont_id` (`rao_devcont_id`);
+
+--
+-- Indexes for table `tb_rao_devcont_attributes`
+--
+ALTER TABLE `tb_rao_devcont_attributes`
+  ADD PRIMARY KEY (`rao_devcont_att_id`),
+  ADD KEY `rao_devcont_id` (`rao_devcont_id`);
+
+--
+-- Indexes for table `tb_rao_devcont_ob`
+--
+ALTER TABLE `tb_rao_devcont_ob`
+  ADD PRIMARY KEY (`rao_devcont_ob_id`),
+  ADD KEY `rao_devcont_id` (`rao_devcont_id`);
+
+--
+-- Indexes for table `tb_rao_devcont_ob_data`
+--
+ALTER TABLE `tb_rao_devcont_ob_data`
+  ADD PRIMARY KEY (`rao_devcont_ob_data_id`),
+  ADD KEY `rao_devcont_ob_id` (`rao_devcont_ob_id`);
+
+--
+-- Indexes for table `tb_rao_devcont_ob_totals`
+--
+ALTER TABLE `tb_rao_devcont_ob_totals`
+  ADD PRIMARY KEY (`rao_devcont_ob_total_id`),
+  ADD KEY `rao_devcont_id` (`rao_devcont_id`);
 
 --
 -- Indexes for table `tb_rao_dev_ap`
@@ -3534,6 +4070,31 @@ ALTER TABLE `tb_rao_sk_ob_totals`
   ADD KEY `rao_sk_id` (`rao_sk_id`);
 
 --
+-- Indexes for table `tb_reai`
+--
+ALTER TABLE `tb_reai`
+  ADD PRIMARY KEY (`reai_id`);
+
+--
+-- Indexes for table `tb_reai_ac`
+--
+ALTER TABLE `tb_reai_ac`
+  ADD PRIMARY KEY (`reai_ac_id`);
+
+--
+-- Indexes for table `tb_reai_es`
+--
+ALTER TABLE `tb_reai_es`
+  ADD PRIMARY KEY (`reai_es_id`);
+
+--
+-- Indexes for table `tb_reai_total`
+--
+ALTER TABLE `tb_reai_total`
+  ADD PRIMARY KEY (`reai_total_id`),
+  ADD KEY `reai_id` (`reai_id`);
+
+--
 -- Indexes for table `tb_request`
 --
 ALTER TABLE `tb_request`
@@ -3569,40 +4130,40 @@ ALTER TABLE `tb_user`
 --
 
 --
+-- AUTO_INCREMENT for table `rao_id_holder`
+--
+ALTER TABLE `rao_id_holder`
+  MODIFY `holder_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tb_blotter`
 --
 ALTER TABLE `tb_blotter`
   MODIFY `blotter_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
--- AUTO_INCREMENT for table `tb_business_m`
---
-ALTER TABLE `tb_business_m`
-  MODIFY `bemp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT for table `tb_cashbook`
 --
 ALTER TABLE `tb_cashbook`
-  MODIFY `cashbook_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `cashbook_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `tb_cashbook_data`
 --
 ALTER TABLE `tb_cashbook_data`
-  MODIFY `cashbook_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `cashbook_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `tb_cashbook_init`
 --
 ALTER TABLE `tb_cashbook_init`
-  MODIFY `init_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `init_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_cashbook_monthly`
 --
 ALTER TABLE `tb_cashbook_monthly`
-  MODIFY `monthly_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `monthly_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `tb_certificate`
@@ -3614,13 +4175,13 @@ ALTER TABLE `tb_certificate`
 -- AUTO_INCREMENT for table `tb_document`
 --
 ALTER TABLE `tb_document`
-  MODIFY `document_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `document_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `tb_document_files`
 --
 ALTER TABLE `tb_document_files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `tb_employee`
@@ -3632,7 +4193,7 @@ ALTER TABLE `tb_employee`
 -- AUTO_INCREMENT for table `tb_event`
 --
 ALTER TABLE `tb_event`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `tb_financial`
@@ -3650,7 +4211,7 @@ ALTER TABLE `tb_household`
 -- AUTO_INCREMENT for table `tb_indigency`
 --
 ALTER TABLE `tb_indigency`
-  MODIFY `indigency_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `indigency_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `tb_indigency_bir`
@@ -3662,13 +4223,13 @@ ALTER TABLE `tb_indigency_bir`
 -- AUTO_INCREMENT for table `tb_inventory`
 --
 ALTER TABLE `tb_inventory`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `tb_item_transaction`
 --
 ALTER TABLE `tb_item_transaction`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `tb_permit`
@@ -3680,13 +4241,13 @@ ALTER TABLE `tb_permit`
 -- AUTO_INCREMENT for table `tb_project`
 --
 ALTER TABLE `tb_project`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `tb_rao`
 --
 ALTER TABLE `tb_rao`
-  MODIFY `rao_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `rao_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_ap_data`
@@ -3698,13 +4259,13 @@ ALTER TABLE `tb_rao_ap_data`
 -- AUTO_INCREMENT for table `tb_rao_bd`
 --
 ALTER TABLE `tb_rao_bd`
-  MODIFY `rao_bd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `rao_bd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_bd_ap`
 --
 ALTER TABLE `tb_rao_bd_ap`
-  MODIFY `rao_bd_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `rao_bd_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_bd_ob`
@@ -3716,7 +4277,7 @@ ALTER TABLE `tb_rao_bd_ob`
 -- AUTO_INCREMENT for table `tb_rao_bd_totals`
 --
 ALTER TABLE `tb_rao_bd_totals`
-  MODIFY `rao_bd_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `rao_bd_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_co`
@@ -3728,7 +4289,7 @@ ALTER TABLE `tb_rao_co`
 -- AUTO_INCREMENT for table `tb_rao_cocont`
 --
 ALTER TABLE `tb_rao_cocont`
-  MODIFY `rao_cocont_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `rao_cocont_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_cocont_ap`
@@ -3746,13 +4307,13 @@ ALTER TABLE `tb_rao_cocont_ap_data`
 -- AUTO_INCREMENT for table `tb_rao_cocont_ap_totals`
 --
 ALTER TABLE `tb_rao_cocont_ap_totals`
-  MODIFY `rao_cocont_ap_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `rao_cocont_ap_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_cocont_attributes`
 --
 ALTER TABLE `tb_rao_cocont_attributes`
-  MODIFY `rao_cocont_att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `rao_cocont_att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_cocont_ob`
@@ -3770,67 +4331,67 @@ ALTER TABLE `tb_rao_cocont_ob_data`
 -- AUTO_INCREMENT for table `tb_rao_cocont_ob_totals`
 --
 ALTER TABLE `tb_rao_cocont_ob_totals`
-  MODIFY `rao_cocont_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `rao_cocont_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_cont`
 --
 ALTER TABLE `tb_rao_cont`
-  MODIFY `rao_cont_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `rao_cont_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_cont_ap`
 --
 ALTER TABLE `tb_rao_cont_ap`
-  MODIFY `rao_cont_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `rao_cont_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_cont_ap_data`
 --
 ALTER TABLE `tb_rao_cont_ap_data`
-  MODIFY `rao_cont_ap_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=560;
+  MODIFY `rao_cont_ap_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=581;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_cont_ap_totals`
 --
 ALTER TABLE `tb_rao_cont_ap_totals`
-  MODIFY `rao_cont_ap_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=549;
+  MODIFY `rao_cont_ap_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=563;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_cont_attributes`
 --
 ALTER TABLE `tb_rao_cont_attributes`
-  MODIFY `rao_cont_att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=288;
+  MODIFY `rao_cont_att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=303;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_cont_ob`
 --
 ALTER TABLE `tb_rao_cont_ob`
-  MODIFY `rao_cont_ob_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `rao_cont_ob_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_cont_ob_data`
 --
 ALTER TABLE `tb_rao_cont_ob_data`
-  MODIFY `rao_cont_ob_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=527;
+  MODIFY `rao_cont_ob_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=544;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_cont_ob_totals`
 --
 ALTER TABLE `tb_rao_cont_ob_totals`
-  MODIFY `rao_cont_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=823;
+  MODIFY `rao_cont_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=844;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_co_ap`
 --
 ALTER TABLE `tb_rao_co_ap`
-  MODIFY `rao_co_ap_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `rao_co_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_co_ap_data`
 --
 ALTER TABLE `tb_rao_co_ap_data`
-  MODIFY `rao_co_ap_data_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `rao_co_ap_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_co_ap_totals`
@@ -3867,6 +4428,54 @@ ALTER TABLE `tb_rao_co_ob_totals`
 --
 ALTER TABLE `tb_rao_dev`
   MODIFY `rao_dev_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_devcont`
+--
+ALTER TABLE `tb_rao_devcont`
+  MODIFY `rao_devcont_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_devcont_ap`
+--
+ALTER TABLE `tb_rao_devcont_ap`
+  MODIFY `rao_devcont_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_devcont_ap_data`
+--
+ALTER TABLE `tb_rao_devcont_ap_data`
+  MODIFY `rao_devcont_ap_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_devcont_ap_totals`
+--
+ALTER TABLE `tb_rao_devcont_ap_totals`
+  MODIFY `rao_devcont_ap_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_devcont_attributes`
+--
+ALTER TABLE `tb_rao_devcont_attributes`
+  MODIFY `rao_devcont_att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_devcont_ob`
+--
+ALTER TABLE `tb_rao_devcont_ob`
+  MODIFY `rao_devcont_ob_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_devcont_ob_data`
+--
+ALTER TABLE `tb_rao_devcont_ob_data`
+  MODIFY `rao_devcont_ob_data_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_rao_devcont_ob_totals`
+--
+ALTER TABLE `tb_rao_devcont_ob_totals`
+  MODIFY `rao_devcont_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_dev_ap`
@@ -3914,31 +4523,31 @@ ALTER TABLE `tb_rao_dev_ob_totals`
 -- AUTO_INCREMENT for table `tb_rao_fe`
 --
 ALTER TABLE `tb_rao_fe`
-  MODIFY `rao_fe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `rao_fe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_fe_ap`
 --
 ALTER TABLE `tb_rao_fe_ap`
-  MODIFY `rao_fe_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `rao_fe_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_fe_ap_data`
 --
 ALTER TABLE `tb_rao_fe_ap_data`
-  MODIFY `rao_fe_ap_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `rao_fe_ap_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_fe_ap_totals`
 --
 ALTER TABLE `tb_rao_fe_ap_totals`
-  MODIFY `rao_fe_ap_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `rao_fe_ap_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_fe_attributes`
 --
 ALTER TABLE `tb_rao_fe_attributes`
-  MODIFY `rao_fe_att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `rao_fe_att_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_fe_ob`
@@ -3956,7 +4565,7 @@ ALTER TABLE `tb_rao_fe_ob_data`
 -- AUTO_INCREMENT for table `tb_rao_fe_ob_totals`
 --
 ALTER TABLE `tb_rao_fe_ob_totals`
-  MODIFY `rao_fe_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `rao_fe_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_mooe`
@@ -4010,19 +4619,19 @@ ALTER TABLE `tb_rao_mooe_ob_totals`
 -- AUTO_INCREMENT for table `tb_rao_ob_data`
 --
 ALTER TABLE `tb_rao_ob_data`
-  MODIFY `rao_ob_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `rao_ob_data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_ps`
 --
 ALTER TABLE `tb_rao_ps`
-  MODIFY `rao_ps_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `rao_ps_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_ps_ap`
 --
 ALTER TABLE `tb_rao_ps_ap`
-  MODIFY `rao_ps_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `rao_ps_ap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_ps_ob`
@@ -4034,7 +4643,7 @@ ALTER TABLE `tb_rao_ps_ob`
 -- AUTO_INCREMENT for table `tb_rao_ps_totals`
 --
 ALTER TABLE `tb_rao_ps_totals`
-  MODIFY `rao_ps_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `rao_ps_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `tb_rao_sk`
@@ -4085,10 +4694,34 @@ ALTER TABLE `tb_rao_sk_ob_totals`
   MODIFY `rao_sk_ob_total_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
+-- AUTO_INCREMENT for table `tb_reai`
+--
+ALTER TABLE `tb_reai`
+  MODIFY `reai_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_reai_ac`
+--
+ALTER TABLE `tb_reai_ac`
+  MODIFY `reai_ac_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_reai_es`
+--
+ALTER TABLE `tb_reai_es`
+  MODIFY `reai_es_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_reai_total`
+--
+ALTER TABLE `tb_reai_total`
+  MODIFY `reai_total_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tb_request`
 --
 ALTER TABLE `tb_request`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tb_residency`
@@ -4100,7 +4733,7 @@ ALTER TABLE `tb_residency`
 -- AUTO_INCREMENT for table `tb_resident`
 --
 ALTER TABLE `tb_resident`
-  MODIFY `resident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=398;
+  MODIFY `resident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=345;
 
 --
 -- AUTO_INCREMENT for table `tb_user`
@@ -4117,6 +4750,12 @@ ALTER TABLE `tb_user`
 --
 ALTER TABLE `tb_cashbook_data`
   ADD CONSTRAINT `tb_cashbook_data_ibfk_1` FOREIGN KEY (`cashbook_id`) REFERENCES `tb_cashbook` (`cashbook_id`);
+
+--
+-- Constraints for table `tb_cashbook_monthly`
+--
+ALTER TABLE `tb_cashbook_monthly`
+  ADD CONSTRAINT `tb_cashbook_monthly_ibfk_1` FOREIGN KEY (`cashbook_id`) REFERENCES `tb_cashbook` (`cashbook_id`);
 
 --
 -- Constraints for table `tb_document_files`
@@ -4203,6 +4842,18 @@ ALTER TABLE `tb_rao_cont_attributes`
   ADD CONSTRAINT `tb_rao_cont_attributes_ibfk_1` FOREIGN KEY (`rao_cont_id`) REFERENCES `tb_rao_cont` (`rao_cont_id`);
 
 --
+-- Constraints for table `tb_rao_cont_ob`
+--
+ALTER TABLE `tb_rao_cont_ob`
+  ADD CONSTRAINT `tb_rao_cont_ob_ibfk_1` FOREIGN KEY (`rao_cont_id`) REFERENCES `tb_rao_cont` (`rao_cont_id`);
+
+--
+-- Constraints for table `tb_rao_cont_ob_data`
+--
+ALTER TABLE `tb_rao_cont_ob_data`
+  ADD CONSTRAINT `tb_rao_cont_ob_data_ibfk_1` FOREIGN KEY (`rao_cont_ob_id`) REFERENCES `tb_rao_cont_ob` (`rao_cont_ob_id`);
+
+--
 -- Constraints for table `tb_rao_cont_ob_totals`
 --
 ALTER TABLE `tb_rao_cont_ob_totals`
@@ -4249,6 +4900,48 @@ ALTER TABLE `tb_rao_co_ob_data`
 --
 ALTER TABLE `tb_rao_co_ob_totals`
   ADD CONSTRAINT `tb_rao_co_ob_totals_ibfk_1` FOREIGN KEY (`rao_co_id`) REFERENCES `tb_rao_co` (`rao_co_id`);
+
+--
+-- Constraints for table `tb_rao_devcont_ap`
+--
+ALTER TABLE `tb_rao_devcont_ap`
+  ADD CONSTRAINT `tb_rao_devcont_ap_ibfk_1` FOREIGN KEY (`rao_devcont_id`) REFERENCES `tb_rao_devcont` (`rao_devcont_id`);
+
+--
+-- Constraints for table `tb_rao_devcont_ap_data`
+--
+ALTER TABLE `tb_rao_devcont_ap_data`
+  ADD CONSTRAINT `tb_rao_devcont_ap_data_ibfk_1` FOREIGN KEY (`rao_devcont_ap_id`) REFERENCES `tb_rao_devcont_ap` (`rao_devcont_ap_id`);
+
+--
+-- Constraints for table `tb_rao_devcont_ap_totals`
+--
+ALTER TABLE `tb_rao_devcont_ap_totals`
+  ADD CONSTRAINT `tb_rao_devcont_ap_totals_ibfk_1` FOREIGN KEY (`rao_devcont_id`) REFERENCES `tb_rao_devcont` (`rao_devcont_id`);
+
+--
+-- Constraints for table `tb_rao_devcont_attributes`
+--
+ALTER TABLE `tb_rao_devcont_attributes`
+  ADD CONSTRAINT `tb_rao_devcont_attributes_ibfk_1` FOREIGN KEY (`rao_devcont_id`) REFERENCES `tb_rao_devcont` (`rao_devcont_id`);
+
+--
+-- Constraints for table `tb_rao_devcont_ob`
+--
+ALTER TABLE `tb_rao_devcont_ob`
+  ADD CONSTRAINT `tb_rao_devcont_ob_ibfk_1` FOREIGN KEY (`rao_devcont_id`) REFERENCES `tb_rao_devcont` (`rao_devcont_id`);
+
+--
+-- Constraints for table `tb_rao_devcont_ob_data`
+--
+ALTER TABLE `tb_rao_devcont_ob_data`
+  ADD CONSTRAINT `tb_rao_devcont_ob_data_ibfk_1` FOREIGN KEY (`rao_devcont_ob_id`) REFERENCES `tb_rao_devcont_ob_data` (`rao_devcont_ob_data_id`);
+
+--
+-- Constraints for table `tb_rao_devcont_ob_totals`
+--
+ALTER TABLE `tb_rao_devcont_ob_totals`
+  ADD CONSTRAINT `tb_rao_devcont_ob_totals_ibfk_1` FOREIGN KEY (`rao_devcont_id`) REFERENCES `tb_rao_devcont` (`rao_devcont_id`);
 
 --
 -- Constraints for table `tb_rao_dev_ap`
@@ -4435,6 +5128,12 @@ ALTER TABLE `tb_rao_sk_ob_data`
 --
 ALTER TABLE `tb_rao_sk_ob_totals`
   ADD CONSTRAINT `tb_rao_sk_ob_totals_ibfk_1` FOREIGN KEY (`rao_sk_id`) REFERENCES `tb_rao_sk` (`rao_sk_id`);
+
+--
+-- Constraints for table `tb_reai_total`
+--
+ALTER TABLE `tb_reai_total`
+  ADD CONSTRAINT `tb_reai_total_ibfk_1` FOREIGN KEY (`reai_id`) REFERENCES `tb_reai` (`reai_id`);
 
 --
 -- Constraints for table `tb_resident`
