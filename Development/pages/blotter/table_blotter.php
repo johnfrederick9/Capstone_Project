@@ -117,7 +117,7 @@ if (mysqli_num_rows($result) > 0) {
                                         <div class="input-wrapper">
                                             <label for="blotter_complainee_add" class="input-label">Complainee's Address:</label>
                                             <select id="blotter_complainee_addField" name="blotter_complainee_add" class="input-field" require>
-                                                <option value="" disabled selected>Address</option>
+                                                <option value="" disabled selected> Address</option>
                                                 <option value="Sitio Sto. Nino">Sitio Sto. Nino</option>
                                                 <option value="Sitio Suwa">Sitio Suwa</option>
                                                 <option value="Sitio Private">Sitio Private</option>
