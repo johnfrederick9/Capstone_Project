@@ -426,6 +426,24 @@ td.action-buttons{
   margin-right: 10px;
 }
 
+.cashbook-actions {
+    text-align: right;
+}
+
+.cashbook-actions button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.cashbook-actions button:hover {
+    background-color: #45a049;
+}
+
 </style>
 <body>
     <section class="home">  
@@ -438,15 +456,15 @@ td.action-buttons{
                         <div class="table-actions">    
                         <div class="dropdown table_dropdown">
                         <button class="dropdown-toggle">Other RAO Sources</button>
-                            <ul class="dropdown-menu">
+                        <ul class="dropdown-menu">
                                 <li><a href="../rao/table_rao_records.php">RAO-PS</a></li>
                                 <li><a href="../rao-cont/table_rao_cont_records.php">RAO-CONT</a></li>
                                 <li><a href="../rao-fe/table_rao_fe_records.php">RAO-FE</a></li>
                                 <li><a href="../rao-mooe/table_rao_mooe_records.php">RAO-MOOE</a></li>
+                                <li><a href="../rao-bdrrmf/table_rao_bdrrmf_records.php">RAO-BDRRMF</a></li>
                                 <li><a href="../rao-dev/table_rao_dev_records.php">RAO-DEV</a></li>
                                 <li><a href="../rao-sk/table_rao_sk_records.php">RAO-SK</a></li>
                                 <li><a href="../rao-co/table_rao_co_cont_records.php">RAO-CO</a></li>
-                                <li><a href="../co-cont/table_rao_cocont_records.php">RAO-CO-CONT</a></li>
                             </ul>
                         </div>  
                             <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-table-btn">+ Add Table</button>
@@ -607,16 +625,18 @@ td.action-buttons{
                                 dataType: 'json',
                                 success: function (response) {
                                     if (response.status === 'true') {
-                                        alert('Data saved successfully!');
+                                        mytable = $('#example').DataTable();
+                                        mytable.draw();
+                                        showAlert('Record added successfully!',"alert-success");
                                         $('#addUserModal').modal('hide');
                                     } else {
-                                        alert('Error saving data: ' + response.error);
+                                        showAlert('Error saving data: ' + response.error,"alert-danger");
                                     }
                                 },
                                 error: function (jqXHR, textStatus, errorThrown) {
                                     console.error('AJAX Error: ' + textStatus, errorThrown);
                                     console.error('Response: ' + jqXHR.responseText);
-                                    alert('Error: ' + errorThrown);
+                                    showAlert('Error: ' + errorThrown,"alert-danger");
                                 }
                             });
                         });
@@ -766,14 +786,15 @@ td.action-buttons{
 
                                             // Close the modal
                                             $('#exampleModal').modal('hide');
+                                            showAlert('Record Updated successfully!',"alert-success");
                                     } else {
-                                        alert('Error saving data: ' + response.error);
+                                        showAlert('Error saving data: ' + response.error,"alert-danger");
                                     }
                                 },
                                 error: function (jqXHR, textStatus, errorThrown) {
                                     console.error('AJAX Error:', textStatus, errorThrown);
                                     console.error('Response:', jqXHR.responseText);
-                                    alert('Error: ' + errorThrown);
+                                    showAlert('Error: ' + errorThrown,"alert-danger");
                                 }
                             });
                         });
@@ -863,7 +884,7 @@ td.action-buttons{
                                 },
                                 error: function (xhr, status, error) {
                                     console.error("AJAX error:", status, error);
-                                    alert('Error fetching data. Please try again.');
+                                    showAlert('Error fetching data. Please try again.',"alert-danger");
                                 }
                             });
 
@@ -1022,7 +1043,7 @@ td.action-buttons{
                                 },
                                 error: function (xhr, status, error) {
                                     console.error("AJAX error:", status, error);
-                                    alert('Error fetching data. Please try again.');
+                                    showAlert('Error fetching data. Please try again.',"alert-danger");
                                 }
                             });
 
@@ -1053,7 +1074,7 @@ td.action-buttons{
                                     // Remove the row from DataTable
                                     table.row($(event.target).closest('tr')).remove().draw();
                                 } else {
-                                    alert('Deletion failed');
+                                    showAlert('Deletion failed',"alert-danger");
                                 }
                                 // Close the modal
                                 $('#deleteConfirmationModal').modal('hide');
@@ -1062,6 +1083,47 @@ td.action-buttons{
                             });
                         });
                     
+
+                        
+                        $(document).on('click', '#viewDataModal #print-btn', function () {
+                        var rao_bd_id = $('#viewDataModal #rao_bd_id').val(); // Get the ID from hidden input
+                        console.log("Print", rao_bd_id); // Log for debugging
+
+                        $.ajax({
+                            url: 'print-handler.php',
+                            type: 'POST',
+                            data: { rao_bd_id: rao_bd_id },
+                            success: function (response) {
+                                var printWindow = window.open('', '', 'height=600,width=800');
+                                printWindow.document.write(response);
+                                printWindow.document.close();
+
+                                var images = printWindow.document.images;
+                                var totalImages = images.length;
+                                var loadedImages = 0;
+
+                                if (totalImages === 0) {
+                                    printWindow.focus();
+                                    printWindow.print();
+                                    //printWindow.close();
+                                } else {
+                                    for (var i = 0; i < totalImages; i++) {
+                                        images[i].onload = images[i].onerror = function () {
+                                            loadedImages++;
+                                            if (loadedImages === totalImages) {
+                                                printWindow.focus();
+                                                printWindow.print();
+                                                printWindow.close();
+                                            }
+                                        };
+                                    }
+                                }
+                            },
+                        });
+                    });
+
+
+        
                     </script>
                 </section><!-- .home-->
                 <!-- Modal -->
@@ -1079,6 +1141,7 @@ td.action-buttons{
                             <div class="rao-container">
                             <div class="rao-header">
                                     <h1>Report of Appropriations and Obligations (RAO-BDRRMF)</h1>
+                                    <input type="hidden" id="rao_bd_id" name="rao_bd_id">
                                     <p id="period_covered" style="text-align: center;"></p>
                                     <div class="details">
                                         <div class="info">
@@ -1208,6 +1271,10 @@ td.action-buttons{
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="cashbook-actions">
+                                <button id="print-btn">Print</button>
+                            </div>
 
 
                             </div>
@@ -1669,7 +1736,7 @@ function handleValidation(modal) {
 
     // Display the alert message if there are any missing inputs
     if (alertMessage) {
-        alert(alertMessage);
+        showAlert(alertMessage,"alert-danger");
         return true; // Indicate there are errors
     }
 
@@ -1756,17 +1823,17 @@ document.addEventListener('DOMContentLoaded', function () {
                         $('#addUserModal #periodcovered').val('');
                         if (data.error.includes("record already exists")) {
                             // Error for duplicate record
-                            alert("A record for this month already exists. Please choose a different month.");
+                            showAlert("A record for this month already exists. Please choose a different month.","alert-danger");
                         } else {
                             // General error handling
-                            alert("An error occurred: " + data.error);
+                            showAlert("An error occurred: " + data.error,"alert-danger");
                         }
 
                     }
                 })
                 .catch(error => {
                     console.error('Fetch error:', error);
-                    alert("An unexpected error occurred. Please try again.");
+                    showAlert("An unexpected error occurred. Please try again.","alert-danger");
                 });
         });
 
@@ -2097,17 +2164,17 @@ document.addEventListener('DOMContentLoaded', function () {
                         $('#exampleModal #period_covered').val('');
                         if (data.error.includes("record already exists")) {
                             // Error for duplicate record
-                            alert("A record for this month already exists. Please choose a different month.");
+                            showAlert("A record for this month already exists. Please choose a different month.","alert-danger");
                         } else {
                             // General error handling
-                            alert("An error occurred: " + data.error);
+                            showAlert("An error occurred: " + data.error,"alert-danger");
                         }
 
                     }
                 })
                 .catch(error => {
                     console.error('Fetch error:', error);
-                    alert("An unexpected error occurred. Please try again.");
+                    showAlert("An unexpected error occurred. Please try again.","alert-danger");
                 });
         });
 

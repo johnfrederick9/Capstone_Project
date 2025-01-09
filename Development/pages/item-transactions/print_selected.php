@@ -4,7 +4,26 @@ include('../../connection.php');
 $ids = $_GET['ids'];
 $idArray = explode(',', $ids);
 
-$sql = "SELECT * FROM tb_item_transaction WHERE transaction_id IN (".implode(',', $idArray).")";
+$sql = "SELECT 
+            t.borrower_name, 
+            t.reserved_on, 
+            t.date_borrowed, 
+            t.return_date, 
+            t.approved_by, 
+            t.released_by, 
+            t.date_returned, 
+            t.transaction_status,
+            GROUP_CONCAT(i.item_name SEPARATOR ', ') AS borrowed_items,
+            GROUP_CONCAT(i.borrow_quantity SEPARATOR ', ') AS borrowed_quantities
+        FROM 
+            tb_item_transaction t
+        LEFT JOIN 
+            tb_transaction_items i ON t.transaction_id = i.transaction_id
+        WHERE 
+            t.transaction_id IN (".implode(',', $idArray).")
+        GROUP BY 
+            t.transaction_id";
+
 $query = mysqli_query($con, $sql);
 
 echo '<html>
@@ -73,6 +92,8 @@ echo '<html>
         <thead>
             <tr>
                 <th>Name</th>
+                 <th>Borrowed Items</th>
+                <th>Borrowed Quantities</th>
                 <th>Reserved Date</th>
                 <th>Borrowed Date</th>
                 <th>Return Date</th>
@@ -80,21 +101,30 @@ echo '<html>
                 <th>Released By</th>
                 <th>Date Returned</th>
                 <th>Transaction Status</th>
+               
             </tr>
         </thead>
         <tbody>';
 
-// Output the selected resident data
 while ($row = mysqli_fetch_assoc($query)) {
+    // Format dates before output
+    $reserved_on = date('d M, Y', strtotime($row['reserved_on']));
+    $date_borrowed = date('d M, Y', strtotime($row['date_borrowed']));
+    $return_date = date('d M, Y', strtotime($row['return_date']));
+    $date_returned = $row['date_returned'] ? date('d M, Y', strtotime($row['date_returned'])) : 'N/A';
+
     echo '<tr>
             <td>'.$row['borrower_name'].'</td>
-            <td>'.$row['reserved_on'].'</td>
-            <td>'.$row['date_borrowed'].'</td>
-            <td>'.$row['return_date'].'</td>
+            <td>'.$row['borrowed_items'].'</td>
+            <td>'.$row['borrowed_quantities'].'</td>
+            <td>'.$reserved_on.'</td>
+            <td>'.$date_borrowed.'</td>
+            <td>'.$return_date.'</td>
             <td>'.$row['approved_by'].'</td>
             <td>'.$row['released_by'].'</td>
-            <td>'.$row['date_returned'].'</td>
+            <td>'.$date_returned.'</td>
             <td>'.$row['transaction_status'].'</td>
+            
           </tr>';
 }
 

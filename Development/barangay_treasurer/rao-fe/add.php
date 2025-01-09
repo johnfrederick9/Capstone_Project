@@ -9,6 +9,19 @@ try {
     $chairman = $_POST['chairman'];
     $brgy_captain = $_POST['brgy_captain'];
 
+    $currentDate = date('Y-m');
+    $monthYear = date('Y-m', strtotime($period_covered));
+
+     // Check if the passed date is in the future
+     if ($monthYear > $currentDate) {
+        $response = [
+            'status' => 'false',
+            'error' => 'The selected date is yet to come. Please choose a valid date.'
+        ];
+        echo json_encode($response);
+        exit;
+    }
+    
     // Update the tb_rao_fe with the chairman, period_covered, and brgy_captain
     $update_rao_fe_query = "UPDATE tb_rao_fe 
                               SET chairman = ?, brgy_captain = ?, period_covered = ? 

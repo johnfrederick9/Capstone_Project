@@ -6,6 +6,10 @@ require '../../database.php';
 
 
 <style>
+
+div.dataTables_filter {
+    margin-top: 0 !important;
+}
 .column-titles {
   display: grid;
   grid-template-columns: auto repeat(14, 1fr);
@@ -467,8 +471,8 @@ button[data-group]:not(.active) {
                             <h1>Cashbook</h1>
                         </div>
                         <div class="table-actions">    
-                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#initModal" class="add-table-btn">Beginning Balance</button>
-                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-table-btn">+ Add Item</button>
+                            <!-- <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#initModal" class="add-table-btn">Beginning Balance</button>
+                            <button href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addUserModal" class="add-table-btn">+ Add Item</button> -->
                             <!--<button class="print-btn" title="Print">
                                 <i class="bx bx-printer"></i>
                             </button>-->

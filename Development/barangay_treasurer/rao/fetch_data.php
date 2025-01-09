@@ -48,7 +48,10 @@ $data = array();
 while ($row = mysqli_fetch_assoc($query)) {
     $sub_array = array();
     $sub_array[] = $row['rao_ps_id'];
-    $sub_array[] = $row['period_covered'];
+
+    $formatted_date = date("F Y", strtotime($row['period_covered']));
+    $sub_array[] = $formatted_date;
+    
     $sub_array[] = $row['chairman'];
     $sub_array[] = $row['brgy_captain'];
     $sub_array[] = '
@@ -60,11 +63,11 @@ while ($row = mysqli_fetch_assoc($query)) {
 				<a href="javascript:void(0);" data-id="' . $row['rao_ps_id'] . '" class="dropdown-item update-btn editbtn">
 					<i class="bx bx-edit"></i>
 				</a>
+                 <a href="javascript:void(0);" data-id="' . $row['rao_ps_id'] . '" class="dropdown-item delete-btn deleteBtn">
+					<i class="bx bx-trash"></i>
+				</a>
 				<a href="javascript:void(0);" data-id="' . $row['rao_ps_id'] . '"class="dropdown-item view-btn infoBtn">
                 <i class="bx bx-info-circle"></i>
-				</a>
-                <a href="javascript:void(0);" data-id="' . $row['rao_ps_id'] . '" class="dropdown-item delete-btn deleteBtn">
-					<i class="bx bx-trash"></i>
 				</a>
 			</div>
 		</div>';

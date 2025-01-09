@@ -199,6 +199,12 @@ $(document).ready(function() {
                 $(document).on('submit', '#updateUser', function (e) {
     e.preventDefault();
 
+    // Helper function to format the date
+    function formatDate(date) {
+        if (!date || date === '0000-00-00') return 'N/A';  // Check if date is empty or '0000-00-00'
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(date).toLocaleDateString("en-US", options);
+    }
     // Collect values from the form
     var borrower_name = $('#borrowernameField').val();
     var borrower_address = $('#borroweraddressField').val();
@@ -228,11 +234,16 @@ $(document).ready(function() {
     var items = [];
     $('.inp-group-update > .flex').each(function () {
         var item_id = $(this).find('select[name="items[]"]').val();
+        var item_name = $(this).find('select[name="items[]"] option:selected').text();
+    
+        // Clean the item name by removing the part in parentheses
+        item_name = item_name.replace(/\s*\(.*\)/, '').trim();
         var borrow_quantity = parseInt($(this).find('input[name="borrow_quantity[]"]').val()) || 0;
         var return_quantity = parseInt($(this).find('input[name="return_quantity[]"]').val()) || 0;
 
         items.push({
             item_id: item_id,
+            item_name: item_name, 
             borrow_quantity: borrow_quantity,
             return_quantity: return_quantity,
         });
@@ -260,10 +271,18 @@ $(document).ready(function() {
             success: function (data) {
                 var json = JSON.parse(data);
                 var status = json.status;
+                console.log("Status:",json.transaction_status);
 
                 if (status == 'true') {
                     var borrow_quantity = json.borrow_quantity || 0;
                     var return_quantity = json.return_quantity || 0;
+
+                     // Function to format date into "Month Day, Year" (e.g., January 8, 2025)
+                    function formatDate(date) {
+                        if (!date || date === '0000-00-00') return "N/A";  // If the date is empty or '0000-00-00', return "N/A"
+                        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+                        return new Date(date).toLocaleDateString("en-US", options);
+                    }
 
                     var table = $('#example').DataTable();
                     var button = `
@@ -291,14 +310,13 @@ $(document).ready(function() {
                     row.data([
                         transaction_id,
                         checkbox,
+                        borrower_name,
                         borrower_address,
-                        borrow_quantity,
-                        reserved_on,
-                        date_borrowed,
-                        return_date,
-                        approved_by,
-                        released_by,
-                        return_quantity, // Added return quantity
+                        items.map(item => item.item_name).join(', '),
+                        items.map(item => item.borrow_quantity).join(', '),
+                        formatDate(date_borrowed),
+                        formatDate(return_date),
+                        items.map(item => item.return_quantity).join(', '),
                         json.transaction_status,
                         button,
                     ]);
@@ -386,6 +404,7 @@ $(document).ready(function() {
                         }
                     });
                 });
+                
                 $(document).on('click', '.deleteBtn', function(event) {
                 event.preventDefault();
                 var transaction_id = $(this).data('id'); // Get transaction ID from data attribute
@@ -429,6 +448,7 @@ $(document).ready(function() {
                 $("body").append(alertDiv);
                 setTimeout(function() { alertDiv.alert('close'); }, 900);
             }
+
             $(document).ready(function() {
     $('#example').on('click', '.viewbtn', function(event) {
         var table = $('#example').DataTable();
@@ -452,25 +472,38 @@ $(document).ready(function() {
             type: 'post',
             success: function(data) {
                 console.log("AJAX data response:", data);
-                try {
-                    var json = JSON.parse(data);
-                    $('#view_name').text(json.borrower_name || "N/A");
-                    $('#view_address').text(json.borrower_address || "N/A");
-                    $('#view_bitems').text(json.borrowed_items || "N/A");
-                    $('#view_bquantity').text(json.borrowed_quantities || "N/A");
-                    $('#view_reserved').text(json.reserved_on || "N/A");
-                    $('#view_bdate').text(json.date_borrowed || "N/A");
-                    $('#view_rdate').text(json.return_date || "N/A");
-                    $('#view_approved').text(json.approved_by || "N/A");
-                    $('#view_released').text(json.released_by || "N/A");
-                    $('#view_returned').text(json.returned_by || "N/A");
-                    $('#view_retdate').text(json.date_returned || "N/A");
-                    $('#view_rquantity').text(json.return_quantities || "N/A");
-                    $('#view_status').text(json.transaction_status || "N/A");
-                } catch (e) {
-                    console.error("JSON parsing error:", e);
-                    alert("An error occurred while processing the data.");
+              try {
+                var json = JSON.parse(data);
+
+                // Function to format date into "Month Day, Year" (e.g., January 8, 2025)
+                function formatDate(date) {
+                    if (!date || date === '0000-00-00') return "N/A";  // If the date is empty or '0000-00-00', return "N/A"
+                    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+                    return new Date(date).toLocaleDateString("en-US", options);
                 }
+
+                $('#view_name').text(json.borrower_name || "N/A");
+                $('#view_address').text(json.borrower_address || "N/A");
+                $('#view_bitems').text(json.borrowed_items || "N/A");
+                $('#view_bquantity').text(json.borrowed_quantities || "N/A");
+                $('#view_reserved').text(json.reserved_on || "N/A");
+
+                // Format the dates using the formatDate function
+                $('#view_bdate').text(formatDate(json.date_borrowed));
+                $('#view_rdate').text(formatDate(json.return_date));
+                $('#view_approved').text(json.approved_by || "N/A");
+                $('#view_released').text(json.released_by || "N/A");
+                $('#view_returned').text(json.returned_by || "N/A");
+                $('#view_retdate').text((json.date_returned));
+                $('#view_rquantity').text(json.return_quantities || "N/A");
+                $('#view_status').text(json.transaction_status || "N/A");
+
+            } catch (e) {
+                console.error("JSON parsing error:", e);
+                alert("An error occurred while processing the data.");
+            }
+
+
             },
             error: function(xhr, status, error) {
                 console.error("AJAX error:", error);

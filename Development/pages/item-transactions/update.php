@@ -212,7 +212,7 @@ try {
     $response = array(
         'status' => 'true',
         'item_id' => $item_id,
-        'transaction_status' => $transaction_status,
+        'transaction_status' => $status,
     );
 } catch (Exception $e) {
     // Rollback transaction in case of failure

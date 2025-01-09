@@ -8,6 +8,7 @@ $monthYear = date('Y-m', strtotime($date));
 $previousMonthYear = date('Y-m', strtotime('first day of previous month', strtotime($monthYear . '-01')));
 
 try {
+    
     // Check if the selected month record already exists
     if($task == "update"){
 

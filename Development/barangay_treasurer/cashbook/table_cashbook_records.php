@@ -1,5 +1,5 @@
 <?php
-include '../../sidebar_officials.php';
+include '../../sidebar.php';
 include '../../head.php';
 require '../../database.php';
 ?>
@@ -515,6 +515,8 @@ button[data-group]:not(.active) {
                                 ]
                             });
                         });
+
+                        // FOR ADD
                         $(document).on('submit', '#addUser', function(e) {
                             e.preventDefault();
 
@@ -525,6 +527,9 @@ button[data-group]:not(.active) {
                             var treasurer_name = $('#treasurername').val();
                             var clt_init_balance = $('#cltinitbalance').val();
                             var cb_init_balance = $('#cbinitbalance').val();
+
+                            var clt_suggested_balance = $('#cltinitbalance').data('suggested-value');
+                            var cb_suggested_balance = $('#cbinitbalance').data('suggested-value');
 
                             // Collect ap array data
                             var add_counter = $('#addUserModal input[name="add_counter[]"]').map(function() {
@@ -588,6 +593,8 @@ button[data-group]:not(.active) {
                             formData.append('treasurer_name', treasurer_name);
                             formData.append('clt_init_balance', clt_init_balance);
                             formData.append('cb_init_balance', cb_init_balance);
+                            formData.append('clt_suggested_balance', clt_suggested_balance);
+                            formData.append('cb_suggested_balance', cb_suggested_balance);
 
                             formData.append('add_counter', JSON.stringify(add_counter));
                             formData.append('date_data', JSON.stringify(date_data));
@@ -603,11 +610,6 @@ button[data-group]:not(.active) {
                             formData.append('ca_disbursement_data', JSON.stringify(ca_disbursement_data));
                             formData.append('pcf_receipt_data', JSON.stringify(pcf_receipt_data));
                             formData.append('pcf_payments_data', JSON.stringify(pcf_payments_data));
-
-                            console.log("Period Covered: ", period_covered);
-                            console.log("Treasurer Name: ", treasurer_name);
-                            console.log("clt_init_balance: ", clt_init_balance);
-                            console.log("cb_init_balance: ", cb_init_balance);
 
 
                             // Check if all required fields are filled
@@ -637,16 +639,19 @@ button[data-group]:not(.active) {
                                             $('#addUserModal input').val('');
                                             $('.inp-group-view').empty();
 
+                                            showAlert("Record Added successfully.", "alert-success");
+
                                         } else {
-                                            alert(message||'Failed to submit data');
+                                            showAlert(message||'Failed to submit data',"alert-danger");
                                         }
                                     }
                                 });
                             } else {
-                                alert('Please fill all the required fields');
+                                showAlert('Please fill all the required fields',"alert-danger");
                             }
                         });
 
+                        // FOR UPDATE
                         $(document).on('submit', '#updateUser', function(e) {
                             e.preventDefault();
 
@@ -662,6 +667,9 @@ button[data-group]:not(.active) {
                             var treasurer_name = $('#treasurernameField').val();
                             var clt_init_balance = $('#cltinitbalanceField').val();
                             var cb_init_balance = $('#cbinitbalanceField').val();
+
+                            var clt_suggested_balance = $('#cltinitbalanceField').data('suggested-value');
+                            var cb_suggested_balance = $('#cbinitbalanceField').data('suggested-value');
 
                             // Collect ap array data
                             var cashbook_data_id = $('#exampleModal input[name="cashbook_data_id[]"]').map(function() {
@@ -731,6 +739,8 @@ button[data-group]:not(.active) {
                             formData.append('cb_init_balance', cb_init_balance);
                             formData.append('trid', trid);
 
+                            formData.append('clt_suggested_balance', clt_suggested_balance);
+                            formData.append('cb_suggested_balance', cb_suggested_balance);
 
                             formData.append('cashbook_data_id', JSON.stringify(cashbook_data_id));
                             formData.append('up_counter', JSON.stringify(up_counter));
@@ -775,22 +785,22 @@ button[data-group]:not(.active) {
 
                                             // Close the modal
                                             $('#exampleModal').modal('hide');
+                                            showAlert("Record Updated successfully.", "alert-success");
                                         } else {
-                                            alert('Update failed: ' + (json.error || 'Unknown error'));
+                                            showAlert('Update failed: ' + (json.error || 'Unknown error'), "alert-danger");
                                         }
                                     },
                                     error: function(xhr, status, error) {
                                         console.error("AJAX Error: " + status + ": " + error);
-                                        alert("An error occurred while updating data.");
+                                        showAlert("An error occurred while updating data.", "alert-danger");
                                     }
                                 });
                             } else {
-                                alert('Please fill all the required fields');
+                                showAlert('Please fill all the required fields');
                             }
                         });
 
-                        
-
+                        // FOR EDIT
                         $('#example').on('click', '.editbtn', function(event) {
                             var table = $('#example').DataTable();
                             var trid = $(this).closest('tr').attr('id');
@@ -826,6 +836,10 @@ button[data-group]:not(.active) {
                                             $('#treasurernameField').val(record.treasurer_name);
                                             $('#cltinitbalanceField').val(record.clt_init_balance);
                                             $('#cbinitbalanceField').val(record.cb_init_balance);
+
+                                            $('#cltinitbalanceField').attr('data-suggested-value', json.clt_end_balance);
+                                            $('#cbinitbalanceField').attr('data-suggested-value', json.cb_end_balance);
+
 
                                         // Populate input fields with associated records
                                         cashbookData.forEach(function(cData) {
@@ -884,11 +898,12 @@ button[data-group]:not(.active) {
                                 },
                                 error: function(xhr, status, error) {
                                     console.error("AJAX Error: " + status + ": " + error);
-                                    alert("An error occurred while fetching data.");
+                                    showAlert("An error occurred while fetching data.", "alert-danger");
                                 }
                             });
                         });
 
+                        // UPDATE DATA MODAL DOM SCRIPT
                         document.addEventListener('DOMContentLoaded', function () {
                             let modalInitialized = false;
                             let addInputHandler;
@@ -939,6 +954,38 @@ button[data-group]:not(.active) {
                                     console.log("Window Upcounter value: ", window.upCounter);
                                     const periodCoveredInput = document.querySelector('#periodcoveredField');
                                     const inpGroup = document.querySelector('#exampleModal .inp-group-view');
+                                    const cltBalanceInput = document.querySelector('#cltinitbalanceField');
+                                    const cbBalanceInput = document.querySelector('#cbinitbalanceField');
+
+                                    const id = document.querySelector('#exampleModal #cashbook_id').value;
+                                    const state = "update";
+
+                                    periodCoveredInput.addEventListener('change', function() {
+                                        const date = this.value;
+
+                                        // Include the id and state parameters in the query string
+                                        fetch(`get_monthly.php?date=${date}&state=${state}&id=${id}`)
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                if (data.status === 'true') {
+                                                    // Set the balances from the response for the requested month
+                                                    cltBalanceInput.value = parseFloat(data.clt_start_balance).toFixed(2);
+                                                    cbBalanceInput.value = parseFloat(data.cb_start_balance).toFixed(2);
+                                                    cltBalanceInput.setAttribute('data-suggested-value', parseFloat(data.clt_start_balance).toFixed(2));
+                                                    cbBalanceInput.setAttribute('data-suggested-value', parseFloat(data.cb_start_balance).toFixed(2));
+                                                } else {
+                                                    // General error handling
+                                                    showAlert("An error occurred: " + data.error, "alert-danger");
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error('Fetch error:', error);
+
+                                                // Reset balances to 0.00 if there is a fetch error
+                                                cltBalanceInput.value = '0.00';
+                                                cbBalanceInput.value = '0.00';
+                                            });
+                                    });
 
 
                                     // Function to format date as YYYY-MM-DD
@@ -1342,7 +1389,7 @@ button[data-group]:not(.active) {
                                                     //#cbinitbalance$(this).find('input[name="clt_balance_data[]"]').val(newBalance.toFixed(2));
                                                     // Alert if the balance is negative
                                                     if (newBalance < 0) {
-                                                        alert('Warning: A Cash in Local Treasury Balance is negative! Please check your inputs.');
+                                                        showAlert('Warning: A Cash in Local Treasury Balance is negative! Please check your inputs.', "alert-danger");
                                                     }
                                                 }
                                             });
@@ -1384,7 +1431,7 @@ button[data-group]:not(.active) {
                                                     //$(this).find('input[name="cb_balance_data[]"]').val(newBalance.toFixed(2));
                                                     // Alert if the balance is negative
                                                     if (newBalance < 0) {
-                                                        alert('Warning: A Cash in Bank Balance is negative! Please check your inputs.');
+                                                        showAlert('Warning: A Cash in Bank Balance is negative! Please check your inputs.', "alert-danger");
                                                     }
                                                 }
                                             });
@@ -1426,7 +1473,7 @@ button[data-group]:not(.active) {
                                                     //$(this).find('input[name="ca_balance_data[]"]').val(newBalance.toFixed(2));
                                                     // Alert if the balance is negative
                                                     if (newBalance < 0) {
-                                                        alert('Warning: A Cash Advance Balance is negative! Please check your inputs.');
+                                                        showAlert('Warning: A Cash Advance Balance is negative! Please check your inputs.', "alert-danger");
                                                     }
                                                 }
                                             });
@@ -1469,7 +1516,7 @@ button[data-group]:not(.active) {
 
                                                     // Alert if the balance is negative
                                                     if (newBalance < 0) {
-                                                        alert('Warning: A Petty Cash Balance is negative! Please check your inputs.');
+                                                        showAlert('Warning: A Petty Cash Balance is negative! Please check your inputs.', "alert-danger");
                                                     }
                                                 }
                                             });
@@ -1585,7 +1632,7 @@ button[data-group]:not(.active) {
                                                     
 
                                                     if (newBalance < 0) {
-                                                        alert(`Warning: A ${type.name.toUpperCase()} Balance is negative! Please check your inputs.`);
+                                                        showAlert(`Warning: A ${type.name.toUpperCase()} Balance is negative! Please check your inputs.`, "alert-danger");
                                                     }
                                                 }
                                             });
@@ -1618,33 +1665,37 @@ button[data-group]:not(.active) {
                         
                         });
 
+                        // FOR DELETE
                         $(document).on('click', '.deleteBtn', function(event) {
                             var table = $('#example').DataTable();
                             event.preventDefault();
                             var cashbook_id = $(this).data('cashbook_id');
                             console.log('Cashbook ID:', cashbook_id); 
-                            if (confirm("Are you sure want to delete this cashbook Record ? ")) {
-                                $.ajax({
-                                    url: "delete.php",
-                                    data: {
-                                        cashbook_id: cashbook_id,
-                                    },
-                                    type: "post",
-                                    success: function(data) {
-                                        var json = JSON.parse(data);
-                                        status = json.status;
-                                        if (status == 'success') {
-                                            $("#" + cashbook_id).closest('tr').remove();
-                                        } else {
-                                            alert('Failed');
-                                            return;
-                                        }
+                            // Open the modal
+                            $('#deleteConfirmationModal').modal('show');
+                             // Handle the confirmation
+                            $('#confirmDeleteBtn').off('click').on('click', function() {
+                            $.ajax({
+                                url: "delete.php",
+                                data: {
+                                    cashbook_id: cashbook_id,
+                                },
+                                type: "post",
+                                success: function(data) {
+                                    var json = JSON.parse(data);
+                                    status = json.status;
+                                    if (status == 'success') {
+                                        $("#" + cashbook_id).closest('tr').remove();
+                                    } else {
+                                        showAlert('Failed', "alert-danger");
+                                        return;
                                     }
-                                });
-                            } else {
-                                return null;
-                            }
-                        })
+                                    // Close the modal
+                                    $('#deleteConfirmationModal').modal('hide');
+                                }
+                            });
+                            })
+                        });
 
                         // Function to format the period covered
                         function formatPeriodCovered(dateString) {
@@ -1655,6 +1706,7 @@ button[data-group]:not(.active) {
                             return `${month} 1-${lastDay}, ${year}`;
                         }
 
+                        // FOR VIEW 
                         $('#example').on('click', '.infoBtn', function(event) {
                         let trid = $(this).closest('tr').attr('id');
                         let cashbook_id = $(this).data('item-id');
@@ -1760,21 +1812,22 @@ button[data-group]:not(.active) {
 
                                     } else {
                                         console.error('Error in JSON response:', json.message);
-                                        alert("Error: " + json.message); // Alert user if there's an error message
+                                        showAlert("Error: " + json.message, "alert-danger"); // Alert user if there's an error message
                                     }
                                 } catch (e) {
                                     console.error("Failed to parse JSON:", e);
-                                    alert("An error occurred while processing the data.");
+                                    showAlert("An error occurred while processing the data.", "alert-danger");
                                 }
                             },
                             error: function(xhr, status, error) {
                                 console.error("AJAX Error: " + status + ": " + error);
-                                alert("An error occurred while fetching data.");
+                                showAlert("An error occurred while fetching data.", "alert-danger");
                             }
                         });
                     });
 
-                    document.addEventListener('DOMContentLoaded', function () {
+                        // FOR INITIAL BALANCE MODAL DOM
+                        document.addEventListener('DOMContentLoaded', function () {
                         $('#initModal').on('show.bs.modal', function() {
                             console.log("Init Modal is Opened");
                             // AJAX request to fetch existing initial balance data
@@ -1801,7 +1854,8 @@ button[data-group]:not(.active) {
                         });
                     });
 
-                    $(document).on('submit', '#initForm', function(e) {
+                        // FOR INIT FORM
+                        $(document).on('submit', '#initForm', function(e) {
                             e.preventDefault();
                             var clt_init = $('#cltinitField').val();
                             var cb_init = $('#cbinitField').val();
@@ -1821,14 +1875,53 @@ button[data-group]:not(.active) {
                                             mytable.draw();
                                             $('#initModal').modal('hide');
                                         } else {
-                                            alert('failed');
+                                            showAlert('failed', "alert-danger");
                                         }
                                     }
                                 });
                             } else {
-                                alert('Fill all the required fields');
+                                showAlert('Fill all the required fields', "alert-danger");
                             }
                         });
+
+                        //FOR PRINT 
+                        $(document).on('click', '#print-btn', function() {
+                            var cashbook_id = $('#cashbook_id').val(); // Get the ID from hidden input
+                            console.log("Print", cashbook_id); //
+
+                            $.ajax({
+                                url: 'print-handler.php',
+                                type: 'POST',
+                                data: { cashbook_id: cashbook_id},
+                                success: function(response) {
+                                    var printWindow = window.open('', '', 'height=600,width=800');
+                                    printWindow.document.write(response);
+                                    printWindow.document.close();
+
+                                    var images = printWindow.document.images;
+                                    var totalImages = images.length;
+                                    var loadedImages = 0;
+
+                                    if (totalImages === 0) {
+                                        printWindow.focus();
+                                        printWindow.print();
+                                        //printWindow.close();
+                                    } else {
+                                        for (var i = 0; i < totalImages; i++) {
+                                            images[i].onload = images[i].onerror = function() {
+                                                loadedImages++;
+                                                if (loadedImages === totalImages) {
+                                                    printWindow.focus();
+                                                    printWindow.print();
+                                                    printWindow.close();
+                                                }
+                                            };
+                                        }
+                                    }
+                                }
+                            });
+                        });
+
 
                     </script>
                 </section><!-- .home-->
@@ -1967,6 +2060,7 @@ button[data-group]:not(.active) {
                             <div class="cashbook-actions">
                                 <button id="print-btn">Print</button>
                             </div>
+                            <button id="print-btn">Prin1t</button>
                         </div>
                     </div>
                     </div>
@@ -1994,7 +2088,7 @@ button[data-group]:not(.active) {
                                     <div class="col-md-6">
                                         <div class="form-group">
                                         <label for="periodcoveredField">Period Covered:</label>
-                                        <input type="date" id="periodcoveredField" name="period_covered" required disabled>
+                                        <input type="date" id="periodcoveredField" name="period_covered" required>
                                     </div>
                                     </div>
                                     <div class="col-md-6">
@@ -2008,13 +2102,13 @@ button[data-group]:not(.active) {
                                     <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="cltinitbalanceField">Cash in Local Treasurer Beginning Balance:</label>
-                                        <input type="number" id="cltinitbalanceField" name="clt_init_balance" step="0.01"  required disabled>
+                                        <input type="number" id="cltinitbalanceField" name="clt_init_balance" step="0.01" data-suggested-value=""  required>
                                     </div>
                                     </div>
                                     <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="cbinitbalanceField">Cash in Bank Beginning Balance:</label>
-                                        <input type="number" id="cbinitbalanceField" name="cb_init_balance" step="0.01" required disabled>
+                                        <input type="number" id="cbinitbalanceField" name="cb_init_balance" step="0.01" data-suggested-value="" required>
                                     </div>
                                     </div>
                                     </div>
@@ -2126,13 +2220,13 @@ button[data-group]:not(.active) {
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="cltinitbalance">Cash in Local Treasurer Beginning Balance:</label>
-                                            <input type="number" id="cltinitbalance" name="clt_init_balance" step="0.01"  required disabled>
+                                            <input type="number" id="cltinitbalance" name="clt_init_balance" step="0.01" data-suggested-value="" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="cbinitbalance">Cash in Bank Beginning Balance:</label>
-                                        <input type="number" id="cbinitbalance" name="cb_init_balance" step="0.01" required disabled>
+                                        <input type="number" id="cbinitbalance" name="cb_init_balance" step="0.01" data-suggested-value="" required>
                                     </div>
                                 </div>
                             </div>
@@ -2216,6 +2310,21 @@ button[data-group]:not(.active) {
                 </div>
             </div>
             </section>
+            <section class="delete-modal">
+                <!-- Delete Confirmation Modal -->
+                <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Remove for you</h5>
+                        <p>This data will be removed, Would you like to remove it ?</p>
+                        <button type="button" class="btn btn-primary" id="confirmDeleteBtn">Remove</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     </body> 
 
     <!-- <script>
@@ -2293,127 +2402,128 @@ document.addEventListener('DOMContentLoaded', function () {
 });
     </script> -->
 
+    <!-- HIDE/SHOW OF CASH CATEGORY -->
    <script>
-function toggleGroup(group, modalId) {
-    const table = document.querySelector(`#${modalId} #viewDataTable`);
-    console.log(`Table modal: ${modalId}`);
+    function toggleGroup(group, modalId) {
+        const table = document.querySelector(`#${modalId} #viewDataTable`);
+        console.log(`Table modal: ${modalId}`);
 
-    if (!table) {
-        console.log(`Table not found in modal: ${modalId}`);
-        return;
-    }
+        if (!table) {
+            console.log(`Table not found in modal: ${modalId}`);
+            return;
+        }
 
-    // Hide all sections first
-    table.classList.add('hide-cash-treasury', 'hide-cash-bank', 'hide-cash-advance', 'hide-petty-cash');
-    const allCells = table.querySelectorAll('td:has(input[name^="clt_"]), td:has(input[name^="cb_"]), td:has(input[name^="ca_"]), td:has(input[name^="pcf_"])');
-    allCells.forEach(cell => cell.classList.add('hidden'));
+        // Hide all sections first
+        table.classList.add('hide-cash-treasury', 'hide-cash-bank', 'hide-cash-advance', 'hide-petty-cash');
+        const allCells = table.querySelectorAll('td:has(input[name^="clt_"]), td:has(input[name^="cb_"]), td:has(input[name^="ca_"]), td:has(input[name^="pcf_"])');
+        allCells.forEach(cell => cell.classList.add('hidden'));
 
-    // Show only the selected section
-    switch (group) {
-        case 'cashTreasury':
-            table.classList.remove('hide-cash-treasury');
-            const cltCells = table.querySelectorAll('td:has(input[name^="clt_"])');
-            cltCells.forEach(cell => {
-                const input = cell.querySelector('input');
-                if (input && input.value === "") {
-                    // Check if the input is numeric or not
-                    if (input.type === 'number') {
-                        input.value = 0;  // Set default to 0 for numeric fields
-                    } else {
-                        input.value = " ";  // Set default to " " for text fields
+        // Show only the selected section
+        switch (group) {
+            case 'cashTreasury':
+                table.classList.remove('hide-cash-treasury');
+                const cltCells = table.querySelectorAll('td:has(input[name^="clt_"])');
+                cltCells.forEach(cell => {
+                    const input = cell.querySelector('input');
+                    if (input && input.value === "") {
+                        // Check if the input is numeric or not
+                        if (input.type === 'number') {
+                            input.value = 0;  // Set default to 0 for numeric fields
+                        } else {
+                            input.value = " ";  // Set default to " " for text fields
+                        }
                     }
-                }
-                cell.classList.remove('hidden');
+                    cell.classList.remove('hidden');
+                });
+                break;
+                
+            case 'cashBank':
+                table.classList.remove('hide-cash-bank');
+                const cbCells = table.querySelectorAll('td:has(input[name^="cb_"])');
+                cbCells.forEach(cell => cell.classList.remove('hidden'));
+                break;
+                
+            case 'cashAdvance':
+                table.classList.remove('hide-cash-advance');
+                const caCells = table.querySelectorAll('td:has(input[name^="ca_"])');
+                caCells.forEach(cell => cell.classList.remove('hidden'));
+                break;
+                
+            case 'pettyCash':
+                table.classList.remove('hide-petty-cash');
+                const pcfCells = table.querySelectorAll('td:has(input[name^="pcf_"])');
+                pcfCells.forEach(cell => cell.classList.remove('hidden'));
+                break;
+        }
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const sectionToggle1 = document.getElementById('sectionToggle');
+        if (sectionToggle1) {
+            toggleGroup(sectionToggle1.value, 'addUserModal');
+        }
+
+        // Initialize exampleModal toggle
+        const sectionToggle2 = document.getElementById('sectionToggle2');
+        if (sectionToggle2) {
+            toggleGroup(sectionToggle2.value, 'exampleModal');
+        }
+        console.log('Selected value:', sectionToggle.value);
+
+        if (sectionToggle) {
+            // Initial toggle based on default selected option
+            const initialGroup = sectionToggle.value;
+            const initialModalId = sectionToggle.options[sectionToggle.selectedIndex].getAttribute('data-modal-id');
+            toggleGroup(initialGroup, initialModalId);
+
+            // Add change event listener
+            sectionToggle.addEventListener('change', function () {
+
+                const selectedGroup = this.value;
+                console.log('Change detected!: ',selectedGroup );
+                const modalId = this.options[this.selectedIndex].getAttribute('data-modal-id');
+                console.log(`Section changed to: ${selectedGroup} in modal: ${modalId}`);
+                // Debug logging
+                console.log('Change detected!');
+                console.log({
+                    selectedValue: selectedGroup,
+                    modalId: modalId,
+                    selectedIndex: this.selectedIndex,
+                    selectedText: this.options[this.selectedIndex].text
+                });
+                toggleGroup(selectedGroup, modalId);
             });
-            break;
-            
-        case 'cashBank':
-            table.classList.remove('hide-cash-bank');
-            const cbCells = table.querySelectorAll('td:has(input[name^="cb_"])');
-            cbCells.forEach(cell => cell.classList.remove('hidden'));
-            break;
-            
-        case 'cashAdvance':
-            table.classList.remove('hide-cash-advance');
-            const caCells = table.querySelectorAll('td:has(input[name^="ca_"])');
-            caCells.forEach(cell => cell.classList.remove('hidden'));
-            break;
-            
-        case 'pettyCash':
-            table.classList.remove('hide-petty-cash');
-            const pcfCells = table.querySelectorAll('td:has(input[name^="pcf_"])');
-            pcfCells.forEach(cell => cell.classList.remove('hidden'));
-            break;
-    }
-}
 
-
-document.addEventListener('DOMContentLoaded', function () {
-    const sectionToggle1 = document.getElementById('sectionToggle');
-    if (sectionToggle1) {
-        toggleGroup(sectionToggle1.value, 'addUserModal');
-    }
-
-    // Initialize exampleModal toggle
-    const sectionToggle2 = document.getElementById('sectionToggle2');
-    if (sectionToggle2) {
-        toggleGroup(sectionToggle2.value, 'exampleModal');
-    }
-    console.log('Selected value:', sectionToggle.value);
-
-    if (sectionToggle) {
-        // Initial toggle based on default selected option
-        const initialGroup = sectionToggle.value;
-        const initialModalId = sectionToggle.options[sectionToggle.selectedIndex].getAttribute('data-modal-id');
-        toggleGroup(initialGroup, initialModalId);
-
-        // Add change event listener
-        sectionToggle.addEventListener('change', function () {
-
-            const selectedGroup = this.value;
-            console.log('Change detected!: ',selectedGroup );
-            const modalId = this.options[this.selectedIndex].getAttribute('data-modal-id');
-            console.log(`Section changed to: ${selectedGroup} in modal: ${modalId}`);
-             // Debug logging
-            console.log('Change detected!');
-            console.log({
-                selectedValue: selectedGroup,
-                modalId: modalId,
-                selectedIndex: this.selectedIndex,
-                selectedText: this.options[this.selectedIndex].text
+            // Method 3: Log all properties of the selected option
+            console.log('Full option details:', {
+                value: sectionToggle.value,
+                text: sectionToggle.options[sectionToggle.selectedIndex].text,
+                modalId: sectionToggle.options[sectionToggle.selectedIndex].getAttribute('data-modal-id'),
+                index: sectionToggle.selectedIndex
             });
-            toggleGroup(selectedGroup, modalId);
-        });
+        }
 
-        // Method 3: Log all properties of the selected option
-        console.log('Full option details:', {
-            value: sectionToggle.value,
-            text: sectionToggle.options[sectionToggle.selectedIndex].text,
-            modalId: sectionToggle.options[sectionToggle.selectedIndex].getAttribute('data-modal-id'),
-            index: sectionToggle.selectedIndex
-        });
-    }
+        // Keep the existing add and submit button handlers
+        const addButton = document.querySelector('.modal-footer .add');
+        if (addButton) {
+            addButton.addEventListener('click', function () {
+                console.log('Add button clicked');
+                // Add your functionality for adding a row here
+            });
+        }
 
-    // Keep the existing add and submit button handlers
-    const addButton = document.querySelector('.modal-footer .add');
-    if (addButton) {
-        addButton.addEventListener('click', function () {
-            console.log('Add button clicked');
-            // Add your functionality for adding a row here
-        });
-    }
-
-    const submitButton = document.querySelector('.modal-footer .btn-primary');
-    if (submitButton) {
-        submitButton.addEventListener('click', function () {
-            console.log('Submit button clicked');
-            // Add any validation or functionality for submitting the form here
-        });
-    }
-});
+        const submitButton = document.querySelector('.modal-footer .btn-primary');
+        if (submitButton) {
+            submitButton.addEventListener('click', function () {
+                console.log('Submit button clicked');
+                // Add any validation or functionality for submitting the form here
+            });
+        }
+    });
     </script>
 
-
+    <!-- EMPTY VIEW DATA MODAL ON CLOSE -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             $('#viewDataModal').on('hidden.bs.modal', function() {
@@ -2426,453 +2536,443 @@ document.addEventListener('DOMContentLoaded', function () {
 
     </script>
 
+    <!-- FOR ADD USER MODAL -->
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const modal1 = document.getElementById('addUserModal');
-    let modal1Initialized = false;
-    let addInputHandler;
+            document.addEventListener('DOMContentLoaded', function () {
+                const modal1 = document.getElementById('addUserModal');
+                let modal1Initialized = false;
+                let addInputHandler;
 
-    $('#addUserModal').on('show.bs.modal', function () {
-        if (!modal1Initialized) {
-            initializeModal1();
-            modal1Initialized = true;
-        }
-       
-    });
-
-    $('#addUserModal').on('hidden.bs.modal', function () {
-        // Clean up event listeners when the modal is closed
-   
-        if (addInputHandler) {
-            const addButton = document.querySelector('#addUserModal .modal-footer .add');
-            addButton.removeEventListener('click', addInputHandler);
-        }
-    });
-
-    function initializeModal1() {
-        console.log('Modal 1 is initialized');
-
-        const periodCoveredInput = document.querySelector('#periodcovered');
-        const inpGroup = document.querySelector('#addUserModal .inp-group-view');
-        const cltBalanceInput = document.querySelector('#cltinitbalance');
-        const cbBalanceInput = document.querySelector('#cbinitbalance');
-        let addCounter = 1;
-
-        periodCoveredInput.addEventListener('change', function() {
-    fetch(`get_monthly.php?date=${this.value}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'true') {
-                // Set the balances from the response for the requested month
-                cltBalanceInput.value = parseFloat(data.clt_start_balance).toFixed(2);
-                cbBalanceInput.value = parseFloat(data.cb_start_balance).toFixed(2);
-            } else {
-                console.error('Error:', data.error);
-
-                // Check if the error is about missing sequential months
-                if (data.missingMonths && data.firstMissingMonth) {
-                    alert(
-                        `Records are missing for certain months. Please start by adding the record for ${data.firstMissingMonth}.`
-                    );
-
-                    // Set the input to the first missing month
-                    const firstMissingMonthWithDay = data.firstMissingMonth + '-01';
-                    periodCoveredInput.value = firstMissingMonthWithDay;
-
-                    // Set the balances for the first missing month from the response
-                    cltBalanceInput.value = parseFloat(data.clt_start_balance).toFixed(2);
-                    cbBalanceInput.value = parseFloat(data.cb_start_balance).toFixed(2);
-
-                } else if (data.error.includes("record already exists")) {
-                    // Error for duplicate record
-                    alert("A record for this month already exists. Please choose a different month.");
-                } else {
-                    // General error handling
-                    alert("An error occurred: " + data.error);
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-            alert("An unexpected error occurred. Please try again.");
-
-            // Reset balances to 0.00 if there is a fetch error
-            cltBalanceInput.value = '0.00';
-            cbBalanceInput.value = '0.00';
-        });
-});
-
-
-        // Function to format date as YYYY-MM-DD
-        function formatDate(date) {
-            return date.toISOString().split('T')[0];
-        }
-
-        // Function to get the last day of a month
-        function getLastDayOfMonth(year, month) {
-            return new Date(year, month + 1, 0).getDate();
-        }
-
-        // Update min and max attributes for date inputs based on the selected period
-        function updateDateInputs() {
-            const selectedDate = new Date(periodCoveredInput.value);
-            if (isNaN(selectedDate.getTime())) return; // No valid date selected
-
-            const month = selectedDate.getMonth(); // 0-based month
-            const year = selectedDate.getFullYear();
-
-            const startOfMonth = new Date(year, month, 2);
-            const lastDay = getLastDayOfMonth(year, month);
-            const endOfMonth = new Date(year, month, lastDay+1);
-
-            const minDate = formatDate(startOfMonth);
-            const maxDate = formatDate(endOfMonth);
-
-            const dateInputs = document.querySelectorAll('#addUserModal input[name="date_data[]"]');
-            dateInputs.forEach(input => {
-                input.setAttribute('min', minDate);
-                input.setAttribute('max', maxDate);
-
-                // Validate the input value only if it exists
-                if (input.value) {
-                    const currentDate = new Date(input.value);
-                    if (currentDate < startOfMonth || currentDate > endOfMonth) {
-                        console.log(`Date ${input.value} is outside the valid range.`);
+                $('#addUserModal').on('show.bs.modal', function () {
+                    if (!modal1Initialized) {
+                        initializeModal1();
+                        modal1Initialized = true;
                     }
-                }
-            });
-        }
+                
+                });
 
-        // Event listener for period covered input change
-        periodCoveredInput.addEventListener('change', updateDateInputs);
-
-        function addInputHandler(event) {
-            event.preventDefault();
-            addInput();
-            updateDateInputs();
-        }
-
-        // Add event listener for adding new input groups
-        const addButton = document.querySelector('#addUserModal .modal-footer .add');
-        addButton.addEventListener('click', addInputHandler);
-        
-        // Remove an input group
-        function removeInput(event) {
-            event.preventDefault(); // Prevent default link behavior
-            if (confirm("Are you sure you want to remove this row?")) {
-                const inputGroup = event.target.closest('#addUserModal tr');
-                if (inputGroup) {
-                    inputGroup.remove();
-                    update_add_Counter();
-                }
-            }
-        }
-
-        // Function to update the counters after a row is removed
-        function update_add_Counter() {
-            const rows = document.querySelectorAll("#addUserModal .inp-group-view tr");
-            let updatedCounter = 1;  // Start counter from 1
-
-            rows.forEach(function(row) {
-                const label = row.querySelector("label");
-                const hiddenInput = row.querySelector("input[type='hidden']");
-
-                if (label) {
-                    label.textContent = updatedCounter; // Update label text
-                }
-                if (hiddenInput) {
-                    hiddenInput.value = updatedCounter; // Update hidden input value
-                }
-                updatedCounter++;  // Increment counter for the next row
-            });
-
-            addCounter = updatedCounter;
-        }
-
-        // Add a new input group
-        function addInput(afterElement = null) {
-
-            //for the individual buttons
-            const table = document.querySelector(`#addUserModal #viewDataTable`);
-            const hiddenGroups = {
-                cashTreasury: table.classList.contains('hide-cash-treasury'),
-                cashBank: table.classList.contains('hide-cash-bank'),
-                cashAdvance: table.classList.contains('hide-cash-advance'),
-                pettyCash: table.classList.contains('hide-petty-cash')
-            };
-
-            //for the dropdown
-            // const table = document.querySelector('#addUserModal #viewDataTable');
-            // const selectedGroup = document.getElementById('sectionToggle').value;
-
-            const newRow = document.createElement("tr");
-
-            const cells = [
-                createCell('input', '', {type: 'date', name: 'date_data[]', required: true}),
-                createCell('input', '', {type: 'text', name: 'particulars_1[]' , required: false}),
-                createCell('input', '', {type: 'text', name: 'particulars_2[]', required: false}),
-                createCell('input', '', {type: 'text', name: 'reference_1[]' ,required: false}),
-                createCell('input', '', {type: 'text', name: 'reference_2[]' ,required: false}),
-                createCell('input', '', {type: 'number', name: 'clt_in_data[]', required: false, min: 0, step: "0.01", value: 0}),
-                createCell('input', '', {type: 'number', name: 'clt_out_data[]', required: false, min: 0, step: "0.01", value: 0}),
-                createCell('input', '', {type: 'number', name: 'clt_balance_data[]', required: false, min: 0, step: "0.01", disabled: true, value: 0}),
-                createCell('input', '', {type: 'number', name: 'cb_in_data[]', required: false, min: 0, step: "0.01", value: 0}),
-                createCell('input', '', {type: 'number', name: 'cb_out_data[]', required: false, min: 0, step: "0.01", value: 0}),
-                createCell('input', '', {type: 'number', name: 'cb_balance_data[]', required: false, min: 0, step: "0.01", disabled: true, value: 0}),
-                createCell('input', '', {type: 'number', name: 'ca_receipt_data[]', required: false, min: 0, step: "0.01", value: 0}),
-                createCell('input', '', {type: 'number', name: 'ca_disbursement_data[]', required: false, min: 0, step: "0.01", value: 0}),
-                createCell('input', '', {type: 'number', name: 'ca_balance_data[]', required: false, min: 0, step: "0.01", disabled: true, value: 0}),
-                createCell('input', '', {type: 'number', name: 'pcf_receipt_data[]', required: false, min: 0, step: "0.01", value: 0}),
-                createCell('input', '', {type: 'number', name: 'pcf_payments_data[]', required: false, min: 0, step: "0.01", value: 0}),
-                createCell('input', '', {type: 'number', name: 'pcf_balance_data[]', required: false, min: 0, step: "0.01", disabled: true, value: 0}),
-            ];
-
-            //for individual buttons
-            cells.forEach((cell, index) => {
-            // Add appropriate hidden classes based on the input name
-            const inputName = cell.querySelector('input')?.name;
-            if (inputName) {
-                if (hiddenGroups.cashTreasury && inputName.startsWith('clt_')) {
-                    cell.classList.add('hidden');
-                }
-                if (hiddenGroups.cashBank && inputName.startsWith('cb_')) {
-                    cell.classList.add('hidden');
-                }
-                if (hiddenGroups.cashAdvance && inputName.startsWith('ca_')) {
-                    cell.classList.add('hidden');
-                }
-                if (hiddenGroups.pettyCash && inputName.startsWith('pcf_')) {
-                    cell.classList.add('hidden');
-                }
-            }
-            newRow.appendChild(cell);
-        });
-
-        //fpr dropdown
-//        cells.forEach((cell) => {
-//     const inputName = cell.querySelector('input')?.name;
-//     if (inputName) {
-//         // Keep common fields visible
-//         if (!inputName.startsWith('date_') && 
-//             !inputName.startsWith('particulars_') && 
-//             !inputName.startsWith('reference_')) {
+                $('#addUserModal').on('hidden.bs.modal', function () {
+                    // Clean up event listeners when the modal is closed
             
-//             // Hide only the section-specific cells
-//             if (
-//                 (selectedGroup !== 'cashTreasury' && inputName.startsWith('clt_')) ||
-//                 (selectedGroup !== 'cashBank' && inputName.startsWith('cb_')) ||
-//                 (selectedGroup !== 'cashAdvance' && inputName.startsWith('ca_')) ||
-//                 (selectedGroup !== 'pettyCash' && inputName.startsWith('pcf_'))
-//             ) {
-//                 cell.classList.add('hidden');
-//             }
-//         }
-//     }
-//     newRow.appendChild(cell);
-// });
-
-
-
-
-            // Create action buttons
-            const hiddenInput = document.createElement('input');
-            hiddenInput.type = 'hidden';
-            hiddenInput.name = 'add_counter[]';
-            hiddenInput.value = document.querySelectorAll("#addUserModal .inp-group-view tr").length + 1;
-            newRow.appendChild(hiddenInput);
-
-            const actionCell = document.createElement('td');
-            actionCell.classList.add('action-buttons');
-            actionCell.innerHTML = `
-                <a href="#" class="add">+</a>
-                <a href="#" class="delete">X</a>
-            `;
-            newRow.appendChild(actionCell);
-
-            // Add event listeners for calculating clt balance
-            const cltInInput = newRow.querySelector('input[name="clt_in_data[]"]');
-            const cltOutInput = newRow.querySelector('input[name="clt_out_data[]"]');
-            const cltBalanceInput = newRow.querySelector('input[name="clt_balance_data[]"]');
-
-            cltInInput.addEventListener('input', updateCLTBalances);
-            cltOutInput.addEventListener('input', updateCLTBalances);
-
-            // Add event listener to the initial balance input
-            const cltInitBalanceInput = document.getElementById('cltinitbalance');
-            cltInitBalanceInput.addEventListener('input', updateCLTBalances);
-
-            function updateCLTBalances() {
-                const initialBalance = parseFloat(cltInitBalanceInput.value) || 0;
-                const rows = document.querySelectorAll("#addUserModal .inp-group-view tr");
-                let previousBalance = initialBalance;
-
-                rows.forEach((row) => {
-                    const cltInValue = parseFloat(row.querySelector('input[name="clt_in_data[]"]').value) || 0;
-                    const cltOutValue = parseFloat(row.querySelector('input[name="clt_out_data[]"]').value) || 0;
-
-                    const newBalance = previousBalance + cltInValue - cltOutValue; 
-                    row.querySelector('input[name="clt_balance_data[]"]').value = newBalance;
-
-                    previousBalance = newBalance; 
-
-                    if (newBalance < 0) {
-                        alert('Warning: A Cash in Local Treasury Balance is negative! Please check your inputs.');
+                    if (addInputHandler) {
+                        const addButton = document.querySelector('#addUserModal .modal-footer .add');
+                        addButton.removeEventListener('click', addInputHandler);
                     }
                 });
-            }
 
-            // Add event listeners for calculating cb balance
-            const cbInInput = newRow.querySelector('input[name="cb_in_data[]"]');
-            const cbOutInput = newRow.querySelector('input[name="cb_out_data[]"]');
-            const cbBalanceInput = newRow.querySelector('input[name="cb_balance_data[]"]');
+                function initializeModal1() {
+                    console.log('Modal 1 is initialized');
 
-            cbInInput.addEventListener('input', updateCBBalances);
-            cbOutInput.addEventListener('input', updateCBBalances);
+                    const periodCoveredInput = document.querySelector('#periodcovered');
+                    const inpGroup = document.querySelector('#addUserModal .inp-group-view');
+                    const cltBalanceInput = document.querySelector('#cltinitbalance');
+                    const cbBalanceInput = document.querySelector('#cbinitbalance');
+                    let addCounter = 1;
 
-            // Add event listener to the initial balance input
-            const cbInitBalanceInput = document.getElementById('cbinitbalance');
-            cbInitBalanceInput.addEventListener('input', updateCBBalances);
+                    const state = "insert";
 
-            function updateCBBalances() {
-                const initialBalance = parseFloat(cbInitBalanceInput.value) || 0;
-                const rows = document.querySelectorAll("#addUserModal .inp-group-view tr");
-                let previousBalance = initialBalance;
+                    periodCoveredInput.addEventListener('change', function() {
+                        const date = this.value;
 
-                rows.forEach((row) => {
-                    const cbInValue = parseFloat(row.querySelector('input[name="cb_in_data[]"]').value) || 0; 
-                    const cbOutValue = parseFloat(row.querySelector('input[name="cb_out_data[]"]').value) || 0;
+                        // Include the state parameter in the query string
+                        fetch(`get_monthly.php?date=${date}&state=${state}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'true') {
+                                    // Set the balances from the response for the requested month
+                                    cltBalanceInput.value = parseFloat(data.clt_start_balance).toFixed(2);
+                                    cbBalanceInput.value = parseFloat(data.cb_start_balance).toFixed(2);
+                                    cltBalanceInput.setAttribute('data-suggested-value', parseFloat(data.clt_start_balance).toFixed(2));
+                                    cbBalanceInput.setAttribute('data-suggested-value', parseFloat(data.cb_start_balance).toFixed(2));
+                                } else {
+                                    console.error('Error:', data.error);
+                                    // General error handling
+                                    showAlert("An error occurred: " + data.error, "alert-danger");
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Fetch error:', error);
+                                showAlert("An unexpected error occurred. Please try again.", "alert-danger");
 
-                    const newBalance = previousBalance + cbInValue - cbOutValue; 
-                    row.querySelector('input[name="cb_balance_data[]"]').value = newBalance;
+                                // Reset balances to 0.00 if there is a fetch error
+                                cltBalanceInput.value = '0.00';
+                                cbBalanceInput.value = '0.00';
+                            });
+                    });
 
-                    previousBalance = newBalance; 
 
-                    if (newBalance < 0) {
-                        alert('Warning: A Cash in Bank Balance is negative! Please check your inputs.');
+
+                    // Function to format date as YYYY-MM-DD
+                    function formatDate(date) {
+                        return date.toISOString().split('T')[0];
                     }
-                });
-            }
 
-            // Add event listeners for calculating ca balance
-            const caInInput = newRow.querySelector('input[name="ca_receipt_data[]"]');
-            const caOutInput = newRow.querySelector('input[name="ca_disbursement_data[]"]');
-            const caBalanceInput = newRow.querySelector('input[name="ca_balance_data[]"]');
-
-            caInInput.addEventListener('input', updateCABalances);
-            caOutInput.addEventListener('input', updateCABalances);
-
-            function updateCABalances() {
-                let initialBalance = 0; 
-                const rows = document.querySelectorAll("#addUserModal .inp-group-view tr");
-                let previousBalance = initialBalance;
-
-                rows.forEach((row) => {
-                    const caInValue = parseFloat(row.querySelector('input[name="ca_receipt_data[]"]').value) || 0; 
-                    const caOutValue = parseFloat(row.querySelector('input[name="ca_disbursement_data[]"]').value) || 0;
-
-                    const newBalance = previousBalance + caInValue - caOutValue; 
-                    row.querySelector('input[name="ca_balance_data[]"]').value = newBalance;
-
-                    previousBalance = newBalance; 
-
-                    if (newBalance < 0) {
-                        alert('Warning: A Cash Advance Balance is negative! Please check your inputs.');
+                    // Function to get the last day of a month
+                    function getLastDayOfMonth(year, month) {
+                        return new Date(year, month + 1, 0).getDate();
                     }
-                });
-            }
 
-            // Add event listeners for calculating pcf balance
-            const pcfInInput = newRow.querySelector('input[name="pcf_receipt_data[]"]');
-            const pcfOutInput = newRow.querySelector('input[name="pcf_payments_data[]"]');
-            const pcfBalanceInput = newRow.querySelector('input[name="pcf_balance_data[]"]');
+                    // Update min and max attributes for date inputs based on the selected period
+                    function updateDateInputs() {
+                        const selectedDate = new Date(periodCoveredInput.value);
+                        if (isNaN(selectedDate.getTime())) return; // No valid date selected
 
-            pcfInInput.addEventListener('input', updatePCFBalances);
-            pcfOutInput.addEventListener('input', updatePCFBalances);
+                        const month = selectedDate.getMonth(); // 0-based month
+                        const year = selectedDate.getFullYear();
 
-            function updatePCFBalances() {
-                let initialBalance = 0;
-                const rows = document.querySelectorAll("#addUserModal .inp-group-view tr");
-                let previousBalance = initialBalance;
+                        const startOfMonth = new Date(year, month, 2);
+                        const lastDay = getLastDayOfMonth(year, month);
+                        const endOfMonth = new Date(year, month, lastDay+1);
 
-                rows.forEach((row) => {
-                    const pcfInValue = parseFloat(row.querySelector('input[name="pcf_receipt_data[]"]').value) || 0; 
-                    const pcfOutValue = parseFloat(row.querySelector('input[name="pcf_payments_data[]"]').value) || 0;
+                        const minDate = formatDate(startOfMonth);
+                        const maxDate = formatDate(endOfMonth);
 
-                    const newBalance = previousBalance + pcfInValue - pcfOutValue; 
-                    row.querySelector('input[name="pcf_balance_data[]"]').value = newBalance;
+                        const dateInputs = document.querySelectorAll('#addUserModal input[name="date_data[]"]');
+                        dateInputs.forEach(input => {
+                            input.setAttribute('min', minDate);
+                            input.setAttribute('max', maxDate);
 
-                    previousBalance = newBalance; 
-
-                    if (newBalance < 0) {
-                        alert('Warning: A Petty Cash Balance is negative! Please check your inputs.');
+                            // Validate the input value only if it exists
+                            if (input.value) {
+                                const currentDate = new Date(input.value);
+                                if (currentDate < startOfMonth || currentDate > endOfMonth) {
+                                    console.log(`Date ${input.value} is outside the valid range.`);
+                                }
+                            }
+                        });
                     }
-                });
-            }
 
-            // Add event listener to delete button
-            actionCell.querySelector('.delete').addEventListener('click', function(event) {
-                event.preventDefault();
-                if (confirm("Are you sure you want to remove this row?")) {
-                    newRow.remove();
-                    updateCLTBalances();
-                    updateCBBalances();
-                    updateCABalances();
-                    updatePCFBalances();
+                    // Event listener for period covered input change
+                    periodCoveredInput.addEventListener('change', updateDateInputs);
+
+                    function addInputHandler(event) {
+                        event.preventDefault();
+                        addInput();
+                        updateDateInputs();
+                    }
+
+                    // Add event listener for adding new input groups
+                    const addButton = document.querySelector('#addUserModal .modal-footer .add');
+                    addButton.addEventListener('click', addInputHandler);
+                    
+                    // Remove an input group
+                    function removeInput(event) {
+                        event.preventDefault(); // Prevent default link behavior
+                        if (confirm("Are you sure you want to remove this row?")) {
+                            const inputGroup = event.target.closest('#addUserModal tr');
+                            if (inputGroup) {
+                                inputGroup.remove();
+                                update_add_Counter();
+                            }
+                        }
+                    }
+
+                    // Function to update the counters after a row is removed
+                    function update_add_Counter() {
+                        const rows = document.querySelectorAll("#addUserModal .inp-group-view tr");
+                        let updatedCounter = 1;  // Start counter from 1
+
+                        rows.forEach(function(row) {
+                            const label = row.querySelector("label");
+                            const hiddenInput = row.querySelector("input[type='hidden']");
+
+                            if (label) {
+                                label.textContent = updatedCounter; // Update label text
+                            }
+                            if (hiddenInput) {
+                                hiddenInput.value = updatedCounter; // Update hidden input value
+                            }
+                            updatedCounter++;  // Increment counter for the next row
+                        });
+
+                        addCounter = updatedCounter;
+                    }
+
+                    // Add a new input group
+                    function addInput(afterElement = null) {
+
+                        //for the individual buttons
+                        const table = document.querySelector(`#addUserModal #viewDataTable`);
+                        const hiddenGroups = {
+                            cashTreasury: table.classList.contains('hide-cash-treasury'),
+                            cashBank: table.classList.contains('hide-cash-bank'),
+                            cashAdvance: table.classList.contains('hide-cash-advance'),
+                            pettyCash: table.classList.contains('hide-petty-cash')
+                        };
+
+                        //for the dropdown
+                        // const table = document.querySelector('#addUserModal #viewDataTable');
+                        // const selectedGroup = document.getElementById('sectionToggle').value;
+
+                        const newRow = document.createElement("tr");
+
+                        const cells = [
+                            createCell('input', '', {type: 'date', name: 'date_data[]', required: true}),
+                            createCell('input', '', {type: 'text', name: 'particulars_1[]' , required: false}),
+                            createCell('input', '', {type: 'text', name: 'particulars_2[]', required: false}),
+                            createCell('input', '', {type: 'text', name: 'reference_1[]' ,required: false}),
+                            createCell('input', '', {type: 'text', name: 'reference_2[]' ,required: false}),
+                            createCell('input', '', {type: 'number', name: 'clt_in_data[]', required: false, min: 0, step: "0.01", value: 0}),
+                            createCell('input', '', {type: 'number', name: 'clt_out_data[]', required: false, min: 0, step: "0.01", value: 0}),
+                            createCell('input', '', {type: 'number', name: 'clt_balance_data[]', required: false, min: 0, step: "0.01", disabled: true, value: 0}),
+                            createCell('input', '', {type: 'number', name: 'cb_in_data[]', required: false, min: 0, step: "0.01", value: 0}),
+                            createCell('input', '', {type: 'number', name: 'cb_out_data[]', required: false, min: 0, step: "0.01", value: 0}),
+                            createCell('input', '', {type: 'number', name: 'cb_balance_data[]', required: false, min: 0, step: "0.01", disabled: true, value: 0}),
+                            createCell('input', '', {type: 'number', name: 'ca_receipt_data[]', required: false, min: 0, step: "0.01", value: 0}),
+                            createCell('input', '', {type: 'number', name: 'ca_disbursement_data[]', required: false, min: 0, step: "0.01", value: 0}),
+                            createCell('input', '', {type: 'number', name: 'ca_balance_data[]', required: false, min: 0, step: "0.01", disabled: true, value: 0}),
+                            createCell('input', '', {type: 'number', name: 'pcf_receipt_data[]', required: false, min: 0, step: "0.01", value: 0}),
+                            createCell('input', '', {type: 'number', name: 'pcf_payments_data[]', required: false, min: 0, step: "0.01", value: 0}),
+                            createCell('input', '', {type: 'number', name: 'pcf_balance_data[]', required: false, min: 0, step: "0.01", disabled: true, value: 0}),
+                        ];
+
+                        //for individual buttons
+                        cells.forEach((cell, index) => {
+                        // Add appropriate hidden classes based on the input name
+                        const inputName = cell.querySelector('input')?.name;
+                        if (inputName) {
+                            if (hiddenGroups.cashTreasury && inputName.startsWith('clt_')) {
+                                cell.classList.add('hidden');
+                            }
+                            if (hiddenGroups.cashBank && inputName.startsWith('cb_')) {
+                                cell.classList.add('hidden');
+                            }
+                            if (hiddenGroups.cashAdvance && inputName.startsWith('ca_')) {
+                                cell.classList.add('hidden');
+                            }
+                            if (hiddenGroups.pettyCash && inputName.startsWith('pcf_')) {
+                                cell.classList.add('hidden');
+                            }
+                        }
+                        newRow.appendChild(cell);
+                    });
+
+                    //fpr dropdown
+            //        cells.forEach((cell) => {
+            //     const inputName = cell.querySelector('input')?.name;
+            //     if (inputName) {
+            //         // Keep common fields visible
+            //         if (!inputName.startsWith('date_') && 
+            //             !inputName.startsWith('particulars_') && 
+            //             !inputName.startsWith('reference_')) {
+                        
+            //             // Hide only the section-specific cells
+            //             if (
+            //                 (selectedGroup !== 'cashTreasury' && inputName.startsWith('clt_')) ||
+            //                 (selectedGroup !== 'cashBank' && inputName.startsWith('cb_')) ||
+            //                 (selectedGroup !== 'cashAdvance' && inputName.startsWith('ca_')) ||
+            //                 (selectedGroup !== 'pettyCash' && inputName.startsWith('pcf_'))
+            //             ) {
+            //                 cell.classList.add('hidden');
+            //             }
+            //         }
+            //     }
+            //     newRow.appendChild(cell);
+            // });
+
+
+
+
+                    // Create action buttons
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = 'add_counter[]';
+                    hiddenInput.value = document.querySelectorAll("#addUserModal .inp-group-view tr").length + 1;
+                    newRow.appendChild(hiddenInput);
+
+                    const actionCell = document.createElement('td');
+                    actionCell.classList.add('action-buttons');
+                    actionCell.innerHTML = `
+                        <a href="#" class="add">+</a>
+                        <a href="#" class="delete">X</a>
+                    `;
+                    newRow.appendChild(actionCell);
+
+                    // Add event listeners for calculating clt balance
+                    const cltInInput = newRow.querySelector('input[name="clt_in_data[]"]');
+                    const cltOutInput = newRow.querySelector('input[name="clt_out_data[]"]');
+                    const cltBalanceInput = newRow.querySelector('input[name="clt_balance_data[]"]');
+
+                    cltInInput.addEventListener('input', updateCLTBalances);
+                    cltOutInput.addEventListener('input', updateCLTBalances);
+
+                    // Add event listener to the initial balance input
+                    const cltInitBalanceInput = document.getElementById('cltinitbalance');
+                    cltInitBalanceInput.addEventListener('input', updateCLTBalances);
+
+                    function updateCLTBalances() {
+                        const initialBalance = parseFloat(cltInitBalanceInput.value) || 0;
+                        const rows = document.querySelectorAll("#addUserModal .inp-group-view tr");
+                        let previousBalance = initialBalance;
+
+                        rows.forEach((row) => {
+                            const cltInValue = parseFloat(row.querySelector('input[name="clt_in_data[]"]').value) || 0;
+                            const cltOutValue = parseFloat(row.querySelector('input[name="clt_out_data[]"]').value) || 0;
+
+                            const newBalance = previousBalance + cltInValue - cltOutValue; 
+                            row.querySelector('input[name="clt_balance_data[]"]').value = newBalance;
+
+                            previousBalance = newBalance; 
+
+                            if (newBalance < 0) {
+                                showAlert('Warning: A Cash in Local Treasury Balance is negative! Please check your inputs.', "alert-danger");
+                            }
+                        });
+                    }
+
+                    // Add event listeners for calculating cb balance
+                    const cbInInput = newRow.querySelector('input[name="cb_in_data[]"]');
+                    const cbOutInput = newRow.querySelector('input[name="cb_out_data[]"]');
+                    const cbBalanceInput = newRow.querySelector('input[name="cb_balance_data[]"]');
+
+                    cbInInput.addEventListener('input', updateCBBalances);
+                    cbOutInput.addEventListener('input', updateCBBalances);
+
+                    // Add event listener to the initial balance input
+                    const cbInitBalanceInput = document.getElementById('cbinitbalance');
+                    cbInitBalanceInput.addEventListener('input', updateCBBalances);
+
+                    function updateCBBalances() {
+                        const initialBalance = parseFloat(cbInitBalanceInput.value) || 0;
+                        const rows = document.querySelectorAll("#addUserModal .inp-group-view tr");
+                        let previousBalance = initialBalance;
+
+                        rows.forEach((row) => {
+                            const cbInValue = parseFloat(row.querySelector('input[name="cb_in_data[]"]').value) || 0; 
+                            const cbOutValue = parseFloat(row.querySelector('input[name="cb_out_data[]"]').value) || 0;
+
+                            const newBalance = previousBalance + cbInValue - cbOutValue; 
+                            row.querySelector('input[name="cb_balance_data[]"]').value = newBalance;
+
+                            previousBalance = newBalance; 
+
+                            if (newBalance < 0) {
+                                showAlert('Warning: A Cash in Bank Balance is negative! Please check your inputs.', "alert-danger");
+                            }
+                        });
+                    }
+
+                    // Add event listeners for calculating ca balance
+                    const caInInput = newRow.querySelector('input[name="ca_receipt_data[]"]');
+                    const caOutInput = newRow.querySelector('input[name="ca_disbursement_data[]"]');
+                    const caBalanceInput = newRow.querySelector('input[name="ca_balance_data[]"]');
+
+                    caInInput.addEventListener('input', updateCABalances);
+                    caOutInput.addEventListener('input', updateCABalances);
+
+                    function updateCABalances() {
+                        let initialBalance = 0; 
+                        const rows = document.querySelectorAll("#addUserModal .inp-group-view tr");
+                        let previousBalance = initialBalance;
+
+                        rows.forEach((row) => {
+                            const caInValue = parseFloat(row.querySelector('input[name="ca_receipt_data[]"]').value) || 0; 
+                            const caOutValue = parseFloat(row.querySelector('input[name="ca_disbursement_data[]"]').value) || 0;
+
+                            const newBalance = previousBalance + caInValue - caOutValue; 
+                            row.querySelector('input[name="ca_balance_data[]"]').value = newBalance;
+
+                            previousBalance = newBalance; 
+
+                            if (newBalance < 0) {
+                                showAlert('Warning: A Cash Advance Balance is negative! Please check your inputs.', "alert-danger");
+                            }
+                        });
+                    }
+
+                    // Add event listeners for calculating pcf balance
+                    const pcfInInput = newRow.querySelector('input[name="pcf_receipt_data[]"]');
+                    const pcfOutInput = newRow.querySelector('input[name="pcf_payments_data[]"]');
+                    const pcfBalanceInput = newRow.querySelector('input[name="pcf_balance_data[]"]');
+
+                    pcfInInput.addEventListener('input', updatePCFBalances);
+                    pcfOutInput.addEventListener('input', updatePCFBalances);
+
+                    function updatePCFBalances() {
+                        let initialBalance = 0;
+                        const rows = document.querySelectorAll("#addUserModal .inp-group-view tr");
+                        let previousBalance = initialBalance;
+
+                        rows.forEach((row) => {
+                            const pcfInValue = parseFloat(row.querySelector('input[name="pcf_receipt_data[]"]').value) || 0; 
+                            const pcfOutValue = parseFloat(row.querySelector('input[name="pcf_payments_data[]"]').value) || 0;
+
+                            const newBalance = previousBalance + pcfInValue - pcfOutValue; 
+                            row.querySelector('input[name="pcf_balance_data[]"]').value = newBalance;
+
+                            previousBalance = newBalance; 
+
+                            if (newBalance < 0) {
+                                showAlert('Warning: A Petty Cash Balance is negative! Please check your inputs.', "alert-danger");
+                            }
+                        });
+                    }
+
+                    // Add event listener to delete button
+                    actionCell.querySelector('.delete').addEventListener('click', function(event) {
+                        event.preventDefault();
+                        if (confirm("Are you sure you want to remove this row?")) {
+                            newRow.remove();
+                            updateCLTBalances();
+                            updateCBBalances();
+                            updateCABalances();
+                            updatePCFBalances();
+                        }
+                    });
+
+                    actionCell.querySelector('.add').addEventListener('click', function(event) {
+                        event.preventDefault();
+                        addInput(newRow);
+                    });
+
+                    function initializeBalances(newRow) {
+                        // Initialize CLT Balance
+                        updateCLTBalances();
+                        
+                        // Initialize CB Balance
+                        updateCBBalances();
+                        
+                        // Initialize CA Balance
+                        updateCABalances();
+                        
+                        // Initialize PCF Balance
+                        updatePCFBalances();
+                    }
+
+                    // Add the new group to the form
+                    if (afterElement) {
+                        afterElement.insertAdjacentElement('afterend', newRow);
+                    } else {
+                        document.querySelector("#addUserModal .inp-group-view").appendChild(newRow);
+                    }
+                    update_add_Counter(); 
+                    updateDateInputs();
+                    initializeBalances(newRow);
+
+                    console.log("New Row Added");
                 }
-            });
 
-            actionCell.querySelector('.add').addEventListener('click', function(event) {
-                event.preventDefault();
-                addInput(newRow);
-            });
+                function createCell(elementType, textContent = '', attributes = {}) {
+                    const cell = document.createElement('td');
+                    const element = document.createElement(elementType);
 
-            function initializeBalances(newRow) {
-                // Initialize CLT Balance
-                updateCLTBalances();
-                
-                // Initialize CB Balance
-                updateCBBalances();
-                
-                // Initialize CA Balance
-                updateCABalances();
-                
-                // Initialize PCF Balance
-                updatePCFBalances();
+                    if (textContent) element.textContent = textContent;
+
+                    for (const [key, value] of Object.entries(attributes)) {
+                        element.setAttribute(key, value);
+                    }
+
+                    cell.appendChild(element);
+                    return cell;
+                }
+
+                // Initial call to set the correct date range
+                updateDateInputs();
             }
-
-            // Add the new group to the form
-            if (afterElement) {
-                afterElement.insertAdjacentElement('afterend', newRow);
-            } else {
-                document.querySelector("#addUserModal .inp-group-view").appendChild(newRow);
-            }
-            update_add_Counter(); 
-            updateDateInputs();
-            initializeBalances(newRow);
-
-            console.log("New Row Added");
-        }
-
-        function createCell(elementType, textContent = '', attributes = {}) {
-            const cell = document.createElement('td');
-            const element = document.createElement(elementType);
-
-            if (textContent) element.textContent = textContent;
-
-            for (const [key, value] of Object.entries(attributes)) {
-                element.setAttribute(key, value);
-            }
-
-            cell.appendChild(element);
-            return cell;
-        }
-
-        // Initial call to set the correct date range
-        updateDateInputs();
-    }
-});
+        });
 
     </script>
+
     <script>
  function toggleDropdown(button) {
     // Get the dropdown menu associated with the button
@@ -2910,6 +3010,34 @@ window.onclick = function(event) {
         }
     }
 }
+
+function showAlert(message, alertClass) {
+            var alertDiv = $('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' + message +
+                '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+            alertDiv.css({
+                "position": "fixed",
+                "top": "10px",
+                "right": "10px",
+                "z-index": "9999",
+                "background-color": alertClass === "alert-danger" ? "#f8d7da" : "#d4edda",
+                "border-color": alertClass === "alert-danger" ? "#f5c6cb" : "#c3e6cb"
+            });
+            $("body").append(alertDiv);
+            setTimeout(function() {
+                alertDiv.alert('close');
+            }, 900);
+        }
+
+</script>
+<script>
+    // Add event listener for the Enter key when the modal is open
+document.addEventListener('keydown', function(event) {
+    const modalOpen = document.getElementById('deleteConfirmationModal').classList.contains('show');
+    if (modalOpen && event.key === 'Enter') {
+        event.preventDefault();
+        document.getElementById('confirmDeleteBtn').click();
+    }
+});
 </script>
 
 </html>

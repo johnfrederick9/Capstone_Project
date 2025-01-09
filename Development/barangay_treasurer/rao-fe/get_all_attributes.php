@@ -3,7 +3,7 @@ include('../../connection.php');
 
 try {
     // Fetch attribute names
-    $sql_fetch_att_name = "SELECT DISTINCT attribute_name FROM tb_rao_fe_attributes"; // Ensure uniqueness at the query level
+    $sql_fetch_att_name = "SELECT DISTINCT attribute_name FROM tb_rao_fe_attributes WHERE isDisplayed = 1"; // Ensure uniqueness at the query level
     $stmt_fetch_att_name = mysqli_prepare($con, $sql_fetch_att_name);
 
     if (!$stmt_fetch_att_name) {
