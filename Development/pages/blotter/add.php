@@ -5,7 +5,7 @@ $blotter_complainant = mysqli_real_escape_string($con, $_POST["blotter_complaina
 $blotter_complainee = mysqli_real_escape_string($con, $_POST["blotter_complainee"]);
 
 // Check for duplicate blotter
-$check_sql = "SELECT * FROM `tb_blotter` WHERE `blotter_complainant` = '$blotter_complainant' AND `blotter_complainee` = '$blotter_complainee' AND `isDisplayed` = 1";
+$check_sql = "SELECT * FROM `tb_blotter` WHERE `blotter_complainant` = '$blotter_complainant' AND `blotter_complainee` = '$blotter_complainee' AND `isDisplayed` = 1 AND `blotter_status` = 'New'";
 $check_query = mysqli_query($con, $check_sql);
 
 if (mysqli_num_rows($check_query) > 0) {
