@@ -174,6 +174,30 @@ if (mysqli_num_rows($result) > 0) {
             <?php endforeach; ?>
         }
     </script>
+            <!-- View Modal -->
+            <section class="view-modal">
+            <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="viewModalLabel">Blotter Details</h5>
+                            <button type="button" class="bx bxs-x-circle icon" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="justify-content: center; display: flex;">
+                                <div class="col-md-6">
+                                    <p><strong>Requester Name:</strong> <span id="view_1"></span></p>
+                                    <p><strong>Request Type:</strong> <span id="view_2"></span></p>
+                                    <p><strong>Request Description:</strong> <span id="view_3"></span></p>
+                                    <p><strong>Request Date:</strong> <span id="view_4"></span></p>
+                                    <p><strong>Request Status:</strong> <span id="view_5"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section class="delete-modal">
                 <!-- Delete Confirmation Modal -->
                 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">

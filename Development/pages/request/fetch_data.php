@@ -48,10 +48,14 @@ while ($row = mysqli_fetch_assoc($query)) {
                         ACTIONS <i class="bx bx-chevron-down"></i>
                     </button>
                     <div class="dropdown-menu">
-                        <a href="javascript:void(0);" data-id="' . $row['request_id'] . '" class="dropdown-item update-btn editbtn">
+                         <a href="javascript:void(0);" data-id="' . $row['request_id'] . '" class="dropdown-item view-btn viewbtn">
+                            <i class="bx bx-show"></i>
+                        </a>'
+                        . ($row['request_status'] != 'Completed' ? 
+                        '<a href="javascript:void(0);" data-id="' . $row['request_id'] . '" class="dropdown-item update-btn editbtn">
                             <i class="bx bx-edit"></i>
-                        </a>
-                        <a href="javascript:void(0);" data-id="' . $row['request_id'] . '" class="dropdown-item delete-btn deleteBtn">
+                        </a>' : '') .
+                        '<a href="javascript:void(0);" data-id="' . $row['request_id'] . '" class="dropdown-item delete-btn deleteBtn">
                             <i class="bx bx-trash"></i>
                         </a>
                     </div>
