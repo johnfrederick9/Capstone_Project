@@ -45,7 +45,7 @@ if (isset($_POST['id'])) {
                     background-color: #f5f5f5;
                     min-height: 100vh;
                     font-family: "Times New Roman", Times, serif;
-                    font-size: 12pt;
+                    font-size: larger;
                 }
                 .certificate-container {
                     background-color: white;
