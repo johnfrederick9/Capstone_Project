@@ -137,6 +137,8 @@ $(document).ready(function() {
         }
     });
  $(document).on('submit', '#addRequest', function(e) {
+
+    
     e.preventDefault();
     var requester_name = $('#requester_name').val();
     var request_type = $('#request_type').val();
@@ -288,6 +290,48 @@ $(document).ready(function() {
             }
         })
     });
+    $(document).ready(function() {
+    $('#example').on('click', '.viewbtn', function(event) {
+        var table = $('#example').DataTable();
+        var request_id = $(this).data('id');
+        
+        // Debugging: Check if request_id is found
+        console.log("request ID:", request_id);
+        
+        if (!request_id) {
+            console.error("request ID is not defined.");
+            alert("request ID is missing. Please try again.");
+            return;
+        }
+
+        $('#viewModal').modal('show');
+        $.ajax({
+            url: "fetch_details.php",
+            data: {
+                request_id: request_id
+            },
+            type: 'post',
+            success: function(data) {
+                console.log("AJAX data response:", data);
+                try {
+                    var json = JSON.parse(data);
+                    $('#view_1').text(json.requester_name || "N/A");
+                    $('#view_2').text(json.request_type || "N/A");
+                    $('#view_3').text(json.request_description || "N/A");
+                    $('#view_4').text(json.request_date|| "N/A");
+                    $('#view_5').text(json.request_status || "N/A");
+                } catch (e) {
+                    console.error("JSON parsing error:", e);
+                    alert("An error occurred while processing the data.");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error:", error);
+                alert("Failed to fetch details: " + error);
+            }
+        });
+    });
+});
     </script>
     <script>
         function toggleDropdown(button) {
