@@ -469,8 +469,8 @@ $(document).ready(function() {
                     $('#view_9').text(json.blotter_action || "N/A");
                     $('#view_10').text(json.blotter_incidence || "N/A");
                     $('#view_11').text(json.blotter_date_recorded || "N/A");
-                    $('#view_12').text(json.blotter_date_settled || "N/A");
-                    $('#view_13').text(json.blotter_recorded_by || "N/A");
+                    $('#view_12').text(json.blotter_date_settled || "Not Yet Settled");
+                    $('#view_13').text(json.blotter_recorded_by || "Not Yet Settled");
                 } catch (e) {
                     console.error("JSON parsing error:", e);
                     alert("An error occurred while processing the data.");

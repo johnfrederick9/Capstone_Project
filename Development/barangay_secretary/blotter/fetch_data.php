@@ -4,7 +4,6 @@ include('../../connection.php');
 $output = array();
 $sql = "SELECT * FROM tb_blotter WHERE isDisplayed = 1"; // Only fetch records with isDisplayed = 1
 
-
 $totalQuery = mysqli_query($con, $sql);
 $total_all_rows = mysqli_num_rows($totalQuery);
 
@@ -27,7 +26,7 @@ $columns = array(
 
 if (isset($_POST['search']['value'])) {
     $search_value = $_POST['search']['value'];
-	$sql .= " AND (blotter_complainant LIKE '%" . $search_value . "%'";
+    $sql .= " AND (blotter_complainant LIKE '%" . $search_value . "%'";
     $sql .= " OR blotter_complainant_no like '%".$search_value."%'";
     $sql .= " OR blotter_complainant_add like '%".$search_value."%'";
     $sql .= " OR blotter_complainee like '%".$search_value."%'";
@@ -40,7 +39,6 @@ if (isset($_POST['search']['value'])) {
     $sql .= " OR blotter_date_recorded like '%".$search_value."%'";
     $sql .= " OR blotter_date_settled like '%".$search_value."%'";
     $sql .= " OR blotter_recorded_by like '%".$search_value."%')";
-    
 }
 
 if ($_POST['length'] != -1) {
@@ -52,6 +50,7 @@ if ($_POST['length'] != -1) {
 $query = mysqli_query($con, $sql);
 $count_rows = mysqli_num_rows($query);
 $data = array();
+
 while ($row = mysqli_fetch_assoc($query)) {
     $sub_array = array();
     $sub_array[] = $row['blotter_id'];
@@ -76,11 +75,12 @@ while ($row = mysqli_fetch_assoc($query)) {
                     <div class="dropdown-menu">
                         <a href="javascript:void(0);" data-id="' . $row['blotter_id'] . '" class="dropdown-item view-btn viewbtn">
                             <i class="bx bx-show"></i>
-                        </a>
-                        <a href="javascript:void(0);" data-id="' . $row['blotter_id'] . '" class="dropdown-item update-btn editbtn">
+                        </a>'
+                        . ($row['blotter_status'] != 'Settled' ? 
+                        '<a href="javascript:void(0);" data-id="' . $row['blotter_id'] . '" class="dropdown-item update-btn editbtn">
                             <i class="bx bx-edit"></i>
-                        </a>
-                        <a href="javascript:void(0);" data-id="' . $row['blotter_id'] . '" class="dropdown-item delete-btn deleteBtn">
+                        </a>' : '') .
+                        '<a href="javascript:void(0);" data-id="' . $row['blotter_id'] . '" class="dropdown-item delete-btn deleteBtn">
                             <i class="bx bx-trash"></i>
                         </a>
                     </div>
