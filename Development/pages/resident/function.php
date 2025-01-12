@@ -160,7 +160,7 @@ $(document).ready(function() {
     var resident_pension = $('#resident_pension').val();
     var resident_beneficiaries = $('#resident_beneficiaries').val();
 
-    if (resident_firstname && resident_lastname && resident_sex && resident_suffixes && resident_address && resident_educationalattainment && resident_birthdate && resident_occupation && resident_religion && resident_indigenous && resident_status && resident_householdrole && household_id && resident_pension && resident_beneficiaries) {
+    if (resident_firstname && resident_lastname && resident_sex && resident_suffixes && resident_address && resident_educationalattainment && resident_birthdate && resident_middlename && resident_religion && resident_status && resident_householdrole && household_id) {
         $.ajax({
             url: "add.php",  
             type: "post",
@@ -255,7 +255,7 @@ $(document).on('submit', '#updateUser', function(e) {
     var trid = $('#trid').val();
     var resident_id = $('#resident_id').val();
 
-    if (resident_firstname && resident_lastname && resident_sex && resident_suffixes && resident_address && resident_educationalattainment && resident_birthdate && resident_occupation && resident_religion && resident_indigenous && resident_status && resident_householdrole && household_id && resident_pension && resident_beneficiaries) {
+    if (resident_firstname && resident_lastname && resident_sex && resident_suffixes && resident_address && resident_educationalattainment && resident_birthdate && resident_middlename && resident_religion && resident_status && resident_householdrole) {
         $.ajax({
             url: "update.php",
             type: "post",

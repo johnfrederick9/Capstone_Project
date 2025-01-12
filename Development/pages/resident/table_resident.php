@@ -56,15 +56,15 @@ include '../../sidebar.php';
                                 <div class="add">
                             <div class="form-grid">
                             <div class="input-wrapper">
-                                <label for="Last Name" class="input-label">Last Name:</label>
+                                <label for="Last Name" class="input-label">Last Name: *</label>
                                 <input type="text" placeholder="Last Name" id="lnameField" name="resident_lastname" class="input-field" require>
                             </div>
                             <div class="input-wrapper">
-                                <label for="First Name" class="input-label">First Name:</label>
+                                <label for="First Name" class="input-label">First Name: *</label>
                                 <input type="text" placeholder="First Name" id="fnameField" name="resident_firstname" class="input-field">
                             </div>
                             <div class="input-wrapper">
-                                <label for="Middle Name" class="input-label">Middle Name:</label>
+                                <label for="Middle Name" class="input-label">Middle Name: *</label>
                                 <input type="text" placeholder="Middle Name" id="minameField" name="resident_middlename" class="input-field">
                             </div>
                             <div class="input-wrapper">
@@ -72,7 +72,7 @@ include '../../sidebar.php';
                                 <input type="text" placeholder="Maiden Name" id="manameField" name="resident_maidenname" class="input-field">
                             </div>
                             <div class="input-wrapper">
-                                <label for="Sex" class="input-label">Sex:</label>
+                                <label for="Sex" class="input-label">Sex: *</label>
                                 <select id="sexField" class="input-field" name="resident_sex" require>
                                 <option value="" disabled selected>Sex</option>
                                     <option value="Male">Male</option>
@@ -81,7 +81,7 @@ include '../../sidebar.php';
                                 </select>
                             </div>
                             <div class="input-wrapper">
-                                <label for="Suffixes" class="input-label">Suffixes:</label>
+                                <label for="Suffixes" class="input-label">Suffixes: *</label>
                                 <select id="suffixesField" class="input-field" name="resident_suffixes" require>
                                     <option value=" ">None</option>
                                     <option value="Jr">Jr</option>
@@ -90,7 +90,7 @@ include '../../sidebar.php';
                             </div>
 
                             <div class="input-wrapper">
-                                <label for="" class="input-label">Address:</label>
+                                <label for="" class="input-label">Address: *</label>
                                 <select id="addressField" name="resident_address" class="input-field" require>
                                     <option value="" disabled selected>Address</option>
                                     <option value="Sitio Sto. Nino">Sitio Sto. Nino</option>
@@ -107,7 +107,7 @@ include '../../sidebar.php';
                             </div>
 
                             <div class="input-wrapper">
-                                <label for="" class="input-label">Educational Attainment:</label>
+                                <label for="" class="input-label">Educational Attainment: *</label>
                                     <select id="educField" name="resident_educationalattainment" class="input-field" require>
                                         <option value="" disabled selected>Educational Attainment</option>
                                         <option value="Elementary">Elementary</option>
@@ -122,12 +122,12 @@ include '../../sidebar.php';
                             </div>
                             
                             <div class="input-wrapper ">
-                            <label for="birthdate" class="input-label">Birth Date:</label>
+                            <label for="birthdate" class="input-label">Birth Date: *</label>
                                 <input type="date" id="birthField" name="resident_birthdate" class="input-field" require>
                             </div>
 
                             <div class="input-wrapper">
-                                <label for="status" class="input-label">Status:</label>
+                                <label for="status" class="input-label">Status: *</label>
                                 <select id="statusField" class="input-field" name="resident_status" require>
                                     <option value="" disabled selected>Status</option>
                                     <option value="Single">Single</option>
@@ -148,7 +148,7 @@ include '../../sidebar.php';
                             </div>
 
                             <div class="input-wrapper">
-                                <label for="age" class="input-label">Religion:</label>
+                                <label for="age" class="input-label">Religion: *</label>
                                 <input type="text" placeholder="Religion" id="religionField" name="resident_religion" class="input-field" require>
                             </div>
 
@@ -169,11 +169,11 @@ include '../../sidebar.php';
                             
                             
                             <div class="input-wrapper">
-                                <label for="householdrole" class="input-label">Household Role:</label>
+                                <label for="householdrole" class="input-label">Household Role: *</label>
                                 <input type="text" placeholder="Household Role" id="roleField" name="resident_householdrole" class="input-field" require>
                             </div>
                             <div class="input-wrapper">
-                                <label for="householdid" class="input-label">Household ID:</label>
+                                <label for="householdid" class="input-label">Household ID: *</label>
                                 <input type="Number" placeholder="Household ID" id="idField" name="household_id" class="input-field" disabled>
                             </div>
                         </div>
@@ -199,15 +199,15 @@ include '../../sidebar.php';
                             <div class="add">
                             <div class="form-grid">
                             <div class="input-wrapper">
-                                <label for="Last Name" class="input-label">Last Name:</label>
+                                <label for="Last Name" class="input-label">Last Name: *</label>
                                 <input type="text" placeholder="Last Name" id="resident_lastname" name="resident_lastname" class="input-field">
                             </div>
                             <div class="input-wrapper">
-                                <label for="First Name" class="input-label">First Name:</label>
+                                <label for="First Name" class="input-label">First Name: *</label>
                                 <input type="text" placeholder="First Name" id="resident_firstname" name="resident_firstname" class="input-field">
                             </div>
                             <div class="input-wrapper">
-                                <label for="Middle Name" class="input-label">Middle Name:</label>
+                                <label for="Middle Name" class="input-label">Middle Name: *</label>
                                 <input type="text" placeholder="Middle Name" id="resident_middlename" name="resident_middlename" class="input-field">
                             </div>
                             <div class="input-wrapper">
@@ -215,7 +215,7 @@ include '../../sidebar.php';
                                 <input type="text" placeholder="Maiden Name" id="resident_maidenname" name="resident_maidenname" class="input-field">
                             </div>
                             <div class="input-wrapper">
-                                <label for="Sex" class="input-label">Sex:</label>
+                                <label for="Sex" class="input-label">Sex: *</label>
                                 <select id="resident_sex" class="input-field" name="resident_sex" require>
                                 <option value="" disabled selected>Sex</option>
                                     <option value="Male">Male</option>
@@ -224,7 +224,7 @@ include '../../sidebar.php';
                                 </select>
                             </div>
                             <div class="input-wrapper">
-                                <label for="Suffixes" class="input-label">Suffixes:</label>
+                                <label for="Suffixes" class="input-label">Suffixes: *</label>
                                 <select id="resident_suffixes" class="input-field" name="resident_suffixes" require>
                                     <option value=" ">None</option>
                                     <option value="Jr">Jr</option>
@@ -233,7 +233,7 @@ include '../../sidebar.php';
                             </div>
 
                             <div class="input-wrapper">
-                                <label for="" class="input-label">Address:</label>
+                                <label for="" class="input-label">Address: *</label>
                                 <select id="resident_address" name="resident_address" class="input-field" require>
                                     <option value="" disabled selected>Address</option>
                                     <option value="Sitio Sto. Nino">Sitio Sto. Nino</option>
@@ -250,7 +250,7 @@ include '../../sidebar.php';
                             </div>
 
                             <div class="input-wrapper">
-                            <label for="" class="input-label">Educational Attainment:</label>
+                            <label for="" class="input-label">Educational Attainment: *</label>
                                 <select id="resident_educationalattainment" name="resident_educationalattainment" class="input-field" require>
                                     <option value="" disabled selected>Education Attainment</option>
                                     <option value="Elementary">Elementary</option>
@@ -265,12 +265,12 @@ include '../../sidebar.php';
                             </div>
                             
                             <div class="input-wrapper ">
-                            <label for="birthdate" class="input-label">Birth Date:</label>
+                            <label for="birthdate" class="input-label">Birth Date: *</label>
                                 <input type="date" id="resident_birthdate" name="resident_birthdate" class="input-field" require>
                             </div>
 
                             <div class="input-wrapper">
-                                <label for="status" class="input-label">Status:</label>
+                                <label for="status" class="input-label">Status: *</label>
                                 <select id="resident_status" class="input-field" name="resident_status" require>
                                     <option value="" disabled selected>Status</option>
                                     <option value="Single">Single</option>
@@ -289,7 +289,7 @@ include '../../sidebar.php';
                             </div>
 
                             <div class="input-wrapper">
-                                <label for="age" class="input-label">Religion:</label>
+                                <label for="age" class="input-label">Religion: *</label>
                                 <input type="text" placeholder="Religion" id="resident_religion" name="resident_religion" class="input-field" require>
                             </div>
 
@@ -309,11 +309,11 @@ include '../../sidebar.php';
                             </div>
                             
                             <div class="input-wrapper">
-                                <label for="householdrole" class="input-label">Household Role:</label>
+                                <label for="householdrole" class="input-label">Household Role: *</label>
                                 <input type="text" placeholder="Household Role" id="resident_householdrole" name="resident_householdrole" class="input-field" require>
                             </div>
                             <div class="input-wrapper">
-                                <label for="householdid" class="input-label">Household ID:</label>
+                                <label for="householdid" class="input-label">Household ID: *</label>
                                 <input type="Number" placeholder="Household ID" id="household_id" name="household_id" class="input-field" require>
                             </div>
                         </div>

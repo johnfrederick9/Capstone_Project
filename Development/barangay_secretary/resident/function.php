@@ -160,7 +160,7 @@ $(document).ready(function() {
     var resident_pension = $('#resident_pension').val();
     var resident_beneficiaries = $('#resident_beneficiaries').val();
 
-    if (resident_firstname && resident_lastname && resident_sex && resident_suffixes && resident_address && resident_educationalattainment && resident_birthdate && resident_occupation && resident_religion && resident_indigenous && resident_status && resident_householdrole && household_id && resident_pension && resident_beneficiaries) {
+    if (resident_firstname && resident_lastname && resident_sex && resident_suffixes && resident_address && resident_educationalattainment && resident_birthdate && resident_middlename && resident_religion && resident_status && resident_householdrole && household_id) {
         $.ajax({
             url: "add.php",  
             type: "post",
@@ -255,7 +255,7 @@ $(document).on('submit', '#updateUser', function(e) {
     var trid = $('#trid').val();
     var resident_id = $('#resident_id').val();
 
-    if (resident_firstname && resident_lastname && resident_sex && resident_suffixes && resident_address && resident_educationalattainment && resident_birthdate && resident_occupation && resident_religion && resident_indigenous && resident_status && resident_householdrole && household_id && resident_pension && resident_beneficiaries) {
+    if (resident_firstname && resident_lastname && resident_sex && resident_suffixes && resident_address && resident_educationalattainment && resident_birthdate && resident_middlename && resident_religion && resident_status && resident_householdrole) {
         $.ajax({
             url: "update.php",
             type: "post",
@@ -458,6 +458,15 @@ function showAlert(message, alertClass) {
                     $('#view_indigenous').text(json.resident_indigenous || "N/A");
                     $('#view_pension').text(json.resident_pension || "N/A");
                     $('#view_beneficiaries').text(json.resident_beneficiaries || "N/A");
+                    $('#view_1').text(json.resident_height || "Not Updated");
+                    $('#view_2').text(json.resident_weight || "Not Updated");
+                    $('#view_3').text(json.resident_BMI || "Not Updated");
+                    $('#view_4').text(json.resident_BMIstatus || "Not Updated");
+                    $('#view_6').text(json.resident_medical || "Not Updated");
+                    $('#view_7').text(json.resident_lactating || "Not Updated");
+                    $('#view_8').text(json.resident_pregnant || "Not Updated");
+                    $('#view_9').text(json.resident_PWD || "Not Updated");
+                    $('#view_10').text(json.resident_SY || "Not Updated");
                 } catch (e) {
                     console.error("JSON parsing error:", e);
                     alert("An error occurred while processing the data.");
