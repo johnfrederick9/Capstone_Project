@@ -1,6 +1,6 @@
 <?php
 include '../../head.php';
-include '../../sidebar.php';
+include '../../sidebar_mainofficials.php';
 ?>
 <body>
     <section class="home">  

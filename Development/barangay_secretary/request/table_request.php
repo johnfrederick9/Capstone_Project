@@ -1,6 +1,6 @@
 <?php
 include '../../head.php';
-include '../../sidebar.php';
+include '../../sidebar_mainofficials.php';
 include '../../connection.php';
 
 // Updated query to include the condition for isDisplayed = 1

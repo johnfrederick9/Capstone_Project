@@ -1,7 +1,6 @@
 <?php
 include '../../head.php';
-include '../../sidebar.php';
-?>
+include '../../sidebar_mainofficials.php';?>
 <style>
 
 .column-titles {
