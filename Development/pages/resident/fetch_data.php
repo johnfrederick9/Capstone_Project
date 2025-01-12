@@ -35,6 +35,8 @@ if (isset($_POST['search']['value'])) {
     $sql .= " OR resident_status LIKE '%" . $search_value . "%')";
 }
 
+$sql .= " ORDER BY resident_lastname ASC";
+
 if ($_POST['length'] != -1) {
     $start = $_POST['start'];
     $length = $_POST['length'];

@@ -25,6 +25,7 @@ if (isset($_POST['search']['value'])) {
     )";
 }
 
+$sql .= " ORDER BY resident_lastname ASC";
 // Count rows after filtering
 $count_filtered_query = mysqli_query($con, $sql);
 $count_filtered_rows = mysqli_num_rows($count_filtered_query);
