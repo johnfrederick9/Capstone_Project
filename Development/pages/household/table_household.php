@@ -3,12 +3,6 @@ include '../../head.php';
 include '../../sidebar.php';
 ?>
 <style>
-    .head{
-        margin-top: 10px;
-    }
-    .dataTables_filter{
-      margin-left: 800px;
-    }
     /* Modal Header Styling */
 
 /* Member List Styling */
@@ -63,10 +57,19 @@ include '../../sidebar.php';
         <div class="head">
             <h1>Household Table</h1>
         </div>
+                    <div class="table-actions">    
+                        <button class="print-btn " title="Print Selected">
+                            <i class="bx bx-printer"></i>
+                        </button>
+                    </div>
                     </div>
                     <table id="example" class="table-table">
                         <thead>
                             <th>#</th>
+                            <th><button class="print-all-btn" title="Print All">
+                                    <i class="bx bx-printer"></i>
+                                </button>
+                            </th>
                             <th>Household Number</th>
                             <th>Household Name</th>
                             <th>Household Head</th>

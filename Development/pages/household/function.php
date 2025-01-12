@@ -1,29 +1,152 @@
 <script type="text/javascript">
-            $(document).ready(function() {
-                $('#example').DataTable({
-                    "fnCreatedRow": function(nRow, aData, iDataIndex) {
-                        $(nRow).attr('id', aData[0]);
-                    },
-                    'serverSide': 'true',
-                    'processing': 'true',
-                    'paging': 'true',
-                    'order': [],
-                    'ajax': {
-                        'url': 'fetch_data.php',
-                        'type': 'post',
-                    },
-                    "aoColumnDefs": [
-                        {
-                        "targets": [0],  // Target the first column (aData[0])
-                        "visible": false, // Hide the column
-                        "searchable": false // Disable search for this column if needed
-                        },
-                        {
-                        "bSortable": false,
-                        "aTargets": [0]
-                    }],
-                });
+$(document).ready(function() {
+        // Array to store selected checkbox IDs
+        var selectedIds = [];
+
+        var table = $('#example').DataTable({
+            "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                $(nRow).attr('id', aData[0]);
+            },
+            'serverSide': 'true',
+            'processing': 'true',
+            'paging': 'true',
+            'order': [],
+            'ajax': {
+                'url': 'fetch_data.php',
+                'type': 'post',
+            },
+            "aoColumnDefs": [
+                {
+                "targets": [0],  // Target the first column (aData[0])
+                "visible": false, // Hide the column
+                "searchable": false // Disable search for this column if needed
+                },
+                {
+                "bSortable": false,
+                "aTargets": [0]
+            }],
+            // Event that triggers when the table is redrawn (pagination or search)
+            "drawCallback": function() {
+                updateCheckboxStates();
+            }
+        });
+
+        // Update checkbox states when the page is redrawn or loaded
+        function updateCheckboxStates() {
+            $('.row-checkbox').each(function () {
+                const id = $(this).val();
+                // Check or uncheck based on whether the ID is in the selected array
+                $(this).prop('checked', selectedIds.includes(id));
             });
+        }
+
+        // Print content from a specified URL
+        function printContentFromPage(url, ids = '') {
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: { ids: ids },
+                success: function (response) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.position = 'absolute';
+                    iframe.style.width = '0px';
+                    iframe.style.height = '0px';
+                    iframe.style.border = 'none';
+                    document.body.appendChild(iframe);
+
+                    const doc = iframe.contentWindow.document;
+                    doc.open();
+                    doc.write(response);
+                    doc.close();
+
+                    iframe.contentWindow.focus();
+                    iframe.contentWindow.print();
+
+                    document.body.removeChild(iframe);
+                },
+                error: function () {
+                    showAlert("Failed to load print content.", "alert-danger");
+                }
+            });
+        }
+
+        // Select or deselect all checkboxes
+        $('#selectAll').on('change', function () {
+            const checkedStatus = this.checked;
+            $('.row-checkbox').each(function () {
+                $(this).prop('checked', checkedStatus);
+
+                // Add or remove IDs from the selected array
+                const id = $(this).val();
+                if (checkedStatus && !selectedIds.includes(id)) {
+                    selectedIds.push(id);
+                } else if (!checkedStatus) {
+                    selectedIds = [];
+                }
+            });
+        });
+
+        // Handle individual checkbox change events
+        $('#example').on('change', '.row-checkbox', function () {
+            const id = $(this).val();
+            if ($(this).is(':checked')) {
+                if (!selectedIds.includes(id)) {
+                    selectedIds.push(id);
+                }
+            } else {
+                selectedIds = selectedIds.filter(item => item !== id);
+            }
+        });
+
+        // Print selected rows
+        $('.print-btn').on('click', function () {
+            if (selectedIds.length > 0) {
+                const idsString = selectedIds.join(',');
+                printContentFromPage('print_selected.php', idsString);
+            } else {
+                showAlert("Please select at least one row to print.", "alert-danger");
+            }
+        });
+
+        // Print all rows
+        $('.print-all-btn').on('click', function () {
+            printContentFromPage('print_all.php');
+        });
+
+        // Helper function to display alerts
+        function showAlert(message, className) {
+            const alertBox = `<div class="alert ${className}" role="alert">${message}</div>`;
+            $('.alert-container').html(alertBox);
+
+            // Automatically remove the alert after 3 seconds
+            setTimeout(() => {
+                $('.alert-container').html('');
+            }, 3000);
+        }
+
+        // Initialize checkbox states on page load
+        $(document).ready(function () {
+            updateCheckboxStates();
+        });
+
+
+        // Function to show alert
+        function showAlert(message, alertClass) {
+            var alertDiv = $('<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' + message +'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+            alertDiv.css({
+                "position": "fixed",
+                "top": "10px",
+                "right": "10px",
+                "z-index": "9999",
+                "background-color": alertClass === "alert-danger" ? "#f8d7da" : "#d4edda",
+                "border-color": alertClass === "alert-danger" ? "#f5c6cb" : "#c3e6cb"
+            });
+            $("body").append(alertDiv);
+            setTimeout(function() {
+                alertDiv.alert('close');
+            }, 900);
+        }
+    });
             $(document).on('submit', '#updateUser', function(e) {
             e.preventDefault();
 

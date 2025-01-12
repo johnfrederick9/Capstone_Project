@@ -83,6 +83,7 @@ while ($row = mysqli_fetch_assoc($query)) {
     if ($display_status == 1) {
         $sub_array = array();
         $sub_array[] = $row['id'];
+        $sub_array[] = '<input type="checkbox" class="row-checkbox" value="' . $row['household_id'] . '">';
         $sub_array[] = $row['household_id'];
         $sub_array[] = $row['household_name'];
         $sub_array[] = $row['household_head'];

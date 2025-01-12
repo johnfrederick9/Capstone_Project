@@ -31,30 +31,34 @@ $(document).ready(function() {
             }
         });
 
-        // Update checkbox states when the page is redrawn or loaded
+        // Update checkbox state on page draw
         function updateCheckboxStates() {
-            $('.row-checkbox').each(function () {
-                const id = $(this).val();
-                // Check or uncheck based on whether the ID is in the selected array
-                $(this).prop('checked', selectedIds.includes(id));
+            // Iterate through each row checkbox
+            $('.row-checkbox').each(function() {
+                var id = $(this).val();
+                // If the ID is in the selected array, keep it checked
+                if (selectedIds.includes(id)) {
+                    $(this).prop('checked', true);
+                } else {
+                    $(this).prop('checked', false);
+                }
             });
         }
-
-        // Print content from a specified URL
-        function printContentFromPage(url, ids = '') {
+                // Print function (same as your original code)
+                function printContentFromPage(url, ids = '') {
             $.ajax({
                 url: url,
                 type: 'GET',
                 data: { ids: ids },
-                success: function (response) {
-                    const iframe = document.createElement('iframe');
+                success: function(response) {
+                    var iframe = document.createElement('iframe');
                     iframe.style.position = 'absolute';
                     iframe.style.width = '0px';
                     iframe.style.height = '0px';
                     iframe.style.border = 'none';
                     document.body.appendChild(iframe);
 
-                    const doc = iframe.contentWindow.document;
+                    var doc = iframe.contentWindow.document;
                     doc.open();
                     doc.write(response);
                     doc.close();
@@ -64,31 +68,33 @@ $(document).ready(function() {
 
                     document.body.removeChild(iframe);
                 },
-                error: function () {
+                error: function() {
                     showAlert("Failed to load print content.", "alert-danger");
                 }
             });
         }
 
-        // Select or deselect all checkboxes
-        $('#selectAll').on('change', function () {
-            const checkedStatus = this.checked;
-            $('.row-checkbox').each(function () {
+        // Select all checkboxes
+        $('#selectAll').click(function() {
+            var checkedStatus = this.checked;
+            $('.row-checkbox').each(function() {
                 $(this).prop('checked', checkedStatus);
 
-                // Add or remove IDs from the selected array
-                const id = $(this).val();
-                if (checkedStatus && !selectedIds.includes(id)) {
-                    selectedIds.push(id);
-                } else if (!checkedStatus) {
+                // Add or remove IDs from selectedIds array
+                var id = $(this).val();
+                if (checkedStatus) {
+                    if (!selectedIds.includes(id)) {
+                        selectedIds.push(id);
+                    }
+                } else {
                     selectedIds = [];
                 }
             });
         });
 
-        // Handle individual checkbox change events
-        $('#example').on('change', '.row-checkbox', function () {
-            const id = $(this).val();
+        // Individual checkbox change event
+        $('#example').on('change', '.row-checkbox', function() {
+            var id = $(this).val();
             if ($(this).is(':checked')) {
                 if (!selectedIds.includes(id)) {
                     selectedIds.push(id);
@@ -99,9 +105,9 @@ $(document).ready(function() {
         });
 
         // Print selected rows
-        $('.print-btn').on('click', function () {
+        $('.print-btn').click(function() {
             if (selectedIds.length > 0) {
-                const idsString = selectedIds.join(',');
+                var idsString = selectedIds.join(',');
                 printContentFromPage('print_selected.php', idsString);
             } else {
                 showAlert("Please select at least one row to print.", "alert-danger");
@@ -109,26 +115,9 @@ $(document).ready(function() {
         });
 
         // Print all rows
-        $('.print-all-btn').on('click', function () {
+        $('.print-all-btn').click(function() {
             printContentFromPage('print_all.php');
         });
-
-        // Helper function to display alerts
-        function showAlert(message, className) {
-            const alertBox = `<div class="alert ${className}" role="alert">${message}</div>`;
-            $('.alert-container').html(alertBox);
-
-            // Automatically remove the alert after 3 seconds
-            setTimeout(() => {
-                $('.alert-container').html('');
-            }, 3000);
-        }
-
-        // Initialize checkbox states on page load
-        $(document).ready(function () {
-            updateCheckboxStates();
-        });
-
 
         // Function to show alert
         function showAlert(message, alertClass) {

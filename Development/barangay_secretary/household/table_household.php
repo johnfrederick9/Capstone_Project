@@ -1,14 +1,8 @@
 <?php
 include '../../head.php';
-include '../../sidebar_officials.php';
+include '../../sidebar.php';
 ?>
 <style>
-    .head{
-        margin-top: 10px;
-    }
-    .dataTables_filter{
-      margin-left: 800px;
-    }
     /* Modal Header Styling */
 
 /* Member List Styling */
@@ -63,10 +57,19 @@ include '../../sidebar_officials.php';
         <div class="head">
             <h1>Household Table</h1>
         </div>
+                    <div class="table-actions">    
+                        <button class="print-btn " title="Print Selected">
+                            <i class="bx bx-printer"></i>
+                        </button>
+                    </div>
                     </div>
                     <table id="example" class="table-table">
                         <thead>
                             <th>#</th>
+                            <th><button class="print-all-btn" title="Print All">
+                                    <i class="bx bx-printer"></i>
+                                </button>
+                            </th>
                             <th>Household Number</th>
                             <th>Household Name</th>
                             <th>Household Head</th>
@@ -109,7 +112,19 @@ include '../../sidebar_officials.php';
 
                                 <div class="form-group">
                                     <label for="documentInfo">Address</label>
-                                    <input type="text" id="addressField" name="household_address" require>
+                                    <select id="addressField" name="household_address" require>
+                                    <option value="" disabled selected>Address</option>
+                                    <option value="Sitio Sto. Nino">Sitio Sto. Nino</option>
+                                    <option value="Sitio Suwa">Sitio Suwa</option>
+                                    <option value="Sitio Private">Sitio Private</option>
+                                    <option value="Sitio Lahug">Sitio Lahug</option>
+                                    <option value="Sitio Lapa">Sitio Lapa</option>
+                                    <option value="Sitio Sampig">Sitio Sampig</option>
+                                    <option value="Sitio Alang-Alang">Sitio Alang-Alang</option>
+                                    <option value="Sitio Granchina">Sitio Granchina</option>
+                                    <option value="Sitio Catambisan">Sitio Catambisan</option>
+                                    <option value="Sitio Mag-Alambac">Sitio Mag-Alambac</option>
+                                </select> 
                                 </div>
                                 <div class="form-group">
                                 <label for="household_contact">Contact Number:</label>
