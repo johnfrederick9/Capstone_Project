@@ -16,6 +16,14 @@ $result = mysqli_query($conn, $query);
         <link rel="stylesheet" href="assets/css/owl-carousel.css">
         <!----===== Index CSS ===== -->
         <link rel="stylesheet" href="assets/css/index.css">
+
+        <style>
+            .card1 {
+                background-size: cover; /* Ensure the image covers the entire card */
+                background-position: center; /* Center the image within the card */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Add a shadow for styling */
+            }
+        </style>
     </head>
     <title>Barangay Mantalongon Information System</title>
     <link rel="icon" href="assets/image/Logo.png">
@@ -157,8 +165,6 @@ $result = mysqli_query($conn, $query);
         </div>
     </div>
 <?php endwhile; ?>
-
-
                 </div>
             </div>
         </div>
